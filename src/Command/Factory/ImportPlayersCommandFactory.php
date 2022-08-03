@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Controller\Factory;
+namespace Jesperbeisner\Fwstats\Command\Factory;
 
-use Jesperbeisner\Fwstats\Controller\HomeController;
+use Jesperbeisner\Fwstats\Command\ImportPlayersCommand;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Database;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Psr\Container\ContainerInterface;
 
-final class HomeControllerFactory implements FactoryInterface
+class ImportPlayersCommandFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, string $serviceName): HomeController
+    public function __invoke(ContainerInterface $container, string $serviceName): ImportPlayersCommand
     {
         /** @var Database $database */
         $database = $container->get(Database::class);
@@ -20,6 +20,6 @@ final class HomeControllerFactory implements FactoryInterface
         /** @var PlayerRepository $playerRepository */
         $playerRepository = $database->getRepository(PlayerRepository::class);
 
-        return new HomeController($playerRepository);
+        return new ImportPlayersCommand($playerRepository);
     }
 }

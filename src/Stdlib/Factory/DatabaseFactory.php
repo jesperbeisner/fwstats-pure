@@ -13,6 +13,12 @@ final class DatabaseFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, string $serviceName): Database
     {
-        return new Database(new PDO('sqlite:' . ROOT_DIR . '/database/sqlite.db'));
+        $options = [
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ];
+
+        return new Database(new PDO(dsn: 'sqlite:' . ROOT_DIR . '/database/sqlite.db', options: $options));
     }
 }
