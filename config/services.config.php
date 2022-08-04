@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Jesperbeisner\Fwstats\Command\Factory;
+use Jesperbeisner\Fwstats\Command;
 use Jesperbeisner\Fwstats\Controller;
 use Jesperbeisner\Fwstats\Stdlib;
 use Psr\Log\LoggerInterface;
@@ -14,8 +14,8 @@ return [
     // Services
 
     // Commands
-    'app:database-migration' => Factory\DatabaseMigrationCommandFactory::class,
-    'app:import-players' => Factory\ImportPlayersCommandFactory::class,
+    Command\DatabaseMigrationCommand::class => Command\Factory\DatabaseMigrationCommandFactory::class,
+    Command\ImportPlayersCommand::class => Command\Factory\ImportPlayersCommandFactory::class,
 
     // Stdlib
     Stdlib\Request::class => Stdlib\Factory\RequestFactory::class,

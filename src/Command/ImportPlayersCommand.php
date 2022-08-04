@@ -8,6 +8,9 @@ use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 
 final class ImportPlayersCommand extends AbstractCommand
 {
+    public static string $name = 'app:import-players';
+    public static string $description = "Deletes the old player stats and imports the current stats in the 'players' database table.";
+
     public function __construct(
         private readonly PlayerRepository $playerRepository,
     ) {

@@ -9,6 +9,9 @@ use RuntimeException;
 
 final class DatabaseMigrationCommand extends AbstractCommand
 {
+    public static string $name = 'app:database-migration';
+    public static string $description = 'Checks for new migrations and when found executes them.';
+
     private const MIGRATION_FILE_PATTERN = __DIR__ . '/../../migrations/*.migration.sql';
 
     public function __construct(
