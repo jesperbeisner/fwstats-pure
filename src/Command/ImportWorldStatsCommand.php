@@ -59,6 +59,10 @@ final class ImportWorldStatsCommand extends AbstractCommand
         $clans = $this->clanRepository->findAllByWorld($world);
         $clansDump = $this->freewarDumpService->getClansDump($world);
 
+        // TODO: Remove
+        $this->clanRepository->insertClans($world, $clansDump);
+        return;
+
         if (count($clans) === 0) {
             $this->write("No clans found for world '$world->value'. Only inserting clan dump into the database.");
         } else {
@@ -121,6 +125,10 @@ final class ImportWorldStatsCommand extends AbstractCommand
     {
         $playersDump = $this->freewarDumpService->getPlayersDump($world);
         $players = $this->playerRepository->findAllByWorld($world);
+
+        // TODO: Remove
+        $this->playerRepository->insertPlayers($world, $playersDump);
+        return;
 
         if (count($players) === 0) {
             $this->write("No players found for world '$world->value'. Inserting player dump into the database.");
