@@ -31,7 +31,7 @@ final class App
             (new HtmlResponse('errors/405.phtml'))->send();
         }
 
-        /** @var class-string $controllerClassName */
+        /** @var class-string<AbstractController> $controllerClassName */
         $controllerClassName = $routeResult[1];
 
         /** @var AbstractController $controller */

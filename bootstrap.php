@@ -10,6 +10,11 @@ require ROOT_DIR . '/vendor/autoload.php';
 
 $config = require ROOT_DIR . '/config/config.php';
 
+if (file_exists(ROOT_DIR . '/config/config.local.php')) {
+    $configLocal = require ROOT_DIR . '/config/config.local.php';
+    $config = array_merge($config, $configLocal);
+}
+
 $serviceContainer = new ServiceContainer($config['services']);
 
 $serviceContainer->set('config', $config);

@@ -2,3 +2,5 @@
 
 /database/*
 !/database/.gitkeep
+
+/config/config.local.php
