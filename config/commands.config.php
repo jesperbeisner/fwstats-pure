@@ -6,5 +6,5 @@ use Jesperbeisner\Fwstats\Command;
 
 return [
     Command\DatabaseMigrationCommand::class,
-    Command\ImportPlayersCommand::class
+    Command\ImportWorldStatsCommand::class
 ];

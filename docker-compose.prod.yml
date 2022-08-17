@@ -2,18 +2,19 @@ version: '3.9'
 
 services:
   web:
-    image: caddy:2.5.2-alpine
+    build:
+      dockerfile: .docker/caddy/Dockerfile
+      context: .
     container_name: fwstats-caddy-prod
     volumes:
       - .:/var/www/html
-      - ./.docker/caddy:/etc/caddy
     ports:
       - '10000:80'
     restart: always
 
   php:
     build:
-      dockerfile: .docker/php/Dockerfile-prod
+      dockerfile: .docker/php/prod/Dockerfile
       context: .
     container_name: fwstats-php-prod
     volumes:

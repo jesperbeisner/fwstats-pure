@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Controller;
 
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\HtmlResponse;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
@@ -17,10 +18,12 @@ final class HomeController extends AbstractController
 
     public function __invoke(): ResponseInterface
     {
-        $players = $this->playerRepository->findAllOrderedByTotalXp();
+        $afPlayers = $this->playerRepository->findAllByWorldAndOrderedByTotalXp(WorldEnum::AFSRV);
+        $cfPlayers = $this->playerRepository->findAllByWorldAndOrderedByTotalXp(WorldEnum::CHAOS);
 
         return new HtmlResponse('home/home.phtml', [
-            'players' => $players,
+            'afPlayers' => $afPlayers,
+            'cfPlayers' => $cfPlayers,
         ]);
     }
 }

@@ -13,4 +13,9 @@ abstract class AbstractCommand
     public static string $description = '';
 
     abstract public function execute(): int;
+
+    protected function write(string $text): void
+    {
+        echo $text . PHP_EOL;
+    }
 }

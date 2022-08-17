@@ -8,7 +8,7 @@ use RuntimeException;
 
 final class ViewRenderService
 {
-    private const TITLE = 'fwstats.de';
+    private const TITLE = 'FWSTATS';
     private const VIEWS_FOLDER = ROOT_DIR . '/views/';
 
     private ?string $title = null;

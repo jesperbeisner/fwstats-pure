@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib;
 
+use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
 use Psr\Log\AbstractLogger;
-use RuntimeException;
 use Stringable;
 
 final class Logger extends AbstractLogger
@@ -23,7 +23,7 @@ final class Logger extends AbstractLogger
 
         $message = '[' . date('Y-m-d H:i:s') . '] ' . strtoupper($level) . ': ' . $message . ' ' . $jsonContext . PHP_EOL;
 
-        if (false === $outputStream = fopen('php://stdout', 'w')) {
+        if (false === $outputStream = fopen('php://stderr', 'w')) {
             throw new RuntimeException('Could not open stdout resource');
         }
 

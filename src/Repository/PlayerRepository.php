@@ -4,39 +4,106 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use Exception;
+use Jesperbeisner\Fwstats\DTO\Player;
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
+
 final class PlayerRepository extends AbstractRepository
 {
-    protected const TABLE_NAME = 'players';
+    private string $table = 'players';
 
-    public function deleteAllPlayers(): void
+    public function findAllByWorldAndOrderedByTotalXp(WorldEnum $world): array
     {
-        $this->database->execute("DELETE FROM players");
+        $sql = "SELECT * FROM $this->table WHERE world = :world ORDER BY total_xp DESC LIMIT 100";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['world' => $world->value]);
+
+        $players = [];
+        while (false !== $row = $stmt->fetch()) {
+            $players[] = new Player(
+                world: WorldEnum::from($row['world']),
+                playerId: $row['player_id'],
+                name: $row['name'],
+                race: $row['race'],
+                xp: $row['xp'],
+                soulXp: $row['soul_xp'],
+                totalXp: $row['total_xp'],
+                clanId: $row['clan_id'],
+                profession: $row['profession'],
+            );
+        }
+
+        return $players;
     }
 
-    public function createPlayer(int $playerId, string $name, string $race, int $clanId, string $profession, int $xp, int $soulXp): void
+    /**
+     * @return Player[]
+     */
+    public function findAllByWorld(WorldEnum $world): array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE world = :world");
+        $stmt->execute(['world' => $world->value]);
+
+        $players = [];
+        while (false !== $row = $stmt->fetch()) {
+            $players[$row['player_id']] = new Player(
+                world: $world,
+                playerId: $row['player_id'],
+                name: $row['name'],
+                race: $row['race'],
+                xp: $row['xp'],
+                soulXp: $row['soul_xp'],
+                totalXp: $row['total_xp'],
+                clanId: $row['clan_id'],
+                profession: $row['profession'],
+            );
+        }
+
+        return $players;
+    }
+
+    public function insert(Player $player): void
     {
         $sql = <<<SQL
-            INSERT INTO players (playerId, name, race, clanId, profession, xp, soulXp, totalXp)
-            VALUES (:playerId, :name, :race, :clanId, :profession, :xp, :soulXp, :totalXp);
+            INSERT INTO $this->table (world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp)
+            VALUES (:world, :playerId, :name, :race, :clanId, :profession, :xp, :soulXp, :totalXp)
         SQL;
 
-        $statement = $this->database->prepare($sql);
-        $statement->execute([
-            'playerId' => $playerId,
-            'name' => $name,
-            'race' => $race,
-            'clanId' => $clanId,
-            'profession' => $profession,
-            'xp' => $xp,
-            'soulXp' => $soulXp,
-            'totalXp' => $xp + $soulXp,
+        $this->pdo->prepare($sql)->execute([
+            'world' => $player->world->value,
+            'playerId' => $player->playerId,
+            'name' => $player->name,
+            'race' => $player->race,
+            'clanId' => $player->clanId,
+            'profession' => $player->profession,
+            'xp' => $player->xp,
+            'soulXp' => $player->soulXp,
+            'totalXp' => $player->xp + $player->soulXp,
         ]);
     }
 
-    public function findAllOrderedByTotalXp(): array
+    /**
+     * @param Player[] $players
+     */
+    public function insertPlayers(WorldEnum $world, array $players): void
     {
-        $statement = $this->database->getPdo()->query("SELECT * FROM players ORDER BY totalXp DESC");
+        $sql = "DELETE FROM $this->table WHERE world = :world";
 
-        return $statement->fetchAll();
+        try {
+            $this->pdo->beginTransaction();
+
+            $this->pdo->prepare($sql)->execute(['world' => $world->value]);
+
+            foreach ($players as $player) {
+                $this->insert($player);
+            }
+
+            $this->pdo->commit();
+        } catch (Exception $e) {
+            $this->pdo->rollBack();
+
+            throw $e;
+        }
     }
 }

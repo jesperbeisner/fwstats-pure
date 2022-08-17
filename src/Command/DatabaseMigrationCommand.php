@@ -12,7 +12,7 @@ final class DatabaseMigrationCommand extends AbstractCommand
     public static string $name = 'app:database-migration';
     public static string $description = 'Checks for new migrations and when found executes them.';
 
-    private const MIGRATION_FILE_PATTERN = __DIR__ . '/../../migrations/*.migration.sql';
+    private const MIGRATION_FILE_PATTERN = __DIR__ . '/../../migrations/*.sql';
 
     public function __construct(
         private readonly MigrationRepository $migrationRepository
@@ -21,6 +21,10 @@ final class DatabaseMigrationCommand extends AbstractCommand
 
     public function execute(): int
     {
+        $start = microtime(true);
+
+        $this->write("Starting the 'app:database-migration' command...");
+
         $this->migrationRepository->createMigrationsTable();
 
         if (false === $migrationFiles = glob(self::MIGRATION_FILE_PATTERN)) {
@@ -31,7 +35,7 @@ final class DatabaseMigrationCommand extends AbstractCommand
             $fileName = basename($migrationFile);
 
             if (null !== $this->migrationRepository->findByFileName($fileName)) {
-                echo "Skip '$fileName': Migration was already executed" . PHP_EOL;
+                $this->write("Skip '$fileName': Migration was already executed");
                 continue;
             }
 
@@ -40,6 +44,10 @@ final class DatabaseMigrationCommand extends AbstractCommand
 
             $this->migrationRepository->executeMigration($fileName, $sql);
         }
+
+        $end = round((microtime(true) - $start) * 1000);
+
+        $this->write("Finished the 'app:database-migration' command in $end ms.");
 
         return self::SUCCESS;
     }
