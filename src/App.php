@@ -8,12 +8,14 @@ use Jesperbeisner\Fwstats\Controller\AbstractController;
 use Jesperbeisner\Fwstats\Stdlib\Router;
 use Jesperbeisner\Fwstats\Stdlib\ServiceContainer;
 use Jesperbeisner\Fwstats\Stdlib\HtmlResponse;
+use Throwable;
 
 final class App
 {
     public function __construct(
         private readonly ServiceContainer $serviceContainer,
     ) {
+        $this->registerExceptionHandler();
     }
 
     public function run(): never
@@ -39,5 +41,19 @@ final class App
         $response = $controller();
 
         $response->send();
+    }
+
+    private function registerExceptionHandler(): void
+    {
+        set_exception_handler(function (Throwable $e): never {
+            /** @var string $appEnv */
+            $appEnv = $this->serviceContainer->get('appEnv');
+
+            if ($appEnv === 'prod') {
+                (new HtmlResponse('errors/500.phtml'))->send();
+            }
+
+            throw $e;
+        });
     }
 }
