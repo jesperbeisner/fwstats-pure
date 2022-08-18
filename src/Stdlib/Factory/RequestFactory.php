@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
 
 final class RequestFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, string $serviceName): Request
+    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): Request
     {
         $uri = $_SERVER['REQUEST_URI'];
 

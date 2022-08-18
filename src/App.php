@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats;
 
 use Jesperbeisner\Fwstats\Controller\AbstractController;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
+use Jesperbeisner\Fwstats\Stdlib\Request;
+use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 use Jesperbeisner\Fwstats\Stdlib\Router;
 use Jesperbeisner\Fwstats\Stdlib\ServiceContainer;
-use Jesperbeisner\Fwstats\Stdlib\HtmlResponse;
 use Throwable;
 
 final class App
@@ -33,12 +35,22 @@ final class App
             (new HtmlResponse('errors/405.phtml'))->send();
         }
 
+        /** @var Request $request */
+        $request = $this->serviceContainer->get(Request::class);
+
+        $request->setRouteParameters($routeResult[2]);
+
         /** @var class-string<AbstractController> $controllerClassName */
-        $controllerClassName = $routeResult[1];
+        $controllerClassName = $routeResult[1][0];
+
+        /** @var string $controllerAction */
+        $controllerAction = $routeResult[1][1];
 
         /** @var AbstractController $controller */
         $controller = $this->serviceContainer->get($controllerClassName);
-        $response = $controller();
+
+        /** @var ResponseInterface $response */
+        $response = $controller->$controllerAction();
 
         $response->send();
     }

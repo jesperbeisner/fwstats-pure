@@ -6,5 +6,4 @@ namespace Jesperbeisner\Fwstats\Stdlib\Interface;
 
 interface ControllerInterface
 {
-    public function __invoke(): ResponseInterface;
 }

@@ -13,10 +13,10 @@ use Throwable;
 
 class RepositoryFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, string $serviceName): AbstractRepository
+    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): AbstractRepository
     {
         /** @var PDO $pdo */
-        $pdo = $container->get(PDO::class);
+        $pdo = $serviceContainer->get(PDO::class);
 
         try {
             $repository = new $serviceName($pdo);

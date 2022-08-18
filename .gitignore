@@ -1,6 +1,9 @@
 /vendor/
 
-/database/*
-!/database/.gitkeep
+/data/database/*
+!/data/database/.gitkeep
+
+/data/images/*
+!/data/images/404-image.png
 
 /config/config.local.php

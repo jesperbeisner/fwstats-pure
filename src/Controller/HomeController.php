@@ -7,8 +7,8 @@ namespace Jesperbeisner\Fwstats\Controller;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
-use Jesperbeisner\Fwstats\Stdlib\HtmlResponse;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
+use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
 final class HomeController extends AbstractController
 {
@@ -18,12 +18,12 @@ final class HomeController extends AbstractController
     ) {
     }
 
-    public function __invoke(): ResponseInterface
+    public function index(): ResponseInterface
     {
         return new HtmlResponse('home/home.phtml', [
             'afsrvPlayers' => $this->playerRepository->findAllByWorldAndOrderedByTotalXp(WorldEnum::AFSRV),
-            'afsrvClans' => $this->clanRepository->findAllByWorld(WorldEnum::AFSRV),
             'chaosPlayers' => $this->playerRepository->findAllByWorldAndOrderedByTotalXp(WorldEnum::CHAOS),
+            'afsrvClans' => $this->clanRepository->findAllByWorld(WorldEnum::AFSRV),
             'chaosClans' => $this->clanRepository->findAllByWorld(WorldEnum::CHAOS),
         ]);
     }

@@ -11,16 +11,16 @@ use Psr\Container\ContainerInterface;
 
 final class RouterFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, string $serviceName): Router
+    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): Router
     {
         /** @var mixed[] $globalConfig */
-        $globalConfig = $container->get('config');
+        $globalConfig = $serviceContainer->get('config');
 
         /** @var array<string, mixed[]> $routesConfig */
         $routesConfig = $globalConfig['routes'];
 
         /** @var Request $request */
-        $request = $container->get(Request::class);
+        $request = $serviceContainer->get(Request::class);
 
         return new Router($routesConfig, $request);
     }

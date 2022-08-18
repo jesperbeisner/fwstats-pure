@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Stdlib;
+namespace Jesperbeisner\Fwstats\Stdlib\Response;
 
 use Jesperbeisner\Fwstats\Service\ViewRenderService;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;

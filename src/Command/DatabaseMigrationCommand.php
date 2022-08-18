@@ -21,8 +21,7 @@ final class DatabaseMigrationCommand extends AbstractCommand
 
     public function execute(): int
     {
-        $start = microtime(true);
-
+        $this->startTime();
         $this->write("Starting the 'app:database-migration' command...");
 
         $this->migrationRepository->createMigrationsTable();
@@ -45,9 +44,7 @@ final class DatabaseMigrationCommand extends AbstractCommand
             $this->migrationRepository->executeMigration($fileName, $sql);
         }
 
-        $end = round((microtime(true) - $start) * 1000);
-
-        $this->write("Finished the 'app:database-migration' command in $end ms.");
+        $this->write("Finished the 'app:database-migration' command in {$this->getTime()} ms.");
 
         return self::SUCCESS;
     }

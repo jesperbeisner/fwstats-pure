@@ -21,17 +21,7 @@ final class PlayerRepository extends AbstractRepository
 
         $players = [];
         while (false !== $row = $stmt->fetch()) {
-            $players[] = new Player(
-                world: WorldEnum::from($row['world']),
-                playerId: $row['player_id'],
-                name: $row['name'],
-                race: $row['race'],
-                xp: $row['xp'],
-                soulXp: $row['soul_xp'],
-                totalXp: $row['total_xp'],
-                clanId: $row['clan_id'],
-                profession: $row['profession'],
-            );
+            $players[] = $this->hydratePlayer($row);
         }
 
         return $players;
@@ -47,17 +37,7 @@ final class PlayerRepository extends AbstractRepository
 
         $players = [];
         while (false !== $row = $stmt->fetch()) {
-            $players[$row['player_id']] = new Player(
-                world: $world,
-                playerId: $row['player_id'],
-                name: $row['name'],
-                race: $row['race'],
-                xp: $row['xp'],
-                soulXp: $row['soul_xp'],
-                totalXp: $row['total_xp'],
-                clanId: $row['clan_id'],
-                profession: $row['profession'],
-            );
+            $players[$row['player_id']] = $this->hydratePlayer($row);
         }
 
         return $players;
@@ -105,5 +85,38 @@ final class PlayerRepository extends AbstractRepository
 
             throw $e;
         }
+    }
+
+    /**
+     * @return Player[]
+     */
+    public function getTop50PlayersByWorld(WorldEnum $world): array
+    {
+        $sql = "SELECT * FROM $this->table WHERE world = :world ORDER BY total_xp DESC LIMIT 50";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['world' => $world->value]);
+
+        $players = [];
+        while (false !== $row = $stmt->fetch()) {
+            $players[] = $this->hydratePlayer($row);
+        }
+
+        return $players;
+    }
+
+    private function hydratePlayer(array $row): Player
+    {
+        return new Player(
+            world: WorldEnum::from($row['world']),
+            playerId: $row['player_id'],
+            name: $row['name'],
+            race: $row['race'],
+            xp: $row['xp'],
+            soulXp: $row['soul_xp'],
+            totalXp: $row['total_xp'],
+            clanId: $row['clan_id'],
+            profession: $row['profession'],
+        );
     }
 }

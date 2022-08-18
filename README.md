@@ -34,6 +34,9 @@ docker-compose exec php composer install --no-dev --optimize-autoloader --no-int
 # Load migrations
 docker-compose exec php php bin/console.php app:database-migration
 
-# Cronjob
+# World Stats Cronjob
 */5 * * * * docker exec fwstats-php-prod php bin/console.php app:import-world-stats > /dev/null 2>&1 
+
+# Images Cronjob
+1,6,11,16,21,26,31,36,41,46,51,56 * * * * docker exec fwstats-php-prod php bin/console.php app:create-images > /dev/null 2>&1 
 ```

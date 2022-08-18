@@ -24,8 +24,7 @@ final class ImportWorldStatsCommand extends AbstractCommand
 
     public function execute(): int
     {
-        $start = microtime(true);
-
+        $this->startTime();
         $this->write("Starting the 'app:import-world-stats' command...");
 
         foreach (WorldEnum::cases() as $world) {
@@ -39,9 +38,7 @@ final class ImportWorldStatsCommand extends AbstractCommand
             $this->writeImportResultMessages($achievementImporterResult);
         }
 
-        $end = round((microtime(true) - $start) * 1000);
-
-        $this->write("Finished the 'app:import-world-stats' command in $end ms.");
+        $this->write("Finished the 'app:import-world-stats' command in {$this->getTime()} ms.");
 
         return self::SUCCESS;
     }
