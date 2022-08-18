@@ -10,7 +10,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
-final class HomeController extends AbstractController
+final class IndexController extends AbstractController
 {
     public function __construct(
         private readonly PlayerRepository $playerRepository,
@@ -20,7 +20,7 @@ final class HomeController extends AbstractController
 
     public function index(): ResponseInterface
     {
-        return new HtmlResponse('home/home.phtml', [
+        return new HtmlResponse('index/index.phtml', [
             'afsrvPlayers' => $this->playerRepository->findAllByWorldAndOrderedByTotalXp(WorldEnum::AFSRV),
             'chaosPlayers' => $this->playerRepository->findAllByWorldAndOrderedByTotalXp(WorldEnum::CHAOS),
             'afsrvClans' => $this->clanRepository->findAllByWorld(WorldEnum::AFSRV),

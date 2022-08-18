@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+/** @var Jesperbeisner\Fwstats\Service\ViewRenderService $this */
+
+$this->setTitle('Ranking Bilder');
+
+?>
+<div id="images" class="mb-5">
+    <div class="tabs is-centered is-medium">
+        <ul>
+            <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
+            <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
+        </ul>
+    </div>
+    <div>
+        <div id="action-freewar-tab-content" class="has-text-centered">
+            <p class="is-size-5 has-text-weight-bold mb-3">
+                Ranking Bild im Profil einbinden:
+            </p>
+
+            <pre class="mb-5">[center][url=https://fwstats.de/images][img]https://fwstats.de/images/afsrv-ranking.png[/img][/url][/center]</pre>
+
+            <img src="/images/afsrv-ranking.png" alt="afsrv-anking image">
+        </div>
+        <div id="chaos-freewar-tab-content" class="is-hidden has-text-centered">
+            <p class="is-size-5 has-text-weight-bold mb-3">
+                Ranking Bild im Profil einbinden:
+            </p>
+
+            <pre class="mb-5">[center][url=https://fwstats.de/images][img]https://fwstats.de/images/chaos-ranking.png[/img][/url][/center]</pre>
+
+            <img src="/images/chaos-ranking.png" alt="chaos-ranking image">
+        </div>
+    </div>
+</div>

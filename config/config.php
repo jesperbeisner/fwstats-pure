@@ -17,7 +17,12 @@ return [
         [
             'route' => '/',
             'methods' => ['GET'],
-            'controller' => [Controller\HomeController::class, 'index'],
+            'controller' => [Controller\IndexController::class, 'index'],
+        ],
+        [
+            'route' => '/images/ranking',
+            'methods' => ['GET'],
+            'controller' => [Controller\ImageController::class, 'ranking'],
         ],
         [
             'route' => '/images/{world}-ranking.png',
@@ -32,7 +37,7 @@ return [
     ],
     'services' => [
         // Controller
-        Controller\HomeController::class => Controller\Factory\HomeControllerFactory::class,
+        Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
         Controller\ImageController::class => Controller\Factory\ImageControllerFactory::class,
 
         // Services

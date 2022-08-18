@@ -19,6 +19,11 @@ final class ImageController extends AbstractController
     ) {
     }
 
+    public function ranking(): ResponseInterface
+    {
+        return new HtmlResponse('image/ranking-image.phtml');
+    }
+
     public function image(): ResponseInterface
     {
         /** @var string $world */
