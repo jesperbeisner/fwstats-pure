@@ -6,7 +6,7 @@ namespace Jesperbeisner\Fwstats\DTO;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-final class ClanNamingHistory
+final class ClanNameHistory
 {
     public function __construct(
         public readonly WorldEnum $world,

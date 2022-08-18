@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller\Factory;
 
 use Jesperbeisner\Fwstats\Controller\HomeController;
+use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Psr\Container\ContainerInterface;
@@ -16,6 +17,9 @@ final class HomeControllerFactory implements FactoryInterface
         /** @var PlayerRepository $playerRepository */
         $playerRepository = $container->get(PlayerRepository::class);
 
-        return new HomeController($playerRepository);
+        /** @var ClanRepository $clanRepository */
+        $clanRepository = $container->get(ClanRepository::class);
+
+        return new HomeController($playerRepository, $clanRepository);
     }
 }

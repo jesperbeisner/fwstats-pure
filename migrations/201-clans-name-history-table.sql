@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS clans_naming_history (
+CREATE TABLE IF NOT EXISTS clans_name_history (
     id INTEGER PRIMARY KEY,
     world TEXT NOT NULL,
     clan_id INTEGER NOT NULL,

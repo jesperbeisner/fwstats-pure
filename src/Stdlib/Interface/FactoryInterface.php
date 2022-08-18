@@ -8,5 +8,5 @@ use Psr\Container\ContainerInterface;
 
 interface FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, string $serviceName): mixed;
+    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): mixed;
 }

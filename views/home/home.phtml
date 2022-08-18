@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Jesperbeisner\Fwstats\DTO\Clan;
 use Jesperbeisner\Fwstats\DTO\Player;
 use Jesperbeisner\Fwstats\Helper\View;
 
@@ -9,11 +10,17 @@ use Jesperbeisner\Fwstats\Helper\View;
 
 $this->setTitle('Home');
 
-/** @var Player[] $afPlayers */
-$afPlayers = $this->vars['afPlayers'];
+/** @var Player[] $afsrvPlayers */
+$afsrvPlayers = $this->vars['afsrvPlayers'];
 
-/** @var Player[] $cfPlayers */
-$cfPlayers = $this->vars['cfPlayers'];
+/** @var Clan[] $afsrvClans */
+$afsrvClans = $this->vars['afsrvClans'];
+
+/** @var Player[] $chaosPlayers */
+$chaosPlayers = $this->vars['chaosPlayers'];
+
+/** @var Clan[] $chaosClans */
+$chaosClans = $this->vars['chaosClans'];
 
 ?>
 <div id="ranking" class="mb-5">
@@ -32,6 +39,7 @@ $cfPlayers = $this->vars['cfPlayers'];
                         <td>#</td>
                         <td>Name</td>
                         <td>Rasse</td>
+                        <td class="has-text-centered">Clan</td>
                         <td>Beruf</td>
                         <td class="has-text-right">Xp</td>
                         <td class="has-text-right">Seelen-Xp</td>
@@ -42,7 +50,7 @@ $cfPlayers = $this->vars['cfPlayers'];
                     </thead>
                     <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($afPlayers as $player): ?>
+                    <?php foreach ($afsrvPlayers as $player): ?>
                         <tr>
                             <td>
                                 <?= $i ?>
@@ -52,6 +60,19 @@ $cfPlayers = $this->vars['cfPlayers'];
                             </td>
                             <td>
                                 <?= View::escape($player->race) ?>
+                            </td>
+                            <td class="has-text-centered">
+                                <?php $clan = $afsrvClans[$player->clanId] ?? null; ?>
+                                <?php if ($clan === null): ?>
+                                    -
+                                <?php else: ?>
+                                    <a
+                                            title="<?= View::escape($clan->name) ?>"
+                                            href="https://afsrv.freewar.de/freewar/internal/fight.php?action=watchclan&act_clan_id=<?= $clan->clanId ?>"
+                                    >
+                                        <?= View::escape($clan->shortcut) ?>
+                                    </a>
+                                <?php endif; ?>
                             </td>
                             <td>
                                 <?= $player->profession === null ? '-' : View::escape($player->profession) ?>
@@ -89,6 +110,7 @@ $cfPlayers = $this->vars['cfPlayers'];
                         <td>#</td>
                         <td>Name</td>
                         <td>Rasse</td>
+                        <td class="has-text-centered">Clan</td>
                         <td>Beruf</td>
                         <td class="has-text-right">Xp</td>
                         <td class="has-text-right">Seelen-Xp</td>
@@ -99,7 +121,7 @@ $cfPlayers = $this->vars['cfPlayers'];
                     </thead>
                     <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($cfPlayers as $player): ?>
+                    <?php foreach ($chaosPlayers as $player): ?>
                         <tr>
                             <td>
                                 <?= $i ?>
@@ -109,6 +131,19 @@ $cfPlayers = $this->vars['cfPlayers'];
                             </td>
                             <td>
                                 <?= View::escape($player->race) ?>
+                            </td>
+                            <td class="has-text-centered">
+                                <?php $clan = $chaosClans[$player->clanId] ?? null; ?>
+                                <?php if ($clan === null): ?>
+                                    -
+                                <?php else: ?>
+                                    <a
+                                            title="<?= View::escape($clan->name) ?>"
+                                            href="https://chaos.freewar.de/freewar/internal/fight.php?action=watchclan&act_clan_id=<?= $clan->clanId ?>"
+                                    >
+                                        <?= View::escape($clan->shortcut) ?>
+                                    </a>
+                                <?php endif; ?>
                             </td>
                             <td>
                                 <?= $player->profession === null ? '-' : View::escape($player->profession) ?>

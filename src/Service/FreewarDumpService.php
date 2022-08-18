@@ -9,7 +9,7 @@ use Jesperbeisner\Fwstats\DTO\Player;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
 
-class FreewarDumpService implements FreewarDumpServiceInterface
+final class FreewarDumpService implements FreewarDumpServiceInterface
 {
     private const ADMINS = ['Sotrax', 'bwoebi', 'Nyrea', 'Andocai'];
 
