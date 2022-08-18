@@ -26,7 +26,12 @@ final class RankingImageService extends AbstractImageService
         $this->createImage(750, 1030);
         $this->setBackgroundColor($this->colorWhite());
 
-        $this->write($world->value === 'afsrv' ? 'Top 50 ActionFreewar' : 'Top 50 ChaosFreewar', 275, 25, 17);
+        if ($world === WorldEnum::AFSRV) {
+            $this->write('Top 50 ActionFreewar', 264, 25, 17);
+        } else {
+            $this->write('Top 50 ChaosFreewar', 262, 25, 17);
+        }
+
         $this->write(date('d.m.Y - H:i:s'), 624, 15, 10);
 
         $this->createRankColumn($players);
