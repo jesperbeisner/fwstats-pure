@@ -44,7 +44,7 @@ use Jesperbeisner\Fwstats\Helper\View;
                     <?php else: ?>
                         <a
                             title="<?= View::escape($clan->name) ?>"
-                            href="https://chaos.freewar.de/freewar/internal/fight.php?action=watchclan&act_clan_id=<?= $clan->clanId ?>"
+                            href="https://<?= $player->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchclan&act_clan_id=<?= $clan->clanId ?>"
                             target="_blank"
                             class="clan_profile_link"
                         >
