@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Command;
 
-use RuntimeException;
+use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
 
 abstract class AbstractCommand
 {
@@ -18,9 +18,11 @@ abstract class AbstractCommand
 
     abstract public function execute(): int;
 
-    protected function write(string $text): void
+    protected function writeLine(string $text = ''): void
     {
-        echo $text . PHP_EOL;
+        if (false === file_put_contents('php://stderr', $text . PHP_EOL)) {
+            throw new RuntimeException('Could not write to stderr');
+        }
     }
 
     protected function startTime(): void

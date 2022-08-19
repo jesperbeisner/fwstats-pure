@@ -20,13 +20,13 @@ final class CreateImagesCommand extends AbstractCommand
     public function execute(): int
     {
         $this->startTime();
-        $this->write("Starting the 'app:create-images' command...");
+        $this->writeLine("Starting the 'app:create-images' command...");
 
         foreach (WorldEnum::cases() as $world) {
             $this->rankingImageService->create($world);
         }
 
-        $this->write("Finished the 'app:create-images' command in {$this->getTime()} ms.");
+        $this->writeLine("Finished the 'app:create-images' command in {$this->getTime()} ms.");
 
         return self::SUCCESS;
     }

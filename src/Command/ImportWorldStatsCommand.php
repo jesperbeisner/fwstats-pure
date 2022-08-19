@@ -25,20 +25,24 @@ final class ImportWorldStatsCommand extends AbstractCommand
     public function execute(): int
     {
         $this->startTime();
-        $this->write("Starting the 'app:import-world-stats' command...");
+        $this->writeLine("Starting the 'app:import-world-stats' command...");
+        $this->writeLine();
 
         foreach (WorldEnum::cases() as $world) {
             $clanImporterResult = $this->clanImporter->import($world);
             $this->writeImportResultMessages($clanImporterResult);
+            $this->writeLine();
 
             $playerImporterResult = $this->playerImporter->import($world);
             $this->writeImportResultMessages($playerImporterResult);
+            $this->writeLine();
 
             $achievementImporterResult = $this->achievementImporter->import($world);
             $this->writeImportResultMessages($achievementImporterResult);
+            $this->writeLine();
         }
 
-        $this->write("Finished the 'app:import-world-stats' command in {$this->getTime()} ms.");
+        $this->writeLine("Finished the 'app:import-world-stats' command in {$this->getTime()} ms.");
 
         return self::SUCCESS;
     }
@@ -46,7 +50,7 @@ final class ImportWorldStatsCommand extends AbstractCommand
     private function writeImportResultMessages(ImportResult $importResult): void
     {
         foreach ($importResult->getMessages() as $message) {
-            $this->write($message);
+            $this->writeLine($message);
         }
     }
 }

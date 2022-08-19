@@ -11,7 +11,9 @@ use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Service\PlayerStatusService;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Psr\Container\ContainerInterface;
 
@@ -40,6 +42,12 @@ final class PlayerImporterFactory implements FactoryInterface
         /** @var PlayerProfessionHistoryRepository $playerProfessionHistoryRepository */
         $playerProfessionHistoryRepository = $serviceContainer->get(PlayerProfessionHistoryRepository::class);
 
+        /** @var PlayerStatusHistoryRepository $playerStatusHistoryRepository */
+        $playerStatusHistoryRepository = $serviceContainer->get(PlayerStatusHistoryRepository::class);
+
+        /** @var PlayerStatusService $playerStatusService */
+        $playerStatusService = $serviceContainer->get(PlayerStatusService::class);
+
         return new PlayerImporter(
             $freewarDumpService,
             $clanRepository,
@@ -47,7 +55,9 @@ final class PlayerImporterFactory implements FactoryInterface
             $playerNameHistoryRepository,
             $playerRaceHistoryRepository,
             $playerClanHistoryRepository,
-            $playerProfessionHistoryRepository
+            $playerProfessionHistoryRepository,
+            $playerStatusHistoryRepository,
+            $playerStatusService
         );
     }
 }

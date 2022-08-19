@@ -22,7 +22,7 @@ final class DatabaseMigrationCommand extends AbstractCommand
     public function execute(): int
     {
         $this->startTime();
-        $this->write("Starting the 'app:database-migration' command...");
+        $this->writeLine("Starting the 'app:database-migration' command...");
 
         $this->migrationRepository->createMigrationsTable();
 
@@ -34,7 +34,7 @@ final class DatabaseMigrationCommand extends AbstractCommand
             $fileName = basename($migrationFile);
 
             if (null !== $this->migrationRepository->findByFileName($fileName)) {
-                $this->write("Skip '$fileName': Migration was already executed");
+                $this->writeLine("Skip '$fileName': Migration was already executed");
                 continue;
             }
 
@@ -42,9 +42,10 @@ final class DatabaseMigrationCommand extends AbstractCommand
             $sql = file_get_contents($migrationFile);
 
             $this->migrationRepository->executeMigration($fileName, $sql);
+            $this->writeLine("Hit: '$fileName' was executed");
         }
 
-        $this->write("Finished the 'app:database-migration' command in {$this->getTime()} ms.");
+        $this->writeLine("Finished the 'app:database-migration' command in {$this->getTime()} ms.");
 
         return self::SUCCESS;
     }

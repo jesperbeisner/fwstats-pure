@@ -11,18 +11,19 @@ use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
 use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Model\PlayerStatusHistory;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerClanHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Service\PlayerStatusService;
 
 final class PlayerImporter implements ImporterInterface
 {
-    private const PROFILE = 'https://[WORLD].freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=[PLAYER_ID]';
-
     public function __construct(
         private readonly FreewarDumpServiceInterface $freewarDumpService,
         private readonly ClanRepository $clanRepository,
@@ -31,12 +32,15 @@ final class PlayerImporter implements ImporterInterface
         private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
         private readonly PlayerClanHistoryRepository $playerClanHistoryRepository,
         private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
+        private readonly PlayerStatusHistoryRepository $playerStatusHistoryRepository,
+        private readonly PlayerStatusService $playerStatusService,
     ) {
     }
 
     public function import(WorldEnum $world): ImportResult
     {
         $importResult = new ImportResult();
+        $importResult->addMessage('Starting PlayerImporter...');
 
         $clans = $this->clanRepository->findAllByWorld($world);
 
@@ -64,6 +68,17 @@ final class PlayerImporter implements ImporterInterface
                 // Gebannt = Name noch normal vorhanden
                 // Profil parsen und als gebannt/gelöscht einsortieren
                 // Bei neuen Spielern gucken, ob diese vorher gelöscht/gebannt waren
+
+                $playerStatus = $this->playerStatusService->getStatus($world, $player);
+
+                $playerStatusHistory = new PlayerStatusHistory(
+                    world: $world,
+                    playerId: $player->playerId,
+                    name: $player->name,
+                    status: $playerStatus
+                );
+
+                $this->playerStatusHistoryRepository->insert($playerStatusHistory);
             }
         }
 
@@ -79,6 +94,8 @@ final class PlayerImporter implements ImporterInterface
         }
 
         $this->playerRepository->insertPlayers($world, $playersDump);
+
+        $importResult->addMessage('Finishing PlayerImporter...');
 
         return $importResult;
     }

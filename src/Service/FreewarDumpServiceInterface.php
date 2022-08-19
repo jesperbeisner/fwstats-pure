@@ -20,5 +20,8 @@ interface FreewarDumpServiceInterface
      */
     public function getClansDump(WorldEnum $world): array;
 
+    /**
+     * @return array<int, array<int, int>>
+     */
     public function getAchievementsDump(WorldEnum $world): array;
 }

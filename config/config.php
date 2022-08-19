@@ -20,6 +20,11 @@ return [
             'controller' => [Controller\IndexController::class, 'index'],
         ],
         [
+            'route' => '/ping',
+            'methods' => ['GET'],
+            'controller' => [Controller\PingController::class, 'ping'],
+        ],
+        [
             'route' => '/images/ranking',
             'methods' => ['GET'],
             'controller' => [Controller\ImageController::class, 'ranking'],
@@ -39,9 +44,11 @@ return [
         // Controller
         Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
         Controller\ImageController::class => Controller\Factory\ImageControllerFactory::class,
+        Controller\PingController::class => Controller\Factory\PingControllerFactory::class,
 
         // Services
         Service\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
+        Service\PlayerStatusService::class => Service\Factory\PlayerStatusServiceFactory::class,
 
         // ImageService
         ImageService\RankingImageService::class => ImageService\Factory\RankingImageServiceFactory::class,
@@ -64,11 +71,14 @@ return [
         Repository\PlayerRaceHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\PlayerClanHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\PlayerProfessionHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
+        Repository\PlayerStatusHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
 
         Repository\ClanRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\ClanNameHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\ClanCreatedHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\ClanDeletedHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
+
+        Repository\AchievementRepository::class => Repository\Factory\RepositoryFactory::class,
 
         // Stdlib
         PDO::class => Stdlib\Factory\PdoFactory::class,

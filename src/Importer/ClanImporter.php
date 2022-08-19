@@ -28,6 +28,7 @@ final class ClanImporter implements ImporterInterface
     public function import(WorldEnum $world): ImportResult
     {
         $importResult = new ImportResult();
+        $importResult->addMessage('Starting ClanImporter...');
 
         $clans = $this->clanRepository->findAllByWorld($world);
         $clansDump = $this->freewarDumpService->getClansDump($world);
@@ -97,6 +98,8 @@ final class ClanImporter implements ImporterInterface
         }
 
         $this->clanRepository->insertClans($world, $clansDump);
+
+        $importResult->addMessage('Finishing ClanImporter...');
 
         return $importResult;
     }
