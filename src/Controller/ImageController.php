@@ -21,7 +21,7 @@ final class ImageController extends AbstractController
 
     public function ranking(): ResponseInterface
     {
-        return new HtmlResponse('image/ranking-image.phtml');
+        return new HtmlResponse('image/ranking.phtml');
     }
 
     public function image(): ResponseInterface

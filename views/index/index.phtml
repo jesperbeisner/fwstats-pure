@@ -9,18 +9,6 @@ use Jesperbeisner\Fwstats\DTO\Player;
 
 $this->setTitle('Index');
 
-/** @var Player[] $afsrvPlayers */
-$afsrvPlayers = $this->vars['afsrvPlayers'];
-
-/** @var Clan[] $afsrvClans */
-$afsrvClans = $this->vars['afsrvClans'];
-
-/** @var Player[] $chaosPlayers */
-$chaosPlayers = $this->vars['chaosPlayers'];
-
-/** @var Clan[] $chaosClans */
-$chaosClans = $this->vars['chaosClans'];
-
 ?>
 <div id="ranking" class="mb-5">
     <div class="tabs is-centered is-medium">
@@ -31,14 +19,26 @@ $chaosClans = $this->vars['chaosClans'];
     </div>
     <div>
         <div id="action-freewar-tab-content">
-            <?php $players = $afsrvPlayers ?>
-            <?php $clans = $afsrvClans ?>
-            <?php require __DIR__ . '/partials/players-ranking-table.partial.phtml' ?>
+            <?php
+            /** @var Player[] $players */
+            $players = $this->vars['afsrvPlayers'];
+
+            /** @var Clan[] $clans */
+            $clans = $this->vars['afsrvClans'];
+
+            require __DIR__ . '/_ranking-table.phtml'
+            ?>
         </div>
         <div id="chaos-freewar-tab-content" class="is-hidden">
-            <?php $players = $chaosPlayers ?>
-            <?php $clans = $chaosClans ?>
-            <?php require __DIR__ . '/partials/players-ranking-table.partial.phtml' ?>
+            <?php
+            /** @var Player[] $players */
+            $players = $this->vars['chaosPlayers'];
+
+            /** @var Clan[] $clans */
+            $clans = $this->vars['chaosClans'];
+
+            require __DIR__ . '/_ranking-table.phtml'
+            ?>
         </div>
     </div>
 </div>
