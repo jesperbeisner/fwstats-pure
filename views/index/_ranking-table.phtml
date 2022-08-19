@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Jesperbeisner\Fwstats\DTO\Player;
-use Jesperbeisner\Fwstats\Helper\View;
+use Jesperbeisner\Fwstats\Model\Player;
+use Jesperbeisner\Fwstats\Helper\Html;
 
 /** @var Player[] $players */
 
@@ -31,11 +31,11 @@ use Jesperbeisner\Fwstats\Helper\View;
                 <td>
                     <?= $i ?>
                 </td>
-                <td title="<?= View::escape($player->name) ?>">
-                    <?= View::shortNames(View::escape($player->name)) ?>
+                <td title="<?= Html::escape($player->name) ?>">
+                    <?= Html::shortNames(Html::escape($player->name)) ?>
                 </td>
                 <td>
-                    <?= View::escape($player->race) ?>
+                    <?= Html::escape($player->race) ?>
                 </td>
                 <td class="has-text-centered">
                     <?php $clan = $clans[$player->clanId] ?? null; ?>
@@ -43,26 +43,26 @@ use Jesperbeisner\Fwstats\Helper\View;
                         -
                     <?php else: ?>
                         <a
-                            title="<?= View::escape($clan->name) ?>"
+                            title="<?= Html::escape($clan->name) ?>"
                             href="https://<?= $player->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchclan&act_clan_id=<?= $clan->clanId ?>"
                             target="_blank"
                             class="clan_profile_link"
                         >
-                            <?= View::escape($clan->shortcut) ?>
+                            <?= Html::escape($clan->shortcut) ?>
                         </a>
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?= $player->profession === null ? '-' : View::escape($player->profession) ?>
+                    <?= $player->profession === null ? '-' : Html::escape($player->profession) ?>
                 </td>
                 <td class="has-text-right">
-                    <?= View::numberFormat($player->xp) ?>
+                    <?= Html::numberFormat($player->xp) ?>
                 </td>
                 <td class="has-text-right">
-                    <?= View::numberFormat($player->soulXp) ?>
+                    <?= Html::numberFormat($player->soulXp) ?>
                 </td>
                 <td class="has-text-right">
-                    <?= View::numberFormat($player->totalXp) ?>
+                    <?= Html::numberFormat($player->totalXp) ?>
                 </td>
                 <td class="has-text-centered">
                     <?= $player->getSoulLevel() ?? '-' ?>

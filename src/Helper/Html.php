@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Helper;
 
-use Jesperbeisner\Fwstats\DTO\Player;
-
-final class View
+final class Html
 {
     public static function escape(string $text): string
     {

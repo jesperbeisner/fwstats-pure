@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\ImageService;
 
 use GdImage;
-use RuntimeException;
+use Jesperbeisner\Fwstats\ImageService\Exception\ImageException;
 
 abstract class AbstractImageService implements ImageServiceInterface
 {
@@ -13,98 +13,99 @@ abstract class AbstractImageService implements ImageServiceInterface
     private const ROBOTO_FONT = ROOT_DIR . '/data/fonts/Roboto-Light.ttf';
 
     protected ?GdImage $image = null;
-    protected ?int $colorBlack = null;
-    protected ?int $colorWhite = null;
+
+    /** @var int[] */
+    protected array $colors = [];
 
     protected function createImage(int $width, int $height): void
     {
-        $this->image = imagecreate($width, $height);
+        if (false === $image = imagecreate($width, $height)) {
+            throw new ImageException('Could not create an image.');
+        }
+
+        $this->image = $image;
     }
 
     protected function setBackgroundColor(int $color): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         if (false === imagefill($this->image, 0, 0, $color)) {
-            throw new RuntimeException('Could not set background color.');
+            throw new ImageException('Could not set background color.');
         }
     }
 
     protected function write(string $text, int $x, int $y, int $size = null, int $color = null, int $angle = 0): void
     {
-        $this->checkImage();
-
-        if ($size === null) {
-            $size = 14;
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
         }
 
-        if ($color === null) {
-            $color = $this->colorBlack();
-        }
+        $size = $size ?? 14;
+        $color = $color ?? $this->colorBlack();
 
         if (false === imagettftext($this->image, $size, $angle, $x, $y, $color, self::ROBOTO_FONT, $text)) {
-            throw new RuntimeException('Could not write to image.');
+            throw new ImageException('Could not write to image.');
         }
     }
 
     protected function save(string $fileName): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         if (file_exists($fileName)) {
             if (false === unlink($fileName)) {
-                throw new RuntimeException("Could not unlink '$fileName'.");
+                throw new ImageException("Could not unlink '$fileName'.");
             }
         }
 
         if (false === imagepng($this->image, $fileName)) {
-            throw new RuntimeException('Could not save the image.');
+            throw new ImageException('Could not save the image.');
         }
 
-        $this->colorBlack = null;
-        $this->colorWhite = null;
-
+        $this->colors = [];
         $this->image = null;
     }
 
     protected function colorBlack(): int
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
-        if ($this->colorBlack !== null) {
-            return $this->colorBlack;
+        if (isset($this->colors['black'])) {
+            return $this->colors['black'];
         }
 
         if (false === $color = imagecolorallocate($this->image, 0, 0, 0)) {
-            throw new RuntimeException('Could not allocate image color.');
+            throw new ImageException('Could not allocate image color.');
         }
 
-        $this->colorBlack = $color;
+        $this->colors['black'] = $color;
 
-        return $this->colorBlack;
+        return $color;
     }
 
     protected function colorWhite(): int
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
-        if ($this->colorWhite !== null) {
-            return $this->colorWhite;
+        if (isset($this->colors['white'])) {
+            return $this->colors['white'];
         }
 
         if (false === $color = imagecolorallocate($this->image, 255, 255, 255)) {
-            throw new RuntimeException('Could not allocate image color.');
+            throw new ImageException('Could not allocate image color.');
         }
 
-        $this->colorWhite = $color;
+        $this->colors['white'] = $color;
 
-        return $this->colorWhite;
-    }
-
-    protected function checkImage(): void
-    {
-        if ($this->image === null) {
-            throw new RuntimeException("Did you forget to run 'imageCreate'?");
-        }
+        return $color;
     }
 }

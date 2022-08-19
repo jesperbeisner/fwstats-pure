@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Service;
 
-use Jesperbeisner\Fwstats\DTO\Clan;
-use Jesperbeisner\Fwstats\DTO\Player;
+use Jesperbeisner\Fwstats\Model\Clan;
+use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
 interface FreewarDumpServiceInterface

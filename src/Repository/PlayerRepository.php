@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Repository;
 
 use Exception;
-use Jesperbeisner\Fwstats\DTO\Player;
+use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
 final class PlayerRepository extends AbstractRepository
 {
     private string $table = 'players';
 
+    /**
+     * @return Player[]
+     */
     public function findAllByWorldAndOrderedByTotalXp(WorldEnum $world): array
     {
         $sql = "SELECT * FROM $this->table WHERE world = :world ORDER BY total_xp DESC LIMIT 100";
@@ -21,6 +24,7 @@ final class PlayerRepository extends AbstractRepository
 
         $players = [];
         while (false !== $row = $stmt->fetch()) {
+            /** @var array<int|string|null> $row */
             $players[] = $this->hydratePlayer($row);
         }
 
@@ -37,6 +41,7 @@ final class PlayerRepository extends AbstractRepository
 
         $players = [];
         while (false !== $row = $stmt->fetch()) {
+            /** @var array<int|string|null> $row */
             $players[$row['player_id']] = $this->hydratePlayer($row);
         }
 
@@ -99,24 +104,28 @@ final class PlayerRepository extends AbstractRepository
 
         $players = [];
         while (false !== $row = $stmt->fetch()) {
+            /** @var array<int|string|null> $row */
             $players[] = $this->hydratePlayer($row);
         }
 
         return $players;
     }
 
+    /**
+     * @param array<int|string|null> $row
+     */
     private function hydratePlayer(array $row): Player
     {
         return new Player(
-            world: WorldEnum::from($row['world']),
-            playerId: $row['player_id'],
-            name: $row['name'],
-            race: $row['race'],
-            xp: $row['xp'],
-            soulXp: $row['soul_xp'],
-            totalXp: $row['total_xp'],
-            clanId: $row['clan_id'],
-            profession: $row['profession'],
+            world: WorldEnum::from((string) $row['world']),
+            playerId: (int) $row['player_id'],
+            name: (string) $row['name'],
+            race: (string) $row['race'],
+            xp: (int) $row['xp'],
+            soulXp: (int) $row['soul_xp'],
+            totalXp: (int) $row['total_xp'],
+            clanId: $row['clan_id'] === null ? null : (int) $row['clan_id'],
+            profession: $row['profession'] === null ? null : (string) $row['profession'],
         );
     }
 }

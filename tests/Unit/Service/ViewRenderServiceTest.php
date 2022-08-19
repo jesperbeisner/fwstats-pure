@@ -12,8 +12,9 @@ final class ViewRenderServiceTest extends TestCase
     public function test_title_creation(): void
     {
         $viewRenderService = new ViewRenderService('');
-        self::assertSame('fwstats.de', $viewRenderService->getTitle());
-        $viewRenderService->setTitle('Home');
-        self::assertSame('Home - fwstats.de', $viewRenderService->getTitle());
+        self::assertSame('FWSTATS', $viewRenderService->getTitle());
+
+        $viewRenderService->setTitle('Index');
+        self::assertSame('Index - FWSTATS', $viewRenderService->getTitle());
     }
 }

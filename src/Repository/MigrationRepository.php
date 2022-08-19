@@ -21,6 +21,9 @@ final class MigrationRepository extends AbstractRepository
         $this->pdo->exec($sql);
     }
 
+    /**
+     * @return array{id: int, name: string, created: string}|null
+     */
     public function findByFileName(string $fileName): ?array
     {
         $sql = "SELECT * FROM {$this->table} WHERE name = :migration";
@@ -28,10 +31,14 @@ final class MigrationRepository extends AbstractRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['migration' => $fileName]);
 
-        /** @var mixed[] $result */
         $result = $stmt->fetchAll();
+        if (count($result) === 0) {
+            return null;
+        }
 
-        return count($result) === 0 ? null : $result;
+        /** @var array{id: int, name: string, created: string} $result */
+
+        return $result;
     }
 
     public function executeMigration(string $fileName, string $sql): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats;
 
+use FastRoute\Dispatcher;
 use Jesperbeisner\Fwstats\Controller\AbstractController;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
@@ -27,24 +28,26 @@ final class App
 
         $routeResult = $router->match();
 
-        if ($routeResult[0] === Router::NOT_FOUND) {
+        if ($routeResult[0] === Dispatcher::NOT_FOUND) {
             (new HtmlResponse('errors/404.phtml'))->send();
         }
 
-        if ($routeResult[0] === Router::METHOD_NOT_ALLOWED) {
+        if ($routeResult[0] === Dispatcher::METHOD_NOT_ALLOWED) {
             (new HtmlResponse('errors/405.phtml'))->send();
         }
 
         /** @var Request $request */
         $request = $this->serviceContainer->get(Request::class);
 
-        $request->setRouteParameters($routeResult[2]);
+        /** @var array<string, string> $routeParameters */
+        $routeParameters = $routeResult[2];
+        $request->setRouteParameters($routeParameters);
 
-        /** @var class-string<AbstractController> $controllerClassName */
-        $controllerClassName = $routeResult[1][0];
+        /** @var array{class-string<AbstractController>, string} $handler */
+        $handler = $routeResult[1];
 
-        /** @var string $controllerAction */
-        $controllerAction = $routeResult[1][1];
+        $controllerClassName = $handler[0];
+        $controllerAction = $handler[1];
 
         /** @var AbstractController $controller */
         $controller = $this->serviceContainer->get($controllerClassName);

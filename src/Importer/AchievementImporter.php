@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Importer;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Service\FreewarDumpService;
+use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
 
 final class AchievementImporter implements ImporterInterface
 {
     public function __construct(
-        private readonly FreewarDumpService $freewarDumpService,
+        private readonly FreewarDumpServiceInterface $freewarDumpService,
     ) {
     }
 

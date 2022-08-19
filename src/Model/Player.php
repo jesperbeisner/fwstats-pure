@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\DTO;
+namespace Jesperbeisner\Fwstats\Model;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use RuntimeException;

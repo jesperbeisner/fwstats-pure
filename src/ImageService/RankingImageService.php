@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\ImageService;
 
-use Jesperbeisner\Fwstats\DTO\Clan;
-use Jesperbeisner\Fwstats\DTO\Player;
+use Jesperbeisner\Fwstats\Model\Clan;
+use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\ImageService\Exception\ImageException;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 
@@ -52,7 +53,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createRankColumn(array $players): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('#', 15, 65, 12);
 
@@ -66,7 +69,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createNameColumn(array $players): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('Name', 45, 65, 12);
 
@@ -81,7 +86,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createRaceColumn(array $players): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('Rasse', 170, 65, 12);
 
@@ -96,7 +103,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createClanColumn(array $players, array $clans): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('Clan', 240, 65, 12);
 
@@ -111,7 +120,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createProfessionColumn(array $players): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('Beruf', 310, 65, 12);
 
@@ -125,7 +136,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createXpColumn(array $players): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('Xp', 440, 65, 12);
 
@@ -140,7 +153,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createSoulXpColumn(array $players): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('Soul-Xp', 530, 65, 12);
 
@@ -155,7 +170,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createTotalXpColumn(array $players): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('Total-Xp', 620, 65, 12);
 
@@ -170,7 +187,9 @@ final class RankingImageService extends AbstractImageService
      */
     private function createSoulLevelColumn(array $players): void
     {
-        $this->checkImage();
+        if ($this->image === null) {
+            throw new ImageException("Did you forget to run 'imageCreate'?");
+        }
 
         $this->write('Stufe', 700, 65, 12);
 

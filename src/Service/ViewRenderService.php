@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Service;
 
-use RuntimeException;
+use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
 
 final class ViewRenderService
 {
@@ -13,6 +13,9 @@ final class ViewRenderService
 
     private ?string $title = null;
 
+    /**
+     * @param array<string, mixed> $vars
+     */
     public function __construct(
         private readonly string $template,
         private readonly array $vars = [],
@@ -23,11 +26,17 @@ final class ViewRenderService
     {
         ob_start();
         require self::VIEWS_FOLDER . $this->template;
-        $content = ob_get_clean();
+        if (false === $content = ob_get_clean()) {
+            throw new RuntimeException("'ob_get_clean' returned false! o.O");
+        }
 
         ob_start();
         require self::VIEWS_FOLDER . 'layout.phtml';
-        return ob_get_clean();
+        if (false === $content = ob_get_clean()) {
+            throw new RuntimeException("'ob_get_clean' returned false! o.O");
+        }
+
+        return $content;
     }
 
     public function get(string $id): mixed

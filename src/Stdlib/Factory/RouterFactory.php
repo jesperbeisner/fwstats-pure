@@ -16,7 +16,7 @@ final class RouterFactory implements FactoryInterface
         /** @var mixed[] $globalConfig */
         $globalConfig = $serviceContainer->get('config');
 
-        /** @var array<string, mixed[]> $routesConfig */
+        /** @var array<int, array{route: string, methods: string[], controller: string[]}> $routesConfig */
         $routesConfig = $globalConfig['routes'];
 
         /** @var Request $request */

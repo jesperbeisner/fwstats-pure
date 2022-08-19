@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Repository;
 
 use Exception;
-use Jesperbeisner\Fwstats\DTO\Clan;
+use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
 final class ClanRepository extends AbstractRepository
@@ -22,16 +22,8 @@ final class ClanRepository extends AbstractRepository
 
         $clans = [];
         while (false !== $row = $stmt->fetch()) {
-            $clans[$row['clan_id']] = new Clan(
-                world: WorldEnum::from($row['world']),
-                clanId: $row['clan_id'],
-                shortcut: $row['shortcut'],
-                name: $row['name'],
-                leaderId: $row['leader_id'],
-                coLeaderId: $row['co_leader_id'],
-                diplomatId: $row['diplomat_id'],
-                warPoints: $row['war_points'],
-            );
+            /** @var array<int|string|null> $row */
+            $clans[$row['clan_id']] = $this->hydrateClan($row);
         }
 
         return $clans;
@@ -78,5 +70,22 @@ final class ClanRepository extends AbstractRepository
 
             throw $e;
         }
+    }
+
+    /**
+     * @param array<int|string|null> $row
+     */
+    private function hydrateClan(array $row): Clan
+    {
+        return new Clan(
+            world: WorldEnum::from((string) $row['world']),
+            clanId: (int) $row['clan_id'],
+            shortcut: (string) $row['shortcut'],
+            name: (string) $row['name'],
+            leaderId: (int) $row['leader_id'],
+            coLeaderId: (int) $row['co_leader_id'],
+            diplomatId: (int) $row['diplomat_id'],
+            warPoints: (int) $row['war_points'],
+        );
     }
 }

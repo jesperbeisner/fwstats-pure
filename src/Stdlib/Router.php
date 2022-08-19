@@ -8,16 +8,18 @@ use FastRoute;
 
 final class Router
 {
-    public const NOT_FOUND = 0;
-    public const FOUND = 1;
-    public const METHOD_NOT_ALLOWED = 2;
-
+    /**
+     * @param array<int, array{route: string, methods: string[], controller: string[]}> $routesConfig
+     */
     public function __construct(
         private readonly array $routesConfig,
         private readonly Request $request,
     ) {
     }
 
+    /**
+     * @return mixed[]
+     */
     public function match(): array
     {
         $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {

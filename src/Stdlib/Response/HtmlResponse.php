@@ -9,6 +9,9 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 
 final class HtmlResponse implements ResponseInterface
 {
+    /**
+     * @param array<string, mixed> $vars
+     */
     public function __construct(
         private readonly string $template,
         private readonly array $vars = [],

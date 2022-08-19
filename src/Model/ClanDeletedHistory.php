@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\DTO;
+namespace Jesperbeisner\Fwstats\Model;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-final class Clan
+final class ClanDeletedHistory
 {
     public function __construct(
         public readonly WorldEnum $world,

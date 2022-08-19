@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
-use Jesperbeisner\Fwstats\DTO\ClanNameHistory;
+use Jesperbeisner\Fwstats\Model\ClanNameHistory;
 
 final class ClanNameHistoryRepository extends AbstractRepository
 {

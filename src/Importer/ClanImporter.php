@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Importer;
 
-use Jesperbeisner\Fwstats\DTO\ClanCreatedHistory;
-use Jesperbeisner\Fwstats\DTO\ClanDeletedHistory;
-use Jesperbeisner\Fwstats\DTO\ClanNameHistory;
+use Jesperbeisner\Fwstats\Model\ClanCreatedHistory;
+use Jesperbeisner\Fwstats\Model\ClanDeletedHistory;
+use Jesperbeisner\Fwstats\Model\ClanNameHistory;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\ClanCreatedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
-use Jesperbeisner\Fwstats\Service\FreewarDumpService;
+use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
 
 final class ClanImporter implements ImporterInterface
 {
     public function __construct(
-        private readonly FreewarDumpService $freewarDumpService,
+        private readonly FreewarDumpServiceInterface $freewarDumpService,
         private readonly ClanRepository $clanRepository,
         private readonly ClanNameHistoryRepository $clanNameHistoryRepository,
         private readonly ClanDeletedHistoryRepository $clanDeletedHistoryRepository,

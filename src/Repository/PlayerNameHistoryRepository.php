@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
-use Jesperbeisner\Fwstats\DTO\PlayerNameHistory;
+use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 
 final class PlayerNameHistoryRepository extends AbstractRepository
 {

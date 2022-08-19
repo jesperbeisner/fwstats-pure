@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\DTO;
+namespace Jesperbeisner\Fwstats\Model;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-final class PlayerRaceHistory
+final class PlayerProfessionHistory
 {
     public function __construct(
         public readonly WorldEnum $world,
         public readonly int $playerId,
-        public readonly string $oldRace,
-        public readonly string $newRace,
+        public readonly ?string $oldProfession,
+        public readonly ?string $newProfession,
     ) {
     }
 }

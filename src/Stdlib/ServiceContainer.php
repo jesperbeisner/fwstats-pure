@@ -7,25 +7,32 @@ namespace Jesperbeisner\Fwstats\Stdlib;
 use Exception;
 use Jesperbeisner\Fwstats\Stdlib\Exception\ContainerException;
 use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
+use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Psr\Container\ContainerInterface;
 
 final class ServiceContainer implements ContainerInterface
 {
-    private array $services;
+    /**
+     * @var array<string, mixed>
+     */
     private array $buildServices = [];
 
-    public function __construct(array $services)
-    {
-        $this->services = $services;
+    /**
+     * @param array<string, mixed> $services
+     */
+    public function __construct(
+        private readonly array $services
+    ) {
     }
 
-    public function get(string $id)
+    public function get(string $id): mixed
     {
         if (array_key_exists($id, $this->buildServices)) {
             return $this->buildServices[$id];
         }
 
         if (array_key_exists($id, $this->services)) {
+            /** @var class-string<FactoryInterface> $factoryClassName */
             $factoryClassName = $this->services[$id];
 
             try {

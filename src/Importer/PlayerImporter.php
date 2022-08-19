@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Importer;
 
-use Jesperbeisner\Fwstats\DTO\Clan;
-use Jesperbeisner\Fwstats\DTO\Player;
-use Jesperbeisner\Fwstats\DTO\PlayerClanHistory;
-use Jesperbeisner\Fwstats\DTO\PlayerNameHistory;
-use Jesperbeisner\Fwstats\DTO\PlayerProfessionHistory;
-use Jesperbeisner\Fwstats\DTO\PlayerRaceHistory;
+use Jesperbeisner\Fwstats\Model\Clan;
+use Jesperbeisner\Fwstats\Model\Player;
+use Jesperbeisner\Fwstats\Model\PlayerClanHistory;
+use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
+use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
+use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerClanHistoryRepository;
@@ -17,14 +17,14 @@ use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
-use Jesperbeisner\Fwstats\Service\FreewarDumpService;
+use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
 
 final class PlayerImporter implements ImporterInterface
 {
     private const PROFILE = 'https://[WORLD].freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=[PLAYER_ID]';
 
     public function __construct(
-        private readonly FreewarDumpService $freewarDumpService,
+        private readonly FreewarDumpServiceInterface $freewarDumpService,
         private readonly ClanRepository $clanRepository,
         private readonly PlayerRepository $playerRepository,
         private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,

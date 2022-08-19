@@ -14,6 +14,9 @@ final class ImportResult
         $this->messages[] = $message;
     }
 
+    /**
+     * @return string[]
+     */
     public function getMessages(): array
     {
         return $this->messages;

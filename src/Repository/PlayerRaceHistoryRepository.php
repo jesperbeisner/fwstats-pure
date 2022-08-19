@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
-use Jesperbeisner\Fwstats\DTO\PlayerRaceHistory;
+use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
 
 final class PlayerRaceHistoryRepository extends AbstractRepository
 {
