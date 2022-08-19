@@ -39,6 +39,7 @@ return [
         Command\DatabaseMigrationCommand::class,
         Command\ImportWorldStatsCommand::class,
         Command\CreateImagesCommand::class,
+        Command\PlayerActiveSecondsCommand::class,
     ],
     'services' => [
         // Controller
@@ -57,6 +58,7 @@ return [
         Command\DatabaseMigrationCommand::class => Command\Factory\DatabaseMigrationCommandFactory::class,
         Command\ImportWorldStatsCommand::class => Command\Factory\ImportWorldStatsCommandFactory::class,
         Command\CreateImagesCommand::class => Command\Factory\CreateImagesCommandFactory::class,
+        Command\PlayerActiveSecondsCommand::class => Command\Factory\PlayerActiveSecondsCommandFactory::class,
 
         // Importer
         Importer\ClanImporter::class => Importer\Factory\ClanImporterFactory::class,
@@ -72,6 +74,7 @@ return [
         Repository\PlayerClanHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\PlayerProfessionHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\PlayerStatusHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
+        Repository\PlayerActiveSecondRepository::class => Repository\Factory\RepositoryFactory::class,
 
         Repository\ClanRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\ClanNameHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
