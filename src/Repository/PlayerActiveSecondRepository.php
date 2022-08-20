@@ -15,14 +15,28 @@ final class PlayerActiveSecondRepository extends AbstractRepository
     public function insert(PlayerActiveSecond $playerActiveSecond): void
     {
         $sql = <<<SQL
-            INSERT INTO $this->table (world, player_id, seconds)
-            VALUES (:world, :playerId, :seconds)
+            UPDATE $this->table
+            SET seconds = :seconds
+            WHERE world = :world AND player_id = :playerId AND created = :created
+        SQL;
+
+        $this->pdo->prepare($sql)->execute([
+            'seconds' => $playerActiveSecond->seconds,
+            'world' => $playerActiveSecond->world->value,
+            'playerId' => $playerActiveSecond->playerId,
+            'created' => $playerActiveSecond->created->format('Y-m-d')
+        ]);
+
+        $sql = <<<SQL
+            INSERT OR IGNORE INTO $this->table (world, player_id, seconds, created)
+            VALUES (:world, :playerId, :seconds, :created)
         SQL;
 
         $this->pdo->prepare($sql)->execute([
             'world' => $playerActiveSecond->world->value,
             'playerId' => $playerActiveSecond->playerId,
             'seconds' => $playerActiveSecond->seconds,
+            'created' => $playerActiveSecond->created->format('Y-m-d')
         ]);
     }
 
@@ -63,6 +77,7 @@ final class PlayerActiveSecondRepository extends AbstractRepository
                 world: WorldEnum::from($row['world']),
                 playerId: $row['player_id'],
                 seconds: $row['seconds'],
+                created: new \DateTimeImmutable($row['created'])
             );
         }
 

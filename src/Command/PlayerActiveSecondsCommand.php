@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Command;
 
-use DateTime;
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
@@ -30,14 +30,6 @@ final class PlayerActiveSecondsCommand extends AbstractCommand
 
         $playerActiveSeconds = [];
         foreach (WorldEnum::cases() as $world) {
-            $dateTime = new DateTime('-1 day');
-            $playerActiveSecondsArray = $this->playerActiveSecondRepository->findAllByWorldAndDate($world, $dateTime->format('Y-m-d'));
-
-            if (count($playerActiveSecondsArray) > 0) {
-                $this->writeLine("Skipping world $world->value, we already got seconds for this date in the database.");
-                continue;
-            }
-
             $players = $this->freewarDumpService->getPlayersDump($world);
             $achievements = $this->freewarDumpService->getAchievementsDump($world);
 
@@ -52,7 +44,12 @@ final class PlayerActiveSecondsCommand extends AbstractCommand
 
                     $seconds = ($fieldsWalked * 4) + ($fieldsElixir * 3) + ($fieldsRun * 2) + $fieldsRunFast;
 
-                    $playerActiveSeconds[] = new PlayerActiveSecond($world, $player->playerId, $seconds);
+                    $playerActiveSeconds[] = new PlayerActiveSecond(
+                        $world,
+                        $player->playerId,
+                        $seconds,
+                        new DateTimeImmutable(),
+                    );
                 }
             }
         }
