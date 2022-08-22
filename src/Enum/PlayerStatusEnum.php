@@ -8,4 +8,5 @@ enum PlayerStatusEnum: string
 {
     case BANNED = 'banned';
     case DELETED = 'deleted';
+    case UNKNOWN = 'unknown';
 }

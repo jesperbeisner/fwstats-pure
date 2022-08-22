@@ -20,6 +20,11 @@ return [
             'controller' => [Controller\IndexController::class, 'index'],
         ],
         [
+            'route' => '/playtime',
+            'methods' => ['GET'],
+            'controller' => [Controller\PlaytimeController::class, 'playtime'],
+        ],
+        [
             'route' => '/ping',
             'methods' => ['GET'],
             'controller' => [Controller\PingController::class, 'ping'],
@@ -45,6 +50,7 @@ return [
         // Controller
         Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
         Controller\ImageController::class => Controller\Factory\ImageControllerFactory::class,
+        Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
         Controller\PingController::class => Controller\Factory\PingControllerFactory::class,
 
         // Services

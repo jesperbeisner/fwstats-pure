@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Importer;
 
+use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerClanHistory;
@@ -71,14 +72,16 @@ final class PlayerImporter implements ImporterInterface
 
                 $playerStatus = $this->playerStatusService->getStatus($world, $player);
 
-                $playerStatusHistory = new PlayerStatusHistory(
-                    world: $world,
-                    playerId: $player->playerId,
-                    name: $player->name,
-                    status: $playerStatus
-                );
+                if ($playerStatus !== PlayerStatusEnum::UNKNOWN) {
+                    $playerStatusHistory = new PlayerStatusHistory(
+                        world: $world,
+                        playerId: $player->playerId,
+                        name: $player->name,
+                        status: $playerStatus
+                    );
 
-                $this->playerStatusHistoryRepository->insert($playerStatusHistory);
+                    $this->playerStatusHistoryRepository->insert($playerStatusHistory);
+                }
             }
         }
 

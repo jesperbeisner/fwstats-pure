@@ -35,10 +35,10 @@ final class PlayerStatusService
             return PlayerStatusEnum::BANNED;
         }
 
-        if ($playerName === $playerName . 'ba' . $player->playerId) {
+        if ($playerName === $playerName . ' ba' . $player->playerId) {
             return PlayerStatusEnum::DELETED;
         }
 
-        throw new RuntimeException('Unknown player status.');
+        return PlayerStatusEnum::UNKNOWN;
     }
 }
