@@ -25,6 +25,11 @@ return [
             'controller' => [Controller\PlaytimeController::class, 'playtime'],
         ],
         [
+            'route' => '/name-change',
+            'methods' => ['GET'],
+            'controller' => [Controller\NameChangeController::class, 'nameChange'],
+        ],
+        [
             'route' => '/ping',
             'methods' => ['GET'],
             'controller' => [Controller\PingController::class, 'ping'],
@@ -52,6 +57,7 @@ return [
         Controller\ImageController::class => Controller\Factory\ImageControllerFactory::class,
         Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
         Controller\PingController::class => Controller\Factory\PingControllerFactory::class,
+        Controller\NameChangeController::class => Controller\Factory\NameChangeControllerFactory::class,
 
         // Services
         Service\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,

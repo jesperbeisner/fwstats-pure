@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 
 final class PlayerNameHistoryRepository extends AbstractRepository
@@ -23,5 +24,15 @@ final class PlayerNameHistoryRepository extends AbstractRepository
             'oldName' => $playerNameHistory->oldName,
             'newName' => $playerNameHistory->newName,
         ]);
+    }
+
+    public function getNameChangesByWorld(WorldEnum $world): array
+    {
+        $sql = "SELECT * FROM $this->table WHERE world = :world ORDER BY created DESC";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['world' => $world->value]);
+
+        return $stmt->fetchAll();
     }
 }
