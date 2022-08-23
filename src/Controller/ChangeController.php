@@ -9,16 +9,16 @@ use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
-final class NameChangeController extends AbstractController
+final class ChangeController extends AbstractController
 {
     public function __construct(
         private readonly PlayerNameHistoryRepository $playerNameHistoryRepository
     ) {
     }
 
-    public function nameChange(): ResponseInterface
+    public function name(): ResponseInterface
     {
-        return new HtmlResponse('name-change/name-change.phtml', [
+        return new HtmlResponse('changes/names.phtml', [
             'afsrvNameChanges' => $this->playerNameHistoryRepository->getNameChangesByWorld(WorldEnum::AFSRV),
             'chaosNameChanges' => $this->playerNameHistoryRepository->getNameChangesByWorld(WorldEnum::CHAOS),
         ]);

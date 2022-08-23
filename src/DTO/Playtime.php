@@ -16,29 +16,44 @@ final class Playtime
     ) {
     }
 
-    public function getPlaytime(): string
+    public function getHours(): int
     {
-        // TODO: Muss überarbeitet werden, nur hingeschmiert...
-
-        if ($this->playtime < 60) {
-            return "$this->playtime sec";
-        }
-
         if ($this->playtime < 3600) {
-            $minutes = (string) floor($this->playtime / 60);
-            $seconds = (string) ($this->playtime % 60);
-
-            return "$minutes min & $seconds sec";
+            return 0;
         }
 
+        return (int) floor($this->playtime / 60 / 60);
+    }
+
+    public function getMinutes(): int
+    {
+        if ($this->playtime < 60) {
+            return 0;
+        }
+
+        $minutes = (int) floor($this->playtime / 60);
+
+        if ($minutes >= 60) {
+            return $minutes % 60;
+        }
+
+        return $minutes;
+    }
+
+    public function getSeconds(): int
+    {
         $playtime = $this->playtime;
 
-        $hours = (string) floor($playtime / 60 / 60);
-        $playtime = $playtime - ($hours * 60 * 60);
+        if ($playtime >= 3600) {
+            $hours = (int) floor($playtime / 60 / 60);
+            $playtime = $playtime - ($hours * 60 * 60);
+        }
 
-        $minutes = (string) floor($playtime / 60);
-        $seconds = (string) ($this->playtime % 60);
+        if ($playtime >= 60) {
+            $minutes = (int) floor($playtime / 60);
+            $playtime = $playtime - ($minutes * 60);
+        }
 
-        return "$hours h & $minutes min & $seconds sec";
+        return $playtime;
     }
 }

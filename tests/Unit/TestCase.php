@@ -9,10 +9,12 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 abstract class TestCase extends PHPUnitTestCase
 {
-    protected ServiceContainer $serviceContainer;
+    protected static ?ServiceContainer $serviceContainer = null;
 
     public function setUp(): void
     {
-        $this->serviceContainer = require __DIR__ . '/../../bootstrap.php';
+        if (self::$serviceContainer === null) {
+            self::$serviceContainer = require __DIR__ . '/../../bootstrap.php';
+        }
     }
 }

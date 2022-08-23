@@ -34,12 +34,6 @@ docker-compose exec php composer install --no-dev --optimize-autoloader --no-int
 # Load migrations
 docker-compose exec php php bin/console.php app:database-migration
 
-# World Stats Cronjob
-*/5 * * * * docker exec fwstats-php-prod php bin/console.php app:import-world-stats > /dev/null 2>&1 
-
-# Images Cronjob
-1,6,11,16,21,26,31,36,41,46,51,56 * * * * docker exec fwstats-php-prod php bin/console.php app:create-images > /dev/null 2>&1 
-
-# Player Seconds Cronjob
-0 0 * * * docker exec fwstats-php-prod php bin/console.php app:player-active-seconds > /dev/null 2>&1 
+# One cronjob for everything
+*/5 * * * * docker exec fwstats-php-prod php bin/console.php app:run > /dev/null 2>&1 
 ```

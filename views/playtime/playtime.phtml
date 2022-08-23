@@ -31,7 +31,9 @@ $chaosPlaytime = $this->vars['chaosPlaytime'];
                     <tr>
                         <td>#</td>
                         <td>Name</td>
-                        <td>Spielzeit</td>
+                        <td>Stunden</td>
+                        <td>Minuten</td>
+                        <td>Sekunden</td>
                         <td class="has-text-right"></td>
                     </tr>
                     </thead>
@@ -46,7 +48,13 @@ $chaosPlaytime = $this->vars['chaosPlaytime'];
                                 <?= Html::shortNames(Html::escape($playtime->name)) ?>
                             </td>
                             <td>
-                                <?= $playtime->getPlaytime() ?>
+                                <?= $playtime->getHours() ?>
+                            </td>
+                            <td>
+                                <?= $playtime->getMinutes() ?>
+                            </td>
+                            <td>
+                                <?= $playtime->getSeconds() ?>
                             </td>
                             <td class="has-text-right">
                                 <a href="https://<?= $playtime->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $playtime->playerId ?>" target="_blank" class="player_profile_link">
@@ -68,7 +76,9 @@ $chaosPlaytime = $this->vars['chaosPlaytime'];
                     <tr>
                         <td>#</td>
                         <td>Name</td>
-                        <td>Spielzeit</td>
+                        <td>Stunden</td>
+                        <td>Minuten</td>
+                        <td>Sekunden</td>
                         <td class="has-text-right"></td>
                     </tr>
                     </thead>
@@ -83,7 +93,13 @@ $chaosPlaytime = $this->vars['chaosPlaytime'];
                                 <?= Html::shortNames(Html::escape($playtime->name)) ?>
                             </td>
                             <td>
-                                <?= $playtime->getPlaytime() ?>
+                                <?= $playtime->getHours() ?>
+                            </td>
+                            <td>
+                                <?= $playtime->getMinutes() ?>
+                            </td>
+                            <td>
+                                <?= $playtime->getSeconds() ?>
                             </td>
                             <td class="has-text-right">
                                 <a href="https://<?= $playtime->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $playtime->playerId ?>" target="_blank" class="player_profile_link">
