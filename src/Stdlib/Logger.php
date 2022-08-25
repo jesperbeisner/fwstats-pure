@@ -28,7 +28,7 @@ final class Logger extends AbstractLogger
 
         $message = '[' . date('Y-m-d H:i:s') . '] ' . strtoupper($level) . ': ' . $message . ' ' . $jsonContext . PHP_EOL;
 
-        if (false === $outputStream = fopen('php://stderr', 'w')) {
+        if (false === $outputStream = fopen(ROOT_DIR . '/data/logs/' . date('Y-m-d') . '-fwstats.log', 'a')) {
             throw new RuntimeException('Could not open stdout resource');
         }
 

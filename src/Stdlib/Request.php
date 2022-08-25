@@ -15,8 +15,9 @@ final class Request
      * @param mixed[] $cookieParameters
      */
     public function __construct(
-        public readonly string $httpMethod,
         public readonly string $uri,
+        public readonly string $fullUri,
+        public readonly string $httpMethod,
         public readonly array $getParameters,
         public readonly array $postParameters,
         public readonly array $cookieParameters

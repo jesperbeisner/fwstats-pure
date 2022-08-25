@@ -19,8 +19,9 @@ final class RequestFactory implements FactoryInterface
         }
 
         return new Request(
-            strtoupper($_SERVER['REQUEST_METHOD']),
             rawurldecode($uri),
+            $_SERVER['REQUEST_URI'],
+            strtoupper($_SERVER['REQUEST_METHOD']),
             $_GET,
             $_POST,
             $_COOKIE,

@@ -6,4 +6,7 @@
 /data/images/*
 !/data/images/404-image.png
 
+/data/logs/*
+!/data/logs/.gitkeep
+
 /config/config.local.php

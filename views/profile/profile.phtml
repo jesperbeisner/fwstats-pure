@@ -46,7 +46,9 @@ $this->setTitle($player->name . ' - ' . $player->world->worldString());
 
 <div id="profile">
     <h1 class="title is-2">
-        <?= Html::escape($player->name) ?>
+        <a href="https://<?= $player->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $player->playerId ?>" target="_blank" class="player_profile_link">
+            <?= Html::escape($player->name) ?>
+        </a>
     </h1>
 
     <div class="card">

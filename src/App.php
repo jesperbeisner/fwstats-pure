@@ -12,6 +12,7 @@ use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 use Jesperbeisner\Fwstats\Stdlib\Router;
 use Jesperbeisner\Fwstats\Stdlib\ServiceContainer;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 final class App
@@ -24,6 +25,8 @@ final class App
 
     public function run(): never
     {
+        $this->logRequest();
+
         /** @var Router $router */
         $router = $this->serviceContainer->get(Router::class);
 
@@ -75,5 +78,16 @@ final class App
 
             throw $e;
         });
+    }
+
+    private function logRequest(): void
+    {
+        /** @var Request $request */
+        $request = $this->serviceContainer->get(Request::class);
+
+        /** @var LoggerInterface $logger */
+        $logger = $this->serviceContainer->get(LoggerInterface::class);
+
+        $logger->info($request->fullUri);
     }
 }
