@@ -25,23 +25,19 @@ $player = $this->vars['player'];
 $playtime = $this->vars['playtime'];
 
 $total = 0;
+$nullValues = 0;
 foreach ($playtime as $time) {
     if ($time !== null) {
         $total += $time->getHours() * 60 * 60;
         $total += $time->getMinutes() * 60;
         $total += $time->getSeconds();
-    }
-}
-
-$nullValues = 0;
-foreach ($playtime as $time) {
-    if ($time === null) {
+    } else {
         $nullValues++;
     }
 }
 
 $totalPlaytime = new Playtime($player->world, $player->name, $player->playerId, $total);
-$averagePlaytime = new Playtime($player->world, $player->name, $player->playerId, (int) ($total / ($nullValues + 1)));
+$averagePlaytime = new Playtime($player->world, $player->name, $player->playerId, (int) ($total / (7 - $nullValues)));
 
 $date = new DateTime();
 
