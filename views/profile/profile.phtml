@@ -1,0 +1,104 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\DTO\Playtime;
+use Jesperbeisner\Fwstats\Helper\Html;
+use Jesperbeisner\Fwstats\Model\Player;
+use Jesperbeisner\Fwstats\Service\ViewRenderService;
+
+/** @var ViewRenderService $this */
+
+/** @var Player $player */
+$player = $this->vars['player'];
+
+/** @var array{
+ *     day_1: Playtime|null,
+ *     day_2: Playtime|null,
+ *     day_3: Playtime|null,
+ *     day_4: Playtime|null,
+ *     day_5: Playtime|null,
+ *     day_6: Playtime|null,
+ *     day_7: Playtime|null
+ * } $playtime
+ */
+$playtime = $this->vars['playtime'];
+
+$date = new DateTime();
+
+$this->setTitle($player->name . ' - ' . $player->world->worldString());
+?>
+
+<div id="profile">
+    <h1 class="title is-2">
+        <?= Html::escape($player->name) ?>
+    </h1>
+
+    <div class="card">
+        <div class="card-header">
+            <p class="card-header-title">
+                Spielzeit der letzten 7 Tage
+            </p>
+        </div>
+        <div class="card-content">
+            <div class="content">
+                <div class="table-container">
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <td>Datum</td>
+                            <td>Stunden</td>
+                            <td>Minuten</td>
+                            <td>Sekunden</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><?= $date->format('d.m.Y') ?></td>
+                            <td><?= $playtime['day_1'] === null ? '-' : $playtime['day_1']->getHours() ?></td>
+                            <td><?= $playtime['day_1'] === null ? '-' : $playtime['day_1']->getMinutes() ?></td>
+                            <td><?= $playtime['day_1'] === null ? '-' : $playtime['day_1']->getSeconds() ?></td>
+                        </tr>
+                        <tr>
+                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                            <td><?= $playtime['day_2'] === null ? '-' : $playtime['day_2']->getHours() ?></td>
+                            <td><?= $playtime['day_2'] === null ? '-' : $playtime['day_2']->getMinutes() ?></td>
+                            <td><?= $playtime['day_2'] === null ? '-' : $playtime['day_2']->getSeconds() ?></td>
+                        </tr>
+                        <tr>
+                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                            <td><?= $playtime['day_3'] === null ? '-' : $playtime['day_3']->getHours() ?></td>
+                            <td><?= $playtime['day_3'] === null ? '-' : $playtime['day_3']->getMinutes() ?></td>
+                            <td><?= $playtime['day_3'] === null ? '-' : $playtime['day_3']->getSeconds() ?></td>
+                        </tr>
+                        <tr>
+                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                            <td><?= $playtime['day_4'] === null ? '-' : $playtime['day_4']->getHours() ?></td>
+                            <td><?= $playtime['day_4'] === null ? '-' : $playtime['day_4']->getMinutes() ?></td>
+                            <td><?= $playtime['day_4'] === null ? '-' : $playtime['day_4']->getSeconds() ?></td>
+                        </tr>
+                        <tr>
+                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                            <td><?= $playtime['day_5'] === null ? '-' : $playtime['day_5']->getHours() ?></td>
+                            <td><?= $playtime['day_5'] === null ? '-' : $playtime['day_5']->getMinutes() ?></td>
+                            <td><?= $playtime['day_5'] === null ? '-' : $playtime['day_5']->getSeconds() ?></td>
+                        </tr>
+                        <tr>
+                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                            <td><?= $playtime['day_6'] === null ? '-' : $playtime['day_6']->getHours() ?></td>
+                            <td><?= $playtime['day_6'] === null ? '-' : $playtime['day_6']->getMinutes() ?></td>
+                            <td><?= $playtime['day_6'] === null ? '-' : $playtime['day_6']->getSeconds() ?></td>
+                        </tr>
+                        <tr>
+                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                            <td><?= $playtime['day_7'] === null ? '-' : $playtime['day_7']->getHours() ?></td>
+                            <td><?= $playtime['day_7'] === null ? '-' : $playtime['day_7']->getMinutes() ?></td>
+                            <td><?= $playtime['day_7'] === null ? '-' : $playtime['day_7']->getSeconds() ?></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

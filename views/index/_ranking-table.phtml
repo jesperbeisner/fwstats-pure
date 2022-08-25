@@ -32,7 +32,9 @@ use Jesperbeisner\Fwstats\Helper\Html;
                     <?= $i ?>
                 </td>
                 <td title="<?= Html::escape($player->name) ?>">
-                    <?= Html::shortNames(Html::escape($player->name)) ?>
+                    <a href="/profile/<?= $player->world->value ?>/<?= $player->playerId ?>">
+                        <?= Html::shortNames(Html::escape($player->name)) ?>
+                    </a>
                 </td>
                 <td>
                     <?= Html::escape($player->race) ?>

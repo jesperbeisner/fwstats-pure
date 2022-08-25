@@ -45,7 +45,9 @@ $chaosPlaytime = $this->vars['chaosPlaytime'];
                                 <?= $i ?>
                             </td>
                             <td title="<?= Html::escape($playtime->name) ?>">
-                                <?= Html::shortNames(Html::escape($playtime->name)) ?>
+                                <a href="/profile/<?= $playtime->world->value ?>/<?= $playtime->playerId ?>">
+                                    <?= Html::shortNames(Html::escape($playtime->name)) ?>
+                                </a>
                             </td>
                             <td>
                                 <?= $playtime->getHours() ?>
@@ -90,7 +92,9 @@ $chaosPlaytime = $this->vars['chaosPlaytime'];
                                 <?= $i ?>
                             </td>
                             <td title="<?= Html::escape($playtime->name) ?>">
-                                <?= Html::shortNames(Html::escape($playtime->name)) ?>
+                                <a href="/profile/<?= $playtime->world->value ?>/<?= $playtime->playerId ?>">
+                                    <?= Html::shortNames(Html::escape($playtime->name)) ?>
+                                </a>
                             </td>
                             <td>
                                 <?= $playtime->getHours() ?>

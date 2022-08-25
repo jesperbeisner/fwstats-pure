@@ -6,7 +6,7 @@ namespace Jesperbeisner\Fwstats\Stdlib;
 
 use Exception;
 use Jesperbeisner\Fwstats\Stdlib\Exception\ContainerException;
-use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
+use Jesperbeisner\Fwstats\Stdlib\Exception\ServiceNotFoundException;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Psr\Container\ContainerInterface;
 
@@ -46,7 +46,7 @@ final class ServiceContainer implements ContainerInterface
             return $service;
         }
 
-        throw new NotFoundException(sprintf("Service '%s' does not exist in the ServiceManager. Did you forget to register it?", $id));
+        throw new ServiceNotFoundException(sprintf("Service '%s' does not exist in the ServiceManager. Did you forget to register it?", $id));
     }
 
     public function set(string $identifier, mixed $service): void

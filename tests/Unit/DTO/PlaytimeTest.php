@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\DTO;
+namespace Jesperbeisner\Fwstats\Tests\Unit\DTO;
 
 use Generator;
 use Jesperbeisner\Fwstats\DTO\Playtime;

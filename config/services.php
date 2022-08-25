@@ -14,6 +14,7 @@ use Psr\Log\LoggerInterface;
 return [
     // Controller
     Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
+    Controller\ProfileController::class => Controller\Factory\ProfileControllerFactory::class,
     Controller\ImageController::class => Controller\Factory\ImageControllerFactory::class,
     Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
     Controller\PingController::class => Controller\Factory\PingControllerFactory::class,
@@ -22,6 +23,7 @@ return [
     // Services
     Service\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
     Service\PlayerStatusService::class => Service\Factory\PlayerStatusServiceFactory::class,
+    Service\PlaytimeService::class => Service\Factory\PlaytimeServiceFactory::class,
 
     // ImageService
     ImageService\RankingImageService::class => ImageService\Factory\RankingImageServiceFactory::class,

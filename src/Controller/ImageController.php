@@ -28,11 +28,10 @@ final class ImageController extends AbstractController
     {
         /** @var string $world */
         $world = $this->request->getRouteParameter('world');
-
-        if (!in_array($world, [WorldEnum::AFSRV->value, WorldEnum::CHAOS->value], true)) {
-            return new HtmlResponse('errors/404.phtml', statusCode: 404);
+        if (null === $world = WorldEnum::tryFrom($world)) {
+            $this->notFoundException();
         }
 
-        return new ImageResponse(str_replace('[WORLD]', $world, self::RANKING_IMAGE));
+        return new ImageResponse(str_replace('[WORLD]', $world->value, self::RANKING_IMAGE));
     }
 }

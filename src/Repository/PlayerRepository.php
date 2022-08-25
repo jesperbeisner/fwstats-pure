@@ -12,6 +12,20 @@ final class PlayerRepository extends AbstractRepository
 {
     private string $table = 'players';
 
+    public function find(WorldEnum $world, int $playerId): ?Player
+    {
+        $sql = "SELECT * FROM $this->table WHERE world = :world AND player_id = :playerId";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['world' => $world->value, 'playerId' => $playerId]);
+
+        if (false === $playerData = $stmt->fetch()) {
+            return null;
+        }
+
+        return $this->hydratePlayer($playerData);
+    }
+
     /**
      * @return Player[]
      */

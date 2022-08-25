@@ -11,6 +11,11 @@ return [
         'controller' => [Controller\IndexController::class, 'index'],
     ],
     [
+        'route' => '/profile/{world}/{id}',
+        'methods' => ['GET'],
+        'controller' => [Controller\ProfileController::class, 'profile'],
+    ],
+    [
         'route' => '/playtime',
         'methods' => ['GET'],
         'controller' => [Controller\PlaytimeController::class, 'playtime'],
@@ -21,11 +26,6 @@ return [
         'controller' => [Controller\ChangeController::class, 'name'],
     ],
     [
-        'route' => '/ping',
-        'methods' => ['GET'],
-        'controller' => [Controller\PingController::class, 'ping'],
-    ],
-    [
         'route' => '/images/ranking',
         'methods' => ['GET'],
         'controller' => [Controller\ImageController::class, 'ranking'],
@@ -34,5 +34,10 @@ return [
         'route' => '/images/{world}-ranking.png',
         'methods' => ['GET'],
         'controller' => [Controller\ImageController::class, 'image'],
+    ],
+    [
+        'route' => '/ping',
+        'methods' => ['GET'],
+        'controller' => [Controller\PingController::class, 'ping'],
     ],
 ];

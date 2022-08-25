@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use DateTime;
 use DateTimeImmutable;
 use Exception;
 use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 
 final class PlayerActiveSecondRepository extends AbstractRepository
@@ -133,5 +135,52 @@ final class PlayerActiveSecondRepository extends AbstractRepository
         }
 
         return $playtime;
+    }
+
+    /**
+     * WTF is this?! o.O
+     *
+     * @return array{
+     *     day_1: int|null,
+     *     day_2: int|null,
+     *     day_3: int|null,
+     *     day_4: int|null,
+     *     day_5: int|null,
+     *     day_6: int|null,
+     *     day_7: int|null,
+     *     day_8: int|null,
+     * }
+     */
+    public function getWeeklyPlaytimeForPlayer(Player $player): array
+    {
+        $sql = <<<SQL
+            SELECT
+                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day1) AS 'day_1',
+                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day2) AS 'day_2',
+                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day3) AS 'day_3',
+                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day4) AS 'day_4',
+                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day5) AS 'day_5',
+                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day6) AS 'day_6',
+                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day7) AS 'day_7',
+                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day8) AS 'day_8'
+        SQL;
+
+        $date = new DateTime();
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'playerId' => $player->playerId,
+            'world' => $player->world->value,
+            'day1' => $date->format('Y-m-d'),
+            'day2' => $date->modify('-1 day')->format('Y-m-d'),
+            'day3' => $date->modify('-1 day')->format('Y-m-d'),
+            'day4' => $date->modify('-1 day')->format('Y-m-d'),
+            'day5' => $date->modify('-1 day')->format('Y-m-d'),
+            'day6' => $date->modify('-1 day')->format('Y-m-d'),
+            'day7' => $date->modify('-1 day')->format('Y-m-d'),
+            'day8' => $date->modify('-1 day')->format('Y-m-d'),
+        ]);
+
+        return $stmt->fetch();
     }
 }

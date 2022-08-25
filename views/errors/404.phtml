@@ -1,10 +1,19 @@
-<?php declare(strict_types=1); ?>
-<?php /** @var Jesperbeisner\Fwstats\Service\ViewRenderService $this */ ?>
-<?php $this->setTitle('404 - Page not found'); ?>
+<?php
+
+declare(strict_types=1);
+
+/** @var Jesperbeisner\Fwstats\Service\ViewRenderService $this */
+
+/** @var string $message */
+$message = $this->vars['message'];
+
+$this->setTitle('404 - Page not found');
+
+?>
 
 <div class="container has-text-centered mt-5">
     <h1 class="title is-3">
-        404 - Page not found
+        <?= $message ?>
     </h1>
 
     <p class="is-bold">

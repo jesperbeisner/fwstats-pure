@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats;
 
 use FastRoute\Dispatcher;
 use Jesperbeisner\Fwstats\Controller\AbstractController;
+use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
@@ -52,8 +53,12 @@ final class App
         /** @var AbstractController $controller */
         $controller = $this->serviceContainer->get($controllerClassName);
 
-        /** @var ResponseInterface $response */
-        $response = $controller->$controllerAction();
+        try {
+            /** @var ResponseInterface $response */
+            $response = $controller->$controllerAction();
+        } catch (NotFoundException $e) {
+            (new HtmlResponse('errors/404.phtml', ['message' => $e->getMessage()]))->send();
+        }
 
         $response->send();
     }
