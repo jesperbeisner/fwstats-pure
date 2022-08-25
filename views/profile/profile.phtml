@@ -24,6 +24,25 @@ $player = $this->vars['player'];
  */
 $playtime = $this->vars['playtime'];
 
+$total = 0;
+foreach ($playtime as $time) {
+    if ($time !== null) {
+        $total += $time->getHours() * 60 * 60;
+        $total += $time->getMinutes() * 60;
+        $total += $time->getSeconds();
+    }
+}
+
+$nullValues = 0;
+foreach ($playtime as $time) {
+    if ($time === null) {
+        $nullValues++;
+    }
+}
+
+$totalPlaytime = new Playtime($player->world, $player->name, $player->playerId, $total);
+$averagePlaytime = new Playtime($player->world, $player->name, $player->playerId, (int) ($total / ($nullValues + 1)));
+
 $date = new DateTime();
 
 $this->setTitle($player->name . ' - ' . $player->world->worldString());
@@ -100,5 +119,13 @@ $this->setTitle($player->name . ' - ' . $player->world->worldString());
                 </div>
             </div>
         </div>
+        <footer class="card-footer">
+            <p class="card-footer-item">
+                Gesamt: <?= $totalPlaytime->getHours() ?> h <?= $totalPlaytime->getMinutes() ?> m <?= $totalPlaytime->getSeconds() ?> s
+            </p>
+            <p class="card-footer-item">
+                Im Durchschnitt: <?= $averagePlaytime->getHours() ?> h <?= $averagePlaytime->getMinutes() ?> m <?= $averagePlaytime->getSeconds() ?> s
+            </p>
+        </footer>
     </div>
 </div>
