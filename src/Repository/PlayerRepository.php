@@ -19,7 +19,10 @@ final class PlayerRepository extends AbstractRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['world' => $world->value, 'playerId' => $playerId]);
 
-        if (false === $playerData = $stmt->fetch()) {
+        /** @var false|array<int|string|null> $playerData */
+        $playerData = $stmt->fetch();
+
+        if ($playerData === false) {
             return null;
         }
 

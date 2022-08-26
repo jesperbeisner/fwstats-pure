@@ -58,4 +58,13 @@ final class Request
 
         return null;
     }
+
+    public function getCookieParameter(string $id): ?string
+    {
+        if (array_key_exists($id, $this->cookieParameters)) {
+            return $this->cookieParameters[$id];
+        }
+
+        return null;
+    }
 }

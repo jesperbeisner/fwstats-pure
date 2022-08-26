@@ -11,6 +11,7 @@ use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
+use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
 
 final class PlayerActiveSecondRepository extends AbstractRepository
 {
@@ -138,49 +139,36 @@ final class PlayerActiveSecondRepository extends AbstractRepository
     }
 
     /**
-     * WTF is this?! o.O
-     *
-     * @return array{
-     *     day_1: int|null,
-     *     day_2: int|null,
-     *     day_3: int|null,
-     *     day_4: int|null,
-     *     day_5: int|null,
-     *     day_6: int|null,
-     *     day_7: int|null,
-     *     day_8: int|null,
-     * }
+     * @return array<string, int|null>
      */
-    public function getWeeklyPlaytimeForPlayer(Player $player): array
+    public function getPlaytimesForPlayer(Player $player, int $days): array
     {
-        $sql = <<<SQL
-            SELECT
-                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day1) AS 'day_1',
-                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day2) AS 'day_2',
-                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day3) AS 'day_3',
-                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day4) AS 'day_4',
-                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day5) AS 'day_5',
-                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day6) AS 'day_6',
-                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day7) AS 'day_7',
-                (SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day8) AS 'day_8'
-        SQL;
+        $sql = "SELECT ";
+        for ($i = 1; $i < $days + 1; $i++) {
+            $sql .= "(SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day$i) AS 'day_$i',";
+        }
 
-        $date = new DateTime();
+        $sql = rtrim($sql, ',');
+        $date = new DateTime('+1 day');
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([
+        $params = [
             'playerId' => $player->playerId,
             'world' => $player->world->value,
-            'day1' => $date->format('Y-m-d'),
-            'day2' => $date->modify('-1 day')->format('Y-m-d'),
-            'day3' => $date->modify('-1 day')->format('Y-m-d'),
-            'day4' => $date->modify('-1 day')->format('Y-m-d'),
-            'day5' => $date->modify('-1 day')->format('Y-m-d'),
-            'day6' => $date->modify('-1 day')->format('Y-m-d'),
-            'day7' => $date->modify('-1 day')->format('Y-m-d'),
-            'day8' => $date->modify('-1 day')->format('Y-m-d'),
-        ]);
+        ];
 
-        return $stmt->fetch();
+        for ($i = 1; $i < $days +1; $i++) {
+            $params["day$i"] = $date->modify('-1 day')->format('Y-m-d');
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+
+        $result = $stmt->fetch();
+
+        if (is_array($result)) {
+            return $result;
+        }
+
+        throw new DatabaseException('This should never happen!');
     }
 }

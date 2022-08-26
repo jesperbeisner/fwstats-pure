@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Importer;
 
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
@@ -112,7 +113,8 @@ final class PlayerImporter implements ImporterInterface
                 world: $world,
                 playerId: $player->playerId,
                 oldName: $player->name,
-                newName: $playerDump->name
+                newName: $playerDump->name,
+                created: new DateTimeImmutable(),
             );
 
             $this->playerNameHistoryRepository->insert($playerNameHistory);

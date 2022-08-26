@@ -31,6 +31,7 @@ return [
 
     // Commands
     Command\DatabaseMigrationCommand::class => Command\Factory\DatabaseMigrationCommandFactory::class,
+    Command\DatabaseFixtureCommand::class => Command\Factory\DatabaseFixtureCommandFactory::class,
     Command\AppCommand::class => Command\Factory\AppCommandFactory::class,
 
     // Importer

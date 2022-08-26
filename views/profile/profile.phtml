@@ -12,38 +12,18 @@ use Jesperbeisner\Fwstats\Service\ViewRenderService;
 /** @var Player $player */
 $player = $this->vars['player'];
 
-/** @var array{
- *     day_1: Playtime|null,
- *     day_2: Playtime|null,
- *     day_3: Playtime|null,
- *     day_4: Playtime|null,
- *     day_5: Playtime|null,
- *     day_6: Playtime|null,
- *     day_7: Playtime|null
- * } $playtime
- */
-$playtime = $this->vars['playtime'];
+/** @var array<string, Playtime|null> $weeklyPlaytimes */
+$weeklyPlaytimes = $this->vars['weeklyPlaytimes'];
 
-$total = 0;
-$nullValues = 0;
-foreach ($playtime as $time) {
-    if ($time !== null) {
-        $total += $time->getHours() * 60 * 60;
-        $total += $time->getMinutes() * 60;
-        $total += $time->getSeconds();
-    } else {
-        $nullValues++;
-    }
-}
+/** @var Playtime $totalPlaytime */
+$totalPlaytime = $this->vars['totalPlaytime'];
 
-$totalPlaytime = new Playtime($player->world, $player->name, $player->playerId, $total);
-$averagePlaytime = new Playtime($player->world, $player->name, $player->playerId, (int) ($total / (7 - $nullValues)));
-
-$date = new DateTime();
+/** @var Playtime $averagePlaytime */
+$averagePlaytime = $this->vars['averagePlaytime'];
 
 $this->setTitle($player->name . ' - ' . $player->world->worldString());
-?>
 
+?>
 <div id="profile">
     <h1 class="title is-2">
         <a href="https://<?= $player->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $player->playerId ?>" target="_blank" class="player_profile_link">
@@ -70,48 +50,15 @@ $this->setTitle($player->name . ' - ' . $player->world->worldString());
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><?= $date->format('d.m.Y') ?></td>
-                            <td><?= $playtime['day_1'] === null ? '-' : $playtime['day_1']->getHours() ?></td>
-                            <td><?= $playtime['day_1'] === null ? '-' : $playtime['day_1']->getMinutes() ?></td>
-                            <td><?= $playtime['day_1'] === null ? '-' : $playtime['day_1']->getSeconds() ?></td>
-                        </tr>
-                        <tr>
-                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
-                            <td><?= $playtime['day_2'] === null ? '-' : $playtime['day_2']->getHours() ?></td>
-                            <td><?= $playtime['day_2'] === null ? '-' : $playtime['day_2']->getMinutes() ?></td>
-                            <td><?= $playtime['day_2'] === null ? '-' : $playtime['day_2']->getSeconds() ?></td>
-                        </tr>
-                        <tr>
-                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
-                            <td><?= $playtime['day_3'] === null ? '-' : $playtime['day_3']->getHours() ?></td>
-                            <td><?= $playtime['day_3'] === null ? '-' : $playtime['day_3']->getMinutes() ?></td>
-                            <td><?= $playtime['day_3'] === null ? '-' : $playtime['day_3']->getSeconds() ?></td>
-                        </tr>
-                        <tr>
-                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
-                            <td><?= $playtime['day_4'] === null ? '-' : $playtime['day_4']->getHours() ?></td>
-                            <td><?= $playtime['day_4'] === null ? '-' : $playtime['day_4']->getMinutes() ?></td>
-                            <td><?= $playtime['day_4'] === null ? '-' : $playtime['day_4']->getSeconds() ?></td>
-                        </tr>
-                        <tr>
-                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
-                            <td><?= $playtime['day_5'] === null ? '-' : $playtime['day_5']->getHours() ?></td>
-                            <td><?= $playtime['day_5'] === null ? '-' : $playtime['day_5']->getMinutes() ?></td>
-                            <td><?= $playtime['day_5'] === null ? '-' : $playtime['day_5']->getSeconds() ?></td>
-                        </tr>
-                        <tr>
-                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
-                            <td><?= $playtime['day_6'] === null ? '-' : $playtime['day_6']->getHours() ?></td>
-                            <td><?= $playtime['day_6'] === null ? '-' : $playtime['day_6']->getMinutes() ?></td>
-                            <td><?= $playtime['day_6'] === null ? '-' : $playtime['day_6']->getSeconds() ?></td>
-                        </tr>
-                        <tr>
-                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
-                            <td><?= $playtime['day_7'] === null ? '-' : $playtime['day_7']->getHours() ?></td>
-                            <td><?= $playtime['day_7'] === null ? '-' : $playtime['day_7']->getMinutes() ?></td>
-                            <td><?= $playtime['day_7'] === null ? '-' : $playtime['day_7']->getSeconds() ?></td>
-                        </tr>
+                        <?php $date = new DateTime('+1 day') ?>
+                        <?php foreach ($weeklyPlaytimes as $playtime): ?>
+                            <tr>
+                                <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                                <td><?= $playtime === null ? '-' : $playtime->getHours() ?></td>
+                                <td><?= $playtime === null ? '-' : $playtime->getMinutes() ?></td>
+                                <td><?= $playtime === null ? '-' : $playtime->getSeconds() ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

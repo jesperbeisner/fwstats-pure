@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\Repository\LogRepository;
+use Jesperbeisner\Fwstats\Stdlib\Exception\UnauthorizedException;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
@@ -22,7 +23,7 @@ final class LogsController extends AbstractController
     {
         $password = $this->request->getGetParameter('password');
         if ($password === null || $password !== $this->logsPassword) {
-            $this->unauthorizedException();
+            throw new UnauthorizedException();
         }
 
         return new HtmlResponse('logs/logs.phtml', [

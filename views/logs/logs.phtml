@@ -33,9 +33,17 @@ $this->setTitle('Logs');
                         <?php $i = 1; ?>
                         <?php foreach ($logs as $log): ?>
                             <tr>
-                                <td><?= $i ?></td>
-                                <td><?= $log->url ?></td>
-                                <td><?= $log->created->format('d.m.Y H:i:s') ?></td>
+                                <td>
+                                    <?= $i ?>
+                                </td>
+                                <td>
+                                    <a href="<?= $log->url ?>" target="_blank">
+                                        <?= $log->url ?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <?= $log->created->format('d.m.Y H:i:s') ?>
+                                </td>
                             </tr>
                         <?php $i++ ?>
                         <?php endforeach; ?>

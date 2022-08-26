@@ -11,7 +11,7 @@ enum WorldEnum: string
 
     public function worldString(): string
     {
-        return match($this) {
+        return match ($this) {
             WorldEnum::AFSRV => 'ActionFreewar',
             WorldEnum::CHAOS => 'ChaosFreewar',
         };

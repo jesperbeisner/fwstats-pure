@@ -23,8 +23,8 @@ jobs:
       - name: Install Dependencies
         run: composer install
 
-#      - name: Run Full Testsuite
-#        run: composer test
+      - name: Run Full Testsuite
+        run: composer test
 
   deploy:
     name: Deploy
@@ -41,4 +41,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script_stop: true
-          script: /bin/bash ./deployments/scripts/fwstats.sh
+          scripts: echo 'hello world'
+          #script: /bin/bash ./deployments/scripts/fwstats.sh
