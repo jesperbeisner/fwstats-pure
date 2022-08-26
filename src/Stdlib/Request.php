@@ -18,9 +18,9 @@ final class Request
         public readonly string $uri,
         public readonly string $fullUri,
         public readonly string $httpMethod,
-        public readonly array $getParameters,
-        public readonly array $postParameters,
-        public readonly array $cookieParameters
+        private readonly array $getParameters,
+        private readonly array $postParameters,
+        private readonly array $cookieParameters
     ) {
     }
 
@@ -32,18 +32,28 @@ final class Request
         $this->routeParameters = $routeParameters;
     }
 
-    /**
-     * @return array<string, string>
-     */
-    public function getRouteParameters(): array
-    {
-        return $this->routeParameters;
-    }
-
     public function getRouteParameter(string $id): ?string
     {
         if (array_key_exists($id, $this->routeParameters)) {
             return $this->routeParameters[$id];
+        }
+
+        return null;
+    }
+
+    public function getGetParameter(string $id): ?string
+    {
+        if (array_key_exists($id, $this->getParameters)) {
+            return $this->getParameters[$id];
+        }
+
+        return null;
+    }
+
+    public function getPostParameter(string $id): ?string
+    {
+        if (array_key_exists($id, $this->postParameters)) {
+            return $this->postParameters[$id];
         }
 
         return null;

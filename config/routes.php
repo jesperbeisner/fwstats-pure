@@ -40,4 +40,9 @@ return [
         'methods' => ['GET'],
         'controller' => [Controller\PingController::class, 'ping'],
     ],
+    [
+        'route' => '/logs',
+        'methods' => ['GET'],
+        'controller' => [Controller\LogsController::class, 'logs'],
+    ],
 ];

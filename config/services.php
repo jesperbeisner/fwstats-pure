@@ -19,6 +19,7 @@ return [
     Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
     Controller\PingController::class => Controller\Factory\PingControllerFactory::class,
     Controller\ChangeController::class => Controller\Factory\ChangeControllerFactory::class,
+    Controller\LogsController::class => Controller\Factory\LogsControllerFactory::class,
 
     // Services
     Service\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
@@ -55,6 +56,7 @@ return [
     Repository\ClanDeletedHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
 
     Repository\AchievementRepository::class => Repository\Factory\RepositoryFactory::class,
+    Repository\LogRepository::class => Repository\Factory\RepositoryFactory::class,
 
     // Stdlib
     PDO::class => Stdlib\Factory\PdoFactory::class,
