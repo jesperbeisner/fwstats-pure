@@ -16,6 +16,7 @@ use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 use Jesperbeisner\Fwstats\Stdlib\Router;
 use Jesperbeisner\Fwstats\Stdlib\ServiceContainer;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 final class App
@@ -78,6 +79,11 @@ final class App
             $appEnv = $this->serviceContainer->get('appEnv');
 
             if ($appEnv === 'prod') {
+                /** @var LoggerInterface $logger */
+                $logger = $this->serviceContainer->get(LoggerInterface::class);
+
+                $logger->error($e->getMessage());
+
                 (new HtmlResponse('error.phtml', ['message' => '500 - Server error'], 500))->send();
             }
 
