@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Stdlib;
 
 use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
-use JsonException;
 use Psr\Log\AbstractLogger;
 use Stringable;
 
@@ -20,15 +19,10 @@ final class Logger extends AbstractLogger
             throw new RuntimeException('$level needs to be a string.');
         }
 
-        try {
-            $jsonContext = json_encode($context, JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
-            throw new RuntimeException('Could not encode json.');
-        }
-
+        $jsonContext = json_encode($context, JSON_THROW_ON_ERROR);
         $message = '[' . date('Y-m-d H:i:s') . '] ' . strtoupper($level) . ': ' . $message . ' ' . $jsonContext . PHP_EOL;
 
-        if (false === $outputStream = fopen(ROOT_DIR . '/data/logs/' . date('Y-m-d') . '-fwstats.log', 'a')) {
+        if (false === $outputStream = fopen(ROOT_DIR . '/data/logs/fwstats.log', 'a')) {
             throw new RuntimeException('Could not open stdout resource');
         }
 
