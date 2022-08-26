@@ -41,5 +41,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script_stop: true
-          script: echo 'hello world'
-          #script: /bin/bash ./deployments/scripts/fwstats.sh
+          script: /bin/bash ./deployments/scripts/fwstats.sh

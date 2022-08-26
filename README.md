@@ -16,8 +16,8 @@ docker-compose exec php composer install
 # Load migrations
 docker-compose exec php php bin/console.php app:database-migration
 
-# Load data
-docker-compose exec php php bin/console.php app:import-world-stats
+# Load test data
+docker-compose exec php php bin/console.php app:database-fixture
 
 # Visit http://localhost:8080
 ```
@@ -25,6 +25,9 @@ docker-compose exec php php bin/console.php app:import-world-stats
 ### Prod
 
 ```bash
+# Create prod config and change needed values
+cp ./config/config.local.php.dist ./config/config.local.php
+
 # Docker
 docker-compose -f docker-compose.prod.yml up -d --build
 
@@ -34,6 +37,6 @@ docker-compose exec php composer install --no-dev --optimize-autoloader --no-int
 # Load migrations
 docker-compose exec php php bin/console.php app:database-migration
 
-# One cronjob for everything
+# Run one cronjob for everything every 5 minutes
 */5 * * * * docker exec fwstats-php-prod php bin/console.php app:run > /dev/null 2>&1 
 ```
