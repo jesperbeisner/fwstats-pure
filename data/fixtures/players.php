@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
+
 return [
     [
-        'world' => 'afsrv',
+        'world' => WorldEnum::AFSRV,
         'playerId' => 1,
         'name' => 'TarX',
         'race' => 'Onlo',
@@ -15,7 +17,7 @@ return [
         'profession' => 'Sammler',
     ],
     [
-        'world' => 'afsrv',
+        'world' => WorldEnum::AFSRV,
         'playerId' => 2,
         'name' => 'Pomsky',
         'race' => 'Serum-Geist',
@@ -26,7 +28,7 @@ return [
         'profession' => 'Magieverlängerer',
     ],
     [
-        'world' => 'afsrv',
+        'world' => WorldEnum::AFSRV,
         'playerId' => 3,
         'name' => 'Weißes Haus',
         'race' => 'Mensch / Zauberer',
@@ -37,7 +39,7 @@ return [
         'profession' => 'Alchemist',
     ],
     [
-        'world' => 'afsrv',
+        'world' => WorldEnum::AFSRV,
         'playerId' => 4,
         'name' => 'Amunshi',
         'race' => 'Mensch / Zauberer',
@@ -48,7 +50,7 @@ return [
         'profession' => 'Schatzmeister',
     ],
     [
-        'world' => 'afsrv',
+        'world' => WorldEnum::AFSRV,
         'playerId' => 5,
         'name' => 'Grisu',
         'race' => 'Keuroner',
@@ -59,7 +61,7 @@ return [
         'profession' => 'Koch',
     ],
     [
-        'world' => 'chaos',
+        'world' => WorldEnum::CHAOS,
         'playerId' => 1,
         'name' => 'Sotrax',
         'race' => 'Natla - Händler',
@@ -70,7 +72,7 @@ return [
         'profession' => 'Alchemist',
     ],
     [
-        'world' => 'chaos',
+        'world' => WorldEnum::CHAOS,
         'playerId' => 2,
         'name' => 'bwoebi',
         'race' => 'Mensch / Kämpfer',
@@ -81,7 +83,7 @@ return [
         'profession' => 'Sammler',
     ],
     [
-        'world' => 'chaos',
+        'world' => WorldEnum::CHAOS,
         'playerId' => 3,
         'name' => 'Nyrea',
         'race' => 'dunkler Magier',

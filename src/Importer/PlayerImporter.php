@@ -130,7 +130,8 @@ final class PlayerImporter implements ImporterInterface
                 world: $world,
                 playerId: $player->playerId,
                 oldRace: $player->race,
-                newRace: $playerDump->race
+                newRace: $playerDump->race,
+                created: new DateTimeImmutable(),
             );
 
             $this->playerRaceHistoryRepository->insert($playerRaceHistory);

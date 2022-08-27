@@ -24,4 +24,12 @@ final class PlayerRaceHistoryRepository extends AbstractRepository
             'newRace' => $playerRaceHistory->newRace,
         ]);
     }
+
+    public function deleteAll(): void
+    {
+        $sql = "DELETE FROM $this->table";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+    }
 }
