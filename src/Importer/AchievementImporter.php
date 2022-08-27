@@ -8,7 +8,7 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
-use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 
 final class AchievementImporter implements ImporterInterface
 {

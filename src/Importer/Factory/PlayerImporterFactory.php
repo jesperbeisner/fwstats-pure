@@ -12,7 +12,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
-use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Service\PlayerStatusService;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Psr\Container\ContainerInterface;

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Service;
 
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
 
 final class FreewarDumpService implements FreewarDumpServiceInterface
@@ -38,6 +40,7 @@ final class FreewarDumpService implements FreewarDumpServiceInterface
                 totalXp: (int) $player[2] + (int) $player[5],
                 clanId: $player[4] === '0' ? null : (int) $player[4],
                 profession: $player[6] ?? null,
+                created: new DateTimeImmutable(),
             );
         }
 
@@ -60,6 +63,7 @@ final class FreewarDumpService implements FreewarDumpServiceInterface
                 coLeaderId: (int) $clan[4],
                 diplomatId: (int) $clan[5],
                 warPoints: (int) $clan[6],
+                created: new DateTimeImmutable(),
             );
         }
 
@@ -95,6 +99,7 @@ final class FreewarDumpService implements FreewarDumpServiceInterface
         }
 
         $dump = trim($dump);
+
         return explode("\n", $dump);
     }
 }

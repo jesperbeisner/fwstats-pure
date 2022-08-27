@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use DateTimeImmutable;
 use Exception;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -128,6 +129,14 @@ final class PlayerRepository extends AbstractRepository
         return $players;
     }
 
+    public function deleteAll(): void
+    {
+        $sql = "DELETE FROM $this->table";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+    }
+
     /**
      * @param array<int|string|null> $row
      */
@@ -143,6 +152,7 @@ final class PlayerRepository extends AbstractRepository
             totalXp: (int) $row['total_xp'],
             clanId: $row['clan_id'] === null ? null : (int) $row['clan_id'],
             profession: $row['profession'] === null ? null : (string) $row['profession'],
+            created: new DateTimeImmutable((string) $row['created']),
         );
     }
 }

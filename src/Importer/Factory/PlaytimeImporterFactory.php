@@ -6,7 +6,7 @@ namespace Jesperbeisner\Fwstats\Importer\Factory;
 
 use Jesperbeisner\Fwstats\Importer\PlaytimeImporter;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
-use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Psr\Container\ContainerInterface;
 

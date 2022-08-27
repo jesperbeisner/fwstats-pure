@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use DateTimeImmutable;
 use Exception;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -32,8 +33,8 @@ final class ClanRepository extends AbstractRepository
     public function insert(Clan $clan): void
     {
         $sql = <<<SQL
-            INSERT INTO $this->table (world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points)
-            VALUES (:world, :clanId, :shortcut, :name, :leaderId, :coLeaderId, :diplomatId, :warPoints)
+            INSERT INTO $this->table (world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points, created)
+            VALUES (:world, :clanId, :shortcut, :name, :leaderId, :coLeaderId, :diplomatId, :warPoints, :created)
         SQL;
 
         $this->pdo->prepare($sql)->execute([
@@ -45,6 +46,7 @@ final class ClanRepository extends AbstractRepository
             'coLeaderId' => $clan->coLeaderId,
             'diplomatId' => $clan->diplomatId,
             'warPoints' => $clan->warPoints,
+            'created' => $clan->created->format('Y-m-d H:i:s')
         ]);
     }
 
@@ -72,6 +74,14 @@ final class ClanRepository extends AbstractRepository
         }
     }
 
+    public function deleteAll(): void
+    {
+        $sql = "DELETE FROM $this->table";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+    }
+
     /**
      * @param array<int|string|null> $row
      */
@@ -86,6 +96,7 @@ final class ClanRepository extends AbstractRepository
             coLeaderId: (int) $row['co_leader_id'],
             diplomatId: (int) $row['diplomat_id'],
             warPoints: (int) $row['war_points'],
+            created: new DateTimeImmutable((string) $row['created']),
         );
     }
 }

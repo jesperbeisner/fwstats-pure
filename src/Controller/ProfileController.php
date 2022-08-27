@@ -71,8 +71,10 @@ final class ProfileController extends AbstractController
             }
         }
 
+        $average = count($playtimes) - $nullValues === 0 ? 0 : (int) ($total / (count($playtimes) - $nullValues));
+
         $totalPlaytime = new Playtime($player->world, $player->name, $player->playerId, $total);
-        $averagePlaytime = new Playtime($player->world, $player->name, $player->playerId, (int) ($total / (count($playtimes) - $nullValues)));
+        $averagePlaytime = new Playtime($player->world, $player->name, $player->playerId, $average);
 
         return [$totalPlaytime, $averagePlaytime];
     }

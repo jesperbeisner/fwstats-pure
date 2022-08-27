@@ -22,7 +22,7 @@ return [
     Controller\LogsController::class => Controller\Factory\LogsControllerFactory::class,
 
     // Services
-    Service\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
+    Service\Interface\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
     Service\PlayerStatusService::class => Service\Factory\PlayerStatusServiceFactory::class,
     Service\PlaytimeService::class => Service\Factory\PlaytimeServiceFactory::class,
 

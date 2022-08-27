@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Model;
 
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use RuntimeException;
 
@@ -19,6 +20,7 @@ final class Player
         public readonly int $totalXp,
         public readonly ?int $clanId,
         public readonly ?string $profession,
+        public readonly DateTimeImmutable $created,
     ) {
     }
 

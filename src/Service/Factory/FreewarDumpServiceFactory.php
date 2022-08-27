@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Service\Factory;
 
 use Jesperbeisner\Fwstats\Service\FreewarDumpService;
-use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Psr\Container\ContainerInterface;
 

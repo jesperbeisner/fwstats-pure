@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service;
+namespace Jesperbeisner\Fwstats\Service\Interface;
 
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;

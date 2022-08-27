@@ -12,7 +12,7 @@ use Jesperbeisner\Fwstats\Repository\ClanCreatedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
-use Jesperbeisner\Fwstats\Service\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 
 final class ClanImporter implements ImporterInterface
 {

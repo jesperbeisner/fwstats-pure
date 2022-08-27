@@ -33,13 +33,22 @@ final class AppCommand extends AbstractCommand
         $this->writeLine();
 
         foreach (WorldEnum::cases() as $world) {
+            $this->writeLine("Importing clans for world '$world->value'...");
             $this->clanImporter->import($world);
+
+            $this->writeLine("Importing players for world '$world->value'...");
             $this->playerImporter->import($world);
+
+            $this->writeLine("Importing achievements for world '$world->value'...");
             $this->achievementImporter->import($world);
 
+            $this->writeLine("Importing playtime for world '$world->value'...");
             $this->playtimeImporter->import($world);
 
+            $this->writeLine("Creating ranking image for world '$world->value'...");
             $this->rankingImageService->create($world);
+
+            $this->writeLine();
         }
 
         $this->writeLine("Finished the 'app:run' command in {$this->getTime()} ms.");

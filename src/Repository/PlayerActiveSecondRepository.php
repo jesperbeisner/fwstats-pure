@@ -26,9 +26,9 @@ final class PlayerActiveSecondRepository extends AbstractRepository
         SQL;
 
         $this->pdo->prepare($sql)->execute([
-            'seconds' => $playerActiveSecond->seconds,
             'world' => $playerActiveSecond->world->value,
             'playerId' => $playerActiveSecond->playerId,
+            'seconds' => $playerActiveSecond->seconds,
             'created' => $playerActiveSecond->created->format('Y-m-d')
         ]);
 
@@ -144,7 +144,7 @@ final class PlayerActiveSecondRepository extends AbstractRepository
     public function getPlaytimesForPlayer(Player $player, int $days): array
     {
         $sql = "SELECT ";
-        for ($i = 1; $i < $days + 1; $i++) {
+        for ($i = 1; $i < $days + 2; $i++) {
             $sql .= "(SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day$i) AS 'day_$i',";
         }
 
@@ -156,7 +156,7 @@ final class PlayerActiveSecondRepository extends AbstractRepository
             'world' => $player->world->value,
         ];
 
-        for ($i = 1; $i < $days +1; $i++) {
+        for ($i = 1; $i < $days + 2; $i++) {
             $params["day$i"] = $date->modify('-1 day')->format('Y-m-d');
         }
 
@@ -170,5 +170,13 @@ final class PlayerActiveSecondRepository extends AbstractRepository
         }
 
         throw new DatabaseException('This should never happen!');
+    }
+
+    public function deleteAll(): void
+    {
+        $sql = "DELETE FROM $this->table";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
     }
 }
