@@ -11,10 +11,12 @@ use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
+use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
 use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 
@@ -30,6 +32,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
         private readonly PlayerActiveSecondRepository $playerActiveSecondRepository,
         private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,
         private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
+        private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
         private readonly RankingImageService $rankingImageService,
     ) {
     }
@@ -59,6 +62,9 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
         $this->writeLine("Creating player race histories...");
         $this->createPlayerRaceHistories();
+
+        $this->writeLine("Creating player profession histories...");
+        $this->createPlayerProfessionHistories();
 
         $this->writeLine("Creating ranking images...");
         $this->createRankingImages();
@@ -217,6 +223,33 @@ final class DatabaseFixtureCommand extends AbstractCommand
             );
 
             $this->playerRaceHistoryRepository->insert($playerRaceHistory);
+        }
+    }
+
+    private function createPlayerProfessionHistories(): void
+    {
+        $playerProfessionHistoriesFixtureData = require ROOT_DIR . '/data/fixtures/player-profession-histories.php';
+
+        $this->playerProfessionHistoryRepository->deleteAll();
+
+        /** @var array{
+         *     world: WorldEnum,
+         *     playerId: int,
+         *     oldProfession: string|null,
+         *     newProfession: string|null,
+         *     created: DateTimeImmutable
+         * } $playerProfessionFixtureData
+         */
+        foreach ($playerProfessionHistoriesFixtureData as $playerProfessionFixtureData) {
+            $playerProfessionHistory = new PlayerProfessionHistory(
+                world: $playerProfessionFixtureData['world'],
+                playerId: $playerProfessionFixtureData['playerId'],
+                oldProfession: $playerProfessionFixtureData['oldProfession'],
+                newProfession: $playerProfessionFixtureData['newProfession'],
+                created: $playerProfessionFixtureData['created'],
+            );
+
+            $this->playerProfessionHistoryRepository->insert($playerProfessionHistory);
         }
     }
 

@@ -13,8 +13,8 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository
     public function insert(PlayerProfessionHistory $playerProfessionHistory): void
     {
         $sql = <<<SQL
-            INSERT INTO {$this->table} (world, player_id, old_profession, new_profession)
-            VALUES (:world, :playerId, :oldProfession, :newProfession)
+            INSERT INTO {$this->table} (world, player_id, old_profession, new_profession, created)
+            VALUES (:world, :playerId, :oldProfession, :newProfession, :created)
         SQL;
 
         $this->pdo->prepare($sql)->execute([
@@ -22,6 +22,15 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository
             'playerId' => $playerProfessionHistory->playerId,
             'oldProfession' => $playerProfessionHistory->oldProfession,
             'newProfession' => $playerProfessionHistory->newProfession,
+            'created' => $playerProfessionHistory->created->format('Y-m-d H:i:s'),
         ]);
+    }
+
+    public function deleteAll(): void
+    {
+        $sql = "DELETE FROM $this->table";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
     }
 }

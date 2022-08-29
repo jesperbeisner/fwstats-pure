@@ -202,7 +202,8 @@ final class PlayerImporter implements ImporterInterface
                 world: $world,
                 playerId: $player->playerId,
                 oldProfession: $player->profession,
-                newProfession: $playerDump->profession
+                newProfession: $playerDump->profession,
+                created: new DateTimeImmutable(),
             );
 
             $this->playerProfessionHistoryRepository->insert($playerProfessionHistory);

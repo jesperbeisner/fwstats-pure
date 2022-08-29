@@ -9,6 +9,7 @@ use Jesperbeisner\Fwstats\ImageService\RankingImageService;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
@@ -39,6 +40,9 @@ class DatabaseFixtureCommandFactory implements FactoryInterface
         /** @var PlayerRaceHistoryRepository $playerRaceHistoryRepository */
         $playerRaceHistoryRepository = $serviceContainer->get(PlayerRaceHistoryRepository::class);
 
+        /** @var PlayerProfessionHistoryRepository $playerProfessionHistoryRepository */
+        $playerProfessionHistoryRepository = $serviceContainer->get(PlayerProfessionHistoryRepository::class);
+
         /** @var RankingImageService $rankingImageService */
         $rankingImageService = $serviceContainer->get(RankingImageService::class);
 
@@ -49,6 +53,7 @@ class DatabaseFixtureCommandFactory implements FactoryInterface
             $playerActiveSecondRepository,
             $playerNameHistoryRepository,
             $playerRaceHistoryRepository,
+            $playerProfessionHistoryRepository,
             $rankingImageService,
         );
     }
