@@ -1,0 +1,55 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\DTO\Playtime;
+use Jesperbeisner\Fwstats\Service\ViewRenderService;
+
+/** @var ViewRenderService $this */
+/** @var array<string, Playtime|null> $weeklyPlaytimes */
+/** @var Playtime $totalPlaytime */
+/** @var Playtime $averagePlaytime */
+
+?>
+<div class="card">
+    <div class="card-header">
+        <p class="card-header-title">
+            Spielzeit der letzten 7 Tage
+        </p>
+    </div>
+    <div class="card-content">
+        <div class="content">
+            <div class="table-container">
+                <table class="table is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <td>Stunden</td>
+                        <td>Minuten</td>
+                        <td>Sekunden</td>
+                        <td>Datum</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $date = new DateTime('+1 day') ?>
+                    <?php foreach ($weeklyPlaytimes as $playtime): ?>
+                        <tr>
+                            <td><?= $playtime === null ? '-' : $playtime->getHours() ?></td>
+                            <td><?= $playtime === null ? '-' : $playtime->getMinutes() ?></td>
+                            <td><?= $playtime === null ? '-' : $playtime->getSeconds() ?></td>
+                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">
+            Gesamt: <?= $totalPlaytime->getHours() ?> h <?= $totalPlaytime->getMinutes() ?> m <?= $totalPlaytime->getSeconds() ?> s
+        </p>
+        <p class="card-footer-item">
+            Im Durchschnitt: <?= $averagePlaytime->getHours() ?> h <?= $averagePlaytime->getMinutes() ?> m <?= $averagePlaytime->getSeconds() ?> s
+        </p>
+    </footer>
+</div>

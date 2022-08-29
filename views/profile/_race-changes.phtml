@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
+use Jesperbeisner\Fwstats\Service\ViewRenderService;
+
+/** @var ViewRenderService $this */
+/** @var PlayerRaceHistory[] $raceChanges */
+
+?>
+
+<div class="card mt-5">
+    <div class="card-header">
+        <p class="card-header-title">
+            Rassenänderungen
+        </p>
+    </div>
+    <div class="card-content">
+        <div class="content">
+            <?php if (count($raceChanges) > 0): ?>
+                <div class="table-container">
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <td>Alte Rasse</td>
+                            <td>Neue Rasse</td>
+                            <td>Datum</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($raceChanges as $raceChange): ?>
+                            <tr>
+                                <td><?= $raceChange->oldRace ?></td>
+                                <td><?= $raceChange->newRace ?></td>
+                                <td><?= $raceChange->created->format('d.m.Y') ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php else: ?>
+                <p class="has-text-centered">
+                    Keine Rassenänderungen vorhanden.
+                </p>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
