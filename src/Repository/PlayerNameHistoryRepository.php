@@ -7,6 +7,7 @@ namespace Jesperbeisner\Fwstats\Repository;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
+use Jesperbeisner\Fwstats\Stdlib\Interface\PlayerInterface;
 
 final class PlayerNameHistoryRepository extends AbstractRepository
 {
@@ -40,7 +41,42 @@ final class PlayerNameHistoryRepository extends AbstractRepository
 
         $playerNameHistories = [];
         while (false !== $row = $stmt->fetch()) {
-            /** @var array<int|string> $row */
+            /**
+             * @var array{
+             *     world: string,
+             *     player_id: int,
+             *     old_name: string,
+             *     new_name: string,
+             *     created: string
+             * } $row
+             */
+            $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
+        }
+
+        return $playerNameHistories;
+    }
+
+    /**
+     * @return PlayerNameHistory[]
+     */
+    public function getNameChangesForPlayer(PlayerInterface $player): array
+    {
+        $sql = "SELECT * FROM $this->table WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['world' => $player->getWorld()->value, 'playerId' => $player->getPlayerId()]);
+
+        $playerNameHistories = [];
+        while (false !== $row = $stmt->fetch()) {
+            /**
+             * @var array{
+             *     world: string,
+             *     player_id: int,
+             *     old_name: string,
+             *     new_name: string,
+             *     created: string
+             * } $row
+             */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 
@@ -56,16 +92,22 @@ final class PlayerNameHistoryRepository extends AbstractRepository
     }
 
     /**
-     * @param array<int|string> $row
+     * @param array{
+     *     world: string,
+     *     player_id: int,
+     *     old_name: string,
+     *     new_name: string,
+     *     created: string
+     * } $row
      */
     private function hydratePlayerNameHistory(array $row): PlayerNameHistory
     {
         return new PlayerNameHistory(
-            world: WorldEnum::from((string) $row['world']),
-            playerId: (int) $row['player_id'],
-            oldName: (string) $row['old_name'],
-            newName: (string) $row['new_name'],
-            created: new DateTimeImmutable((string) $row['created']),
+            world: WorldEnum::from($row['world']),
+            playerId: $row['player_id'],
+            oldName: $row['old_name'],
+            newName: $row['new_name'],
+            created: new DateTimeImmutable($row['created']),
         );
     }
 }

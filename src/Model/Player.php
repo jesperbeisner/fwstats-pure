@@ -6,9 +6,10 @@ namespace Jesperbeisner\Fwstats\Model;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Stdlib\Interface\PlayerInterface;
 use RuntimeException;
 
-final class Player
+final class Player implements PlayerInterface
 {
     public function __construct(
         public readonly WorldEnum $world,
@@ -22,6 +23,16 @@ final class Player
         public readonly ?string $profession,
         public readonly DateTimeImmutable $created,
     ) {
+    }
+
+    public function getWorld(): WorldEnum
+    {
+        return $this->world;
+    }
+
+    public function getPlayerId(): int
+    {
+        return $this->playerId;
     }
 
     public function getRaceShortcut(): string

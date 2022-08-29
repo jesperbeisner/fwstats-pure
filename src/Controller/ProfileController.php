@@ -7,6 +7,7 @@ namespace Jesperbeisner\Fwstats\Controller;
 use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
+use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
 use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
@@ -20,6 +21,7 @@ final class ProfileController extends AbstractController
         private readonly Request $request,
         private readonly PlayerRepository $playerRepository,
         private readonly PlaytimeService $playtimeService,
+        private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,
     ) {
     }
 
@@ -44,11 +46,14 @@ final class ProfileController extends AbstractController
         $weeklyPlaytimes = $this->playtimeService->getPlaytimesForPlayer($player, 7);
         [$totalPlaytime, $averagePlaytime] = $this->getTotalAndAveragePlaytime($player, $weeklyPlaytimes);
 
+        $nameChanges = $this->playerNameHistoryRepository->getNameChangesForPlayer($player);
+
         return new HtmlResponse('profile/profile.phtml', [
             'player' => $player,
             'weeklyPlaytimes' => $weeklyPlaytimes,
             'totalPlaytime' => $totalPlaytime,
             'averagePlaytime' => $averagePlaytime,
+            'nameChanges' => $nameChanges,
         ]);
     }
 

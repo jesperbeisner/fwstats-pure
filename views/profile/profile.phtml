@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Helper\Html;
 use Jesperbeisner\Fwstats\Model\Player;
+use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Service\ViewRenderService;
 
 /** @var ViewRenderService $this */
@@ -20,6 +21,9 @@ $totalPlaytime = $this->vars['totalPlaytime'];
 
 /** @var Playtime $averagePlaytime */
 $averagePlaytime = $this->vars['averagePlaytime'];
+
+/** @var PlayerNameHistory[] $nameChanges */
+$nameChanges = $this->vars['nameChanges'];
 
 $this->setTitle($player->name . ' - ' . $player->world->worldString());
 
@@ -43,20 +47,20 @@ $this->setTitle($player->name . ' - ' . $player->world->worldString());
                     <table class="table is-hoverable is-fullwidth">
                         <thead>
                         <tr>
-                            <td>Datum</td>
                             <td>Stunden</td>
                             <td>Minuten</td>
                             <td>Sekunden</td>
+                            <td>Datum</td>
                         </tr>
                         </thead>
                         <tbody>
                         <?php $date = new DateTime('+1 day') ?>
                         <?php foreach ($weeklyPlaytimes as $playtime): ?>
                             <tr>
-                                <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
                                 <td><?= $playtime === null ? '-' : $playtime->getHours() ?></td>
                                 <td><?= $playtime === null ? '-' : $playtime->getMinutes() ?></td>
                                 <td><?= $playtime === null ? '-' : $playtime->getSeconds() ?></td>
+                                <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -72,5 +76,43 @@ $this->setTitle($player->name . ' - ' . $player->world->worldString());
                 Im Durchschnitt: <?= $averagePlaytime->getHours() ?> h <?= $averagePlaytime->getMinutes() ?> m <?= $averagePlaytime->getSeconds() ?> s
             </p>
         </footer>
+    </div>
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <p class="card-header-title">
+                Namensänderungen
+            </p>
+        </div>
+        <div class="card-content">
+            <div class="content">
+                <?php if (count($nameChanges) > 0): ?>
+                    <div class="table-container">
+                        <table class="table is-hoverable is-fullwidth">
+                            <thead>
+                            <tr>
+                                <td>Alter Name</td>
+                                <td>Neuer Name</td>
+                                <td>Datum</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($nameChanges as $nameChange): ?>
+                                <tr>
+                                    <td><?= $nameChange->oldName ?></td>
+                                    <td><?= $nameChange->newName ?></td>
+                                    <td><?= $nameChange->created->format('d.m.Y') ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <p class="has-text-centered">
+                        Keine Namensänderungen vorhanden.
+                    </p>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 </div>

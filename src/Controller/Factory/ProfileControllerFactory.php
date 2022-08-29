@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller\Factory;
 
 use Jesperbeisner\Fwstats\Controller\ProfileController;
+use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
@@ -24,10 +25,14 @@ final class ProfileControllerFactory implements FactoryInterface
         /** @var PlaytimeService $playtimeService */
         $playtimeService = $serviceContainer->get(PlaytimeService::class);
 
+        /** @var PlayerNameHistoryRepository $playerNameHistoryRepository */
+        $playerNameHistoryRepository = $serviceContainer->get(PlayerNameHistoryRepository::class);
+
         return new ProfileController(
             $request,
             $playerRepository,
             $playtimeService,
+            $playerNameHistoryRepository,
         );
     }
 }
