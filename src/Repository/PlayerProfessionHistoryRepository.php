@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use DateTimeImmutable;
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
+use Jesperbeisner\Fwstats\Stdlib\Interface\PlayerInterface;
 
 final class PlayerProfessionHistoryRepository extends AbstractRepository
 {
@@ -26,11 +29,58 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository
         ]);
     }
 
+    /**
+     * @return PlayerProfessionHistory[]
+     */
+    public function getProfessionChangesForPlayer(PlayerInterface $player): array
+    {
+        $sql = "SELECT * FROM $this->table WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['world' => $player->getWorld()->value, 'playerId' => $player->getPlayerId()]);
+
+        $playerProfessionHistories = [];
+        while (false !== $row = $stmt->fetch()) {
+            /**
+             * @var array{
+             *     world: string,
+             *     player_id: int,
+             *     old_profession: string|null,
+             *     new_profession: string|null,
+             *     created: string
+             * } $row
+             */
+            $playerProfessionHistories[] = $this->hydratePlayerProfessionHistory($row);
+        }
+
+        return $playerProfessionHistories;
+    }
+
     public function deleteAll(): void
     {
         $sql = "DELETE FROM $this->table";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
+    }
+
+    /**
+     * @param array{
+     *     world: string,
+     *     player_id: int,
+     *     old_profession: string|null,
+     *     new_profession: string|null,
+     *     created: string
+     * } $row
+     */
+    private function hydratePlayerProfessionHistory(array $row): PlayerProfessionHistory
+    {
+        return new PlayerProfessionHistory(
+            world: WorldEnum::from($row['world']),
+            playerId: $row['player_id'],
+            oldProfession: $row['old_profession'],
+            newProfession: $row['new_profession'],
+            created: new DateTimeImmutable($row['created']),
+        );
     }
 }

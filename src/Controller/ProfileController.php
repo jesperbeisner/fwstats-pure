@@ -8,6 +8,8 @@ use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
 use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
@@ -22,6 +24,8 @@ final class ProfileController extends AbstractController
         private readonly PlayerRepository $playerRepository,
         private readonly PlaytimeService $playtimeService,
         private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,
+        private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
+        private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
     ) {
     }
 
@@ -47,6 +51,8 @@ final class ProfileController extends AbstractController
         [$totalPlaytime, $averagePlaytime] = $this->getTotalAndAveragePlaytime($player, $weeklyPlaytimes);
 
         $nameChanges = $this->playerNameHistoryRepository->getNameChangesForPlayer($player);
+        $raceChanges = $this->playerRaceHistoryRepository->getRaceChangesForPlayer($player);
+        $professionChanges = $this->playerProfessionHistoryRepository->getProfessionChangesForPlayer($player);
 
         return new HtmlResponse('profile/profile.phtml', [
             'player' => $player,
@@ -54,6 +60,8 @@ final class ProfileController extends AbstractController
             'totalPlaytime' => $totalPlaytime,
             'averagePlaytime' => $averagePlaytime,
             'nameChanges' => $nameChanges,
+            'raceChanges' => $raceChanges,
+            'professionChanges' => $professionChanges,
         ]);
     }
 

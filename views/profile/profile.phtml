@@ -6,6 +6,8 @@ use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Helper\Html;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
+use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
+use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
 use Jesperbeisner\Fwstats\Service\ViewRenderService;
 
 /** @var ViewRenderService $this */
@@ -24,6 +26,12 @@ $averagePlaytime = $this->vars['averagePlaytime'];
 
 /** @var PlayerNameHistory[] $nameChanges */
 $nameChanges = $this->vars['nameChanges'];
+
+/** @var PlayerRaceHistory[] $raceChanges */
+$raceChanges = $this->vars['raceChanges'];
+
+/** @var PlayerProfessionHistory[] $professionChanges */
+$professionChanges = $this->vars['professionChanges'];
 
 $this->setTitle($player->name . ' - ' . $player->world->worldString());
 
@@ -110,6 +118,82 @@ $this->setTitle($player->name . ' - ' . $player->world->worldString());
                 <?php else: ?>
                     <p class="has-text-centered">
                         Keine Namensänderungen vorhanden.
+                    </p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <p class="card-header-title">
+                Rassenänderungen
+            </p>
+        </div>
+        <div class="card-content">
+            <div class="content">
+                <?php if (count($raceChanges) > 0): ?>
+                    <div class="table-container">
+                        <table class="table is-hoverable is-fullwidth">
+                            <thead>
+                            <tr>
+                                <td>Alte Rasse</td>
+                                <td>Neue Rasse</td>
+                                <td>Datum</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($raceChanges as $raceChange): ?>
+                                <tr>
+                                    <td><?= $raceChange->oldRace ?></td>
+                                    <td><?= $raceChange->newRace ?></td>
+                                    <td><?= $raceChange->created->format('d.m.Y') ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <p class="has-text-centered">
+                        Keine Rassenänderungen vorhanden.
+                    </p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-5 mb-5">
+        <div class="card-header">
+            <p class="card-header-title">
+                Berufsänderungen
+            </p>
+        </div>
+        <div class="card-content">
+            <div class="content">
+                <?php if (count($professionChanges) > 0): ?>
+                    <div class="table-container">
+                        <table class="table is-hoverable is-fullwidth">
+                            <thead>
+                            <tr>
+                                <td>Alter Beruf</td>
+                                <td>Neuer Beruf</td>
+                                <td>Datum</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($professionChanges as $professionChange): ?>
+                                <tr>
+                                    <td><?= $professionChange->oldProfession ?? '-' ?></td>
+                                    <td><?= $professionChange->newProfession ?? '-' ?></td>
+                                    <td><?= $professionChange->created->format('d.m.Y') ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <p class="has-text-centered">
+                        Keine Berufsänderungen vorhanden.
                     </p>
                 <?php endif; ?>
             </div>
