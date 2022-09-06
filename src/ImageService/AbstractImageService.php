@@ -9,13 +9,18 @@ use Jesperbeisner\Fwstats\ImageService\Exception\ImageException;
 
 abstract class AbstractImageService implements ImageServiceInterface
 {
-    protected const IMAGE_FOLDER = ROOT_DIR . '/data/images/';
-    private const ROBOTO_FONT = ROOT_DIR . '/data/fonts/Roboto-Light.ttf';
+    private const IMAGE_FOLDER = '/data/images/';
+    private const ROBOTO_FONT = '/data/fonts/Roboto-Light.ttf';
 
     protected ?GdImage $image = null;
 
     /** @var int[] */
     protected array $colors = [];
+
+    public function __construct(
+        private readonly string $rootDir,
+    ) {
+    }
 
     protected function createImage(int $width, int $height): void
     {
@@ -46,7 +51,7 @@ abstract class AbstractImageService implements ImageServiceInterface
         $size = $size ?? 14;
         $color = $color ?? $this->colorBlack();
 
-        if (false === imagettftext($this->image, $size, $angle, $x, $y, $color, self::ROBOTO_FONT, $text)) {
+        if (false === imagettftext($this->image, $size, $angle, $x, $y, $color, $this->rootDir . self::ROBOTO_FONT, $text)) {
             throw new ImageException('Could not write to image.');
         }
     }
@@ -107,5 +112,10 @@ abstract class AbstractImageService implements ImageServiceInterface
         $this->colors['white'] = $color;
 
         return $color;
+    }
+
+    protected function getImageFolder(): string
+    {
+        return $this->rootDir . self::IMAGE_FOLDER;
     }
 }

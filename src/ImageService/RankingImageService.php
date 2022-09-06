@@ -14,9 +14,11 @@ use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 final class RankingImageService extends AbstractImageService
 {
     public function __construct(
+        string $rootDir,
         private readonly PlayerRepository $playerRepository,
         private readonly ClanRepository $clanRepository,
     ) {
+        parent::__construct($rootDir);
     }
 
     public function create(WorldEnum $world): void
@@ -45,7 +47,7 @@ final class RankingImageService extends AbstractImageService
         $this->createTotalXpColumn($players);
         $this->createSoulLevelColumn($players);
 
-        $this->save(self::IMAGE_FOLDER . $world->value . '-ranking.png');
+        $this->save($this->getImageFolder() . $world->value . '-ranking.png');
     }
 
     /**

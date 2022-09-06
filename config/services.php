@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Jesperbeisner\Fwstats\Action;
 use Jesperbeisner\Fwstats\Command;
 use Jesperbeisner\Fwstats\Controller;
 use Jesperbeisner\Fwstats\ImageService;
@@ -19,7 +20,11 @@ return [
     Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
     Controller\PingController::class => Controller\Factory\PingControllerFactory::class,
     Controller\ChangeController::class => Controller\Factory\ChangeControllerFactory::class,
-    Controller\LogsController::class => Controller\Factory\LogsControllerFactory::class,
+    Controller\LogController::class => Controller\Factory\LogControllerFactory::class,
+    Controller\SecurityController::class => Controller\Factory\SecurityControllerFactory::class,
+
+    // Actions
+    Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,
 
     // Services
     Service\Interface\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
@@ -30,9 +35,10 @@ return [
     ImageService\RankingImageService::class => ImageService\Factory\RankingImageServiceFactory::class,
 
     // Commands
-    Command\DatabaseMigrationCommand::class => Command\Factory\DatabaseMigrationCommandFactory::class,
-    Command\DatabaseFixtureCommand::class => Command\Factory\DatabaseFixtureCommandFactory::class,
     Command\AppCommand::class => Command\Factory\AppCommandFactory::class,
+    Command\CreateUserCommand::class => Command\Factory\CreateUserCommandFactory::class,
+    Command\DatabaseFixtureCommand::class => Command\Factory\DatabaseFixtureCommandFactory::class,
+    Command\DatabaseMigrationCommand::class => Command\Factory\DatabaseMigrationCommandFactory::class,
 
     // Importer
     Importer\ClanImporter::class => Importer\Factory\ClanImporterFactory::class,
@@ -59,9 +65,13 @@ return [
     Repository\AchievementRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\LogRepository::class => Repository\Factory\RepositoryFactory::class,
 
+    Repository\UserRepository::class => Repository\Factory\UserRepositoryFactory::class,
+
     // Stdlib
     PDO::class => Stdlib\Factory\PdoFactory::class,
     LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,
     Stdlib\Request::class => Stdlib\Factory\RequestFactory::class,
     Stdlib\Router::class => Stdlib\Factory\RouterFactory::class,
+    Stdlib\Interface\SessionInterface::class => Stdlib\Factory\SessionFactory::class,
+    Stdlib\Interface\DatabaseInterface::class => Stdlib\Factory\DatabaseFactory::class,
 ];

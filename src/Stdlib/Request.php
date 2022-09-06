@@ -67,4 +67,9 @@ final class Request
 
         return null;
     }
+
+    public function isPost(): bool
+    {
+        return strtoupper($this->httpMethod) === 'POST';
+    }
 }

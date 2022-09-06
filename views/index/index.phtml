@@ -7,9 +7,29 @@ use Jesperbeisner\Fwstats\Model\Player;
 
 /** @var Jesperbeisner\Fwstats\Service\ViewRenderService $this */
 
+/** @var string|null $loginText */
+$loginText = $this->vars['login'];
+
+/** @var string|null $logoutText */
+$logoutText = $this->vars['logout'];
+
 $this->setTitle('Index');
 
 ?>
+<?php if ($loginText === 'success'): ?>
+    <article class="message is-success has-text-centered info-text">
+        <div class="message-body">
+            Du wurdest erfolgreich eingeloggt.
+    </article>
+<?php endif; ?>
+
+<?php if ($logoutText === 'success'): ?>
+    <article class="message is-success has-text-centered info-text">
+        <div class="message-body">
+            Du wurdest erfolgreich ausgeloggt.
+    </article>
+<?php endif; ?>
+
 <div id="ranking" class="mb-5">
     <div class="tabs is-centered is-medium">
         <ul>

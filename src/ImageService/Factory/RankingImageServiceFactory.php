@@ -14,12 +14,19 @@ final class RankingImageServiceFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $serviceContainer, string $serviceName): RankingImageService
     {
+        /** @var string $rootDir */
+        $rootDir = $serviceContainer->get('rootDir');
+
         /** @var PlayerRepository $playerRepository */
         $playerRepository = $serviceContainer->get(PlayerRepository::class);
 
         /** @var ClanRepository $clanRepository */
         $clanRepository = $serviceContainer->get(ClanRepository::class);
 
-        return new RankingImageService($playerRepository, $clanRepository);
+        return new RankingImageService(
+            $rootDir,
+            $playerRepository,
+            $clanRepository,
+        );
     }
 }

@@ -13,9 +13,15 @@ final class ImageControllerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $serviceContainer, string $serviceName): ImageController
     {
+        /** @var string $rootDir */
+        $rootDir = $serviceContainer->get('rootDir');
+
         /** @var Request $request */
         $request = $serviceContainer->get(Request::class);
 
-        return new ImageController($request);
+        return new ImageController(
+            $rootDir,
+            $request,
+        );
     }
 }

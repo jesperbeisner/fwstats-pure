@@ -10,6 +10,11 @@ use Stringable;
 
 final class Logger extends AbstractLogger
 {
+    public function __construct(
+        private readonly string $rootDir,
+    ) {
+    }
+
     /**
      * @param mixed[] $context
      */
@@ -22,7 +27,7 @@ final class Logger extends AbstractLogger
         $jsonContext = json_encode($context, JSON_THROW_ON_ERROR);
         $message = '[' . date('Y-m-d H:i:s') . '] ' . strtoupper($level) . ': ' . $message . ' ' . $jsonContext . PHP_EOL;
 
-        if (false === $outputStream = fopen(ROOT_DIR . '/data/logs/fwstats.log', 'a')) {
+        if (false === $outputStream = fopen($this->rootDir . '/data/logs/fwstats.log', 'a')) {
             throw new RuntimeException('Could not open stdout resource');
         }
 

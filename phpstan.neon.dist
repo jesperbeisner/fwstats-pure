@@ -4,5 +4,3 @@ parameters:
         - public
         - src
         - tests
-    ignoreErrors:
-        - '#Constant ROOT_DIR not found.#'

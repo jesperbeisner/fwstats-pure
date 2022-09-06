@@ -23,7 +23,7 @@
     },
     "scripts": {
         "csfixer": "vendor/bin/php-cs-fixer fix --diff",
-        "phpunit": "vendor/bin/phpunit --do-not-cache-result --debug",
+        "phpunit": "vendor/bin/phpunit --do-not-cache-result",
         "phpstan": "vendor/bin/phpstan",
         "test": {
             "csfixer": "@csfixer",

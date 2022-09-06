@@ -41,8 +41,18 @@ return [
         'controller' => [Controller\PingController::class, 'ping'],
     ],
     [
-        'route' => '/logs',
+        'route' => '/admin/logs',
         'methods' => ['GET'],
-        'controller' => [Controller\LogsController::class, 'logs'],
+        'controller' => [Controller\LogController::class, 'logs'],
+    ],
+    [
+        'route' => '/login',
+        'methods' => ['GET', 'POST'],
+        'controller' => [Controller\SecurityController::class, 'login'],
+    ],
+    [
+        'route' => '/logout',
+        'methods' => ['GET', 'POST'],
+        'controller' => [Controller\SecurityController::class, 'logout'],
     ],
 ];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Command;
 
 use DateTimeImmutable;
+use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\ImageService\RankingImageService;
 use Jesperbeisner\Fwstats\Model\Clan;
@@ -19,6 +20,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
+use Jesperbeisner\Fwstats\Repository\UserRepository;
 
 final class DatabaseFixtureCommand extends AbstractCommand
 {
@@ -27,6 +29,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     public function __construct(
         private readonly string $appEnv,
+        private readonly string $rootDir,
         private readonly PlayerRepository $playerRepository,
         private readonly ClanRepository $clanRepository,
         private readonly PlayerActiveSecondRepository $playerActiveSecondRepository,
@@ -34,13 +37,15 @@ final class DatabaseFixtureCommand extends AbstractCommand
         private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
         private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
         private readonly RankingImageService $rankingImageService,
+        private readonly UserRepository $userRepository,
+        private readonly CreateUserAction $createUserAction,
     ) {
     }
 
     public function execute(): int
     {
         if ($this->appEnv !== 'dev') {
-            $this->writeLine("Rhe 'app:database-fixture' command can only be executed in the dev environment.");
+            $this->writeLine("The 'app:database-fixture' command can only be executed in the dev environment.");
 
             return self::FAILURE;
         }
@@ -69,6 +74,9 @@ final class DatabaseFixtureCommand extends AbstractCommand
         $this->writeLine("Creating ranking images...");
         $this->createRankingImages();
 
+        $this->writeLine("Creating user account...");
+        $this->createUserAccount();
+
         $this->writeLine("Finished the 'app:database-fixture' command in {$this->getTime()} ms.");
 
         return self::SUCCESS;
@@ -76,7 +84,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayers(): void
     {
-        $playersFixtureData = require ROOT_DIR . '/data/fixtures/players.php';
+        $playersFixtureData = require $this->rootDir . '/data/fixtures/players.php';
 
         $this->playerRepository->deleteAll();
 
@@ -112,7 +120,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createClans(): void
     {
-        $clansFixtureData = require ROOT_DIR . '/data/fixtures/clans.php';
+        $clansFixtureData = require $this->rootDir . '/data/fixtures/clans.php';
 
         $this->clanRepository->deleteAll();
 
@@ -149,7 +157,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerPlaytimes(): void
     {
-        $playerPlaytimesFixtureData = require ROOT_DIR . '/data/fixtures/player-playtimes.php';
+        $playerPlaytimesFixtureData = require $this->rootDir . '/data/fixtures/player-playtimes.php';
 
         $this->playerActiveSecondRepository->deleteAll();
 
@@ -174,7 +182,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerNameHistories(): void
     {
-        $playerNameHistoriesFixtureData = require ROOT_DIR . '/data/fixtures/player-name-histories.php';
+        $playerNameHistoriesFixtureData = require $this->rootDir . '/data/fixtures/player-name-histories.php';
 
         $this->playerNameHistoryRepository->deleteAll();
 
@@ -201,7 +209,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerRaceHistories(): void
     {
-        $playerRaceHistoriesFixtureData = require ROOT_DIR . '/data/fixtures/player-race-histories.php';
+        $playerRaceHistoriesFixtureData = require $this->rootDir . '/data/fixtures/player-race-histories.php';
 
         $this->playerRaceHistoryRepository->deleteAll();
 
@@ -228,7 +236,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerProfessionHistories(): void
     {
-        $playerProfessionHistoriesFixtureData = require ROOT_DIR . '/data/fixtures/player-profession-histories.php';
+        $playerProfessionHistoriesFixtureData = require $this->rootDir . '/data/fixtures/player-profession-histories.php';
 
         $this->playerProfessionHistoryRepository->deleteAll();
 
@@ -258,5 +266,12 @@ final class DatabaseFixtureCommand extends AbstractCommand
         foreach (WorldEnum::cases() as $world) {
             $this->rankingImageService->create($world);
         }
+    }
+
+    private function createUserAccount(): void
+    {
+        $this->userRepository->deleteAll();
+        $this->createUserAction->configure(['email' => 'test@test.com', 'password' => 'Password123']);
+        $this->createUserAction->run();
     }
 }

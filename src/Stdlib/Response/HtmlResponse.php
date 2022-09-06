@@ -6,9 +6,12 @@ namespace Jesperbeisner\Fwstats\Stdlib\Response;
 
 use Jesperbeisner\Fwstats\Service\ViewRenderService;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
+use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 
 final class HtmlResponse implements ResponseInterface
 {
+    private SessionInterface $session;
+
     /**
      * @param array<string, mixed> $vars
      */
@@ -21,9 +24,16 @@ final class HtmlResponse implements ResponseInterface
 
     public function send(): never
     {
+        $viewRenderService = new ViewRenderService($this->template, $this->vars, $this->session);
+
         http_response_code($this->statusCode);
-        echo (new ViewRenderService($this->template, $this->vars))->render();
+        echo $viewRenderService->render();
 
         exit(0);
+    }
+
+    public function setSession(SessionInterface $session): void
+    {
+        $this->session = $session;
     }
 }

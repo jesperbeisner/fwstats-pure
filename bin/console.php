@@ -48,4 +48,6 @@ if (!$serviceContainer->has($commandClass)) {
 
 /** @var AbstractCommand $command */
 $command = $serviceContainer->get($commandClass);
+$command->setArguments($argv);
+
 exit($command->execute());

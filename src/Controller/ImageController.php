@@ -13,9 +13,10 @@ use Jesperbeisner\Fwstats\Stdlib\Response\ImageResponse;
 
 final class ImageController extends AbstractController
 {
-    private const RANKING_IMAGE = ROOT_DIR . '/data/images/[WORLD]-ranking.png';
+    private const RANKING_IMAGE = '/data/images/[WORLD]-ranking.png';
 
     public function __construct(
+        private readonly string $rootDir,
         private readonly Request $request,
     ) {
     }
@@ -33,6 +34,6 @@ final class ImageController extends AbstractController
             throw new NotFoundException();
         }
 
-        return new ImageResponse(str_replace('[WORLD]', $world->value, self::RANKING_IMAGE));
+        return new ImageResponse(str_replace('[WORLD]', $world->value, $this->rootDir . self::RANKING_IMAGE));
     }
 }

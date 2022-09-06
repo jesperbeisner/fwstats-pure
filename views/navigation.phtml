@@ -1,3 +1,10 @@
+<?php
+
+declare(strict_types=1);
+
+/** @var Jesperbeisner\Fwstats\Service\ViewRenderService $this */
+
+?>
 <nav id="navbar" class="navbar is-success mb-3" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
@@ -41,9 +48,31 @@
                         </a>
                     </div>
                 </div>
+
+                <?php if ($this->getSession()->getUser() !== null): ?>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Admin
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="/admin/logs">
+                                Logs
+                            </a>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="navbar-end">
+                <?php if ($this->getSession()->getUser() === null): ?>
+                    <a class="navbar-item" href="/login">
+                        Login
+                    </a>
+                <?php else: ?>
+                    <a class="navbar-item" href="/logout">
+                        Logout
+                    </a>
+                <?php endif; ?>
                 <div class="navbar-item">
                     <a id="github-logo" href="https://github.com/jesperbeisner/fwstats.de">
                         <svg xmlns="http://www.w3.org/2000/svg" class="github_logo" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">

@@ -14,9 +14,19 @@ abstract class AbstractCommand
     public static string $name = '';
     public static string $description = '';
 
+    /** @var string[] */
+    protected array $arguments = [];
     protected ?float $time = null;
 
     abstract public function execute(): int;
+
+    /**
+     * @param string[] $arguments
+     */
+    public function setArguments(array $arguments): void
+    {
+        $this->arguments = $arguments;
+    }
 
     protected function writeLine(string $text = ''): void
     {

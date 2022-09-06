@@ -13,6 +13,11 @@ final class LoggerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $serviceContainer, string $serviceName): LoggerInterface
     {
-        return new Logger();
+        /** @var string $rootDir */
+        $rootDir = $serviceContainer->get('rootDir');
+
+        return new Logger(
+            $rootDir,
+        );
     }
 }

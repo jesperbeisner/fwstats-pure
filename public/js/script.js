@@ -38,4 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
             actionFreewarTabContent.classList.add('is-hidden');
         });
     }
+
+    const $infoTexts = document.querySelectorAll('.info-text');
+    $infoTexts.forEach((infoText) => {
+        setTimeout(() => {
+            infoText.classList.add('is-hidden');
+        }, 2500);
+    });
 });

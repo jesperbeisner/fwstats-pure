@@ -8,11 +8,13 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
+use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
 final class IndexController extends AbstractController
 {
     public function __construct(
+        private readonly Request $request,
         private readonly PlayerRepository $playerRepository,
         private readonly ClanRepository $clanRepository,
     ) {
@@ -25,6 +27,8 @@ final class IndexController extends AbstractController
             'chaosPlayers' => $this->playerRepository->findAllByWorldAndOrderedByTotalXp(WorldEnum::CHAOS),
             'afsrvClans' => $this->clanRepository->findAllByWorld(WorldEnum::AFSRV),
             'chaosClans' => $this->clanRepository->findAllByWorld(WorldEnum::CHAOS),
+            'login' => $this->request->getGetParameter('login'),
+            'logout' => $this->request->getGetParameter('logout'),
         ]);
     }
 }

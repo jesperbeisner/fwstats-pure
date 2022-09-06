@@ -10,8 +10,10 @@ use Jesperbeisner\Fwstats\Controller\AbstractController;
 use Jesperbeisner\Fwstats\Model\Log;
 use Jesperbeisner\Fwstats\Repository\LogRepository;
 use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
+use Jesperbeisner\Fwstats\Stdlib\Exception\RedirectException;
 use Jesperbeisner\Fwstats\Stdlib\Exception\UnauthorizedException;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
+use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 use Jesperbeisner\Fwstats\Stdlib\Router;
@@ -31,17 +33,26 @@ final class App
     {
         $this->logRequestToDatabase();
 
+        /** @var SessionInterface $session */
+        $session = $this->serviceContainer->get(SessionInterface::class);
+        $session->start();
+
         /** @var Router $router */
         $router = $this->serviceContainer->get(Router::class);
-
         $routeResult = $router->match();
 
         if ($routeResult[0] === Dispatcher::NOT_FOUND) {
-            (new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404))->send();
+            $response = new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
+            $response->setSession($session);
+
+            $response->send();
         }
 
         if ($routeResult[0] === Dispatcher::METHOD_NOT_ALLOWED) {
-            (new HtmlResponse('error.phtml', ['message' => '405 - Method not allowed'], 405))->send();
+            $response = new HtmlResponse('error.phtml', ['message' => '405 - Method not allowed'], 405);
+            $response->setSession($session);
+
+            $response->send();
         }
 
         /** @var Request $request */
@@ -63,10 +74,27 @@ final class App
         try {
             /** @var ResponseInterface $response */
             $response = $controller->$controllerAction();
-        } catch (NotFoundException $e) {
-            (new HtmlResponse('error.phtml', ['message' => $e->getMessage()], 404))->send();
-        } catch (UnauthorizedException $e) {
-            (new HtmlResponse('error.phtml', ['message' => $e->getMessage()], 401))->send();
+        } catch (NotFoundException | UnauthorizedException | RedirectException $e) {
+            if ($e instanceof NotFoundException) {
+                $response = new HtmlResponse('error.phtml', ['message' => $e->getMessage()], 404);
+                $response->setSession($session);
+
+                $response->send();
+            }
+
+            if ($e instanceof UnauthorizedException) {
+                $response = new HtmlResponse('error.phtml', ['message' => $e->getMessage()], 401);
+                $response->setSession($session);
+
+                $response->send();
+            }
+
+            header(header: "Location: $e->route", response_code: 302);
+            exit(0);
+        }
+
+        if ($response instanceof HtmlResponse) {
+            $response->setSession($session);
         }
 
         $response->send();

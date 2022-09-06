@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Service;
 
 use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
+use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 
 final class ViewRenderService
 {
     private const TITLE = 'FWSTATS';
-    private const VIEWS_FOLDER = ROOT_DIR . '/views/';
+    private const VIEWS_FOLDER = __DIR__ . '/../../views/';
 
     private ?string $title = null;
 
@@ -18,7 +19,8 @@ final class ViewRenderService
      */
     public function __construct(
         private readonly string $template,
-        private readonly array $vars = [],
+        private readonly array $vars,
+        private readonly SessionInterface $session,
     ) {
     }
 
@@ -39,13 +41,13 @@ final class ViewRenderService
         return $content;
     }
 
-    public function get(string $id): mixed
+    public function get(string $key): mixed
     {
-        if (array_key_exists($id, $this->vars)) {
-            return $this->vars[$id];
+        if (array_key_exists($key, $this->vars)) {
+            return $this->vars[$key];
         }
 
-        throw new RuntimeException();
+        throw new RuntimeException("The variable with key '$key' does not exist.");
     }
 
     public function getTitle(): string
@@ -60,5 +62,10 @@ final class ViewRenderService
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public function getSession(): SessionInterface
+    {
+        return $this->session;
     }
 }

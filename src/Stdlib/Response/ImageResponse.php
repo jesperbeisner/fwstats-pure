@@ -8,7 +8,7 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 
 final class ImageResponse implements ResponseInterface
 {
-    private const PLACEHOLDER_IMAGE = ROOT_DIR . '/data/images/404-image.png';
+    private const PLACEHOLDER_IMAGE = __DIR__ . '/../../data/images/404-image.png';
 
     public function __construct(
         private readonly string $imageFileName

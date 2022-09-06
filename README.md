@@ -20,6 +20,9 @@ docker-compose exec php php bin/console.php app:database-migration
 docker-compose exec php php bin/console.php app:database-fixture
 
 # Visit http://localhost:8080
+
+# Test-Account-Mail: test@test.com
+# Test-Account-Password: Password123
 ```
 
 ### Prod

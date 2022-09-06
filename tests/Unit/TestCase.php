@@ -13,8 +13,16 @@ abstract class TestCase extends PHPUnitTestCase
 
     public function setUp(): void
     {
-        if (self::$serviceContainer === null) {
-            self::$serviceContainer = require __DIR__ . '/../../bootstrap.php';
-        }
+        /** @var ServiceContainer $serviceContainer */
+        $serviceContainer = require __DIR__ . '/../../bootstrap.php';
+
+        $serviceContainer->set('appEnv', 'test');
+
+        self::$serviceContainer = $serviceContainer;
+    }
+
+    public function tearDown(): void
+    {
+        self::$serviceContainer = null;
     }
 }
