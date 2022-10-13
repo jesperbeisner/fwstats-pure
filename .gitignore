@@ -9,4 +9,4 @@
 /data/logs/*
 !/data/logs/.gitkeep
 
-/config/config.local.php
+.env.local.php.dist

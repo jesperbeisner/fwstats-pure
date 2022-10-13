@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
-use PDO;
+use Jesperbeisner\Fwstats\Stdlib\Interface\DatabaseInterface;
 
 abstract class AbstractRepository
 {
     public function __construct(
-        protected readonly PDO $pdo,
+        protected readonly DatabaseInterface $database,
     ) {
     }
 }

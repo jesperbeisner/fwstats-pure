@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\ImageService;
 
 use GdImage;
 use Jesperbeisner\Fwstats\ImageService\Exception\ImageException;
+use Jesperbeisner\Fwstats\Stdlib\Config;
 
 abstract class AbstractImageService implements ImageServiceInterface
 {
@@ -18,7 +19,7 @@ abstract class AbstractImageService implements ImageServiceInterface
     protected array $colors = [];
 
     public function __construct(
-        private readonly string $rootDir,
+        private readonly Config $config,
     ) {
     }
 
@@ -51,7 +52,7 @@ abstract class AbstractImageService implements ImageServiceInterface
         $size = $size ?? 14;
         $color = $color ?? $this->colorBlack();
 
-        if (false === imagettftext($this->image, $size, $angle, $x, $y, $color, $this->rootDir . self::ROBOTO_FONT, $text)) {
+        if (false === imagettftext($this->image, $size, $angle, $x, $y, $color, $this->config->getRootDir() . self::ROBOTO_FONT, $text)) {
             throw new ImageException('Could not write to image.');
         }
     }
@@ -116,6 +117,6 @@ abstract class AbstractImageService implements ImageServiceInterface
 
     protected function getImageFolder(): string
     {
-        return $this->rootDir . self::IMAGE_FOLDER;
+        return $this->config->getRootDir() . self::IMAGE_FOLDER;
     }
 }

@@ -14,49 +14,46 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Stdlib\Config;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 
 class DatabaseFixtureCommandFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): DatabaseFixtureCommand
+    public function build(ContainerInterface $container, string $serviceId): DatabaseFixtureCommand
     {
-        /** @var string $appEnv */
-        $appEnv = $serviceContainer->get('appEnv');
-
-        /** @var string $rootDir */
-        $rootDir = $serviceContainer->get('rootDir');
+        /** @var Config $config */
+        $config = $container->get(Config::class);
 
         /** @var PlayerRepository $playerRepository */
-        $playerRepository = $serviceContainer->get(PlayerRepository::class);
+        $playerRepository = $container->get(PlayerRepository::class);
 
         /** @var ClanRepository $clanRepository */
-        $clanRepository = $serviceContainer->get(ClanRepository::class);
+        $clanRepository = $container->get(ClanRepository::class);
 
         /** @var PlayerActiveSecondRepository $playerActiveSecondRepository */
-        $playerActiveSecondRepository = $serviceContainer->get(PlayerActiveSecondRepository::class);
+        $playerActiveSecondRepository = $container->get(PlayerActiveSecondRepository::class);
 
         /** @var PlayerNameHistoryRepository $playerNameHistoryRepository */
-        $playerNameHistoryRepository = $serviceContainer->get(PlayerNameHistoryRepository::class);
+        $playerNameHistoryRepository = $container->get(PlayerNameHistoryRepository::class);
 
         /** @var PlayerRaceHistoryRepository $playerRaceHistoryRepository */
-        $playerRaceHistoryRepository = $serviceContainer->get(PlayerRaceHistoryRepository::class);
+        $playerRaceHistoryRepository = $container->get(PlayerRaceHistoryRepository::class);
 
         /** @var PlayerProfessionHistoryRepository $playerProfessionHistoryRepository */
-        $playerProfessionHistoryRepository = $serviceContainer->get(PlayerProfessionHistoryRepository::class);
+        $playerProfessionHistoryRepository = $container->get(PlayerProfessionHistoryRepository::class);
 
         /** @var RankingImageService $rankingImageService */
-        $rankingImageService = $serviceContainer->get(RankingImageService::class);
+        $rankingImageService = $container->get(RankingImageService::class);
 
         /** @var UserRepository $userRepository */
-        $userRepository = $serviceContainer->get(UserRepository::class);
+        $userRepository = $container->get(UserRepository::class);
 
         /** @var CreateUserAction $createUserAction */
-        $createUserAction = $serviceContainer->get(CreateUserAction::class);
+        $createUserAction = $container->get(CreateUserAction::class);
 
         return new DatabaseFixtureCommand(
-            $appEnv,
-            $rootDir,
+            $config,
             $playerRepository,
             $clanRepository,
             $playerActiveSecondRepository,

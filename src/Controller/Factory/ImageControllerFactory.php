@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller\Factory;
 
 use Jesperbeisner\Fwstats\Controller\ImageController;
+use Jesperbeisner\Fwstats\Stdlib\Config;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
-use Psr\Container\ContainerInterface;
 
 final class ImageControllerFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): ImageController
+    public function build(ContainerInterface $container, string $serviceId): ImageController
     {
-        /** @var string $rootDir */
-        $rootDir = $serviceContainer->get('rootDir');
+        /** @var Config $config */
+        $config = $container->get(Config::class);
 
         /** @var Request $request */
-        $request = $serviceContainer->get(Request::class);
+        $request = $container->get(Request::class);
 
         return new ImageController(
-            $rootDir,
+            $config,
             $request,
         );
     }

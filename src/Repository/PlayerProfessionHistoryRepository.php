@@ -11,16 +11,14 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\PlayerInterface;
 
 final class PlayerProfessionHistoryRepository extends AbstractRepository
 {
-    private string $table = 'players_profession_history';
-
     public function insert(PlayerProfessionHistory $playerProfessionHistory): void
     {
         $sql = <<<SQL
-            INSERT INTO {$this->table} (world, player_id, old_profession, new_profession, created)
+            INSERT INTO players_profession_history (world, player_id, old_profession, new_profession, created)
             VALUES (:world, :playerId, :oldProfession, :newProfession, :created)
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'world' => $playerProfessionHistory->world->value,
             'playerId' => $playerProfessionHistory->playerId,
             'oldProfession' => $playerProfessionHistory->oldProfession,
@@ -34,22 +32,16 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository
      */
     public function getProfessionChangesForPlayer(PlayerInterface $player): array
     {
-        $sql = "SELECT * FROM $this->table WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
+        $sql = "SELECT * FROM players_profession_history WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['world' => $player->getWorld()->value, 'playerId' => $player->getPlayerId()]);
+        $result = $this->database->select($sql, [
+            'world' => $player->getWorld()->value,
+            'playerId' => $player->getPlayerId(),
+        ]);
 
         $playerProfessionHistories = [];
-        while (false !== $row = $stmt->fetch()) {
-            /**
-             * @var array{
-             *     world: string,
-             *     player_id: int,
-             *     old_profession: string|null,
-             *     new_profession: string|null,
-             *     created: string
-             * } $row
-             */
+        foreach ($result as $row) {
+            /** @var array{world: string, player_id: int, old_profession: string|null, new_profession: string|null, created: string} $row */
             $playerProfessionHistories[] = $this->hydratePlayerProfessionHistory($row);
         }
 
@@ -58,10 +50,9 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository
 
     public function deleteAll(): void
     {
-        $sql = "DELETE FROM $this->table";
+        $sql = "DELETE FROM players_profession_history";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        $this->database->delete($sql);
     }
 
     /**

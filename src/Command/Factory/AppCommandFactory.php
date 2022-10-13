@@ -10,27 +10,27 @@ use Jesperbeisner\Fwstats\Importer\AchievementImporter;
 use Jesperbeisner\Fwstats\Importer\ClanImporter;
 use Jesperbeisner\Fwstats\Importer\PlayerImporter;
 use Jesperbeisner\Fwstats\Importer\PlaytimeImporter;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 
 class AppCommandFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): AppCommand
+    public function build(ContainerInterface $container, string $serviceId): AppCommand
     {
         /** @var ClanImporter $clanImporter */
-        $clanImporter = $serviceContainer->get(ClanImporter::class);
+        $clanImporter = $container->get(ClanImporter::class);
 
         /** @var PlayerImporter $playerImporter */
-        $playerImporter = $serviceContainer->get(PlayerImporter::class);
+        $playerImporter = $container->get(PlayerImporter::class);
 
         /** @var AchievementImporter $achievementImporter */
-        $achievementImporter = $serviceContainer->get(AchievementImporter::class);
+        $achievementImporter = $container->get(AchievementImporter::class);
 
         /** @var RankingImageService $rankingImageService */
-        $rankingImageService = $serviceContainer->get(RankingImageService::class);
+        $rankingImageService = $container->get(RankingImageService::class);
 
         /** @var PlaytimeImporter $playtimeImporter */
-        $playtimeImporter = $serviceContainer->get(PlaytimeImporter::class);
+        $playtimeImporter = $container->get(PlaytimeImporter::class);
 
         return new AppCommand(
             $clanImporter,

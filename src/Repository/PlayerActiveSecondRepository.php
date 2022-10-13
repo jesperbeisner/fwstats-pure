@@ -15,17 +15,15 @@ use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
 
 final class PlayerActiveSecondRepository extends AbstractRepository
 {
-    private string $table = 'players_active_seconds';
-
     public function insert(PlayerActiveSecond $playerActiveSecond): void
     {
         $sql = <<<SQL
-            UPDATE $this->table
+            UPDATE players_active_seconds
             SET seconds = :seconds
             WHERE world = :world AND player_id = :playerId AND created = :created
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->update($sql, [
             'world' => $playerActiveSecond->world->value,
             'playerId' => $playerActiveSecond->playerId,
             'seconds' => $playerActiveSecond->seconds,
@@ -33,11 +31,11 @@ final class PlayerActiveSecondRepository extends AbstractRepository
         ]);
 
         $sql = <<<SQL
-            INSERT OR IGNORE INTO $this->table (world, player_id, seconds, created)
+            INSERT OR IGNORE INTO players_active_seconds (world, player_id, seconds, created)
             VALUES (:world, :playerId, :seconds, :created)
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'world' => $playerActiveSecond->world->value,
             'playerId' => $playerActiveSecond->playerId,
             'seconds' => $playerActiveSecond->seconds,
@@ -51,15 +49,15 @@ final class PlayerActiveSecondRepository extends AbstractRepository
     public function insertPlayerActiveSeconds(array $playerActiveSeconds): void
     {
         try {
-            $this->pdo->beginTransaction();
+            $this->database->beginTransaction();
 
             foreach ($playerActiveSeconds as $playerActiveSecond) {
                 $this->insert($playerActiveSecond);
             }
 
-            $this->pdo->commit();
+            $this->database->commitTransaction();
         } catch (Exception $e) {
-            $this->pdo->rollBack();
+            $this->database->rollbackTransaction();
 
             throw $e;
         }
@@ -70,13 +68,15 @@ final class PlayerActiveSecondRepository extends AbstractRepository
      */
     public function findAllByWorldAndDate(WorldEnum $world, string $created): array
     {
-        $sql = "SELECT * FROM $this->table WHERE world = :world AND created = :created";
+        $sql = "SELECT * FROM players_active_seconds WHERE world = :world AND created = :created";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['world' => $world->value, 'created' => $created]);
+        $result = $this->database->select($sql, [
+            'world' => $world->value,
+            'created' => $created,
+        ]);
 
         $playerActiveSeconds = [];
-        while (false !== $row = $stmt->fetch()) {
+        foreach ($result as $row) {
             /** @var array{world: string, player_id: int, seconds: int, created: string} $row */
             $playerActiveSeconds[$row['player_id']] = new PlayerActiveSecond(
                 world: WorldEnum::from($row['world']),
@@ -117,15 +117,14 @@ final class PlayerActiveSecondRepository extends AbstractRepository
                 pas2.seconds - pas1.seconds DESC
         SQL;
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([
+        $result = $this->database->select($sql, [
             'world' => $world->value,
             'yesterday' => (new DateTimeImmutable('-1 day'))->format('Y-m-d'),
             'today' => (new DateTimeImmutable())->format('Y-m-d'),
         ]);
 
         $playtime = [];
-        while (false !== $row = $stmt->fetch()) {
+        foreach ($result as $row) {
             /** @var array{world: string, name: string, player_id: int, playtime: int} $row */
             $playtime[] = new Playtime(
                 world: WorldEnum::from($row['world']),
@@ -144,8 +143,9 @@ final class PlayerActiveSecondRepository extends AbstractRepository
     public function getPlaytimesForPlayer(Player $player, int $days): array
     {
         $sql = "SELECT ";
+
         for ($i = 1; $i < $days + 2; $i++) {
-            $sql .= "(SELECT seconds FROM $this->table WHERE player_id = :playerId and world = :world AND created = :day$i) AS 'day_$i',";
+            $sql .= "(SELECT seconds FROM players_active_seconds WHERE player_id = :playerId and world = :world AND created = :day$i) AS 'day_$i',";
         }
 
         $sql = rtrim($sql, ',');
@@ -160,23 +160,16 @@ final class PlayerActiveSecondRepository extends AbstractRepository
             $params["day$i"] = $date->modify('-1 day')->format('Y-m-d');
         }
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
+        /** @var array{array<string, int>} $result */
+        $result = $this->database->select($sql, $params);
 
-        $result = $stmt->fetch();
-
-        if (is_array($result)) {
-            return $result;
-        }
-
-        throw new DatabaseException('This should never happen!');
+        return $result[0];
     }
 
     public function deleteAll(): void
     {
-        $sql = "DELETE FROM $this->table";
+        $sql = "DELETE FROM players_active_seconds";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        $this->database->delete($sql);
     }
 }

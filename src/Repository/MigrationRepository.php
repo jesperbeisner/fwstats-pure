@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
+
 final class MigrationRepository extends AbstractRepository
 {
-    private string $table = 'migrations';
-
     public function createMigrationsTable(): void
     {
         $sql = <<<SQL
-            CREATE TABLE IF NOT EXISTS {$this->table} (
+            CREATE TABLE IF NOT EXISTS migrations (
                 id INTEGER PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
             )
         SQL;
 
-        $this->pdo->exec($sql);
+        $this->database->execute($sql);
     }
 
     /**
@@ -26,26 +26,32 @@ final class MigrationRepository extends AbstractRepository
      */
     public function findByFileName(string $fileName): ?array
     {
-        $sql = "SELECT * FROM {$this->table} WHERE name = :migration";
+        $sql = "SELECT * FROM migrations WHERE name = :migration";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['migration' => $fileName]);
+        /** @var array<array{id: int, name: string, created: string}> $result */
+        $result = $this->database->select($sql, [
+            'migration' => $fileName,
+        ]);
 
-        $result = $stmt->fetchAll();
         if (count($result) === 0) {
             return null;
         }
 
-        /** @var array{id: int, name: string, created: string} $result */
+        if (count($result) > 1) {
+            throw new DatabaseException('How can there be more than 1 migration for a single file name?');
+        }
 
-        return $result;
+        return $result[0];
     }
 
-    public function executeMigration(string $fileName, string $sql): void
+    public function executeMigration(string $migrationName, string $migrationSql): void
     {
-        $this->pdo->exec($sql);
+        $sql = "INSERT INTO migrations (name) VALUES (:migrationName)";
 
-        $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (name) VALUES (:migrationName)");
-        $stmt->execute(['migrationName' => $fileName]);
+        $this->database->execute($migrationSql);
+
+        $this->database->insert($sql, [
+            'migrationName' => $migrationName,
+        ]);
     }
 }

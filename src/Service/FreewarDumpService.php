@@ -13,7 +13,7 @@ use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
 
 final class FreewarDumpService implements FreewarDumpServiceInterface
 {
-    private const ADMINS = ['Sotrax', 'bwoebi', 'Nyrea', 'Andocai'];
+    private const ADMINS = ['Sotrax', 'bwoebi', 'Nyrea', 'Andocai', 'alexa'];
 
     private const PLAYERS_DUMP_URL = 'https://[WORLD].freewar.de/freewar/dump_players.php';
     private const CLANS_DUMP_URL = 'https://[WORLD].freewar.de/freewar/dump_clans.php';

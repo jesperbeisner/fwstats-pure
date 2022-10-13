@@ -10,31 +10,31 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
-use Psr\Container\ContainerInterface;
 
 final class ProfileControllerFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): ProfileController
+    public function build(ContainerInterface $container, string $serviceId): ProfileController
     {
         /** @var Request $request */
-        $request = $serviceContainer->get(Request::class);
+        $request = $container->get(Request::class);
 
         /** @var PlayerRepository $playerRepository */
-        $playerRepository = $serviceContainer->get(PlayerRepository::class);
+        $playerRepository = $container->get(PlayerRepository::class);
 
         /** @var PlaytimeService $playtimeService */
-        $playtimeService = $serviceContainer->get(PlaytimeService::class);
+        $playtimeService = $container->get(PlaytimeService::class);
 
         /** @var PlayerNameHistoryRepository $playerNameHistoryRepository */
-        $playerNameHistoryRepository = $serviceContainer->get(PlayerNameHistoryRepository::class);
+        $playerNameHistoryRepository = $container->get(PlayerNameHistoryRepository::class);
 
         /** @var PlayerRaceHistoryRepository $playerRaceHistoryRepository */
-        $playerRaceHistoryRepository = $serviceContainer->get(PlayerRaceHistoryRepository::class);
+        $playerRaceHistoryRepository = $container->get(PlayerRaceHistoryRepository::class);
 
         /** @var PlayerProfessionHistoryRepository $playerProfessionHistoryRepository */
-        $playerProfessionHistoryRepository = $serviceContainer->get(PlayerProfessionHistoryRepository::class);
+        $playerProfessionHistoryRepository = $container->get(PlayerProfessionHistoryRepository::class);
 
         return new ProfileController(
             $request,

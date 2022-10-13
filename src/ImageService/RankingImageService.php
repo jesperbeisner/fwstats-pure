@@ -10,15 +10,16 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\ImageService\Exception\ImageException;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
+use Jesperbeisner\Fwstats\Stdlib\Config;
 
 final class RankingImageService extends AbstractImageService
 {
     public function __construct(
-        string $rootDir,
+        Config $config,
         private readonly PlayerRepository $playerRepository,
         private readonly ClanRepository $clanRepository,
     ) {
-        parent::__construct($rootDir);
+        parent::__construct($config);
     }
 
     public function create(WorldEnum $world): void

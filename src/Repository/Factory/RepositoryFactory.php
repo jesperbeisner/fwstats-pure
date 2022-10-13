@@ -6,26 +6,27 @@ namespace Jesperbeisner\Fwstats\Repository\Factory;
 
 use Jesperbeisner\Fwstats\Repository\AbstractRepository;
 use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Stdlib\Interface\DatabaseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use PDO;
-use Psr\Container\ContainerInterface;
 use Throwable;
 
 class RepositoryFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): AbstractRepository
+    public function build(ContainerInterface $container, string $serviceId): AbstractRepository
     {
-        /** @var PDO $pdo */
-        $pdo = $serviceContainer->get(PDO::class);
+        /** @var DatabaseInterface $database */
+        $database = $container->get(DatabaseInterface::class);
 
         try {
-            $repository = new $serviceName($pdo);
+            $repository = new $serviceId($database);
         } catch (Throwable $e) {
-            throw new RuntimeException("Looks like '$serviceName' is not a valid repository class.");
+            throw new RuntimeException(sprintf('Looks like "%s" is not a valid repository class.', $serviceId));
         }
 
         if (!($repository instanceof AbstractRepository)) {
-            throw new RuntimeException("Looks like '$serviceName' is not a valid repository class.");
+            throw new RuntimeException(sprintf('Looks like "%s" is not a valid repository class.', $serviceId));
         }
 
         return $repository;

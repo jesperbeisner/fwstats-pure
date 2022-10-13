@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Stdlib\Config;
 use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
@@ -16,7 +17,7 @@ final class ImageController extends AbstractController
     private const RANKING_IMAGE = '/data/images/[WORLD]-ranking.png';
 
     public function __construct(
-        private readonly string $rootDir,
+        private readonly Config $config,
         private readonly Request $request,
     ) {
     }
@@ -30,10 +31,11 @@ final class ImageController extends AbstractController
     {
         /** @var string $worldString */
         $worldString = $this->request->getRouteParameter('world');
+
         if (null === $world = WorldEnum::tryFrom($worldString)) {
             throw new NotFoundException();
         }
 
-        return new ImageResponse(str_replace('[WORLD]', $world->value, $this->rootDir . self::RANKING_IMAGE));
+        return new ImageResponse(str_replace('[WORLD]', $world->value, $this->config->getRootDir() . self::RANKING_IMAGE));
     }
 }

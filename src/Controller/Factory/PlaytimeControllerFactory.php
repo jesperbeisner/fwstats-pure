@@ -6,15 +6,15 @@ namespace Jesperbeisner\Fwstats\Controller\Factory;
 
 use Jesperbeisner\Fwstats\Controller\PlaytimeController;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 
 final class PlaytimeControllerFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): PlaytimeController
+    public function build(ContainerInterface $container, string $serviceId): PlaytimeController
     {
         /** @var PlayerActiveSecondRepository $playerActiveSecondRepository */
-        $playerActiveSecondRepository = $serviceContainer->get(PlayerActiveSecondRepository::class);
+        $playerActiveSecondRepository = $container->get(PlayerActiveSecondRepository::class);
 
         return new PlaytimeController($playerActiveSecondRepository);
     }

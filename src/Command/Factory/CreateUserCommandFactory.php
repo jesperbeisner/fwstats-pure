@@ -6,18 +6,16 @@ namespace Jesperbeisner\Fwstats\Command\Factory;
 
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Command\CreateUserCommand;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 
 class CreateUserCommandFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): CreateUserCommand
+    public function build(ContainerInterface $container, string $serviceId): CreateUserCommand
     {
         /** @var CreateUserAction $createUserAction */
-        $createUserAction = $serviceContainer->get(CreateUserAction::class);
+        $createUserAction = $container->get(CreateUserAction::class);
 
-        return new CreateUserCommand(
-            $createUserAction,
-        );
+        return new CreateUserCommand($createUserAction);
     }
 }

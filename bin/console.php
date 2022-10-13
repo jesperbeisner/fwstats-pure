@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\Command\AbstractCommand;
-use Jesperbeisner\Fwstats\Stdlib\ServiceContainer;
+use Jesperbeisner\Fwstats\Stdlib\Container;
 
-/** @var ServiceContainer $serviceContainer */
-$serviceContainer = require __DIR__ . '/../bootstrap.php';
+/** @var Container $container */
+$container = require __DIR__ . '/../bootstrap.php';
 
-/** @var mixed[] $config */
-$config = $serviceContainer->get('config');
-
-/** @var string[] $commandStrings */
-$commandStrings = $config['commands'];
+/** @var array<class-string<AbstractCommand>> $commands */
+$commandStrings = require __DIR__ . '/../config/commands.php';
 
 if (!isset($argv[1])) {
     echo 'Available commands: ' . PHP_EOL . PHP_EOL;
@@ -41,13 +38,13 @@ if ($commandClass === null) {
     exit(1);
 }
 
-if (!$serviceContainer->has($commandClass)) {
+if (!$container->has($commandClass)) {
     echo "Command '$commandClass' not found in the service container. Did you forget to register it?" . PHP_EOL;
     exit(1);
 }
 
 /** @var AbstractCommand $command */
-$command = $serviceContainer->get($commandClass);
+$command = $container->get($commandClass);
 $command->setArguments($argv);
 
 exit($command->execute());

@@ -9,13 +9,11 @@ use Jesperbeisner\Fwstats\Model\Log;
 
 final class LogRepository extends AbstractRepository
 {
-    private string $table = 'logs';
-
     public function insert(Log $log): void
     {
-        $sql = "INSERT INTO $this->table (url, created) VALUES (:url, :created)";
+        $sql = "INSERT INTO logs (url, created) VALUES (:url, :created)";
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'url' => $log->url,
             'created' => $log->created->format('Y-m-d H:i:s'),
         ]);
@@ -26,13 +24,12 @@ final class LogRepository extends AbstractRepository
      */
     public function findLast250Logs(): array
     {
-        $sql = "SELECT * FROM $this->table ORDER BY id DESC LIMIT 250";
+        $sql = "SELECT * FROM logs ORDER BY id DESC LIMIT 250";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        $result = $this->database->select($sql);
 
         $logs = [];
-        while (false !== $row = $stmt->fetch()) {
+        foreach ($result as $row) {
             /** @var array{id: int, url: string, created: string} $row */
             $logs[] = $this->hydrateLog($row);
         }

@@ -29,7 +29,7 @@ docker-compose exec php php bin/console.php app:database-fixture
 
 ```bash
 # Create prod config and change needed values
-cp ./config/config.local.php.dist ./config/config.local.php
+cp ./.env.local.php.dist ./.env.local.php
 
 # Docker
 docker-compose -f docker-compose.prod.yml up -d --build

@@ -10,7 +10,6 @@ use Jesperbeisner\Fwstats\Importer;
 use Jesperbeisner\Fwstats\Repository;
 use Jesperbeisner\Fwstats\Service;
 use Jesperbeisner\Fwstats\Stdlib;
-use Psr\Log\LoggerInterface;
 
 return [
     // Controller
@@ -64,14 +63,11 @@ return [
 
     Repository\AchievementRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\LogRepository::class => Repository\Factory\RepositoryFactory::class,
-
-    Repository\UserRepository::class => Repository\Factory\UserRepositoryFactory::class,
+    Repository\UserRepository::class => Repository\Factory\RepositoryFactory::class,
 
     // Stdlib
-    PDO::class => Stdlib\Factory\PdoFactory::class,
-    LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,
     Stdlib\Request::class => Stdlib\Factory\RequestFactory::class,
-    Stdlib\Router::class => Stdlib\Factory\RouterFactory::class,
+    Stdlib\Interface\LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,
     Stdlib\Interface\SessionInterface::class => Stdlib\Factory\SessionFactory::class,
     Stdlib\Interface\DatabaseInterface::class => Stdlib\Factory\DatabaseFactory::class,
 ];

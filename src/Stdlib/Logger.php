@@ -4,34 +4,44 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib;
 
-use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
-use Psr\Log\AbstractLogger;
-use Stringable;
+use Jesperbeisner\Fwstats\Stdlib\Exception\LoggerException;
+use Jesperbeisner\Fwstats\Stdlib\Interface\LoggerInterface;
 
-final class Logger extends AbstractLogger
+final class Logger implements LoggerInterface
 {
+    private const LEVELS = ['INFO', 'ERROR'];
+
     public function __construct(
-        private readonly string $rootDir,
+        private readonly Config $config,
     ) {
     }
 
-    /**
-     * @param mixed[] $context
-     */
-    public function log($level, string|Stringable $message, array $context = []): void
+    public function log(string $level, string $message, array $context = []): void
     {
-        if (!is_string($level)) {
-            throw new RuntimeException('$level needs to be a string.');
+        if (!in_array($level, static::LEVELS)) {
+            throw new LoggerException(sprintf('"%s" is not a valid log level.', $level));
         }
 
         $jsonContext = json_encode($context, JSON_THROW_ON_ERROR);
         $message = '[' . date('Y-m-d H:i:s') . '] ' . strtoupper($level) . ': ' . $message . ' ' . $jsonContext . PHP_EOL;
 
-        if (false === $outputStream = fopen($this->rootDir . '/data/logs/fwstats.log', 'a')) {
-            throw new RuntimeException('Could not open stdout resource');
+        $logFile = $this->config->getRootDir() . '/data/logs/fwstats.log';
+
+        if (false === $logResource = fopen($logFile, 'a')) {
+            throw new LoggerException(sprintf('Could not open "%s".', $logFile));
         }
 
-        fwrite($outputStream, $message);
-        fclose($outputStream);
+        fwrite($logResource, $message);
+        fclose($logResource);
+    }
+
+    public function info(string $message, array $context = []): void
+    {
+        $this->log('INFO', $message, $context);
+    }
+
+    public function error(string $message, array $context = []): void
+    {
+        $this->log('ERROR', $message, $context);
     }
 }

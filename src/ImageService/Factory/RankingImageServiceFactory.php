@@ -7,24 +7,25 @@ namespace Jesperbeisner\Fwstats\ImageService\Factory;
 use Jesperbeisner\Fwstats\ImageService\RankingImageService;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
+use Jesperbeisner\Fwstats\Stdlib\Config;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 
 final class RankingImageServiceFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): RankingImageService
+    public function build(ContainerInterface $container, string $serviceId): RankingImageService
     {
-        /** @var string $rootDir */
-        $rootDir = $serviceContainer->get('rootDir');
+        /** @var Config $config */
+        $config = $container->get(Config::class);
 
         /** @var PlayerRepository $playerRepository */
-        $playerRepository = $serviceContainer->get(PlayerRepository::class);
+        $playerRepository = $container->get(PlayerRepository::class);
 
         /** @var ClanRepository $clanRepository */
-        $clanRepository = $serviceContainer->get(ClanRepository::class);
+        $clanRepository = $container->get(ClanRepository::class);
 
         return new RankingImageService(
-            $rootDir,
+            $config,
             $playerRepository,
             $clanRepository,
         );

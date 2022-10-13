@@ -14,39 +14,39 @@ use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Service\PlayerStatusService;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 
 final class PlayerImporterFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): PlayerImporter
+    public function build(ContainerInterface $container, string $serviceId): PlayerImporter
     {
         /** @var FreewarDumpServiceInterface $freewarDumpService */
-        $freewarDumpService = $serviceContainer->get(FreewarDumpServiceInterface::class);
+        $freewarDumpService = $container->get(FreewarDumpServiceInterface::class);
 
         /** @var ClanRepository $clanRepository */
-        $clanRepository = $serviceContainer->get(ClanRepository::class);
+        $clanRepository = $container->get(ClanRepository::class);
 
         /** @var PlayerRepository $playerRepository */
-        $playerRepository = $serviceContainer->get(PlayerRepository::class);
+        $playerRepository = $container->get(PlayerRepository::class);
 
         /** @var PlayerNameHistoryRepository $playerNameHistoryRepository */
-        $playerNameHistoryRepository = $serviceContainer->get(PlayerNameHistoryRepository::class);
+        $playerNameHistoryRepository = $container->get(PlayerNameHistoryRepository::class);
 
         /** @var PlayerRaceHistoryRepository $playerRaceHistoryRepository */
-        $playerRaceHistoryRepository = $serviceContainer->get(PlayerRaceHistoryRepository::class);
+        $playerRaceHistoryRepository = $container->get(PlayerRaceHistoryRepository::class);
 
         /** @var PlayerClanHistoryRepository $playerClanHistoryRepository */
-        $playerClanHistoryRepository = $serviceContainer->get(PlayerClanHistoryRepository::class);
+        $playerClanHistoryRepository = $container->get(PlayerClanHistoryRepository::class);
 
         /** @var PlayerProfessionHistoryRepository $playerProfessionHistoryRepository */
-        $playerProfessionHistoryRepository = $serviceContainer->get(PlayerProfessionHistoryRepository::class);
+        $playerProfessionHistoryRepository = $container->get(PlayerProfessionHistoryRepository::class);
 
         /** @var PlayerStatusHistoryRepository $playerStatusHistoryRepository */
-        $playerStatusHistoryRepository = $serviceContainer->get(PlayerStatusHistoryRepository::class);
+        $playerStatusHistoryRepository = $container->get(PlayerStatusHistoryRepository::class);
 
         /** @var PlayerStatusService $playerStatusService */
-        $playerStatusService = $serviceContainer->get(PlayerStatusService::class);
+        $playerStatusService = $container->get(PlayerStatusService::class);
 
         return new PlayerImporter(
             $freewarDumpService,

@@ -11,18 +11,19 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
 final class ClanRepository extends AbstractRepository
 {
-    private string $table = 'clans';
-
     /**
      * @return Clan[]
      */
     public function findAllByWorld(WorldEnum $world): array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE world = :world");
-        $stmt->execute(['world' => $world->value]);
+        $sql = "SELECT * FROM clans WHERE world = :world";
+
+        $result = $this->database->select($sql, [
+            'world' => $world->value,
+        ]);
 
         $clans = [];
-        while (false !== $row = $stmt->fetch()) {
+        foreach ($result as $row) {
             /** @var array<int|string|null> $row */
             $clans[$row['clan_id']] = $this->hydrateClan($row);
         }
@@ -33,11 +34,11 @@ final class ClanRepository extends AbstractRepository
     public function insert(Clan $clan): void
     {
         $sql = <<<SQL
-            INSERT INTO $this->table (world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points, created)
+            INSERT INTO clans (world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points, created)
             VALUES (:world, :clanId, :shortcut, :name, :leaderId, :coLeaderId, :diplomatId, :warPoints, :created)
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'world' => $clan->world->value,
             'clanId' => $clan->clanId,
             'shortcut' => $clan->shortcut,
@@ -55,20 +56,22 @@ final class ClanRepository extends AbstractRepository
      */
     public function insertClans(WorldEnum $world, array $clans): void
     {
-        $sql = "DELETE FROM $this->table WHERE world = :world";
+        $sql = "DELETE FROM clans WHERE world = :world";
 
         try {
-            $this->pdo->beginTransaction();
+            $this->database->beginTransaction();
 
-            $this->pdo->prepare($sql)->execute(['world' => $world->value]);
+            $this->database->delete($sql, [
+                'world' => $world->value,
+            ]);
 
             foreach ($clans as $clan) {
                 $this->insert($clan);
             }
 
-            $this->pdo->commit();
+            $this->database->commitTransaction();
         } catch (Exception $e) {
-            $this->pdo->rollBack();
+            $this->database->rollbackTransaction();
 
             throw $e;
         }
@@ -76,10 +79,9 @@ final class ClanRepository extends AbstractRepository
 
     public function deleteAll(): void
     {
-        $sql = "DELETE FROM $this->table";
+        $sql = "DELETE FROM clans";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        $this->database->delete($sql);
     }
 
     /**

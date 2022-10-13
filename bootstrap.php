@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-use Jesperbeisner\Fwstats\Stdlib\ServiceContainer;
+use Jesperbeisner\Fwstats\Stdlib\Config;
+use Jesperbeisner\Fwstats\Stdlib\DotEnvPhpLoader;
+use Jesperbeisner\Fwstats\Stdlib\Container;
+use Jesperbeisner\Fwstats\Stdlib\Router;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$config = require __DIR__ . '/config/config.php';
+DotEnvPhpLoader::load([__DIR__ . '/.env.php', __DIR__ . '/.env.local.php']);
 
-if (file_exists(__DIR__ . '/config/config.local.php')) {
-    $configLocal = require __DIR__ . '/config/config.local.php';
-    $config = array_merge($config, $configLocal);
-}
+$config = new Config(__DIR__ . '/config/config.php');
+$router = new Router(__DIR__ . '/config/routes.php');
 
-$serviceContainer = new ServiceContainer($config['services']);
+$serviceContainer = new Container(__DIR__ . '/config/services.php');
 
-$serviceContainer->set('config', $config);
-$serviceContainer->set('appEnv', $config['app_env']);
-$serviceContainer->set('rootDir', __DIR__);
+$serviceContainer->set(Config::class, $config);
+$serviceContainer->set(Router::class, $router);
 
 return $serviceContainer;

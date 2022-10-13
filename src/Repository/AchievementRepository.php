@@ -8,28 +8,34 @@ use Exception;
 use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
+use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
 
 final class AchievementRepository extends AbstractRepository
 {
-    private string $table = 'achievements';
-
     public function findByPlayer(Player $player): ?Achievement
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE world = :world AND player_id = :playerId");
-        $stmt->execute(['world' => $player->world->value, 'playerId' => $player->playerId]);
+        $sql = "SELECT * FROM achievements WHERE world = :world AND player_id = :playerId";
 
-        if (false === $achievementRow = $stmt->fetch()) {
+        $result = $this->database->select($sql, [
+            'world' => $player->world->value,
+            'playerId' => $player->playerId,
+        ]);
+
+        if (count($result) === 0) {
             return null;
         }
 
-        /** @var array<int|string> $achievementRow */
-        return $this->hydrateAchievement($achievementRow);
+        if (count($result) > 1) {
+            throw new DatabaseException('How can there be more than 1 achievement row for a single player?');
+        }
+
+        return $this->hydrateAchievement($result[0]);
     }
 
     public function insert(Achievement $achievement): void
     {
         $sql = <<<SQL
-            INSERT INTO $this->table (
+            INSERT INTO achievements (
                 world, player_id, fields_walked, fields_elixir, fields_run,
                 fields_run_fast, npc_kills_gold, normal_npc_killed, phase_npc_killed,
                 aggressive_npc_killed, invasion_npc_killed, unique_npc_killed, group_npc_killed,
@@ -42,7 +48,7 @@ final class AchievementRepository extends AbstractRepository
             )
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'world' => $achievement->world->value,
             'playerId' => $achievement->playerId,
             'fieldsWalked' => $achievement->fieldsWalked,
@@ -65,20 +71,22 @@ final class AchievementRepository extends AbstractRepository
      */
     public function insertAchievements(WorldEnum $world, array $achievements): void
     {
-        $sql = "DELETE FROM $this->table WHERE world = :world";
+        $sql = "DELETE FROM achievements WHERE world = :world";
 
         try {
-            $this->pdo->beginTransaction();
+            $this->database->beginTransaction();
 
-            $this->pdo->prepare($sql)->execute(['world' => $world->value]);
+            $this->database->delete($sql, [
+                'world' => $world->value,
+            ]);
 
             foreach ($achievements as $achievement) {
                 $this->insert($achievement);
             }
 
-            $this->pdo->commit();
+            $this->database->commitTransaction();
         } catch (Exception $e) {
-            $this->pdo->rollBack();
+            $this->database->rollbackTransaction();
 
             throw $e;
         }

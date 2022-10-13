@@ -6,19 +6,19 @@ namespace Jesperbeisner\Fwstats\Controller\Factory;
 
 use Jesperbeisner\Fwstats\Controller\LogController;
 use Jesperbeisner\Fwstats\Repository\LogRepository;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
-use Psr\Container\ContainerInterface;
 
 final class LogControllerFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): LogController
+    public function build(ContainerInterface $container, string $serviceId): LogController
     {
         /** @var SessionInterface $session */
-        $session = $serviceContainer->get(SessionInterface::class);
+        $session = $container->get(SessionInterface::class);
 
         /** @var LogRepository $logRepository */
-        $logRepository = $serviceContainer->get(LogRepository::class);
+        $logRepository = $container->get(LogRepository::class);
 
         return new LogController(
             $session,

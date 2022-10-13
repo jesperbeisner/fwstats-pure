@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib\Factory;
 
+use Jesperbeisner\Fwstats\Stdlib\Config;
 use Jesperbeisner\Fwstats\Stdlib\Database;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\DatabaseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 use PDO;
 
 final class DatabaseFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): DatabaseInterface
+    public function build(ContainerInterface $container, string $serviceId): DatabaseInterface
     {
-        /** @var string $rootDir */
-        $rootDir = $serviceContainer->get('rootDir');
+        /** @var Config $config */
+        $config = $container->get(Config::class);
 
         $options = [
             PDO::ATTR_EMULATE_PREPARES => false,
@@ -23,8 +24,8 @@ final class DatabaseFactory implements FactoryInterface
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ];
 
-        return new Database(
-            new PDO(dsn: 'sqlite:' . $rootDir . '/data/database/sqlite.db', options: $options),
-        );
+        $pdo = new PDO(dsn: 'sqlite:' . $config->getRootDir() . '/data/database/sqlite.db', options: $options);
+
+        return new Database($pdo);
     }
 }

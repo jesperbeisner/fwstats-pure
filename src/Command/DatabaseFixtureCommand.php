@@ -21,6 +21,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Stdlib\Config;
 
 final class DatabaseFixtureCommand extends AbstractCommand
 {
@@ -28,8 +29,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
     public static string $description = 'Loads fixtures for local development into the database.';
 
     public function __construct(
-        private readonly string $appEnv,
-        private readonly string $rootDir,
+        private readonly Config $config,
         private readonly PlayerRepository $playerRepository,
         private readonly ClanRepository $clanRepository,
         private readonly PlayerActiveSecondRepository $playerActiveSecondRepository,
@@ -44,7 +44,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     public function execute(): int
     {
-        if ($this->appEnv !== 'dev') {
+        if ($this->config->getAppEnv() !== 'dev') {
             $this->writeLine("The 'app:database-fixture' command can only be executed in the dev environment.");
 
             return self::FAILURE;
@@ -84,7 +84,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayers(): void
     {
-        $playersFixtureData = require $this->rootDir . '/data/fixtures/players.php';
+        $playersFixtureData = require $this->config->getRootDir() . '/data/fixtures/players.php';
 
         $this->playerRepository->deleteAll();
 
@@ -120,7 +120,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createClans(): void
     {
-        $clansFixtureData = require $this->rootDir . '/data/fixtures/clans.php';
+        $clansFixtureData = require $this->config->getRootDir() . '/data/fixtures/clans.php';
 
         $this->clanRepository->deleteAll();
 
@@ -157,7 +157,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerPlaytimes(): void
     {
-        $playerPlaytimesFixtureData = require $this->rootDir . '/data/fixtures/player-playtimes.php';
+        $playerPlaytimesFixtureData = require $this->config->getRootDir() . '/data/fixtures/player-playtimes.php';
 
         $this->playerActiveSecondRepository->deleteAll();
 
@@ -182,7 +182,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerNameHistories(): void
     {
-        $playerNameHistoriesFixtureData = require $this->rootDir . '/data/fixtures/player-name-histories.php';
+        $playerNameHistoriesFixtureData = require $this->config->getRootDir() . '/data/fixtures/player-name-histories.php';
 
         $this->playerNameHistoryRepository->deleteAll();
 
@@ -209,7 +209,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerRaceHistories(): void
     {
-        $playerRaceHistoriesFixtureData = require $this->rootDir . '/data/fixtures/player-race-histories.php';
+        $playerRaceHistoriesFixtureData = require $this->config->getRootDir() . '/data/fixtures/player-race-histories.php';
 
         $this->playerRaceHistoryRepository->deleteAll();
 
@@ -236,7 +236,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerProfessionHistories(): void
     {
-        $playerProfessionHistoriesFixtureData = require $this->rootDir . '/data/fixtures/player-profession-histories.php';
+        $playerProfessionHistoriesFixtureData = require $this->config->getRootDir() . '/data/fixtures/player-profession-histories.php';
 
         $this->playerProfessionHistoryRepository->deleteAll();
 

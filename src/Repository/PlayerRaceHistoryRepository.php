@@ -11,16 +11,14 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\PlayerInterface;
 
 final class PlayerRaceHistoryRepository extends AbstractRepository
 {
-    private string $table = 'players_race_history';
-
     public function insert(PlayerRaceHistory $playerRaceHistory): void
     {
         $sql = <<<SQL
-            INSERT INTO {$this->table} (world, player_id, old_race, new_race, created)
+            INSERT INTO players_race_history (world, player_id, old_race, new_race, created)
             VALUES (:world, :playerId, :oldRace, :newRace, :created)
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'world' => $playerRaceHistory->world->value,
             'playerId' => $playerRaceHistory->playerId,
             'oldRace' => $playerRaceHistory->oldRace,
@@ -34,22 +32,16 @@ final class PlayerRaceHistoryRepository extends AbstractRepository
      */
     public function getRaceChangesForPlayer(PlayerInterface $player): array
     {
-        $sql = "SELECT * FROM $this->table WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
+        $sql = "SELECT * FROM players_race_history WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['world' => $player->getWorld()->value, 'playerId' => $player->getPlayerId()]);
+        $result = $this->database->select($sql, [
+            'world' => $player->getWorld()->value,
+            'playerId' => $player->getPlayerId(),
+        ]);
 
         $playerRaceHistories = [];
-        while (false !== $row = $stmt->fetch()) {
-            /**
-             * @var array{
-             *     world: string,
-             *     player_id: int,
-             *     old_race: string,
-             *     new_race: string,
-             *     created: string
-             * } $row
-             */
+        foreach ($result as $row) {
+            /** @var array{world: string, player_id: int, old_race: string, new_race: string, created: string} $row */
             $playerRaceHistories[] = $this->hydratePlayerRaceHistory($row);
         }
 
@@ -58,10 +50,9 @@ final class PlayerRaceHistoryRepository extends AbstractRepository
 
     public function deleteAll(): void
     {
-        $sql = "DELETE FROM $this->table";
+        $sql = "DELETE FROM players_race_history";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        $this->database->delete($sql);
     }
 
     /**

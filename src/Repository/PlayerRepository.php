@@ -8,26 +8,28 @@ use DateTimeImmutable;
 use Exception;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
 
 final class PlayerRepository extends AbstractRepository
 {
-    private string $table = 'players';
-
     public function find(WorldEnum $world, int $playerId): ?Player
     {
-        $sql = "SELECT * FROM $this->table WHERE world = :world AND player_id = :playerId";
+        $sql = "SELECT * FROM players WHERE world = :world AND player_id = :playerId";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['world' => $world->value, 'playerId' => $playerId]);
+        $result = $this->database->select($sql, [
+            'world' => $world->value,
+            'playerId' => $playerId,
+        ]);
 
-        /** @var false|array<int|string|null> $playerData */
-        $playerData = $stmt->fetch();
-
-        if ($playerData === false) {
+        if (count($result) === 0) {
             return null;
         }
 
-        return $this->hydratePlayer($playerData);
+        if (count($result) > 1) {
+            throw new DatabaseException(sprintf('More than 1 player for the id "%s". How is this possible?', $playerId));
+        }
+
+        return $this->hydratePlayer($result[0]);
     }
 
     /**
@@ -35,14 +37,14 @@ final class PlayerRepository extends AbstractRepository
      */
     public function findAllByWorldAndOrderedByTotalXp(WorldEnum $world): array
     {
-        $sql = "SELECT * FROM $this->table WHERE world = :world ORDER BY total_xp DESC LIMIT 100";
+        $sql = "SELECT * FROM players WHERE world = :world ORDER BY total_xp DESC LIMIT 100";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['world' => $world->value]);
+        $result = $this->database->select($sql, [
+            'world' => $world->value,
+        ]);
 
         $players = [];
-        while (false !== $row = $stmt->fetch()) {
-            /** @var array<int|string|null> $row */
+        foreach ($result as $row) {
             $players[] = $this->hydratePlayer($row);
         }
 
@@ -54,11 +56,14 @@ final class PlayerRepository extends AbstractRepository
      */
     public function findAllByWorld(WorldEnum $world): array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE world = :world");
-        $stmt->execute(['world' => $world->value]);
+        $sql = "SELECT * FROM players WHERE world = :world";
+
+        $result = $this->database->select($sql, [
+            'world' => $world->value,
+        ]);
 
         $players = [];
-        while (false !== $row = $stmt->fetch()) {
+        foreach ($result as $row) {
             /** @var array<int|string|null> $row */
             $players[$row['player_id']] = $this->hydratePlayer($row);
         }
@@ -69,11 +74,11 @@ final class PlayerRepository extends AbstractRepository
     public function insert(Player $player): void
     {
         $sql = <<<SQL
-            INSERT INTO $this->table (world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp)
+            INSERT INTO players (world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp)
             VALUES (:world, :playerId, :name, :race, :clanId, :profession, :xp, :soulXp, :totalXp)
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'world' => $player->world->value,
             'playerId' => $player->playerId,
             'name' => $player->name,
@@ -91,20 +96,22 @@ final class PlayerRepository extends AbstractRepository
      */
     public function insertPlayers(WorldEnum $world, array $players): void
     {
-        $sql = "DELETE FROM $this->table WHERE world = :world";
+        $sql = "DELETE FROM players WHERE world = :world";
 
         try {
-            $this->pdo->beginTransaction();
+            $this->database->beginTransaction();
 
-            $this->pdo->prepare($sql)->execute(['world' => $world->value]);
+            $this->database->delete($sql, [
+                'world' => $world->value,
+            ]);
 
             foreach ($players as $player) {
                 $this->insert($player);
             }
 
-            $this->pdo->commit();
+            $this->database->commitTransaction();
         } catch (Exception $e) {
-            $this->pdo->rollBack();
+            $this->database->rollbackTransaction();
 
             throw $e;
         }
@@ -115,13 +122,14 @@ final class PlayerRepository extends AbstractRepository
      */
     public function getTop50PlayersByWorld(WorldEnum $world): array
     {
-        $sql = "SELECT * FROM $this->table WHERE world = :world ORDER BY total_xp DESC LIMIT 50";
+        $sql = "SELECT * FROM players WHERE world = :world ORDER BY total_xp DESC LIMIT 50";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['world' => $world->value]);
+        $result = $this->database->select($sql, [
+            'world' => $world->value,
+        ]);
 
         $players = [];
-        while (false !== $row = $stmt->fetch()) {
+        foreach ($result as $row) {
             /** @var array<int|string|null> $row */
             $players[] = $this->hydratePlayer($row);
         }
@@ -131,10 +139,9 @@ final class PlayerRepository extends AbstractRepository
 
     public function deleteAll(): void
     {
-        $sql = "DELETE FROM $this->table";
+        $sql = "DELETE FROM players";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        $this->database->delete($sql);
     }
 
     /**

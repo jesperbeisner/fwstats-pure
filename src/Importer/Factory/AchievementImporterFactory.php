@@ -8,21 +8,21 @@ use Jesperbeisner\Fwstats\Importer\AchievementImporter;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 
 final class AchievementImporterFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): AchievementImporter
+    public function build(ContainerInterface $container, string $serviceId): AchievementImporter
     {
         /** @var FreewarDumpServiceInterface $freewarDumpService */
-        $freewarDumpService = $serviceContainer->get(FreewarDumpServiceInterface::class);
+        $freewarDumpService = $container->get(FreewarDumpServiceInterface::class);
 
         /** @var PlayerRepository $playerRepository */
-        $playerRepository = $serviceContainer->get(PlayerRepository::class);
+        $playerRepository = $container->get(PlayerRepository::class);
 
         /** @var AchievementRepository $achievementRepository */
-        $achievementRepository = $serviceContainer->get(AchievementRepository::class);
+        $achievementRepository = $container->get(AchievementRepository::class);
 
         return new AchievementImporter(
             $freewarDumpService,

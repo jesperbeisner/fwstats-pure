@@ -10,27 +10,27 @@ use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Psr\Container\ContainerInterface;
 
 final class ClanImporterFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $serviceContainer, string $serviceName): ClanImporter
+    public function build(ContainerInterface $container, string $serviceId): ClanImporter
     {
         /** @var FreewarDumpServiceInterface $freewarDumpService */
-        $freewarDumpService = $serviceContainer->get(FreewarDumpServiceInterface::class);
+        $freewarDumpService = $container->get(FreewarDumpServiceInterface::class);
 
         /** @var ClanRepository $clanRepository */
-        $clanRepository = $serviceContainer->get(ClanRepository::class);
+        $clanRepository = $container->get(ClanRepository::class);
 
         /** @var ClanNameHistoryRepository $clanNamingHistoryRepository */
-        $clanNamingHistoryRepository = $serviceContainer->get(ClanNameHistoryRepository::class);
+        $clanNamingHistoryRepository = $container->get(ClanNameHistoryRepository::class);
 
         /** @var ClanDeletedHistoryRepository $clanDeletedHistoryRepository */
-        $clanDeletedHistoryRepository = $serviceContainer->get(ClanDeletedHistoryRepository::class);
+        $clanDeletedHistoryRepository = $container->get(ClanDeletedHistoryRepository::class);
 
         /** @var ClanCreatedHistoryRepository $clanCreatedHistoryRepository */
-        $clanCreatedHistoryRepository = $serviceContainer->get(ClanCreatedHistoryRepository::class);
+        $clanCreatedHistoryRepository = $container->get(ClanCreatedHistoryRepository::class);
 
         return new ClanImporter(
             $freewarDumpService,

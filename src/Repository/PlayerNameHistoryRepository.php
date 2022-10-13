@@ -11,16 +11,14 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\PlayerInterface;
 
 final class PlayerNameHistoryRepository extends AbstractRepository
 {
-    private string $table = 'players_name_history';
-
     public function insert(PlayerNameHistory $playerNameHistory): void
     {
         $sql = <<<SQL
-            INSERT INTO {$this->table} (world, player_id, old_name, new_name, created)
+            INSERT INTO players_name_history (world, player_id, old_name, new_name, created)
             VALUES (:world, :playerId, :oldName, :newName, :created)
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'world' => $playerNameHistory->world->value,
             'playerId' => $playerNameHistory->playerId,
             'oldName' => $playerNameHistory->oldName,
@@ -34,22 +32,15 @@ final class PlayerNameHistoryRepository extends AbstractRepository
      */
     public function getNameChangesByWorld(WorldEnum $world): array
     {
-        $sql = "SELECT * FROM $this->table WHERE world = :world ORDER BY created DESC";
+        $sql = "SELECT * FROM players_name_history WHERE world = :world ORDER BY created DESC";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['world' => $world->value]);
+        $result = $this->database->select($sql, [
+            'world' => $world->value,
+        ]);
 
         $playerNameHistories = [];
-        while (false !== $row = $stmt->fetch()) {
-            /**
-             * @var array{
-             *     world: string,
-             *     player_id: int,
-             *     old_name: string,
-             *     new_name: string,
-             *     created: string
-             * } $row
-             */
+        foreach ($result as $row) {
+            /** @var array{world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 
@@ -61,22 +52,16 @@ final class PlayerNameHistoryRepository extends AbstractRepository
      */
     public function getNameChangesForPlayer(PlayerInterface $player): array
     {
-        $sql = "SELECT * FROM $this->table WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
+        $sql = "SELECT * FROM players_name_history WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['world' => $player->getWorld()->value, 'playerId' => $player->getPlayerId()]);
+        $result = $this->database->select($sql, [
+            'world' => $player->getWorld()->value,
+            'playerId' => $player->getPlayerId(),
+        ]);
 
         $playerNameHistories = [];
-        while (false !== $row = $stmt->fetch()) {
-            /**
-             * @var array{
-             *     world: string,
-             *     player_id: int,
-             *     old_name: string,
-             *     new_name: string,
-             *     created: string
-             * } $row
-             */
+        foreach ($result as $row) {
+            /** @var array{world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 
@@ -85,10 +70,9 @@ final class PlayerNameHistoryRepository extends AbstractRepository
 
     public function deleteAll(): void
     {
-        $sql = "DELETE FROM $this->table";
+        $sql = "DELETE FROM players_name_history";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        $this->database->delete($sql);
     }
 
     /**

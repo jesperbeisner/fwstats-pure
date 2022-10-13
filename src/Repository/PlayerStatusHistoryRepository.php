@@ -8,16 +8,14 @@ use Jesperbeisner\Fwstats\Model\PlayerStatusHistory;
 
 final class PlayerStatusHistoryRepository extends AbstractRepository
 {
-    private string $table = 'players_status_history';
-
     public function insert(PlayerStatusHistory $playerStatusHistory): void
     {
         $sql = <<<SQL
-            INSERT INTO $this->table (world, player_id, name, status)
+            INSERT INTO players_status_history (world, player_id, name, status)
             VALUES (:world, :playerId, :name, :status)
         SQL;
 
-        $this->pdo->prepare($sql)->execute([
+        $this->database->insert($sql, [
             'world' => $playerStatusHistory->world->value,
             'playerId' => $playerStatusHistory->playerId,
             'name' => $playerStatusHistory->name,
