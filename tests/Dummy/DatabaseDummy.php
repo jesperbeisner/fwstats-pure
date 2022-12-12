@@ -6,29 +6,49 @@ namespace Jesperbeisner\Fwstats\Tests\Dummy;
 
 use Jesperbeisner\Fwstats\Stdlib\Interface\DatabaseInterface;
 
-class DatabaseDummy implements DatabaseInterface
+final class DatabaseDummy implements DatabaseInterface
 {
-    /** @var mixed[]|null */
-    public ?array $fetchOneResult = null;
+    /** @var mixed[] */
+    private array $selectReturn = [];
 
     /**
-     * @param mixed[]|null $fetchOneResult
+     * @param mixed[] $selectReturn
      */
-    public function setFetchOneResult(?array $fetchOneResult): void
+    public function setSelectReturn(array $selectReturn): void
     {
-        $this->fetchOneResult = $fetchOneResult;
+        $this->selectReturn = $selectReturn;
     }
 
-    public function deleteAll(string $tableName): void
+    public function execute(string $sql, array $params = []): void
     {
+    }
+
+    public function select(string $sql, array $params = []): array
+    {
+        return $this->selectReturn;
     }
 
     public function insert(string $sql, array $params = []): void
     {
     }
 
-    public function fetchOne(string $sql, array $params = []): ?array
+    public function update(string $sql, array $params = []): void
     {
-        return $this->fetchOneResult;
+    }
+
+    public function delete(string $sql, array $params = []): void
+    {
+    }
+
+    public function beginTransaction(): void
+    {
+    }
+
+    public function commitTransaction(): void
+    {
+    }
+
+    public function rollbackTransaction(): void
+    {
     }
 }

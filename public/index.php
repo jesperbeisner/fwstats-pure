@@ -3,9 +3,14 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\App;
-use Jesperbeisner\Fwstats\Stdlib\ServiceContainer;
+use Jesperbeisner\Fwstats\Middleware\MiddlewareInterface;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Stdlib\Request;
 
-/** @var ServiceContainer $serviceContainer */
-$serviceContainer = require __DIR__ . '/../bootstrap.php';
+/** @var ContainerInterface $container */
+$container = require __DIR__ . '/../bootstrap.php';
 
-(new App($serviceContainer))->run();
+/** @var array<class-string<MiddlewareInterface>> $middlewaresArray */
+$middlewaresArray = require __DIR__ . '/../config/middlewares.php';
+
+(new App($container, $middlewaresArray))->handle(Request::fromGlobals())->send();

@@ -5,25 +5,15 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Stdlib;
 
 use FastRoute;
-use Jesperbeisner\Fwstats\Stdlib\Exception\RouterException;
 
 final class Router
 {
-    private readonly array $routes;
-
-    public function __construct(string $routesFile)
-    {
-        if (!file_exists($routesFile)) {
-            throw new RouterException(sprintf('The provided routes file "%s" does not exist.', $routesFile));
-        }
-
-        $routesArray = require $routesFile;
-
-        if (!is_array($routesArray)) {
-            throw new RouterException(sprintf('The provided routes config file "%s" did not return an array.', $routesFile));
-        }
-
-        $this->routes = $routesArray;
+    /**
+     * @param array<array{route: string, methods: array<string>, controller: string, action: string}> $routes
+     */
+    public function __construct(
+        private readonly array $routes
+    ) {
     }
 
     /**
@@ -37,6 +27,6 @@ final class Router
             }
         });
 
-        return $dispatcher->dispatch($request->httpMethod, $request->uri);
+        return $dispatcher->dispatch($request->getHttpMethod(), $request->getUri());
     }
 }

@@ -18,7 +18,7 @@ final class Logger implements LoggerInterface
 
     public function log(string $level, string $message, array $context = []): void
     {
-        if (!in_array($level, static::LEVELS)) {
+        if (!in_array($level, static::LEVELS, true)) {
             throw new LoggerException(sprintf('"%s" is not a valid log level.', $level));
         }
 

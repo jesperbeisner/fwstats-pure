@@ -21,7 +21,7 @@ final class CreateUserCommand extends AbstractCommand
         $this->startTime();
         $this->writeLine("Starting the 'app:create-user' command...");
 
-        if (empty($this->arguments[2]) || empty($this->arguments[3])) {
+        if (!isset($this->arguments[2]) || !isset($this->arguments[3])) {
             $this->writeLine("Error: You forgot to pass the email and/or password to the 'app:create-user' command.");
 
             return self::FAILURE;

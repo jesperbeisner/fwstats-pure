@@ -25,11 +25,11 @@ final class CreateUserAction implements ActionInterface
 
     public function configure(array $data): void
     {
-        if (empty($data['email'])) {
+        if (!isset($data['email'])) {
             throw new ActionException("No email set in the 'AbstractAction::configure' method.");
         }
 
-        if (empty($data['password'])) {
+        if (!isset($data['password'])) {
             throw new ActionException("No password set in the 'AbstractAction::configure' method.");
         }
 
@@ -55,6 +55,10 @@ final class CreateUserAction implements ActionInterface
 
     public function run(): CreateUserActionResult
     {
+        if (!isset($this->email) || !isset($this->password)) {
+            throw new ActionException("You need to run 'configure' before you can use 'run'.");
+        }
+
         if (null !== $this->userRepository->findOneByEmail($this->email)) {
             throw new ActionException("A user with email '$this->email' already exists.");
         }

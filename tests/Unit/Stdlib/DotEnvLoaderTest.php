@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Tests\Unit\Stdlib;
 
-use Jesperbeisner\Fwstats\Stdlib\DotEnvPhpLoader;
+use Jesperbeisner\Fwstats\Stdlib\DotEnvLoader;
 use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jesperbeisner\Fwstats\Stdlib\DotEnvPhpLoader
+ * @covers \Jesperbeisner\Fwstats\Stdlib\DotEnvLoader
  */
-final class DotEnvPhpLoaderTest extends TestCase
+final class DotEnvLoaderTest extends TestCase
 {
     public function setUp(): void
     {
@@ -25,7 +25,7 @@ final class DotEnvPhpLoaderTest extends TestCase
 
     public function test_it_will_load_all_env_vars_right(): void
     {
-        DotEnvPhpLoader::load([__DIR__ . '/../../Fixtures/DotEnv/.env.valid-values.php']);
+        DotEnvLoader::load([__DIR__ . '/../../Fixtures/DotEnv/.env.valid-values.php']);
 
         static::assertSame('dev', $_ENV['APP_ENV']);
         static::assertSame('Hello world', $_ENV['STRING']);
@@ -36,7 +36,7 @@ final class DotEnvPhpLoaderTest extends TestCase
 
     public function test_it_will_overwrite_values_from_previous_files(): void
     {
-        DotEnvPhpLoader::load([
+        DotEnvLoader::load([
             __DIR__ . '/../../Fixtures/DotEnv/.env.valid-values.php',
             __DIR__ . '/../../Fixtures/DotEnv/.env.valid-values_second_file.php',
         ]);
@@ -50,27 +50,31 @@ final class DotEnvPhpLoaderTest extends TestCase
 
     public function test_it_will_throw_a_RuntimeException_when_the_file_does_not_return_an_array(): void
     {
-        $dotEnvPhpFile = __DIR__ . '/../../Fixtures/DotEnv/.env.no-array-return.php';
+        $dotEnvFile = __DIR__ . '/../../Fixtures/DotEnv/.env.no-array-return.php';
 
         static::expectException(RuntimeException::class);
-        static::expectExceptionMessage(sprintf('The file "%s" did not return an array.', $dotEnvPhpFile));
+        static::expectExceptionMessage(sprintf('The file "%s" did not return an array.', $dotEnvFile));
 
-        DotEnvPhpLoader::load([$dotEnvPhpFile]);
+        DotEnvLoader::load([$dotEnvFile]);
     }
 
     public function test_it_will_throw_a_RuntimeException_when_the_array_key_is_no_string(): void
     {
-        static::expectException(RuntimeException::class);
-        static::expectExceptionMessage('Only string values are allowed as array keys.');
+        $dotEnvFile = __DIR__ . '/../../Fixtures/DotEnv/.env.invalid-array-keys.php';
 
-        DotEnvPhpLoader::load([__DIR__ . '/../../Fixtures/DotEnv/.env.invalid-array-keys.php']);
+        static::expectException(RuntimeException::class);
+        static::expectExceptionMessage(sprintf('Only string values are allowed as array keys in file "%s".', $dotEnvFile));
+
+        DotEnvLoader::load([$dotEnvFile]);
     }
 
     public function test_it_will_throw_a_RuntimeException_when_the_array_value_is_not_scalar(): void
     {
-        static::expectException(RuntimeException::class);
-        static::expectExceptionMessage('Only scalar values are allowed as array values.');
+        $dotEnvFile = __DIR__ . '/../../Fixtures/DotEnv/.env.invalid-array-values.php';
 
-        DotEnvPhpLoader::load([__DIR__ . '/../../Fixtures/DotEnv/.env.invalid-array-values.php']);
+        static::expectException(RuntimeException::class);
+        static::expectExceptionMessage(sprintf('Only scalar values are allowed as array values in file "%s".', $dotEnvFile));
+
+        DotEnvLoader::load([$dotEnvFile]);
     }
 }

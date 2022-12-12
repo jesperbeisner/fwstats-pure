@@ -16,6 +16,7 @@ final class PlayerRepository extends AbstractRepository
     {
         $sql = "SELECT * FROM players WHERE world = :world AND player_id = :playerId";
 
+        /** @var array<array{world: string, player_id: string, name: string, race: string, xp: string, soul_xp: string, total_xp: string, clan_id: string, profession: string}> $result */
         $result = $this->database->select($sql, [
             'world' => $world->value,
             'playerId' => $playerId,
@@ -39,6 +40,7 @@ final class PlayerRepository extends AbstractRepository
     {
         $sql = "SELECT * FROM players WHERE world = :world ORDER BY total_xp DESC LIMIT 100";
 
+        /** @var array<array<string, int|string|null>> $result */
         $result = $this->database->select($sql, [
             'world' => $world->value,
         ]);

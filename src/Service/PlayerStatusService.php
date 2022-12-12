@@ -24,7 +24,10 @@ final class PlayerStatusService
             throw new RuntimeException("Could not get profile from player id '$player->playerId' and world '$world->value'.");
         }
 
-        $nameStartPosition = strpos($profile, self::NAME_START_NEEDLE);
+        if (false === $nameStartPosition = strpos($profile, self::NAME_START_NEEDLE)) {
+            throw new RuntimeException("Could not find 'NAME_START_NEEDLE' in profile.");
+        }
+
         $profile = substr($profile, $nameStartPosition + strlen(self::NAME_START_NEEDLE));
 
         /** @var int $nameEndPosition */

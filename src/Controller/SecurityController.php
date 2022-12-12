@@ -26,7 +26,7 @@ final class SecurityController extends AbstractController
             $email = $this->request->getPostParameter('email');
             $password = $this->request->getPostParameter('password');
 
-            if (empty($email) || empty($password)) {
+            if ($email === null || $password === null) {
                 throw new RedirectException('/login?error=fields-empty');
             }
 

@@ -7,6 +7,7 @@ namespace Jesperbeisner\Fwstats;
 use DateTimeImmutable;
 use FastRoute\Dispatcher;
 use Jesperbeisner\Fwstats\Controller\AbstractController;
+use Jesperbeisner\Fwstats\Middleware\MiddlewareInterface;
 use Jesperbeisner\Fwstats\Model\Log;
 use Jesperbeisner\Fwstats\Repository\LogRepository;
 use Jesperbeisner\Fwstats\Stdlib\Config;
@@ -19,23 +20,36 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
+use Jesperbeisner\Fwstats\Stdlib\Response\RedirectResponse;
 use Jesperbeisner\Fwstats\Stdlib\Router;
 use Throwable;
 
 final class App
 {
+    /**
+     * @param ContainerInterface $container
+     * @param array<class-string<MiddlewareInterface>> $middlewares
+     */
     public function __construct(
         private readonly ContainerInterface $container,
+        private readonly array $middlewares,
     ) {
-        $this->registerExceptionHandler();
     }
 
-    public function run(): never
+    public function handle(Request $request): ResponseInterface
     {
-        /** @var Request $request */
-        $request = $this->container->get(Request::class);
+        $this->container->set(Request::class, $request);
 
-        $this->logRequestToDatabase($request);
+        foreach ($this->middlewares as $middlewareName) {
+            /** @var MiddlewareInterface $middleware */
+            $middleware = $this->container->get($middlewareName);
+
+            $response = $middleware->run();
+
+            if ($response instanceof ResponseInterface) {
+                return $response;
+            }
+        }
 
         /** @var SessionInterface $session */
         $session = $this->container->get(SessionInterface::class);
@@ -59,9 +73,6 @@ final class App
             $response->send();
         }
 
-        /** @var Request $request */
-        $request = $this->container->get(Request::class);
-
         /** @var array<string, string> $routeParameters */
         $routeParameters = $routeResult[2];
         $request->setRouteParameters($routeParameters);
@@ -77,59 +88,29 @@ final class App
 
         try {
             /** @var ResponseInterface $response */
-            $response = $controller->$controllerAction();
+            $response = $controller->$controllerAction(); // @phpstan-ignore-line
         } catch (NotFoundException | UnauthorizedException | RedirectException $e) {
             if ($e instanceof NotFoundException) {
                 $response = new HtmlResponse('error.phtml', ['message' => $e->getMessage()], 404);
                 $response->setSession($session);
 
-                $response->send();
+                return $response;
             }
 
             if ($e instanceof UnauthorizedException) {
                 $response = new HtmlResponse('error.phtml', ['message' => $e->getMessage()], 401);
                 $response->setSession($session);
 
-                $response->send();
+                return $response;
             }
 
-            header(header: "Location: $e->route", response_code: 302);
-            exit(0);
+            return new RedirectResponse($e->route);
         }
 
         if ($response instanceof HtmlResponse) {
             $response->setSession($session);
         }
 
-        $response->send();
-    }
-
-    private function registerExceptionHandler(): void
-    {
-        set_exception_handler(function (Throwable $e): never {
-            /** @var Config $config */
-            $config = $this->container->get(Config::class);
-
-            /** @var LoggerInterface $logger */
-            $logger = $this->container->get(LoggerInterface::class);
-
-            $logger->error($e->getMessage());
-
-            if ($config->getAppEnv() === 'prod') {
-                (new HtmlResponse('error.phtml', ['message' => '500 - Server error'], 500))->send();
-            }
-
-            throw $e;
-        });
-    }
-
-    private function logRequestToDatabase(Request $request): void
-    {
-        /** @var LogRepository $logRepository */
-        $logRepository = $this->container->get(LogRepository::class);
-
-        $log = new Log($request->fullUri, new DateTimeImmutable());
-
-        $logRepository->insert($log);
+        return $response;
     }
 }

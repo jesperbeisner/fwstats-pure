@@ -9,9 +9,6 @@ use Jesperbeisner\Fwstats\Stdlib\Exception\ContainerException;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 
-/**
- * @see \Jesperbeisner\Fwstats\Tests\Unit\Stdlib\ContainerTest
- */
 final class Container implements ContainerInterface
 {
     /** @var array<string, class-string<FactoryInterface>>  */

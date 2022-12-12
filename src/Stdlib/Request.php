@@ -10,18 +10,43 @@ final class Request
     private array $routeParameters = [];
 
     /**
-     * @param mixed[] $getParameters
-     * @param mixed[] $postParameters
-     * @param mixed[] $cookieParameters
+     * @param array<string, string> $serverParameters
+     * @param array<string, string> $getParameters
+     * @param array<string, string> $postParameters
+     * @param array<string, string> $cookieParameters
      */
     public function __construct(
-        public readonly string $uri,
-        public readonly string $fullUri,
-        public readonly string $httpMethod,
+        private readonly array $serverParameters,
         private readonly array $getParameters,
         private readonly array $postParameters,
         private readonly array $cookieParameters
     ) {
+    }
+
+    public static function fromGlobals(): Request
+    {
+        return new Request($_SERVER, $_GET, $_POST, $_COOKIE);
+    }
+
+    public function getUri(): string
+    {
+        $uri = $this->serverParameters['REQUEST_URI'];
+
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+
+        return rawurldecode($uri);
+    }
+
+    public function getRequestUri(): string
+    {
+        return $this->serverParameters['REQUEST_URI'];
+    }
+
+    public function getHttpMethod(): string
+    {
+        return strtoupper($this->serverParameters['REQUEST_METHOD']);
     }
 
     /**
@@ -70,6 +95,6 @@ final class Request
 
     public function isPost(): bool
     {
-        return strtoupper($this->httpMethod) === 'POST';
+        return $this->getHttpMethod() === 'POST';
     }
 }

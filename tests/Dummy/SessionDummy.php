@@ -7,7 +7,7 @@ namespace Jesperbeisner\Fwstats\Tests\Dummy;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 
-class SessionDummy implements SessionInterface
+final class SessionDummy implements SessionInterface
 {
     /** @var mixed[] */
     private array $session = [];

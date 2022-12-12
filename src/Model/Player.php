@@ -51,45 +51,79 @@ final class Player implements PlayerInterface
         };
     }
 
+    /*
+     * You can certainly make it easier. I do not know... But it works.
+     */
     public function getSoulLevel(): ?int
     {
         if ($this->xp !== 200_000) {
             return null;
         }
 
-        switch ($this->soulXp) {
-            case $this->soulXp < 50_000:
-                return 0;
-            case $this->soulXp < 50_000 + 100_000:
-                return 1;
-            case $this->soulXp < 50_000 + 100_000 + 200_000:
-                return 2;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000:
-                return 3;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000:
-                return 4;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000:
-                return 5;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000:
-                return 6;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000 + 700_000:
-                return 7;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000 + 700_000 + 800_000:
-                return 8;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000 + 700_000 + 800_000 + 900_000:
-                return 9;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000 + 700_000 + 800_000 + 900_000 + 1_000_000:
-                return 10;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000 + 700_000 + 800_000 + 900_000 + 1_000_000 + 1_100_000:
-                return 11;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000 + 700_000 + 800_000 + 900_000 + 1_000_000 + 1_100_000 + 1_200_000:
-                return 12;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000 + 700_000 + 800_000 + 900_000 + 1_000_000 + 1_100_000 + 1_200_000 + 1_300_000:
-                return 13;
-            case $this->soulXp < 50_000 + 100_000 + 200_000 + 300_000 + 400_000 + 500_000 + 600_000 + 700_000 + 800_000 + 900_000 + 1_000_000 + 1_100_000 + 1_200_000 + 1_300_000 + 1_400_000:
-                return 14;
-            default:
-                return 100;
+        if ($this->soulXp < 50_000) {
+            return 0;
         }
+
+        if ($this->soulXp < 150_000) {
+            return 1;
+        }
+
+        if ($this->soulXp < 350_000) {
+            return 2;
+        }
+
+        if ($this->soulXp < 650_000) {
+            return 3;
+        }
+
+        if ($this->soulXp < 1_050_000) {
+            return 4;
+        }
+
+        if ($this->soulXp < 1_550_000) {
+            return 5;
+        }
+
+        if ($this->soulXp < 2_150_000) {
+            return 6;
+        }
+
+        if ($this->soulXp < 2_850_000) {
+            return 7;
+        }
+
+        if ($this->soulXp < 3_650_000) {
+            return 8;
+        }
+
+        if ($this->soulXp < 4_550_000) {
+            return 9;
+        }
+
+        if ($this->soulXp < 5_550_000) {
+            return 10;
+        }
+
+        if ($this->soulXp < 6_650_000) {
+            return 11;
+        }
+
+        if ($this->soulXp < 7_850_000) {
+            return 12;
+        }
+
+        if ($this->soulXp < 9_150_000) {
+            return 13;
+        }
+
+        if ($this->soulXp < 10_550_000) {
+            return 14;
+        }
+
+        if ($this->soulXp < 12_050_000) {
+            return 15;
+        }
+
+        return 100;
     }
 }

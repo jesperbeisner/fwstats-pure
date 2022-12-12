@@ -1,4 +1,5 @@
 /vendor/
+composer.lock
 
 /data/database/*
 !/data/database/.gitkeep
@@ -9,4 +10,5 @@
 /data/logs/*
 !/data/logs/.gitkeep
 
-.env.local.php.dist
+.env.local.php
+.phpunit.result.cache

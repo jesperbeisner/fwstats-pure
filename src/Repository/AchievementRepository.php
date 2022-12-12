@@ -16,6 +16,7 @@ final class AchievementRepository extends AbstractRepository
     {
         $sql = "SELECT * FROM achievements WHERE world = :world AND player_id = :playerId";
 
+        /** @var array<array<string, int|string>> $result */
         $result = $this->database->select($sql, [
             'world' => $player->world->value,
             'playerId' => $player->playerId,

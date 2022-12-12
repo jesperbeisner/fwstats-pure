@@ -1,6 +1,4 @@
-FROM php:8.1-fpm
-
-RUN apt update
+FROM php:8.2-fpm
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
@@ -11,5 +9,3 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY "./.docker/php/prod/php-extra.ini" "$PHP_INI_DIR/conf.d/php-extra.ini"
 COPY "./.docker/php/prod/php-opcache.ini" "$PHP_INI_DIR/conf.d/php-opcache.ini"
-
-RUN sed -i "s/expose_php = On/expose_php = Off/g" "$PHP_INI_DIR/php.ini"

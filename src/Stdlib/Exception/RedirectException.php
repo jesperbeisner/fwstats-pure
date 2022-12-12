@@ -11,5 +11,6 @@ final class RedirectException extends Exception
     public function __construct(
         public readonly string $route,
     ) {
+        parent::__construct();
     }
 }

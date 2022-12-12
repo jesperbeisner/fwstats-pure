@@ -7,6 +7,7 @@ use Jesperbeisner\Fwstats\Command;
 use Jesperbeisner\Fwstats\Controller;
 use Jesperbeisner\Fwstats\ImageService;
 use Jesperbeisner\Fwstats\Importer;
+use Jesperbeisner\Fwstats\Middleware;
 use Jesperbeisner\Fwstats\Repository;
 use Jesperbeisner\Fwstats\Service;
 use Jesperbeisner\Fwstats\Stdlib;
@@ -47,7 +48,6 @@ return [
 
     // Repositories
     Repository\MigrationRepository::class => Repository\Factory\RepositoryFactory::class,
-
     Repository\PlayerRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\PlayerNameHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\PlayerRaceHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
@@ -55,19 +55,20 @@ return [
     Repository\PlayerProfessionHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\PlayerStatusHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\PlayerActiveSecondRepository::class => Repository\Factory\RepositoryFactory::class,
-
     Repository\ClanRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\ClanNameHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\ClanCreatedHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\ClanDeletedHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
-
     Repository\AchievementRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\LogRepository::class => Repository\Factory\RepositoryFactory::class,
     Repository\UserRepository::class => Repository\Factory\RepositoryFactory::class,
 
     // Stdlib
-    Stdlib\Request::class => Stdlib\Factory\RequestFactory::class,
     Stdlib\Interface\LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,
     Stdlib\Interface\SessionInterface::class => Stdlib\Factory\SessionFactory::class,
     Stdlib\Interface\DatabaseInterface::class => Stdlib\Factory\DatabaseFactory::class,
+
+    // Middlewares
+    Middleware\ExceptionHandlerMiddleware::class => Middleware\Factory\ExceptionHandlerMiddlewareFactory::class,
+    Middleware\DatabaseRequestLoggerMiddleware::class => Middleware\Factory\DatabaseRequestLoggerMiddlewareFactory::class,
 ];

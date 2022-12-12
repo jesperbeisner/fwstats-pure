@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Tests\Unit;
 
-use Jesperbeisner\Fwstats\Stdlib\ServiceContainer;
+use Jesperbeisner\Fwstats\Stdlib\Container;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 abstract class TestCase extends PHPUnitTestCase
 {
-    protected static ?ServiceContainer $serviceContainer = null;
+    protected static ?Container $container = null;
 
     public function setUp(): void
     {
-        /** @var ServiceContainer $serviceContainer */
-        $serviceContainer = require __DIR__ . '/../../bootstrap.php';
+        /** @var Container $container */
+        $container = require __DIR__ . '/../../bootstrap.php';
 
-        $serviceContainer->set('appEnv', 'test');
+        $container->set('appEnv', 'test');
 
-        self::$serviceContainer = $serviceContainer;
+        self::$container = $container;
     }
 
     public function tearDown(): void
     {
-        self::$serviceContainer = null;
+        self::$container = null;
     }
 }

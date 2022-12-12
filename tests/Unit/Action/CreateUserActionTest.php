@@ -6,7 +6,6 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\Action;
 
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Action\Exception\ActionException;
-use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
 use PHPUnit\Framework\TestCase;
@@ -74,7 +73,14 @@ class CreateUserActionTest extends TestCase
     public function test_will_throw_ActionException_when_user_with_this_email_already_exists(): void
     {
         $database = new DatabaseDummy();
-        $database->setFetchOneResult(['uuid' => 'test', 'email' => 'test@test.com', 'password' => 'test', 'created' => '2022-01-01']);
+        $database->setSelectReturn([
+            [
+                'uuid' => 'test',
+                'email' => 'test@test.com',
+                'password' => 'test',
+                'created' => '2022-01-01',
+            ],
+        ]);
 
         $createUserAction = new CreateUserAction(new UserRepository($database));
 
@@ -94,6 +100,5 @@ class CreateUserActionTest extends TestCase
 
         self::assertTrue($createUserActionResult->isSuccess());
         self::assertArrayHasKey('user', $createUserActionResult->getData());
-        self::assertInstanceOf(User::class, $createUserActionResult->getUser());
     }
 }

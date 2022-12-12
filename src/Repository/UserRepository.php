@@ -27,6 +27,7 @@ final class UserRepository extends AbstractRepository
     {
         $sql = "SELECT uuid, email, password, created FROM users WHERE email = :email";
 
+        /** @var array<array{uuid: string, email: string, password: string, created: string}> $result */
         $result = $this->database->select($sql, [
             'email' => $email,
         ]);
