@@ -18,15 +18,15 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
-final class ProfileController implements ControllerInterface
+final readonly class ProfileController implements ControllerInterface
 {
     public function __construct(
-        private readonly Request $request,
-        private readonly PlayerRepository $playerRepository,
-        private readonly PlaytimeService $playtimeService,
-        private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,
-        private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
-        private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
+        private Request $request,
+        private PlayerRepository $playerRepository,
+        private PlaytimeService $playtimeService,
+        private PlayerNameHistoryRepository $playerNameHistoryRepository,
+        private PlayerRaceHistoryRepository $playerRaceHistoryRepository,
+        private PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
     ) {
     }
 
@@ -35,17 +35,17 @@ final class ProfileController implements ControllerInterface
         /** @var string $world */
         $world = $this->request->getRouteParameter('world');
         if (null === $world = WorldEnum::tryFrom($world)) {
-            return new HtmlResponse('error.phtml', ['404 - Page not found'], 404);
+            return new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
         }
 
         /** @var string $playerId */
         $playerId = $this->request->getRouteParameter('id');
         if (!is_numeric($playerId)) {
-            return new HtmlResponse('error.phtml', ['404 - Page not found'], 404);
+            return new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
         }
 
         if (null === $player = $this->playerRepository->find($world, (int) $playerId)) {
-            return new HtmlResponse('error.phtml', ['404 - Page not found'], 404);
+            return new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
         }
 
         $weeklyPlaytimes = $this->playtimeService->getPlaytimesForPlayer($player, 7);

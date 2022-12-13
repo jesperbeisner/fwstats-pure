@@ -12,13 +12,13 @@ use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 use Jesperbeisner\Fwstats\Stdlib\Response\ImageResponse;
 
-final class ImageRenderController implements ControllerInterface
+final readonly class ImageRenderController implements ControllerInterface
 {
     private const RANKING_IMAGE = '/data/images/[WORLD]-ranking.png';
 
     public function __construct(
-        private readonly Config $config,
-        private readonly Request $request,
+        private Config $config,
+        private Request $request,
     ) {
     }
 
@@ -28,7 +28,7 @@ final class ImageRenderController implements ControllerInterface
         $worldString = $this->request->getRouteParameter('world');
 
         if (null === $world = WorldEnum::tryFrom($worldString)) {
-            return new HtmlResponse('error.phtml', ['404 - Page not found'], 404);
+            return new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
         }
 
         $imageFileName = str_replace('[WORLD]', $world->value, $this->config->getRootDir() . ImageRenderController::RANKING_IMAGE);

@@ -8,3 +8,7 @@ parameters:
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
+
+rules:
+    - Jesperbeisner\Fwstats\PHPStan\ControllerKeywordsRule
+    - Jesperbeisner\Fwstats\PHPStan\ControllerImplementsInterfaceRule

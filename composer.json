@@ -38,7 +38,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jesperbeisner\\Fwstats\\Tests\\": "tests/"
+            "Jesperbeisner\\Fwstats\\Tests\\": "tests/",
+            "Jesperbeisner\\Fwstats\\PHPStan\\": ".phpstan/src",
+            "Jesperbeisner\\Fwstats\\PHPStan\\Tests\\": ".phpstan/tests"
         }
     },
     "config": {

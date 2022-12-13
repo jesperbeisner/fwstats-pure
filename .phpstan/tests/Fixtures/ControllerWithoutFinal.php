@@ -8,7 +8,7 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Response\JsonResponse;
 
-final readonly class StatusController implements ControllerInterface
+readonly class ControllerWithoutFinal implements ControllerInterface
 {
     public function __invoke(): ResponseInterface
     {

@@ -10,10 +10,10 @@ use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
-final class ChangeController implements ControllerInterface
+final readonly class ChangeController implements ControllerInterface
 {
     public function __construct(
-        private readonly PlayerNameHistoryRepository $playerNameHistoryRepository
+        private PlayerNameHistoryRepository $playerNameHistoryRepository
     ) {
     }
 

@@ -12,6 +12,7 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
+            <directory>.phpstan/tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
