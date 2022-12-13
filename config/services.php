@@ -17,11 +17,13 @@ return [
     Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
     Controller\ProfileController::class => Controller\Factory\ProfileControllerFactory::class,
     Controller\ImageController::class => Controller\Factory\ImageControllerFactory::class,
+    Controller\ImageRenderController::class => Controller\Factory\ImageRenderControllerFactory::class,
     Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
-    Controller\PingController::class => Controller\Factory\PingControllerFactory::class,
+    Controller\StatusController::class => Controller\Factory\StatusControllerFactory::class,
     Controller\ChangeController::class => Controller\Factory\ChangeControllerFactory::class,
     Controller\LogController::class => Controller\Factory\LogControllerFactory::class,
-    Controller\SecurityController::class => Controller\Factory\SecurityControllerFactory::class,
+    Controller\LoginController::class => Controller\Factory\LoginControllerFactory::class,
+    Controller\LogoutController::class => Controller\Factory\LogoutControllerFactory::class,
 
     // Actions
     Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,

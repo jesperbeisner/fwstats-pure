@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Jesperbeisner\Fwstats\Stdlib\Config;
 use Jesperbeisner\Fwstats\Stdlib\DotEnvLoader;
 use Jesperbeisner\Fwstats\Stdlib\Container;
+use Jesperbeisner\Fwstats\Stdlib\Interface\RouterInterface;
 use Jesperbeisner\Fwstats\Stdlib\Router;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -22,6 +23,6 @@ $router = new Router($routesArray);
 $serviceContainer = new Container(__DIR__ . '/config/services.php');
 
 $serviceContainer->set(Config::class, $config);
-$serviceContainer->set(Router::class, $router);
+$serviceContainer->set(RouterInterface::class, $router);
 
 return $serviceContainer;

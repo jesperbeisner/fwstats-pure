@@ -13,11 +13,12 @@ use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
 use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
-final class ProfileController extends AbstractController
+final class ProfileController implements ControllerInterface
 {
     public function __construct(
         private readonly Request $request,
@@ -29,22 +30,22 @@ final class ProfileController extends AbstractController
     ) {
     }
 
-    public function profile(): ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         /** @var string $world */
         $world = $this->request->getRouteParameter('world');
         if (null === $world = WorldEnum::tryFrom($world)) {
-            throw new NotFoundException();
+            return new HtmlResponse('error.phtml', ['404 - Page not found'], 404);
         }
 
         /** @var string $playerId */
         $playerId = $this->request->getRouteParameter('id');
         if (!is_numeric($playerId)) {
-            throw new NotFoundException();
+            return new HtmlResponse('error.phtml', ['404 - Page not found'], 404);
         }
 
         if (null === $player = $this->playerRepository->find($world, (int) $playerId)) {
-            throw new NotFoundException();
+            return new HtmlResponse('error.phtml', ['404 - Page not found'], 404);
         }
 
         $weeklyPlaytimes = $this->playtimeService->getPlaytimesForPlayer($player, 7);

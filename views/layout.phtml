@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 /** @var Jesperbeisner\Fwstats\Service\ViewRenderService $this */
+/** @var string $content */
 
 ?>
 <!doctype html>
@@ -21,10 +22,12 @@ declare(strict_types=1);
 </head>
 <body>
 
-<?php require __DIR__ . '/navigation.phtml' ?>
+    <?php require __DIR__ . '/navigation.phtml' ?>
 
-<main class="container">
-    <?= $content ?>
-</main>
+    <main class="container">
+        <?= $content ?>
+    </main>
+
+    <?php require __DIR__ . '/footer.phtml' ?>
 </body>
 </html>

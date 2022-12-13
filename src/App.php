@@ -4,25 +4,15 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats;
 
-use DateTimeImmutable;
 use FastRoute\Dispatcher;
-use Jesperbeisner\Fwstats\Controller\AbstractController;
 use Jesperbeisner\Fwstats\Middleware\MiddlewareInterface;
-use Jesperbeisner\Fwstats\Model\Log;
-use Jesperbeisner\Fwstats\Repository\LogRepository;
-use Jesperbeisner\Fwstats\Stdlib\Config;
-use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
-use Jesperbeisner\Fwstats\Stdlib\Exception\RedirectException;
-use Jesperbeisner\Fwstats\Stdlib\Exception\UnauthorizedException;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\LoggerInterface;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
+use Jesperbeisner\Fwstats\Stdlib\Interface\RouterInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
-use Jesperbeisner\Fwstats\Stdlib\Response\RedirectResponse;
-use Jesperbeisner\Fwstats\Stdlib\Router;
-use Throwable;
 
 final class App
 {
@@ -51,63 +41,33 @@ final class App
             }
         }
 
-        /** @var SessionInterface $session */
-        $session = $this->container->get(SessionInterface::class);
-        $session->start();
+        /** @var RouterInterface $router */
+        $router = $this->container->get(RouterInterface::class);
 
-        /** @var Router $router */
-        $router = $this->container->get(Router::class);
         $routeResult = $router->match($request);
 
         if ($routeResult[0] === Dispatcher::NOT_FOUND) {
             $response = new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
-            $response->setSession($session);
-
-            $response->send();
-        }
-
-        if ($routeResult[0] === Dispatcher::METHOD_NOT_ALLOWED) {
+        } elseif ($routeResult[0] === Dispatcher::METHOD_NOT_ALLOWED) {
             $response = new HtmlResponse('error.phtml', ['message' => '405 - Method not allowed'], 405);
-            $response->setSession($session);
+        } else {
+            /** @var array<string, string> $routeParameters */
+            $routeParameters = $routeResult[2];
+            $request->setRouteParameters($routeParameters);
 
-            $response->send();
-        }
+            /** @var class-string<ControllerInterface> $controllerName */
+            $controllerName = $routeResult[1];
 
-        /** @var array<string, string> $routeParameters */
-        $routeParameters = $routeResult[2];
-        $request->setRouteParameters($routeParameters);
+            /** @var ControllerInterface $controller */
+            $controller = $this->container->get($controllerName);
 
-        /** @var array{class-string<AbstractController>, string} $handler */
-        $handler = $routeResult[1];
-
-        $controllerClassName = $handler[0];
-        $controllerAction = $handler[1];
-
-        /** @var AbstractController $controller */
-        $controller = $this->container->get($controllerClassName);
-
-        try {
-            /** @var ResponseInterface $response */
-            $response = $controller->$controllerAction(); // @phpstan-ignore-line
-        } catch (NotFoundException | UnauthorizedException | RedirectException $e) {
-            if ($e instanceof NotFoundException) {
-                $response = new HtmlResponse('error.phtml', ['message' => $e->getMessage()], 404);
-                $response->setSession($session);
-
-                return $response;
-            }
-
-            if ($e instanceof UnauthorizedException) {
-                $response = new HtmlResponse('error.phtml', ['message' => $e->getMessage()], 401);
-                $response->setSession($session);
-
-                return $response;
-            }
-
-            return new RedirectResponse($e->route);
+            $response = $controller();
         }
 
         if ($response instanceof HtmlResponse) {
+            /** @var SessionInterface $session */
+            $session = $this->container->get(SessionInterface::class);
+
             $response->setSession($session);
         }
 

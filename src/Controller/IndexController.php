@@ -7,20 +7,21 @@ namespace Jesperbeisner\Fwstats\Controller;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
-final class IndexController extends AbstractController
+final readonly class IndexController implements ControllerInterface
 {
     public function __construct(
-        private readonly Request $request,
-        private readonly PlayerRepository $playerRepository,
-        private readonly ClanRepository $clanRepository,
+        private Request $request,
+        private PlayerRepository $playerRepository,
+        private ClanRepository $clanRepository,
     ) {
     }
 
-    public function index(): ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         return new HtmlResponse('index/index.phtml', [
             'afsrvPlayers' => $this->playerRepository->findAllByWorldAndOrderedByTotalXp(WorldEnum::AFSRV),

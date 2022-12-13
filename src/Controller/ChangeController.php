@@ -6,17 +6,18 @@ namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
-final class ChangeController extends AbstractController
+final class ChangeController implements ControllerInterface
 {
     public function __construct(
         private readonly PlayerNameHistoryRepository $playerNameHistoryRepository
     ) {
     }
 
-    public function name(): ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         return new HtmlResponse('changes/names.phtml', [
             'afsrvNameChanges' => $this->playerNameHistoryRepository->getNameChangesByWorld(WorldEnum::AFSRV),

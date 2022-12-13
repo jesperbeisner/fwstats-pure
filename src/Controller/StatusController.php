@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Controller;
 
+use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Response\JsonResponse;
 
-final class PingController extends AbstractController
+final class StatusController implements ControllerInterface
 {
-    public function ping(): ResponseInterface
+    public function __invoke(): ResponseInterface
     {
-        return new JsonResponse(['ping' => 'pong']);
+        return new JsonResponse();
     }
 }

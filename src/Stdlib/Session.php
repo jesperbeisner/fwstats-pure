@@ -18,32 +18,10 @@ final class Session implements SessionInterface
     ) {
     }
 
-    public function start(): void
-    {
-        if ($this->isSessionStarted() === false) {
-            $options = [
-                'name' => 'FWSTATS',
-            ];
-
-            if (session_start($options) === false) {
-                throw new SessionException('Could not start the session?! o.O');
-            }
-        }
-    }
-
-    public function destroy(): void
-    {
-        if ($this->isSessionStarted()) {
-            $this->user = null;
-            $_SESSION = [];
-            session_destroy();
-        }
-    }
-
     public function get(string $key): mixed
     {
         if ($this->isSessionStarted() === false) {
-            throw new SessionException('The session has not been started yet.');
+            $this->start();
         }
 
         return $_SESSION[$key] ?? null;
@@ -52,7 +30,7 @@ final class Session implements SessionInterface
     public function set(string $key, mixed $value): void
     {
         if ($this->isSessionStarted() === false) {
-            throw new SessionException('The session has not been started yet.');
+            $this->start();
         }
 
         $_SESSION[$key] = $value;
@@ -82,6 +60,31 @@ final class Session implements SessionInterface
     public function setUser(User $user): void
     {
         $this->set('user', $user->email);
+    }
+
+    public function destroy(): void
+    {
+        if ($this->isSessionStarted()) {
+            $this->user = null;
+            $_SESSION = [];
+
+            setcookie(session_id(), '', time() - 3600);
+            session_destroy();
+            session_write_close();
+        }
+    }
+
+    private function start(): void
+    {
+        if ($this->isSessionStarted() === false) {
+            $options = [
+                'name' => 'FWSTATS',
+            ];
+
+            if (session_start($options) === false) {
+                throw new SessionException('Could not start the session?! o.O');
+            }
+        }
     }
 
     private function isSessionStarted(): bool

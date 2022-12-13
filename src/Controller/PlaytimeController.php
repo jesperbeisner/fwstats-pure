@@ -6,17 +6,18 @@ namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
+use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
 
-final class PlaytimeController extends AbstractController
+final readonly class PlaytimeController implements ControllerInterface
 {
     public function __construct(
-        private readonly PlayerActiveSecondRepository $playerActiveSecondRepository
+        private PlayerActiveSecondRepository $playerActiveSecondRepository
     ) {
     }
 
-    public function playtime(): ResponseInterface
+    public function __invoke(): ResponseInterface
     {
         return new HtmlResponse('playtime/playtime.phtml', [
             'afsrvPlaytime' => $this->playerActiveSecondRepository->getPlaytimeByWorld(WorldEnum::AFSRV),

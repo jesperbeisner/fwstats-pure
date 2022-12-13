@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Controller\Factory;
 
-use Jesperbeisner\Fwstats\Controller\SecurityController;
+use Jesperbeisner\Fwstats\Controller\LoginController;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 
-final class SecurityControllerFactory implements FactoryInterface
+final class LoginControllerFactory implements FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): SecurityController
+    public function build(ContainerInterface $container, string $serviceId): LoginController
     {
         /** @var Request $request */
         $request = $container->get(Request::class);
@@ -24,7 +24,7 @@ final class SecurityControllerFactory implements FactoryInterface
         /** @var UserRepository $userRepository */
         $userRepository = $container->get(UserRepository::class);
 
-        return new SecurityController(
+        return new LoginController(
             $request,
             $session,
             $userRepository,

@@ -13,10 +13,6 @@ final class SessionDummy implements SessionInterface
     private array $session = [];
     private ?User $user = null;
 
-    public function start(): void
-    {
-    }
-
     public function destroy(): void
     {
     }

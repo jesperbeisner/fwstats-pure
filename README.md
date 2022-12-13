@@ -1,8 +1,6 @@
-# fwstats.de
+# fwstats
 
 ## Setup
-
-❗ Docker needs to be installed on your machine ❗
 
 ### Local
 

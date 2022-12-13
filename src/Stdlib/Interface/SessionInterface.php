@@ -8,10 +8,6 @@ use Jesperbeisner\Fwstats\Model\User;
 
 interface SessionInterface
 {
-    public function start(): void;
-
-    public function destroy(): void;
-
     public function get(string $key): mixed;
 
     public function set(string $key, mixed $value): void;
@@ -19,4 +15,6 @@ interface SessionInterface
     public function getUser(): ?User;
 
     public function setUser(User $user): void;
+
+    public function destroy(): void;
 }
