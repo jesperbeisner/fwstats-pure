@@ -35,7 +35,8 @@ jobs:
     steps:
       - name: Run the deployment script
         uses: appleboy/ssh-action@master
-        if: github.ref_name == 'master'
+        #if: github.ref_name == 'master'
+        if: github.ref_name == 'deactivated-at-the-moment'
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
