@@ -10,12 +10,12 @@ use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 
-final class AchievementImporter implements ImporterInterface
+final readonly class AchievementImporter implements ImporterInterface
 {
     public function __construct(
-        private readonly FreewarDumpServiceInterface $freewarDumpService,
-        private readonly PlayerRepository $playerRepository,
-        private readonly AchievementRepository $achievementRepository,
+        private FreewarDumpServiceInterface $freewarDumpService,
+        private PlayerRepository $playerRepository,
+        private AchievementRepository $achievementRepository,
     ) {
     }
 
