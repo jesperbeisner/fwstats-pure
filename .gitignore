@@ -5,7 +5,7 @@ composer.lock
 !/data/database/.gitkeep
 
 /data/images/*
-!/data/images/404-image.png
+!/data/404-image.png
 
 /data/logs/*
 !/data/logs/.gitkeep

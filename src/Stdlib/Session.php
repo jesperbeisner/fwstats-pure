@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib;
 
+use Jesperbeisner\Fwstats\Enum\FlashEnum;
+use Jesperbeisner\Fwstats\Exception\SessionException;
+use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
-use Jesperbeisner\Fwstats\Stdlib\Exception\SessionException;
-use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 
 final class Session implements SessionInterface
 {
+    private bool $started = false;
     private ?User $user = null;
 
     public function __construct(
@@ -18,18 +20,31 @@ final class Session implements SessionInterface
     ) {
     }
 
-    public function get(string $key): mixed
+    public function start(): void
     {
-        if ($this->isSessionStarted() === false) {
+        if ($this->started === true) {
+            return;
+        }
+
+        if (session_start() === false) {
+            throw new SessionException('Could not start the session?! o.O');
+        }
+
+        $this->started = true;
+    }
+
+    public function get(string $key): string|int|float|bool|null
+    {
+        if ($this->started === false) {
             $this->start();
         }
 
         return $_SESSION[$key] ?? null;
     }
 
-    public function set(string $key, mixed $value): void
+    public function set(string $key, string|int|float|bool $value): void
     {
-        if ($this->isSessionStarted() === false) {
+        if ($this->started === false) {
             $this->start();
         }
 
@@ -62,33 +77,28 @@ final class Session implements SessionInterface
         $this->set('user', $user->email);
     }
 
+    public function unset(string $key): void
+    {
+        unset($_SESSION[$key]);
+    }
+
+    public function setFlash(FlashEnum $flashEnum, string $message): void
+    {
+        $_SESSION[$flashEnum->value][] = $message;
+    }
+
+    public function getFlash(FlashEnum $flashEnum): array
+    {
+        $messages = $_SESSION[$flashEnum->value] ?? [];
+
+        unset($_SESSION[$flashEnum->value]);
+
+        return $messages;
+    }
+
     public function destroy(): void
     {
-        if ($this->isSessionStarted()) {
-            $this->user = null;
-            $_SESSION = [];
-
-            setcookie(session_id(), '', time() - 3600);
-            session_destroy();
-            session_write_close();
-        }
-    }
-
-    private function start(): void
-    {
-        if ($this->isSessionStarted() === false) {
-            $options = [
-                'name' => 'FWSTATS',
-            ];
-
-            if (session_start($options) === false) {
-                throw new SessionException('Could not start the session?! o.O');
-            }
-        }
-    }
-
-    private function isSessionStarted(): bool
-    {
-        return session_status() === PHP_SESSION_ACTIVE;
+        $_SESSION = [];
+        $this->user = null;
     }
 }

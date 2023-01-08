@@ -6,13 +6,14 @@ namespace Jesperbeisner\Fwstats\Importer;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerClanHistory;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
 use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
-use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\PlayerStatusHistory;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerClanHistoryRepository;
@@ -21,7 +22,6 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
-use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Service\PlayerStatusService;
 
 final class PlayerImporter implements ImporterInterface

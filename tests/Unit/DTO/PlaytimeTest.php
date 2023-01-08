@@ -21,9 +21,9 @@ class PlaytimeTest extends TestCase
     {
         $playtime = new Playtime(WorldEnum::AFSRV, 'Test', 1, $playtime);
 
-        static::assertSame($hours, $playtime->getHours());
-        static::assertSame($minutes, $playtime->getMinutes());
-        static::assertSame($seconds, $playtime->getSeconds());
+        self::assertSame($hours, $playtime->getHours());
+        self::assertSame($minutes, $playtime->getMinutes());
+        self::assertSame($seconds, $playtime->getSeconds());
     }
 
     public function providePlaytimeData(): Generator

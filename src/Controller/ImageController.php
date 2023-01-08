@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Controller;
 
-use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
-use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
+use Jesperbeisner\Fwstats\Stdlib\Request;
+use Jesperbeisner\Fwstats\Stdlib\Response;
 
 final readonly class ImageController implements ControllerInterface
 {
-    public function __invoke(): ResponseInterface
+    public function execute(Request $request): Response
     {
-        return new HtmlResponse('image/ranking.phtml');
+        return Response::html('image/ranking.phtml');
     }
 }

@@ -6,9 +6,9 @@ namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
 use Exception;
-use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
+use Jesperbeisner\Fwstats\Exception\DatabaseException;
+use Jesperbeisner\Fwstats\Model\Player;
 
 final class PlayerRepository extends AbstractRepository
 {

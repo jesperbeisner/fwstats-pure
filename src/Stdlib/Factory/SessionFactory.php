@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib\Factory;
 
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Stdlib\Session;
 
 final class SessionFactory implements FactoryInterface

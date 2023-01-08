@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Tests\Unit\Action\Result;
 
 use DateTimeImmutable;
-use Jesperbeisner\Fwstats\Action\Exception\ActionResultException;
-use Jesperbeisner\Fwstats\Action\Interface\ActionResultInterface;
-use Jesperbeisner\Fwstats\Action\Result\CreateUserActionResult;
+use Jesperbeisner\Fwstats\Exception\ActionResultException;
+use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
 use Jesperbeisner\Fwstats\Model\User;
+use Jesperbeisner\Fwstats\Result\CreateUserActionResult;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jesperbeisner\Fwstats\Action\Result\CreateUserActionResult
+ * @covers \Jesperbeisner\Fwstats\Result\CreateUserActionResult
  */
 class CreateUserActionResultTest extends TestCase
 {

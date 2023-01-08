@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib;
 
-use FastRoute;
-use Jesperbeisner\Fwstats\Stdlib\Interface\RouterInterface;
+use FastRoute\Dispatcher as DispatcherInterface;
+use Jesperbeisner\Fwstats\Controller\NotFoundController;
+use Jesperbeisner\Fwstats\Interface\RouterInterface;
 
-final class Router implements RouterInterface
+final readonly class Router implements RouterInterface
 {
-    /**
-     * @param array<array{route: string, methods: array<string>, controller: string}> $routes
-     */
     public function __construct(
-        private readonly array $routes
+        private DispatcherInterface $dispatcher,
     ) {
     }
 
-    /**
-     * TODO: Change return to object
-     *
-     * @return mixed[]
-     */
-    public function match(Request $request): array
+    public function route(Request $request): void
     {
-        $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {
-            foreach ($this->routes as $route) {
-                $routeCollector->addRoute($route['methods'], $route['route'], $route['controller']);
-            }
-        });
+        $routeInfo = $this->dispatcher->dispatch($request->getHttpMethod(), $request->getUri());
 
-        return $dispatcher->dispatch($request->getHttpMethod(), $request->getUri());
+        if ($routeInfo[0] === DispatcherInterface::NOT_FOUND) {
+            $request->setController(NotFoundController::class);
+            return;
+        }
+
+        if ($routeInfo[0] === DispatcherInterface::METHOD_NOT_ALLOWED) {
+            $allowedMethods = $routeInfo[1];
+            return;
+        }
+
+        $request->setController($routeInfo[1]);
+        $request->setRouteParameters($routeInfo[2]);
     }
 }

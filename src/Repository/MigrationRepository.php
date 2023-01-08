@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
-use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
+use Jesperbeisner\Fwstats\Exception\DatabaseException;
 
 final class MigrationRepository extends AbstractRepository
 {

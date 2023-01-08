@@ -11,7 +11,6 @@ use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
-use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
 
 final class PlayerActiveSecondRepository extends AbstractRepository
 {

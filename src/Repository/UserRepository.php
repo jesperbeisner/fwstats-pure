@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
+use Jesperbeisner\Fwstats\Exception\DatabaseException;
 use Jesperbeisner\Fwstats\Model\User;
-use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
-use Jesperbeisner\Fwstats\Stdlib\Interface\DatabaseInterface;
 
 final class UserRepository extends AbstractRepository
 {

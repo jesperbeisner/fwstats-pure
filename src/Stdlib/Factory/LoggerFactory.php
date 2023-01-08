@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib\Factory;
 
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
+use Jesperbeisner\Fwstats\Interface\LoggerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Config;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\LoggerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Logger;
 
 final class LoggerFactory implements FactoryInterface
@@ -17,6 +17,8 @@ final class LoggerFactory implements FactoryInterface
         /** @var Config $config */
         $config = $container->get(Config::class);
 
-        return new Logger($config);
+        $logFile = $config->getString('log_file');
+
+        return new Logger($logFile);
     }
 }

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Importer\Factory;
 
 use Jesperbeisner\Fwstats\Importer\ClanImporter;
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
+use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Repository\ClanCreatedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
-use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 
 final class ClanImporterFactory implements FactoryInterface
 {

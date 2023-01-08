@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Service\Factory;
 
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Service\PlayerStatusService;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 
 class PlayerStatusServiceFactory implements FactoryInterface
 {

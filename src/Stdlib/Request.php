@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib;
 
+use Jesperbeisner\Fwstats\Exception\RuntimeException;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
+
 final class Request
 {
+    /** @var null|class-string<ControllerInterface> */
+    private ?string $controller = null;
+
     /** @var array<string, string> */
     private array $routeParameters = [];
 
@@ -50,6 +56,22 @@ final class Request
     }
 
     /**
+     * @param class-string<ControllerInterface> $controller
+     */
+    public function setController(string $controller): void
+    {
+        $this->controller = $controller;
+    }
+
+    /**
+     * @return null|class-string<ControllerInterface>
+     */
+    public function getController(): ?string
+    {
+        return $this->controller;
+    }
+
+    /**
      * @param array<string, string> $routeParameters
      */
     public function setRouteParameters(array $routeParameters): void
@@ -59,11 +81,7 @@ final class Request
 
     public function getRouteParameter(string $id): ?string
     {
-        if (array_key_exists($id, $this->routeParameters)) {
-            return $this->routeParameters[$id];
-        }
-
-        return null;
+        return $this->routeParameters[$id] ?? throw new RuntimeException(sprintf('Route parameter with id "%s" does not exist.', $id));
     }
 
     public function getGetParameter(string $id): ?string
@@ -93,8 +111,28 @@ final class Request
         return null;
     }
 
+    public function isGet(): bool
+    {
+        return $this->getHttpMethod() === 'GET';
+    }
+
     public function isPost(): bool
     {
         return $this->getHttpMethod() === 'POST';
+    }
+
+    public function isPut(): bool
+    {
+        return $this->getHttpMethod() === 'PUT';
+    }
+
+    public function isPatch(): bool
+    {
+        return $this->getHttpMethod() === 'PATCH';
+    }
+
+    public function isDelete(): bool
+    {
+        return $this->getHttpMethod() === 'DELETE';
     }
 }

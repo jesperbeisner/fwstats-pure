@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
-use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
+use Jesperbeisner\Fwstats\Stdlib\Request;
+use Jesperbeisner\Fwstats\Stdlib\Response;
 
 final readonly class PlaytimeController implements ControllerInterface
 {
@@ -17,9 +17,9 @@ final readonly class PlaytimeController implements ControllerInterface
     ) {
     }
 
-    public function __invoke(): ResponseInterface
+    public function execute(Request $request): Response
     {
-        return new HtmlResponse('playtime/playtime.phtml', [
+        return Response::html('playtime/playtime.phtml', [
             'afsrvPlaytime' => $this->playerActiveSecondRepository->getPlaytimeByWorld(WorldEnum::AFSRV),
             'chaosPlaytime' => $this->playerActiveSecondRepository->getPlaytimeByWorld(WorldEnum::CHAOS)
         ]);

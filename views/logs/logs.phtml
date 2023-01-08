@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\Model\Log;
-use Jesperbeisner\Fwstats\Service\ViewRenderService;
+use Jesperbeisner\Fwstats\Service\RenderService;
 
-/** @var ViewRenderService $this */
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
 
 /** @var Log[] $logs */
-$logs = $this->vars['logs'];
+$logs = $vars['logs'];
 
 $this->setTitle('Logs');
 

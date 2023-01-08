@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Controller;
 
-use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
-use Jesperbeisner\Fwstats\Stdlib\Response\RedirectResponse;
+use Jesperbeisner\Fwstats\Enum\FlashEnum;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
+use Jesperbeisner\Fwstats\Interface\SessionInterface;
+use Jesperbeisner\Fwstats\Stdlib\Request;
+use Jesperbeisner\Fwstats\Stdlib\Response;
 
 final readonly class LogoutController implements ControllerInterface
 {
@@ -16,10 +17,12 @@ final readonly class LogoutController implements ControllerInterface
     ) {
     }
 
-    public function __invoke(): ResponseInterface
+    public function execute(Request $request): Response
     {
         $this->session->destroy();
 
-        return new RedirectResponse('/?logout=success');
+        $this->session->setFlash(FlashEnum::SUCCESS, 'Du wurdest erfolgreich ausgeloggt.');
+
+        return Response::redirect('/');
     }
 }

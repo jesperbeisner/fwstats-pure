@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-/** @var Jesperbeisner\Fwstats\Service\ViewRenderService $this */
-
 use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Helper\Html;
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
 
 $this->setTitle('Spielzeit');
 
 /** @var Playtime[] $afsrvPlaytime */
-$afsrvPlaytime = $this->vars['afsrvPlaytime'];
+$afsrvPlaytime = $vars['afsrvPlaytime'];
 
 /** @var Playtime[] $chaosPlaytime */
-$chaosPlaytime = $this->vars['chaosPlaytime'];
+$chaosPlaytime = $vars['chaosPlaytime'];
 
 ?>
 <div id="playtime" class="mb-5">

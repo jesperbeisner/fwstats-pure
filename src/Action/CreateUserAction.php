@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Action;
 
 use DateTimeImmutable;
-use Jesperbeisner\Fwstats\Action\Exception\ActionException;
-use Jesperbeisner\Fwstats\Action\Interface\ActionInterface;
-use Jesperbeisner\Fwstats\Action\Interface\ActionResultInterface;
-use Jesperbeisner\Fwstats\Action\Result\CreateUserActionResult;
+use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Helper\UuidV4;
+use Jesperbeisner\Fwstats\Interface\ActionInterface;
+use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Result\CreateUserActionResult;
 
 final class CreateUserAction implements ActionInterface
 {

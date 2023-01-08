@@ -4,70 +4,50 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib;
 
-use Exception;
-use Jesperbeisner\Fwstats\Stdlib\Exception\ContainerException;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
+use Jesperbeisner\Fwstats\Exception\ContainerException;
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 
 final class Container implements ContainerInterface
 {
-    /** @var array<string, class-string<FactoryInterface>>  */
-    private array $serviceFactories;
-
     /** @var array<string, mixed> */
     private array $services = [];
 
-    public function __construct(string $servicesFile)
-    {
-        if (!file_exists($servicesFile)) {
-            throw new ContainerException(sprintf('The provided services file "%s" does not exist.', $servicesFile));
-        }
-
-        $serviceFactories = require $servicesFile;
-
-        if (!is_array($serviceFactories)) {
-            throw new ContainerException(sprintf('The provided services file "%s" did not return an array.', $servicesFile));
-        }
-
-        $this->serviceFactories = $serviceFactories;
+    /**
+     * @param array<string, class-string<FactoryInterface>> $factories
+     */
+    public function __construct(
+        private readonly array $factories,
+    ) {
     }
 
-    public function set(string $serviceId, mixed $service): void
+    public function set(string $key, mixed $value): void
     {
-        $this->services[$serviceId] = $service;
+        $this->services[$key] = $value;
     }
 
-    public function get(string $serviceId): mixed
+    public function get(string $key): mixed
     {
-        if (array_key_exists($serviceId, $this->services)) {
-            return $this->services[$serviceId];
+        if (array_key_exists($key, $this->services)) {
+            return $this->services[$key];
         }
 
-        if (array_key_exists($serviceId, $this->serviceFactories)) {
-            /** @var class-string<FactoryInterface> $factoryClassName */
-            $factoryClassName = $this->serviceFactories[$serviceId];
+        if (array_key_exists($key, $this->factories)) {
+            $this->services[$key] = (new $this->factories[$key]())->build($this, $key);
 
-            try {
-                $service = (new $factoryClassName())->build($this, $serviceId);
-            } catch (Exception $e) {
-                throw new ContainerException($e->getMessage());
-            }
-
-            $this->services[$serviceId] = $service;
-
-            return $service;
+            return $this->services[$key];
         }
 
-        throw new ContainerException(sprintf('Service with id "%s" does not exist in the Container. Did you forget to register it?', $serviceId));
+        throw new ContainerException(sprintf('Service with key "%s" does not exist in the container. Did you forget to register it in the "config.php" file?', $key));
     }
 
-    public function has(string $serviceId): bool
+    public function has(string $key): bool
     {
-        if (array_key_exists($serviceId, $this->services)) {
+        if (array_key_exists($key, $this->services)) {
             return true;
         }
 
-        if (array_key_exists($serviceId, $this->serviceFactories)) {
+        if (array_key_exists($key, $this->factories)) {
             return true;
         }
 

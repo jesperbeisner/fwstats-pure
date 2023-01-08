@@ -3,15 +3,16 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
-use Jesperbeisner\Fwstats\Service\ViewRenderService;
+use Jesperbeisner\Fwstats\Service\RenderService;
 
-/** @var ViewRenderService $this */
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
 
 /** @var PlayerNameHistory[] $afsrvNameChanges */
-$afsrvNameChanges = $this->vars['afsrvNameChanges'];
+$afsrvNameChanges = $vars['afsrvNameChanges'];
 
 /** @var PlayerNameHistory[] $chaosNameChanges */
-$chaosNameChanges = $this->vars['chaosNameChanges'];
+$chaosNameChanges = $vars['chaosNameChanges'];
 
 $this->setTitle('Namensänderungen');
 

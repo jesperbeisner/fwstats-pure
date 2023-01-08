@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller\Factory;
 
 use Jesperbeisner\Fwstats\Controller\ChangeController;
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 
-final class ChangeControllerFactory implements FactoryInterface
+final readonly class ChangeControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): ChangeController
     {

@@ -1,20 +1,14 @@
 version: '3.9'
 
 services:
-  web:
-    build:
-      dockerfile: .docker/caddy/Dockerfile
-      context: .
-    container_name: fwstats-caddy-dev
-    volumes:
-      - .:/var/www/html
-    ports:
-      - '8080:80'
-
-  php:
-    build:
-      dockerfile: .docker/php/dev/Dockerfile
-      context: .
-    container_name: fwstats-php-dev
-    volumes:
-      - .:/var/www/html
+    php:
+        build:
+            dockerfile: .docker/dev/Dockerfile
+            context: .
+            args:
+                USER: ${USER}
+        container_name: fwstats-php-dev
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "8080:80"

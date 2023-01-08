@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Command;
 
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
+use Jesperbeisner\Fwstats\Exception\ActionException;
 
 final class CreateUserCommand extends AbstractCommand
 {
@@ -27,8 +28,14 @@ final class CreateUserCommand extends AbstractCommand
             return self::FAILURE;
         }
 
-        $this->createUserAction->configure(['email' => $this->arguments[2], 'password' => $this->arguments[3]]);
-        $this->createUserAction->run();
+        try {
+            $this->createUserAction->configure(['email' => $this->arguments[2], 'password' => $this->arguments[3]]);
+            $this->createUserAction->run();
+        } catch (ActionException $e) {
+            $this->writeLine($e->getMessage());
+
+            return self::FAILURE;
+        }
 
         $this->writeLine("Success: A new user with email '{$this->arguments[2]}' was created.");
         $this->writeLine("Finished the 'app:create-user' command in {$this->getTime()} ms.");

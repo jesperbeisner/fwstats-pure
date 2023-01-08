@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository\Factory;
 
+use Jesperbeisner\Fwstats\Exception\RuntimeException;
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\DatabaseInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\AbstractRepository;
-use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\DatabaseInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
-use PDO;
 use Throwable;
 
 class RepositoryFactory implements FactoryInterface
@@ -22,10 +21,10 @@ class RepositoryFactory implements FactoryInterface
         try {
             $repository = new $serviceId($database);
         } catch (Throwable $e) {
-            throw new RuntimeException(sprintf('Looks like "%s" is not a valid repository class.', $serviceId));
+            throw new RuntimeException(sprintf('Looks like service with id "%s" is not a valid repository class.', $serviceId));
         }
 
-        if (!($repository instanceof AbstractRepository)) {
+        if (!$repository instanceof AbstractRepository) {
             throw new RuntimeException(sprintf('Looks like "%s" is not a valid repository class.', $serviceId));
         }
 

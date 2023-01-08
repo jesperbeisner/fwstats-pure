@@ -6,7 +6,8 @@ namespace Jesperbeisner\Fwstats\Command\Factory;
 
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Command\DatabaseFixtureCommand;
-use Jesperbeisner\Fwstats\ImageService\RankingImageService;
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
@@ -14,9 +15,8 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Service\RankingImageService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 
 class DatabaseFixtureCommandFactory implements FactoryInterface
 {

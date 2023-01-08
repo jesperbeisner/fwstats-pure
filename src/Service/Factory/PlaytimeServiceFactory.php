@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Service\Factory;
 
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 
 class PlaytimeServiceFactory implements FactoryInterface
 {

@@ -7,7 +7,6 @@ namespace Jesperbeisner\Fwstats\Command;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\ImageService\RankingImageService;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
@@ -21,6 +20,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Service\RankingImageService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
 final class DatabaseFixtureCommand extends AbstractCommand

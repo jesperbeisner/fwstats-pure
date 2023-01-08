@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
+
+/** @var string $message */
+$message = $vars['message'];
+
+$this->setTitle($message);
+
+?>
+
+<div class="container has-text-centered mt-5">
+    <h1 class="title is-3">
+        <?= $message ?>
+    </h1>
+
+    <p class="is-bold">
+        ¯\_(ツ)_/¯
+    </p>
+</div>

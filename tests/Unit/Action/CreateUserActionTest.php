@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Tests\Unit\Action;
 
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
-use Jesperbeisner\Fwstats\Action\Exception\ActionException;
+use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
 use PHPUnit\Framework\TestCase;

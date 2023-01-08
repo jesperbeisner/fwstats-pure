@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Command;
 
-use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
+use Jesperbeisner\Fwstats\Exception\RuntimeException;
 
 abstract class AbstractCommand
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Controller;
 
-use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
+use Jesperbeisner\Fwstats\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Response\JsonResponse;
 
 final class ControllerWithoutReadonly implements ControllerInterface

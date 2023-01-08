@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Importer\Factory;
 
 use Jesperbeisner\Fwstats\Importer\AchievementImporter;
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
+use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
-use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
 
 final class AchievementImporterFactory implements FactoryInterface
 {

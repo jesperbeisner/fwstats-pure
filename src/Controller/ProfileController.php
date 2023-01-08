@@ -6,22 +6,19 @@ namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
-use Jesperbeisner\Fwstats\Stdlib\Exception\NotFoundException;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
-use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
+use Jesperbeisner\Fwstats\Stdlib\Response;
 
 final readonly class ProfileController implements ControllerInterface
 {
     public function __construct(
-        private Request $request,
         private PlayerRepository $playerRepository,
         private PlaytimeService $playtimeService,
         private PlayerNameHistoryRepository $playerNameHistoryRepository,
@@ -30,22 +27,20 @@ final readonly class ProfileController implements ControllerInterface
     ) {
     }
 
-    public function __invoke(): ResponseInterface
+    public function execute(Request $request): Response
     {
-        /** @var string $world */
-        $world = $this->request->getRouteParameter('world');
+        $world = $request->getRouteParameter('world');
         if (null === $world = WorldEnum::tryFrom($world)) {
-            return new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
         }
 
-        /** @var string $playerId */
-        $playerId = $this->request->getRouteParameter('id');
+        $playerId = $request->getRouteParameter('id');
         if (!is_numeric($playerId)) {
-            return new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
         }
 
         if (null === $player = $this->playerRepository->find($world, (int) $playerId)) {
-            return new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
         }
 
         $weeklyPlaytimes = $this->playtimeService->getPlaytimesForPlayer($player, 7);
@@ -55,7 +50,7 @@ final readonly class ProfileController implements ControllerInterface
         $raceChanges = $this->playerRaceHistoryRepository->getRaceChangesForPlayer($player);
         $professionChanges = $this->playerProfessionHistoryRepository->getProfessionChangesForPlayer($player);
 
-        return new HtmlResponse('profile/profile.phtml', [
+        return Response::html('profile/profile.phtml', [
             'player' => $player,
             'weeklyPlaytimes' => $weeklyPlaytimes,
             'totalPlaytime' => $totalPlaytime,

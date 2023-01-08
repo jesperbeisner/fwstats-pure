@@ -6,8 +6,8 @@ namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\PlayerInterface;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
-use Jesperbeisner\Fwstats\Stdlib\Interface\PlayerInterface;
 
 final class PlayerProfessionHistoryRepository extends AbstractRepository
 {

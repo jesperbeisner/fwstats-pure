@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Repository;
 
 use Exception;
-use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Exception\DatabaseException;
+use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Model\Player;
-use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
 
 final class AchievementRepository extends AbstractRepository
 {

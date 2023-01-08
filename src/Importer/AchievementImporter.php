@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Importer;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
-use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 
 final readonly class AchievementImporter implements ImporterInterface
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Tests\Dummy;
 
+use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Model\User;
-use Jesperbeisner\Fwstats\Stdlib\Interface\SessionInterface;
 
 final class SessionDummy implements SessionInterface
 {
@@ -17,12 +17,12 @@ final class SessionDummy implements SessionInterface
     {
     }
 
-    public function get(string $key): mixed
+    public function get(string $key): string|int|float|bool|null
     {
         return $this->session[$key] ?? null;
     }
 
-    public function set(string $key, mixed $value): void
+    public function set(string $key, string|int|float|bool $value): void
     {
         $this->session[$key] = $value;
     }
@@ -44,5 +44,15 @@ final class SessionDummy implements SessionInterface
     public function setUser(User $user): void
     {
         $this->session['user'] = $user;
+    }
+
+    public function start(): void
+    {
+        // TODO: Implement start() method.
+    }
+
+    public function unset(string $key): void
+    {
+        // TODO: Implement unset() method.
     }
 }

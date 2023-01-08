@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Controller;
 
-use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
-use Jesperbeisner\Fwstats\Stdlib\Response\JsonResponse;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
+use Jesperbeisner\Fwstats\Stdlib\Request;
+use Jesperbeisner\Fwstats\Stdlib\Response;
 
 final readonly class StatusController implements ControllerInterface
 {
-    public function __invoke(): ResponseInterface
+    public function execute(Request $request): Response
     {
-        return new JsonResponse();
+        return Response::json();
     }
 }

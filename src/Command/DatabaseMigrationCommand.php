@@ -12,10 +12,9 @@ final class DatabaseMigrationCommand extends AbstractCommand
     public static string $name = 'app:database-migration';
     public static string $description = 'Checks for new migrations and when found executes them.';
 
-    private const MIGRATION_FILE_PATTERN = __DIR__ . '/../../migrations/*.sql';
-
     public function __construct(
-        private readonly MigrationRepository $migrationRepository
+        private readonly string $migrationsFolder,
+        private readonly MigrationRepository $migrationRepository,
     ) {
     }
 
@@ -26,7 +25,7 @@ final class DatabaseMigrationCommand extends AbstractCommand
 
         $this->migrationRepository->createMigrationsTable();
 
-        if (false === $migrationFiles = glob(self::MIGRATION_FILE_PATTERN)) {
+        if (false === $migrationFiles = glob($this->migrationsFolder . '/*.sql')) {
             throw new RuntimeException("An error occurred while 'globing' the migration files. :^)");
         }
 
@@ -38,8 +37,9 @@ final class DatabaseMigrationCommand extends AbstractCommand
                 continue;
             }
 
-            /** @var string $sql */
-            $sql = file_get_contents($migrationFile);
+            if (false === $sql = file_get_contents($migrationFile)) {
+                throw new RuntimeException(sprintf('Could not get content of migration file "%s".', $migrationFile));
+            }
 
             $this->migrationRepository->executeMigration($fileName, $sql);
             $this->writeLine("Hit: '$fileName' was executed");

@@ -6,8 +6,8 @@ namespace Jesperbeisner\Fwstats\Service;
 
 use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Model\Player;
-use Jesperbeisner\Fwstats\Stdlib\Exception\RuntimeException;
 
 final class PlayerStatusService
 {

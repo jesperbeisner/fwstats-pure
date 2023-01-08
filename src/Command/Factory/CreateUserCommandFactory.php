@@ -6,8 +6,8 @@ namespace Jesperbeisner\Fwstats\Command\Factory;
 
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Command\CreateUserCommand;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\FactoryInterface;
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 
 class CreateUserCommandFactory implements FactoryInterface
 {

@@ -22,7 +22,7 @@ final class ControllerImplementsInterfaceRuleTest extends RuleTestCase
                 __DIR__ . '/Fixtures/ControllerWithoutInterface.php',
             ],
             [
-                ['Controllers need to implement "Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface".', 7],
+                ['Controllers need to implement "Jesperbeisner\Fwstats\Interface\ControllerInterface".', 7],
             ]
         );
     }

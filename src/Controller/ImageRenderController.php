@@ -5,34 +5,30 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Stdlib\Config;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Stdlib\Interface\ResponseInterface;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
-use Jesperbeisner\Fwstats\Stdlib\Response\HtmlResponse;
-use Jesperbeisner\Fwstats\Stdlib\Response\ImageResponse;
+use Jesperbeisner\Fwstats\Stdlib\Response;
 
 final readonly class ImageRenderController implements ControllerInterface
 {
-    private const RANKING_IMAGE = '/data/images/[WORLD]-ranking.png';
+    private const RANKING_IMAGE = '/var/[WORLD]-ranking.png';
 
     public function __construct(
-        private Config $config,
-        private Request $request,
+        private string $rootDir,
     ) {
     }
 
-    public function __invoke(): ResponseInterface
+    public function execute(Request $request): Response
     {
         /** @var string $worldString */
-        $worldString = $this->request->getRouteParameter('world');
+        $worldString = $request->getRouteParameter('world');
 
         if (null === $world = WorldEnum::tryFrom($worldString)) {
-            return new HtmlResponse('error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
         }
 
-        $imageFileName = str_replace('[WORLD]', $world->value, $this->config->getRootDir() . ImageRenderController::RANKING_IMAGE);
+        $imageFileName = str_replace('[WORLD]', $world->value, $this->rootDir . ImageRenderController::RANKING_IMAGE);
 
-        return new ImageResponse($imageFileName);
+        return Response::png($imageFileName);
     }
 }

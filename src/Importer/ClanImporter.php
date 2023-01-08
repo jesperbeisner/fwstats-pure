@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Importer;
 
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Model\ClanCreatedHistory;
 use Jesperbeisner\Fwstats\Model\ClanDeletedHistory;
 use Jesperbeisner\Fwstats\Model\ClanNameHistory;
-use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Repository\ClanCreatedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
-use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 
 final class ClanImporter implements ImporterInterface
 {

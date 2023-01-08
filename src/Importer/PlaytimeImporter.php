@@ -6,9 +6,9 @@ namespace Jesperbeisner\Fwstats\Importer;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
-use Jesperbeisner\Fwstats\Service\Interface\FreewarDumpServiceInterface;
 
 final class PlaytimeImporter implements ImporterInterface
 {

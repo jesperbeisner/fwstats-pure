@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\PHPStan;
 
-use Jesperbeisner\Fwstats\Stdlib\Interface\ControllerInterface;
+use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use PhpParser\Node;
-use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
 use PHPStan\Rules\Rule;

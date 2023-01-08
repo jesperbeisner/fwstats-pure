@@ -3,30 +3,31 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\Command\AbstractCommand;
-use Jesperbeisner\Fwstats\Stdlib\Container;
+use Jesperbeisner\Fwstats\Interface\ContainerInterface;
+use Jesperbeisner\Fwstats\Stdlib\Config;
 
-/** @var Container $container */
+/** @var ContainerInterface $container */
 $container = require __DIR__ . '/../bootstrap.php';
 
-/** @var array<class-string<AbstractCommand>> $commands */
-$commandStrings = require __DIR__ . '/../config/commands.php';
+/** @var Config $config */
+$config = $container->get(Config::class);
 
 if (!isset($argv[1])) {
-    echo 'Available commands: ' . PHP_EOL . PHP_EOL;
+    echo 'Available commands:' . PHP_EOL . PHP_EOL;
 
     /** @var class-string<AbstractCommand> $commandString */
-    foreach ($commandStrings as $commandString) {
-        echo $commandString::$name . "\t" . $commandString::$description . PHP_EOL;
+    foreach ($config->getCommands() as $commandString) {
+        echo str_pad($commandString::$name, 25) . $commandString::$description . PHP_EOL;
     }
 
     exit(0);
 }
 
-$commandName = (string) $argv[1];
+$commandName = $argv[1];
 $commandClass = null;
 
 /** @var class-string<AbstractCommand> $commandString */
-foreach ($commandStrings as $commandString) {
+foreach ($config->getCommands() as $commandString) {
     if ($commandString::$name === $commandName) {
         $commandClass = $commandString;
         break;
@@ -34,7 +35,7 @@ foreach ($commandStrings as $commandString) {
 }
 
 if ($commandClass === null) {
-    echo "Command '$commandName' could not be found. Did you forget to register your command in 'commands.config.php'?";
+    echo "Command '$commandName' could not be found. Did you forget to register your command in 'config.php'?";
     exit(1);
 }
 

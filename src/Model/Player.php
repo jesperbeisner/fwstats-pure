@@ -6,22 +6,22 @@ namespace Jesperbeisner\Fwstats\Model;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Stdlib\Interface\PlayerInterface;
+use Jesperbeisner\Fwstats\Interface\PlayerInterface;
 use RuntimeException;
 
-final class Player implements PlayerInterface
+final readonly class Player implements PlayerInterface
 {
     public function __construct(
-        public readonly WorldEnum $world,
-        public readonly int $playerId,
-        public readonly string $name,
-        public readonly string $race,
-        public readonly int $xp,
-        public readonly int $soulXp,
-        public readonly int $totalXp,
-        public readonly ?int $clanId,
-        public readonly ?string $profession,
-        public readonly DateTimeImmutable $created,
+        public WorldEnum $world,
+        public int $playerId,
+        public string $name,
+        public string $race,
+        public int $xp,
+        public int $soulXp,
+        public int $totalXp,
+        public ?int $clanId,
+        public ?string $profession,
+        public DateTimeImmutable $created,
     ) {
     }
 

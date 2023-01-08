@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Stdlib;
 
-use Jesperbeisner\Fwstats\Stdlib\Exception\DatabaseException;
-use Jesperbeisner\Fwstats\Stdlib\Interface\DatabaseInterface;
+use Jesperbeisner\Fwstats\Exception\DatabaseException;
+use Jesperbeisner\Fwstats\Interface\DatabaseInterface;
+use Jesperbeisner\Fwstats\Interface\LoggerInterface;
 use PDO;
 
 final class Database implements DatabaseInterface
@@ -13,17 +14,22 @@ final class Database implements DatabaseInterface
     private bool $transactionStarted = false;
 
     public function __construct(
-        private readonly PDO $pdo
+        private readonly PDO $pdo,
+        private readonly ?LoggerInterface $logger,
     ) {
     }
 
     public function execute(string $sql, array $params = []): void
     {
+        $this->log($sql);
+
         $this->pdo->prepare($sql)->execute($params);
     }
 
     public function select(string $sql, array $params = []): array
     {
+        $this->log($sql);
+
         $statement = $this->pdo->prepare($sql);
 
         $statement->execute($params);
@@ -33,16 +39,22 @@ final class Database implements DatabaseInterface
 
     public function insert(string $sql, array $params = []): void
     {
+        $this->log($sql);
+
         $this->pdo->prepare($sql)->execute($params);
     }
 
     public function update(string $sql, array $params = []): void
     {
+        $this->log($sql);
+
         $this->pdo->prepare($sql)->execute($params);
     }
 
     public function delete(string $sql, array $params = []): void
     {
+        $this->log($sql);
+
         $this->pdo->prepare($sql)->execute($params);
     }
 
@@ -77,5 +89,10 @@ final class Database implements DatabaseInterface
         $this->pdo->rollBack();
 
         $this->transactionStarted = false;
+    }
+
+    private function log(string $sql): void
+    {
+        $this->logger?->info(sprintf('SQL query executed: [%s]', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sql)));
     }
 }

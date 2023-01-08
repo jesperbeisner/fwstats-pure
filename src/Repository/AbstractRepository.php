@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
-use Jesperbeisner\Fwstats\Stdlib\Interface\DatabaseInterface;
+use Jesperbeisner\Fwstats\Interface\DatabaseInterface;
 
 abstract class AbstractRepository
 {
