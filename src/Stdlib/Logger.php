@@ -26,6 +26,9 @@ final readonly class Logger implements LoggerInterface
         $this->log('ERROR', $message, $context);
     }
 
+    /**
+     * @param mixed[] $context
+     */
     private function log(string $level, string $message, array $context = []): void
     {
         try {

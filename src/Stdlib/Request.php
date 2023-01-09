@@ -79,7 +79,7 @@ final class Request
         $this->routeParameters = $routeParameters;
     }
 
-    public function getRouteParameter(string $id): ?string
+    public function getRouteParameter(string $id): string
     {
         return $this->routeParameters[$id] ?? throw new RuntimeException(sprintf('Route parameter with id "%s" does not exist.', $id));
     }

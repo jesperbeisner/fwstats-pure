@@ -20,6 +20,7 @@ final readonly class SetupProcessFactory implements FactoryInterface
         $databaseSetupFileName = $config->getRootDir() . '/var/setup';
         $migrationsFolder = $config->getRootDir() . '/migrations';
 
+        /** @var MigrationRepository $migrationRepository */
         $migrationRepository = $container->get(MigrationRepository::class);
 
         return new SetupProcess($databaseSetupFileName, $migrationsFolder, $migrationRepository);

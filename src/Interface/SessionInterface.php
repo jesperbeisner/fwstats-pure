@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Interface;
 
+use Jesperbeisner\Fwstats\Enum\FlashEnum;
 use Jesperbeisner\Fwstats\Model\User;
 
 interface SessionInterface
@@ -17,6 +18,13 @@ interface SessionInterface
     public function getUser(): ?User;
 
     public function setUser(User $user): void;
+
+    public function setFlash(FlashEnum $flashEnum, string $message): void;
+
+    /**
+     * @return array<string>
+     */
+    public function getFlash(FlashEnum $flashEnum): array;
 
     public function unset(string $key): void;
 

@@ -28,7 +28,7 @@ final readonly class LoginController implements ControllerInterface
             if ($email === null || $password === null) {
                 $this->session->setFlash(FlashEnum::ERROR, 'E-Mail und/oder Passwort Feld dürfen nicht leer sein.');
 
-                Response::redirect('/login');
+                return Response::redirect('/login');
             }
 
             if (null === $user = $this->userRepository->findOneByEmail($email)) {
@@ -49,7 +49,7 @@ final readonly class LoginController implements ControllerInterface
             if (null !== $securityRedirectUri = $this->session->get('security_request_uri')) {
                 $this->session->unset('security_request_uri');
 
-                return Response::redirect($securityRedirectUri);
+                return Response::redirect((string) $securityRedirectUri);
             }
 
             return Response::redirect('/');

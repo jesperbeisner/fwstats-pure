@@ -4,22 +4,30 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Tests\Dummy;
 
+use Jesperbeisner\Fwstats\Enum\FlashEnum;
+use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Model\User;
 
 final class SessionDummy implements SessionInterface
 {
-    /** @var mixed[] */
+    /** @var array<mixed> */
     private array $session = [];
     private ?User $user = null;
 
-    public function destroy(): void
+    public function start(): void
     {
     }
 
     public function get(string $key): string|int|float|bool|null
     {
-        return $this->session[$key] ?? null;
+        $result = $this->session[$key] ?? null;
+
+        if (is_string($result) || is_int($result) || is_float($result) || is_bool($result) || is_null($result)) {
+            return $result;
+        }
+
+        throw new RuntimeException('How did this happen?');
     }
 
     public function set(string $key, string|int|float|bool $value): void
@@ -46,13 +54,21 @@ final class SessionDummy implements SessionInterface
         $this->session['user'] = $user;
     }
 
-    public function start(): void
+    public function setFlash(FlashEnum $flashEnum, string $message): void
     {
-        // TODO: Implement start() method.
+    }
+
+    public function getFlash(FlashEnum $flashEnum): array
+    {
+        return [];
     }
 
     public function unset(string $key): void
     {
         // TODO: Implement unset() method.
+    }
+
+    public function destroy(): void
+    {
     }
 }

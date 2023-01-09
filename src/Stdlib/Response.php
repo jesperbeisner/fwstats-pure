@@ -16,8 +16,13 @@ final class Response
     public const CONTENT_TYPE_IMAGE = 'image/png';
 
     private ?RenderService $renderService = null;
+
+    /** @var array<string, string> */
     private array $headers = [];
 
+    /**
+     * @param array<string, mixed> $vars
+     */
     private function __construct(
         public readonly int $statusCode,
         public readonly ?string $contentType = null,
@@ -28,6 +33,9 @@ final class Response
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $vars
+     */
     public static function html(string $template, array $vars = [], int $statusCode = 200): Response
     {
         return new Response(statusCode: $statusCode, contentType: Response::CONTENT_TYPE_HTML, template: $template, vars: $vars);
@@ -38,6 +46,9 @@ final class Response
         return new Response(statusCode: $statusCode, contentType: Response::CONTENT_TYPE_TEXT, content: $content);
     }
 
+    /**
+     * @param array<string, mixed> $vars
+     */
     public static function json(array $vars = [], int $statusCode = 200): Response
     {
         try {
@@ -105,6 +116,14 @@ final class Response
         $content = $this->content;
 
         if ($this->contentType === Response::CONTENT_TYPE_HTML) {
+            if ($this->renderService === null) {
+                throw new RuntimeException('Html response and RenderService was not set, how?');
+            }
+
+            if ($this->template === null) {
+                throw new RuntimeException('Html response and we have no template set, how?');
+            }
+
             $content = $this->renderService->render($this->template, $this->vars);
         }
 

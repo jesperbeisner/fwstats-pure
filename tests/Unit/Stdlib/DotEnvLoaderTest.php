@@ -31,7 +31,7 @@ final class DotEnvLoaderTest extends TestCase
         self::assertSame('Hello world', $_ENV['STRING']);
         self::assertSame(123, $_ENV['INTEGER']);
         self::assertSame(123.456, $_ENV['FLOAT']);
-        self::assertSame(true, $_ENV['BOOL']);
+        self::assertTrue($_ENV['BOOL']);
     }
 
     public function test_it_will_overwrite_values_from_previous_files(): void
@@ -45,7 +45,7 @@ final class DotEnvLoaderTest extends TestCase
         self::assertSame('Hello world', $_ENV['STRING']);
         self::assertSame(123, $_ENV['INTEGER']);
         self::assertSame(123.456, $_ENV['FLOAT']);
-        self::assertSame(true, $_ENV['BOOL']);
+        self::assertTrue($_ENV['BOOL']);
     }
 
     public function test_it_will_throw_a_RuntimeException_when_the_file_does_not_return_an_array(): void

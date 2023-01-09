@@ -17,6 +17,9 @@ final class RenderService
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $vars
+     */
     public function render(string $template, array $vars = []): string
     {
         $templateFile = $this->viewsDir . '/' . $template;
