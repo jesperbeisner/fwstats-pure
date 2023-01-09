@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Process\Factory;
 
+use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Process\SetupProcess;
@@ -17,12 +18,15 @@ final readonly class SetupProcessFactory implements FactoryInterface
         /** @var Config $config */
         $config = $container->get(Config::class);
 
-        $databaseSetupFileName = $config->getRootDir() . '/var/setup';
-        $migrationsFolder = $config->getRootDir() . '/migrations';
+        $databaseSetupFileName = $config->getString('database_setup_file');
+        $migrationsDirectory = $config->getString('migrations_directory');
 
         /** @var MigrationRepository $migrationRepository */
         $migrationRepository = $container->get(MigrationRepository::class);
 
-        return new SetupProcess($databaseSetupFileName, $migrationsFolder, $migrationRepository);
+        /** @var CreateUserAction $createUserAction */
+        $createUserAction = $container->get(CreateUserAction::class);
+
+        return new SetupProcess($databaseSetupFileName, $migrationsDirectory, $migrationRepository, $createUserAction);
     }
 }

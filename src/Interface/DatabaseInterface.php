@@ -20,7 +20,7 @@ interface DatabaseInterface
     /**
      * @param array<string, string|int|null> $params
      */
-    public function insert(string $sql, array $params = []): void;
+    public function insert(string $sql, array $params = []): int;
 
     /**
      * @param array<string, string|int|null> $params

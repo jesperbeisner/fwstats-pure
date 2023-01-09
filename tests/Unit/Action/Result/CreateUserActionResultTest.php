@@ -37,7 +37,7 @@ class CreateUserActionResultTest extends TestCase
 
     public function test_will_return_user_when_user_is_set_in_data_array(): void
     {
-        $user = new User('test', 'test@test.com', 'test', new DateTimeImmutable('2000-01-01'));
+        $user = new User(null, 'test', 'test@test.com', 'test', 'test', new DateTimeImmutable('2000-01-01'));
 
         $createUserActionResultTest = new CreateUserActionResult(ActionResultInterface::SUCCESS, ['user' => $user]);
 

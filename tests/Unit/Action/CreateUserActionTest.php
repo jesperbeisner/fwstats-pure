@@ -57,7 +57,7 @@ class CreateUserActionTest extends TestCase
     public function test_will_throw_ActionException_when_email_is_not_valid(): void
     {
         self::expectException(ActionException::class);
-        self::expectExceptionMessage("The email 'test' is not valid email address.");
+        self::expectExceptionMessage('The email "test" is not valid email address.');
 
         $this->createUserAction->configure(['email' => 'test', 'password' => 'Password123']);
     }
@@ -75,9 +75,11 @@ class CreateUserActionTest extends TestCase
         $database = new DatabaseDummy();
         $database->setSelectReturn([
             [
+                'id' => 1,
                 'uuid' => 'test',
                 'email' => 'test@test.com',
                 'password' => 'test',
+                'token' => 'test',
                 'created' => '2022-01-01',
             ],
         ]);

@@ -12,7 +12,7 @@ final class RenderService
     private ?string $title = null;
 
     public function __construct(
-        private readonly string $viewsDir,
+        private readonly string $viewsDirectory,
         private readonly SessionInterface $session,
     ) {
     }
@@ -22,8 +22,8 @@ final class RenderService
      */
     public function render(string $template, array $vars = []): string
     {
-        $templateFile = $this->viewsDir . '/' . $template;
-        $layoutFile = $this->viewsDir . '/_layout/layout.phtml';
+        $templateFile = $this->viewsDirectory . '/' . $template;
+        $layoutFile = $this->viewsDirectory . '/_layout/layout.phtml';
 
         if (!is_file($templateFile)) {
             throw new RuntimeException(sprintf('Template file "%s" does not exist.', $templateFile));

@@ -28,8 +28,9 @@ final class DatabaseDummy implements DatabaseInterface
         return $this->selectReturn;
     }
 
-    public function insert(string $sql, array $params = []): void
+    public function insert(string $sql, array $params = []): int
     {
+        return 1;
     }
 
     public function update(string $sql, array $params = []): void

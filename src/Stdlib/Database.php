@@ -37,11 +37,13 @@ final class Database implements DatabaseInterface
         return $statement->fetchAll();
     }
 
-    public function insert(string $sql, array $params = []): void
+    public function insert(string $sql, array $params = []): int
     {
         $this->log($sql);
 
         $this->pdo->prepare($sql)->execute($params);
+
+        return (int) $this->pdo->lastInsertId();
     }
 
     public function update(string $sql, array $params = []): void

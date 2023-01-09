@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS cronjobs (
+    id INTEGER PRIMARY KEY,
+    created DATETIME NOT NULL
+);

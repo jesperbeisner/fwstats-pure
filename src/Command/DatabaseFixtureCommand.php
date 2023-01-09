@@ -271,7 +271,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
     private function createUserAccount(): void
     {
         $this->userRepository->deleteAll();
-        $this->createUserAction->configure(['email' => 'test@test.com', 'password' => 'Password123']);
+        $this->createUserAction->configure(['email' => 'Password12345', 'password' => 'Password12345']);
         $this->createUserAction->run();
     }
 }

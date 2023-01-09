@@ -11,8 +11,8 @@ use Jesperbeisner\Fwstats\Stdlib\Config;
 
 abstract class AbstractImageService implements ImageServiceInterface
 {
-    private const IMAGE_FOLDER = '/var/images/';
-    private const ROBOTO_FONT = '/data/fonts/Roboto-Light.ttf';
+    private const IMAGE_FOLDER = '/var/';
+    private const ROBOTO_FONT = '/data/Roboto-Light.ttf';
 
     protected ?GdImage $image = null;
 

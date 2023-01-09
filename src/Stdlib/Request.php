@@ -20,18 +20,20 @@ final class Request
      * @param array<string, string> $getParameters
      * @param array<string, string> $postParameters
      * @param array<string, string> $cookieParameters
+     * @param array<string, string> $headers
      */
     public function __construct(
         private readonly array $serverParameters,
         private readonly array $getParameters,
         private readonly array $postParameters,
-        private readonly array $cookieParameters
+        private readonly array $cookieParameters,
+        private readonly array $headers,
     ) {
     }
 
     public static function fromGlobals(): Request
     {
-        return new Request($_SERVER, $_GET, $_POST, $_COOKIE);
+        return new Request($_SERVER, $_GET, $_POST, $_COOKIE, getallheaders());
     }
 
     public function getUri(): string
@@ -109,6 +111,22 @@ final class Request
         }
 
         return null;
+    }
+
+    public function getBearerToken(): ?string
+    {
+        if (!array_key_exists('Authorization', $this->headers)) {
+            return null;
+        }
+
+        $authorizationHeader = $this->headers['Authorization'];
+        $authorizationHeaderParts = explode(" ", $authorizationHeader);
+
+        if (!array_key_exists(1, $authorizationHeaderParts)) {
+            return null;
+        }
+
+        return trim($authorizationHeaderParts[1]);
     }
 
     public function isGet(): bool

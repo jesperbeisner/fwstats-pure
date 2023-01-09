@@ -92,7 +92,7 @@ final class Config
 
     public function getRootDir(): string
     {
-        return $this->getString('root_dir');
+        return $this->getString('root_directory');
     }
 
     /**

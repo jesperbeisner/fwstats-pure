@@ -1,14 +1,8 @@
 /vendor/
 composer.lock
 
-/data/database/*
-!/data/database/.gitkeep
-
-/data/images/*
-!/data/404-image.png
-
-/data/logs/*
-!/data/logs/.gitkeep
+/var/*
+!/var/.gitkeep
 
 .env.local.php
 .phpunit.result.cache

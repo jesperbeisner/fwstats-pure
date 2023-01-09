@@ -8,6 +8,7 @@ use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Process\SecurityProcess;
+use Jesperbeisner\Fwstats\Repository\UserRepository;
 
 final readonly class SecurityProcessFactory implements FactoryInterface
 {
@@ -16,6 +17,9 @@ final readonly class SecurityProcessFactory implements FactoryInterface
         /** @var SessionInterface $session */
         $session = $container->get(SessionInterface::class);
 
-        return new SecurityProcess($session);
+        /** @var UserRepository $userRepository */
+        $userRepository = $container->get(UserRepository::class);
+
+        return new SecurityProcess($session, $userRepository);
     }
 }

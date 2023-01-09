@@ -6,13 +6,20 @@ namespace Jesperbeisner\Fwstats\Model;
 
 use DateTimeImmutable;
 
-final class User
+final readonly class User
 {
     public function __construct(
-        public readonly string $uuid,
-        public readonly string $email,
-        public readonly string $password,
-        public readonly DateTimeImmutable $created
+        public ?int $id,
+        public string $uuid,
+        public string $email,
+        public string $password,
+        public string $token,
+        public DateTimeImmutable $created
     ) {
+    }
+
+    public static function withId(int $id, User $user): User
+    {
+        return new User($id, $user->uuid, $user->email, $user->password, $user->token, $user->created);
     }
 }

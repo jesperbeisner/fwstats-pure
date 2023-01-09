@@ -17,11 +17,11 @@ class RenderServiceFactory implements FactoryInterface
         /** @var Config $config */
         $config = $container->get(Config::class);
 
-        $viewsDir = $config->getString('views_dir');
+        $viewsDirectory = $config->getString('views_directory');
 
         /** @var SessionInterface $session */
         $session = $container->get(SessionInterface::class);
 
-        return new RenderService($viewsDir, $session);
+        return new RenderService($viewsDirectory, $session);
     }
 }

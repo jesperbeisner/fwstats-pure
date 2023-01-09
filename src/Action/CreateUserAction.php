@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Action;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Exception\ActionException;
+use Jesperbeisner\Fwstats\Helper\Str;
 use Jesperbeisner\Fwstats\Helper\UuidV4;
 use Jesperbeisner\Fwstats\Interface\ActionInterface;
 use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
@@ -42,7 +43,7 @@ final class CreateUserAction implements ActionInterface
         }
 
         if (filter_var($data['email'], FILTER_VALIDATE_EMAIL) === false) {
-            throw new ActionException("The email '{$data['email']}' is not valid email address.");
+            throw new ActionException(sprintf('The email "%s" is not valid email address.', $data['email']));
         }
 
         if (strlen($data['password']) < 8) {
@@ -65,9 +66,9 @@ final class CreateUserAction implements ActionInterface
 
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
 
-        $user = new User(UuidV4::create(), $this->email, $hashedPassword, new DateTimeImmutable());
+        $user = new User(null, UuidV4::create(), $this->email, $hashedPassword, Str::random(32), new DateTimeImmutable());
 
-        $this->userRepository->insert($user);
+        $user = $this->userRepository->insert($user);
 
         return new CreateUserActionResult(ActionResultInterface::SUCCESS, ['user' => $user]);
     }

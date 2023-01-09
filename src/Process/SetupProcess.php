@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Process;
 
+use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ProcessInterface;
 use Jesperbeisner\Fwstats\Repository\MigrationRepository;
@@ -13,8 +14,9 @@ final readonly class SetupProcess implements ProcessInterface
 {
     public function __construct(
         private string $databaseSetupFileName,
-        private string $migrationsFolder,
+        private string $migrationsDirectory,
         private MigrationRepository $migrationRepository,
+        private CreateUserAction $createUserAction,
     ) {
     }
 
@@ -24,7 +26,7 @@ final readonly class SetupProcess implements ProcessInterface
             return;
         }
 
-        if (false === $migrationFiles = glob($this->migrationsFolder . '/*.sql')) {
+        if (false === $migrationFiles = glob($this->migrationsDirectory . '/*.sql')) {
             throw new RuntimeException("An error occurred while 'globing' the migration files. :^)");
         }
 
@@ -37,6 +39,9 @@ final readonly class SetupProcess implements ProcessInterface
 
             $this->migrationRepository->executeMigration(basename($migrationFile), $sql);
         }
+
+        $this->createUserAction->configure(['email' => 'admin@example.com', 'password' => 'Password12345']);
+        $this->createUserAction->run();
 
         if (false === touch($this->databaseSetupFileName)) {
             throw new RuntimeException(sprintf('Could not create database setup file "%s".', $this->databaseSetupFileName));

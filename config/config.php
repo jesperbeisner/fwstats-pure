@@ -14,8 +14,9 @@ use Jesperbeisner\Fwstats\Stdlib;
 return [
     'global' => [
         'app_env' => $_ENV['APP_ENV'],
-        'root_dir' => dirname(__DIR__),
-        'views_dir' => __DIR__ . '/../views',
+        'root_directory' => dirname(__DIR__),
+        'views_directory' => __DIR__ . '/../views',
+        'migrations_directory' => __DIR__ . '/../migrations',
         'log_file' => __DIR__ . '/../var/fwstats.log',
         'database_file' => __DIR__ . '/../var/sqlite.db',
         'database_setup_file' => __DIR__ . '/../var/setup.txt',
@@ -31,7 +32,7 @@ return [
         ['route' => '/admin/logs', 'methods' => ['GET'], 'controller' => Controller\LogController::class],
         ['route' => '/login', 'methods' => ['GET', 'POST'], 'controller' => Controller\LoginController::class],
         ['route' => '/logout', 'methods' => ['GET', 'POST'], 'controller' => Controller\LogoutController::class],
-        ['route' => '/cronjob', 'methods' => ['POST'], 'controller' => Controller\LogoutController::class],
+        ['route' => '/cronjob', 'methods' => ['POST'], 'controller' => Controller\CronjobController::class],
     ],
     'processes' => [
         Process\ExceptionHandlerProcess::class,
@@ -61,6 +62,8 @@ return [
         Controller\LogoutController::class => Controller\Factory\LogoutControllerFactory::class,
         Controller\NotFoundController::class => Controller\Factory\NotFoundControllerFactory::class,
         Controller\SecurityController::class => Controller\Factory\SecurityControllerFactory::class,
+        Controller\UnauthorizedController::class => Controller\Factory\UnauthorizedControllerFactory::class,
+        Controller\CronjobController::class => Controller\Factory\CronjobControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,
@@ -70,6 +73,7 @@ return [
         Service\PlayerStatusService::class => Service\Factory\PlayerStatusServiceFactory::class,
         Service\PlaytimeService::class => Service\Factory\PlaytimeServiceFactory::class,
         Service\RenderService::class => Service\Factory\RenderServiceFactory::class,
+        Service\CronjobService::class => Service\Factory\CronjobServiceFactory::class,
 
         // ImageService
         Service\RankingImageService::class => Service\Factory\RankingImageServiceFactory::class,
@@ -102,6 +106,7 @@ return [
         Repository\AchievementRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\LogRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\UserRepository::class => Repository\Factory\RepositoryFactory::class,
+        Repository\CronjobRepository::class => Repository\Factory\RepositoryFactory::class,
 
         // Stdlib
         \Jesperbeisner\Fwstats\Interface\LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,
