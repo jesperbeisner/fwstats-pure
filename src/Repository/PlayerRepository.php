@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Exception;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\DatabaseException;
+use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Model\Player;
 
 final class PlayerRepository extends AbstractRepository
@@ -36,9 +37,9 @@ final class PlayerRepository extends AbstractRepository
     /**
      * @return Player[]
      */
-    public function findAllByWorldAndOrderedByTotalXp(WorldEnum $world): array
+    public function findAllByWorldAndOrderedByTotalXp(WorldEnum $world, int $offset): array
     {
-        $sql = "SELECT * FROM players WHERE world = :world ORDER BY total_xp DESC LIMIT 100";
+        $sql = "SELECT * FROM players WHERE world = :world ORDER BY total_xp DESC LIMIT $offset, 100";
 
         /** @var array<array<string, int|string|null>> $result */
         $result = $this->database->select($sql, [
@@ -137,6 +138,20 @@ final class PlayerRepository extends AbstractRepository
         }
 
         return $players;
+    }
+
+    public function getMaxAmountOfPlayersInSingleWorld(): int
+    {
+        $sql = "SELECT COUNT(id) AS amount, world FROM players GROUP BY world ORDER BY COUNT(id) DESC LIMIT 1";
+
+        /** @var array<array{amount: int, world: string}> $result */
+        $result = $this->database->select($sql);
+
+        if (count($result) !== 1) {
+            throw new RuntimeException('How did this query return more than one result?');
+        }
+
+        return $result[0]['amount'];
     }
 
     public function deleteAll(): void

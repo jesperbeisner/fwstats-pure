@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Helper\Html;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
 /** @var Player[] $players */
+/** @var Clan[] $clans */
+/** @var int $page */
 
 ?>
 <div class="table-container">
@@ -27,7 +30,7 @@ use Jesperbeisner\Fwstats\Service\RenderService;
         </tr>
         </thead>
         <tbody>
-        <?php $i = 1; ?>
+        <?php $i = ($page * 100) - 99; ?>
         <?php foreach ($players as $player): ?>
             <tr>
                 <td>

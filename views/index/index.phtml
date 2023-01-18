@@ -9,11 +9,17 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var RenderService $this */
 /** @var array<string, mixed> $vars */
 
-/** @var string|null $loginText */
-$loginText = $vars['login'];
+/** @var int $page */
+$page = $vars['page'];
 
-/** @var string|null $logoutText */
-$logoutText = $vars['logout'];
+/** @var bool $hasPreviousSite */
+$hasPreviousSite = $vars['hasPreviousSite'];
+
+/** @var bool $hasNextSite */
+$hasNextSite = $vars['hasNextSite'];
+
+/** @var bool $availablePages */
+$availablePages = $vars['availablePages'];
 
 $this->setTitle('Index');
 
@@ -48,5 +54,25 @@ $this->setTitle('Index');
             require __DIR__ . '/_ranking-table.phtml'
             ?>
         </div>
+    </div>
+
+    <div class="pagination is-centered mt-3" aria-label="pagination">
+        <?php if ($hasPreviousSite === true): ?>
+            <a class="pagination-previous" href="/?page=<?= $page - 1 ?>">Vorherige Seite</a>
+        <?php else: ?>
+            <a class="pagination-previous is-disabled">Vorherige Seite</a>
+        <?php endif; ?>
+
+        <ul class="pagination-list">
+            <li>
+                Seite <?= $page . ' / ' . $availablePages ?>
+            </li>
+        </ul>
+
+        <?php if ($hasNextSite === true): ?>
+            <a class="pagination-next" href="/?page=<?= $page + 1 ?>">Nächste Seite</a>
+        <?php else: ?>
+            <a class="pagination-next is-disabled">Nächste Seite</a>
+        <?php endif; ?>
     </div>
 </div>
