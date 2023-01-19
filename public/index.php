@@ -9,4 +9,7 @@ use Jesperbeisner\Fwstats\Stdlib\Request;
 /** @var ContainerInterface $container */
 $container = require __DIR__ . '/../bootstrap.php';
 
-(new Application($container))->handle(Request::fromGlobals())->send();
+$request = Request::fromGlobals();
+$container->set(Request::class, $request);
+
+(new Application($container))->handle($request)->send();

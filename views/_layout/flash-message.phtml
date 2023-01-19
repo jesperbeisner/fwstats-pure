@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Enum\FlashEnum;
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+
+?>
+<?php if ([] !== $successFlashMessages = $this->session->getFlash(FlashEnum::SUCCESS)): ?>
+    <article id="flash-message-success" class="container message is-success has-text-centered info-text">
+        <div class="message-body">
+            <?php foreach ($successFlashMessages as $successFlashMessage): ?>
+                <p class="has-text-weight-bold"><?= $successFlashMessage ?></p>
+            <?php endforeach; ?>
+        </div>
+    </article>
+<?php endif; ?>
+
+<?php if ([] !== $errorFlashMessages = $this->session->getFlash(FlashEnum::ERROR)): ?>
+    <article id="flash-message-error" class="container message is-danger has-text-centered info-text">
+        <div class="message-body">
+            <?php foreach ($errorFlashMessages as $errorFlashMessage): ?>
+                <p class="has-text-weight-bold"><?= $errorFlashMessage ?></p>
+            <?php endforeach; ?>
+        </div>
+    </article>
+<?php endif; ?>

@@ -9,6 +9,7 @@ use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Service\RenderService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
+use Jesperbeisner\Fwstats\Stdlib\Request;
 
 class RenderServiceFactory implements FactoryInterface
 {
@@ -18,10 +19,14 @@ class RenderServiceFactory implements FactoryInterface
         $config = $container->get(Config::class);
 
         $viewsDirectory = $config->getString('views_directory');
+        $appEnv = $config->getAppEnv();
 
         /** @var SessionInterface $session */
         $session = $container->get(SessionInterface::class);
 
-        return new RenderService($viewsDirectory, $session);
+        /** @var Request $request */
+        $request = $container->get(Request::class);
+
+        return new RenderService($viewsDirectory, $appEnv, $session, $request);
     }
 }

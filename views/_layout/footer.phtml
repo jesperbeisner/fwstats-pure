@@ -1,3 +1,11 @@
-<footer>
-    <!-- TODO maybe... -->
+<footer class="has-background-dark">
+    <?php if ($this->getSession()->getUser() === null): ?>
+        <a href="/login">
+            Login
+        </a>
+    <?php else: ?>
+        <a href="/logout">
+            Logout
+        </a>
+    <?php endif; ?>
 </footer>

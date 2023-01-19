@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Service;
 
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
+use Jesperbeisner\Fwstats\Stdlib\Request;
 
 final class RenderService
 {
@@ -13,7 +14,9 @@ final class RenderService
 
     public function __construct(
         private readonly string $viewsDirectory,
+        private readonly string $appEnv,
         private readonly SessionInterface $session,
+        private readonly Request $request,
     ) {
     }
 
@@ -58,8 +61,18 @@ final class RenderService
         return $this->title === null ? 'FWSTATS' : $this->title . ' - FWSTATS';
     }
 
+    public function getAppEnv(): string
+    {
+        return $this->appEnv;
+    }
+
     public function getSession(): SessionInterface
     {
         return $this->session;
+    }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
     }
 }

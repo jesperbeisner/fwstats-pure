@@ -22,10 +22,10 @@ $availablePages = $vars['availablePages'];
 $this->setTitle('Index');
 
 ?>
-<div id="ranking" class="mb-5">
-    <div class="tabs is-centered is-medium">
-        <ul>
-            <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
+<div id="ranking">
+    <div class="tabs is-centered is-medium mt-0">
+        <ul class="m-0 p-0">
+            <li id="action-freewar-tab"><a>ActionFreewar</a></li>
             <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
         </ul>
     </div>
@@ -48,7 +48,7 @@ $this->setTitle('Index');
         </div>
     </div>
 
-    <div class="pagination is-centered mt-3" aria-label="pagination">
+    <div class="pagination is-centered mt-3 mb-0" aria-label="pagination">
         <?php if ($hasPreviousSite === true): ?>
             <a class="pagination-previous" href="/?page=<?= $page - 1 ?>">Vorherige Seite</a>
         <?php else: ?>

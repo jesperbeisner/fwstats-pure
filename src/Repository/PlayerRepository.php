@@ -161,6 +161,27 @@ final class PlayerRepository extends AbstractRepository
         return $result[0]['amount'];
     }
 
+    /**
+     * @return array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}>
+     */
+    public function searchPlayers(string $query): array
+    {
+        $sql = <<<SQL
+            SELECT players.world, players.id, players.name, players.race, players.xp, players.soul_xp, players.total_xp, players.profession, clans.id AS clan_id, clans.name AS clan_name, clans.shortcut AS clan_shortcut
+            FROM players
+            LEFT JOIN clans ON clans.clan_id = players.clan_id AND clans.world = players.world
+            WHERE players.name LIKE :query
+            ORDER BY players.total_xp DESC
+        SQL;
+
+        /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $result */
+        $result = $this->database->select($sql, [
+            'query' => '%' . $query . '%',
+        ]);
+
+        return $result;
+    }
+
     public function deleteAll(): void
     {
         $sql = "DELETE FROM players";

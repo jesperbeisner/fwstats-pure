@@ -1,7 +1,7 @@
 # TODOs
 
 - ~~Pagination on index page~~
-- Search on index page
+- ~~Add player search functionality~~
 - Generate race change/name change pictures as well and display on website
 - i18n
 - Build usable prod docker image and autobuild in github action

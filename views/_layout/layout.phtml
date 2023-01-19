@@ -23,28 +23,16 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 <body>
     <?php require __DIR__ . '/navigation.phtml' ?>
 
-    <main class="container">
-        <?php if ([] !== $successFlashMessages = $this->session->getFlash(FlashEnum::SUCCESS)): ?>
-            <article class="message is-success has-text-centered info-text">
-                <div class="message-body">
-                    <?php foreach ($successFlashMessages as $successFlashMessage): ?>
-                        <p><?= $successFlashMessage ?></p>
-                    <?php endforeach; ?>
-                </div>
-            </article>
-        <?php endif; ?>
+    <?php require __DIR__ . '/flash-message.phtml' ?>
 
-        <?php if ([] !== $errorFlashMessages = $this->session->getFlash(FlashEnum::ERROR)): ?>
-            <article class="message is-danger has-text-centered info-text">
-                <div class="message-body">
-                    <?php foreach ($errorFlashMessages as $errorFlashMessage): ?>
-                        <p><?= $errorFlashMessage ?></p>
-                    <?php endforeach; ?>
+    <main class="container mt-5 mb-5">
+        <div class=" card">
+            <div class="card-content">
+                <div class="content">
+                    <?= $content ?>
                 </div>
-            </article>
-        <?php endif; ?>
-
-        <?= $content ?>
+            </div>
+        </div>
     </main>
 
     <?php require __DIR__ . '/footer.phtml' ?>

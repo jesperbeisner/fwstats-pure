@@ -52,7 +52,7 @@ final readonly class LoginController implements ControllerInterface
                 return Response::redirect((string) $securityRedirectUri);
             }
 
-            return Response::redirect('/');
+            return Response::redirect('/admin');
         }
 
         return Response::html('security/login.phtml');

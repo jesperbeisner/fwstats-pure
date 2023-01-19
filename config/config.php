@@ -34,6 +34,8 @@ return [
         ['route' => '/login', 'methods' => ['GET', 'POST'], 'controller' => Controller\LoginController::class],
         ['route' => '/logout', 'methods' => ['GET', 'POST'], 'controller' => Controller\LogoutController::class],
         ['route' => '/cronjob', 'methods' => ['POST'], 'controller' => Controller\CronjobController::class],
+        ['route' => '/search', 'methods' => ['GET'], 'controller' => Controller\SearchController::class],
+        ['route' => '/admin', 'methods' => ['GET'], 'controller' => Controller\AdminController::class],
     ],
     'processes' => [
         Process\ExceptionHandlerProcess::class,
@@ -65,6 +67,8 @@ return [
         Controller\SecurityController::class => Controller\Factory\SecurityControllerFactory::class,
         Controller\UnauthorizedController::class => Controller\Factory\UnauthorizedControllerFactory::class,
         Controller\CronjobController::class => Controller\Factory\CronjobControllerFactory::class,
+        Controller\SearchController::class => Controller\Factory\SearchControllerFactory::class,
+        Controller\AdminController::class => Controller\Factory\AdminControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,

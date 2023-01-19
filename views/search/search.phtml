@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Helper\Html;
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
+
+/** @var array $players */
+$players = $vars['players'];
+
+$this->setTitle('Search');
+
+$query = $this->getRequest()->getGetParameter('query');
+
+?>
+<?php if ($query === null || $query === ''): ?>
+    <div id="search">
+        <form action="/search" method="GET">
+            <div class="field has-addons">
+                <div class="control" style="width: 500px;">
+                    <input class="input is-rounded" type="text" name="query" id="query" placeholder="…" required>
+                </div>
+                <div class="control">
+                    <button class="button is-danger is-rounded">Suchen</button>
+                </div>
+            </div>
+        </form>
+    </div>
+<?php else: ?>
+    <?php if ($players === []): ?>
+        <p class="has-text-centered has-text-danger has-text-weight-bold">Es wurde kein Spieler mit "<?= Html::escape($query) ?>" im Namen gefunden.</p>
+    <?php else: ?>
+        <?php require __DIR__ . '/_search-table.phtml' ?>
+    <?php endif; ?>
+<?php endif; ?>
