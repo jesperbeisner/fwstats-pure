@@ -7,7 +7,6 @@ namespace Jesperbeisner\Fwstats\Controller\Factory;
 use Jesperbeisner\Fwstats\Controller\IndexController;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
-use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 
 final readonly class IndexControllerFactory implements FactoryInterface
@@ -17,9 +16,6 @@ final readonly class IndexControllerFactory implements FactoryInterface
         /** @var PlayerRepository $playerRepository */
         $playerRepository = $container->get(PlayerRepository::class);
 
-        /** @var ClanRepository $clanRepository */
-        $clanRepository = $container->get(ClanRepository::class);
-
-        return new IndexController($playerRepository, $clanRepository);
+        return new IndexController($playerRepository);
     }
 }

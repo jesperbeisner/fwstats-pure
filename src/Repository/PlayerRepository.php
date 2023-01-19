@@ -35,23 +35,26 @@ final class PlayerRepository extends AbstractRepository
     }
 
     /**
-     * @return Player[]
+     * @return array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}>
      */
     public function findAllByWorldAndOrderedByTotalXp(WorldEnum $world, int $offset): array
     {
-        $sql = "SELECT * FROM players WHERE world = :world ORDER BY total_xp DESC LIMIT $offset, 100";
+        $sql = <<<SQL
+            SELECT players.world, players.id, players.name, players.race, players.xp, players.soul_xp, players.total_xp, players.profession, clans.id AS clan_id, clans.name AS clan_name, clans.shortcut AS clan_shortcut
+            FROM players
+            LEFT JOIN clans ON clans.clan_id = players.clan_id
+            WHERE players.world = :world
+            ORDER BY players.total_xp DESC
+            LIMIT :offset, 100
+        SQL;
 
-        /** @var array<array<string, int|string|null>> $result */
+        /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $result */
         $result = $this->database->select($sql, [
             'world' => $world->value,
+            'offset' => $offset,
         ]);
 
-        $players = [];
-        foreach ($result as $row) {
-            $players[] = $this->hydratePlayer($row);
-        }
-
-        return $players;
+        return $result;
     }
 
     /**

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Jesperbeisner\Fwstats\Model\Clan;
-use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
@@ -34,22 +32,16 @@ $this->setTitle('Index');
     <div>
         <div id="action-freewar-tab-content">
             <?php
-            /** @var Player[] $players */
+            /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
             $players = $vars['afsrvPlayers'];
-
-            /** @var Clan[] $clans */
-            $clans = $vars['afsrvClans'];
 
             require __DIR__ . '/_ranking-table.phtml'
             ?>
         </div>
         <div id="chaos-freewar-tab-content" class="is-hidden">
             <?php
-            /** @var Player[] $players */
+            /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
             $players = $vars['chaosPlayers'];
-
-            /** @var Clan[] $clans */
-            $clans = $vars['chaosClans'];
 
             require __DIR__ . '/_ranking-table.phtml'
             ?>

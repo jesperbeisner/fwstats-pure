@@ -8,3 +8,4 @@
 - Change database access logs
 - ~~Weltauswahl in LocalStorage speichern~~
 - Track xp gains for a single day
+- Change migration loading
