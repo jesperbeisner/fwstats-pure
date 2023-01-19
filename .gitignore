@@ -4,5 +4,8 @@ composer.lock
 /var/*
 !/var/.gitkeep
 
+/data/database/*
+!/data/database/.gitkeep
+
 .env.local.php
 .phpunit.result.cache

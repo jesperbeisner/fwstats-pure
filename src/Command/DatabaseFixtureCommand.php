@@ -102,6 +102,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
          */
         foreach ($playersFixtureData as $playerData) {
             $player = new Player(
+                id: null,
                 world: $playerData['world'],
                 playerId: $playerData['playerId'],
                 name: $playerData['name'],
@@ -271,7 +272,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
     private function createUserAccount(): void
     {
         $this->userRepository->deleteAll();
-        $this->createUserAction->configure(['email' => 'Password12345', 'password' => 'Password12345']);
+        $this->createUserAction->configure(['email' => 'admin@example.com', 'password' => 'Password12345']);
         $this->createUserAction->run();
     }
 }

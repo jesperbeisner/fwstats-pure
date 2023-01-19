@@ -12,6 +12,7 @@ use RuntimeException;
 final readonly class Player implements PlayerInterface
 {
     public function __construct(
+        public ?int $id,
         public WorldEnum $world,
         public int $playerId,
         public string $name,
@@ -23,6 +24,11 @@ final readonly class Player implements PlayerInterface
         public ?string $profession,
         public DateTimeImmutable $created,
     ) {
+    }
+
+    public static function withId(int $id, Player $player): Player
+    {
+        return new Player($id, $player->world, $player->playerId, $player->name, $player->race, $player->xp, $player->soulXp, $player->totalXp, $player->clanId, $player->profession, $player->created);
     }
 
     public function getWorld(): WorldEnum

@@ -15,9 +15,6 @@ use Jesperbeisner\Fwstats\Stdlib\Response;
 
 final readonly class Application
 {
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(
         private ContainerInterface $container,
     ) {

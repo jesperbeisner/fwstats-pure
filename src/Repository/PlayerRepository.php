@@ -42,7 +42,7 @@ final class PlayerRepository extends AbstractRepository
         $sql = <<<SQL
             SELECT players.world, players.id, players.name, players.race, players.xp, players.soul_xp, players.total_xp, players.profession, clans.id AS clan_id, clans.name AS clan_name, clans.shortcut AS clan_shortcut
             FROM players
-            LEFT JOIN clans ON clans.clan_id = players.clan_id
+            LEFT JOIN clans ON clans.clan_id = players.clan_id AND clans.world = players.world
             WHERE players.world = :world
             ORDER BY players.total_xp DESC
             LIMIT :offset, 100
@@ -174,6 +174,7 @@ final class PlayerRepository extends AbstractRepository
     private function hydratePlayer(array $row): Player
     {
         return new Player(
+            id: (int) $row['id'],
             world: WorldEnum::from((string) $row['world']),
             playerId: (int) $row['player_id'],
             name: (string) $row['name'],

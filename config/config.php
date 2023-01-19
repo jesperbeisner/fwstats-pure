@@ -6,6 +6,7 @@ use Jesperbeisner\Fwstats\Action;
 use Jesperbeisner\Fwstats\Command;
 use Jesperbeisner\Fwstats\Controller;
 use Jesperbeisner\Fwstats\Importer;
+use Jesperbeisner\Fwstats\Interface;
 use Jesperbeisner\Fwstats\Process;
 use Jesperbeisner\Fwstats\Repository;
 use Jesperbeisner\Fwstats\Service;
@@ -16,10 +17,10 @@ return [
         'app_env' => $_ENV['APP_ENV'],
         'root_directory' => dirname(__DIR__),
         'views_directory' => __DIR__ . '/../views',
-        'migrations_directory' => __DIR__ . '/../migrations',
+        'migrations_directory' => __DIR__ . '/../data/migrations',
         'log_file' => __DIR__ . '/../var/fwstats.log',
-        'database_file' => __DIR__ . '/../var/sqlite.db',
-        'setup_file' => __DIR__ . '/../var/setup.txt',
+        'database_file' => __DIR__ . '/../data/database/sqlite.db',
+        'setup_file' => __DIR__ . '/../data/database/setup.txt',
     ],
     'routes' => [
         ['route' => '/', 'methods' => ['GET'], 'controller' => Controller\IndexController::class],
@@ -111,10 +112,10 @@ return [
         Repository\CronjobRepository::class => Repository\Factory\RepositoryFactory::class,
 
         // Stdlib
-        \Jesperbeisner\Fwstats\Interface\LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,
-        \Jesperbeisner\Fwstats\Interface\RouterInterface::class => Stdlib\Factory\RouterFactory::class,
-        \Jesperbeisner\Fwstats\Interface\SessionInterface::class => Stdlib\Factory\SessionFactory::class,
-        \Jesperbeisner\Fwstats\Interface\DatabaseInterface::class => Stdlib\Factory\DatabaseFactory::class,
+        Interface\LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,
+        Interface\RouterInterface::class => Stdlib\Factory\RouterFactory::class,
+        Interface\SessionInterface::class => Stdlib\Factory\SessionFactory::class,
+        Interface\DatabaseInterface::class => Stdlib\Factory\DatabaseFactory::class,
 
         // Processes
         Process\ExceptionHandlerProcess::class => Process\Factory\ExceptionHandlerProcessFactory::class,

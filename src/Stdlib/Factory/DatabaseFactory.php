@@ -18,6 +18,7 @@ final class DatabaseFactory implements FactoryInterface
     {
         /** @var Config $config */
         $config = $container->get(Config::class);
+        $databaseFile = $config->getString('database_file');
 
         $options = [
             PDO::ATTR_EMULATE_PREPARES => false,
@@ -25,7 +26,7 @@ final class DatabaseFactory implements FactoryInterface
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ];
 
-        $pdo = new PDO(dsn: 'sqlite:' . $config->getRootDir() . '/var/sqlite.db', options: $options);
+        $pdo = new PDO(dsn: 'sqlite:' . $databaseFile, options: $options);
 
         $logger = null;
         if ($config->getAppEnv() !== 'prod') {
