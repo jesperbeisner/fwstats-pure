@@ -7,21 +7,15 @@ namespace Jesperbeisner\Fwstats\Command\Factory;
 use Jesperbeisner\Fwstats\Command\DatabaseMigrationCommand;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
-use Jesperbeisner\Fwstats\Repository\MigrationRepository;
-use Jesperbeisner\Fwstats\Stdlib\Config;
+use Jesperbeisner\Fwstats\Service\MigrationService;
 
 final readonly class DatabaseMigrationCommandFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): DatabaseMigrationCommand
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
+        /** @var MigrationService $migrationService */
+        $migrationService = $container->get(MigrationService::class);
 
-        $migrationsFolder = $config->getRootDir() . '/migrations';
-
-        /** @var MigrationRepository $migrationRepository */
-        $migrationRepository = $container->get(MigrationRepository::class);
-
-        return new DatabaseMigrationCommand($migrationsFolder, $migrationRepository);
+        return new DatabaseMigrationCommand($migrationService);
     }
 }

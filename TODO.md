@@ -9,3 +9,5 @@
 - ~~Weltauswahl in LocalStorage speichern~~
 - Track xp gains for a single day
 - Change migration loading
+- Make container get generic return
+- Possibility to reset AF in backend

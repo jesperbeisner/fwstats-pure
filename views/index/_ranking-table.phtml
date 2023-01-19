@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\Helper\Html;
+use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
@@ -68,7 +69,7 @@ use Jesperbeisner\Fwstats\Service\RenderService;
                     <?= Html::numberFormat($player['total_xp']) ?>
                 </td>
                 <td class="has-text-centered">
-                    <?= '100' ?? '-' ?>
+                    <?= Player::getSoulLevel($player['xp'], $player['soul_xp']) ?? '-' ?>
                 </td>
                 <td class="has-text-right">
                     <a href="https://<?= $player['world'] ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $player['id'] ?>" target="_blank" class="player_profile_link">

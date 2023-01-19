@@ -197,7 +197,7 @@ final class RankingImageService extends AbstractImageService
         $this->write('Stufe', 700, 65, 12);
 
         foreach ($players as $id => $player) {
-            $this->write($player->getSoulLevel() === null ? '-' : (string) $player->getSoulLevel(), 718, 19 * ($id + 1) + 70, 10);
+            $this->write(Player::getSoulLevel($player->xp, $player->soulXp) === null ? '-' : (string) Player::getSoulLevel($player->xp, $player->soulXp), 718, 19 * ($id + 1) + 70, 10);
         }
     }
 }

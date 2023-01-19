@@ -150,7 +150,11 @@ final class PlayerRepository extends AbstractRepository
         /** @var array<array{amount: int, world: string}> $result */
         $result = $this->database->select($sql);
 
-        if (count($result) !== 1) {
+        if (count($result) === 0) {
+            return 0;
+        }
+
+        if (count($result) > 1) {
             throw new RuntimeException('How did this query return more than one result?');
         }
 

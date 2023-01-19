@@ -19,7 +19,7 @@ return [
         'migrations_directory' => __DIR__ . '/../migrations',
         'log_file' => __DIR__ . '/../var/fwstats.log',
         'database_file' => __DIR__ . '/../var/sqlite.db',
-        'database_setup_file' => __DIR__ . '/../var/setup.txt',
+        'setup_file' => __DIR__ . '/../var/setup.txt',
     ],
     'routes' => [
         ['route' => '/', 'methods' => ['GET'], 'controller' => Controller\IndexController::class],
@@ -74,6 +74,8 @@ return [
         Service\PlaytimeService::class => Service\Factory\PlaytimeServiceFactory::class,
         Service\RenderService::class => Service\Factory\RenderServiceFactory::class,
         Service\CronjobService::class => Service\Factory\CronjobServiceFactory::class,
+        Service\SetupService::class => Service\Factory\SetupServiceFactory::class,
+        Service\MigrationService::class => Service\Factory\MigrationServiceFactory::class,
 
         // ImageService
         Service\RankingImageService::class => Service\Factory\RankingImageServiceFactory::class,
