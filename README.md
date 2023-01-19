@@ -1,27 +1,41 @@
-# fwstats
+# FWSTATS 🚀
+
+Statistics website for the worlds _ActionFreewar_ and _ChaosFreewar_ in the browser game [freewar.de](https://www.freewar.de).
 
 ## Setup
 
 ### Local
 
+#### 1. Start the docker container
+
 ```bash
-# Start Docker Containers
 docker-compose up -d
-
-# Install composer packages
-docker-compose exec php composer install
-
-# Load migrations
-docker-compose exec php php bin/console.php app:database-migration
-
-# Load test data
-docker-compose exec php php bin/console.php app:database-fixture
-
-# Visit http://localhost:8080
-
-# Test-Account-Mail: admin@example.com
-# Test-Account-Password: Password12345
 ```
+
+#### 2. Install composer packages
+
+Use the docker container to install composer packages. This way it's not important which PHP version you have installed locally, and you do not run into any errors.
+
+```bash
+docker-compose exec php composer install
+```
+
+#### 3. Load migrations
+
+```bash
+docker-compose exec php php bin/console.php app:database-migration
+```
+
+#### 4. Load fixtures
+
+```bash
+docker-compose exec php php bin/console.php app:database-fixture
+```
+
+#### 5. Finished
+
+Open your browser and visit http://localhost:8080. A test account with e-mail `admin@example.com` and password `password12345` was also created for you.
+
 
 ### Prod
 
