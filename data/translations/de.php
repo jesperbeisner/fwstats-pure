@@ -9,6 +9,7 @@ return [
     'navigation.changes.names' => 'Namen',
     'navigation.pictures' => 'Bilder',
     'navigation.pictures.ranking' => 'Ranking',
+    'navigation.pictures.name-changes' => 'Namensänderungen',
     'navigation.admin' => 'Admin',
     'navigation.search' => 'Suchen',
 
@@ -22,6 +23,7 @@ return [
     'title.logs' => 'Logs',
     'title.search' => 'Suche',
     'title.ranking-pictures' => 'Ranking Bilder',
+    'title.name-changes-pictures' => 'Namensänderungsbilder',
 
     'text.404-page-not-found' => '404 - Seite nicht gefunden',
     'text.translation-change-success' => 'Deine Spracheinstellungen wurden erfolgreich geändert',
@@ -40,11 +42,12 @@ return [
     'text.search.no-players-found' => 'Es wurde kein Spieler mit "%SEARCH_QUERY%" im Namen gefunden',
     'text.button.search' => 'Suchen',
     'text.include-ranking-image-in-profile' => 'Ranking Bild im Profil einbinden',
+    'text.include-name-changes-image-in-profile' => 'Namensänderungsbild im Profil einbinden',
     'text.username-and-password-cant-be-empty' => 'E-Mail und/oder Passwort dürfen nicht leer sein',
     'text.user-with-username-does-not-exist' => 'Ein User mit dem Usernamen "%USERNAME%" existiert nicht',
     'text.password-does-not-match' => 'Das Passwort stimmt nicht mit dem hinterlegten Passwort überein',
     'text.login-success' => 'Du wurdest erfolgreich eingeloggt',
-    'Du wurdest erfolgreich ausgeloggt.' => 'Du wurdest erfolgreich ausgeloggt',
+    'text.logout-success' => 'Du wurdest erfolgreich ausgeloggt',
 
     'table.name' => 'Name',
     'table.world' => 'Welt',

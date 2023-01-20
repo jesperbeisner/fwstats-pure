@@ -11,6 +11,7 @@ use Jesperbeisner\Fwstats\Importer\PlayerImporter;
 use Jesperbeisner\Fwstats\Importer\PlaytimeImporter;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
+use Jesperbeisner\Fwstats\Service\NameChangeImageService;
 use Jesperbeisner\Fwstats\Service\RankingImageService;
 
 class AppCommandFactory implements FactoryInterface
@@ -21,8 +22,9 @@ class AppCommandFactory implements FactoryInterface
             $container->get(ClanImporter::class),
             $container->get(PlayerImporter::class),
             $container->get(AchievementImporter::class),
-            $container->get(RankingImageService::class),
             $container->get(PlaytimeImporter::class),
+            $container->get(RankingImageService::class),
+            $container->get(NameChangeImageService::class),
         );
     }
 }

@@ -9,6 +9,7 @@ return [
     'navigation.changes.names' => 'Names',
     'navigation.pictures' => 'Pictures',
     'navigation.pictures.ranking' => 'Ranking',
+    'navigation.pictures.name-changes' => 'Name changes',
     'navigation.admin' => 'Admin',
     'navigation.search' => 'Search',
 
@@ -22,6 +23,7 @@ return [
     'title.logs' => 'Logs',
     'title.search' => 'Search',
     'title.ranking-pictures' => 'Ranking pictures',
+    'title.name-changes-pictures' => 'Name changes pictures',
 
     'text.404-page-not-found' => '404 - Page not found',
     'text.translation-change-success' => 'Your language settings have been successfully changed',
@@ -41,6 +43,7 @@ return [
     'text.search.no-players-found' => 'No player with "%SEARCH_QUERY%" in the name was found',
     'text.button.search' => 'Search',
     'text.include-ranking-image-in-profile' => 'Include ranking image in profile',
+    'text.include-name-changes-image-in-profile' => 'Include name changes image in profile',
     'text.username-and-password-cant-be-empty' => 'Email and/or password must not be empty',
     'text.user-with-username-does-not-exist' => 'A user with the username "%USERNAME%" does not exist',
     'text.password-does-not-match' => 'The password does not match the stored password',

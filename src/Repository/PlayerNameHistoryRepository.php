@@ -30,12 +30,12 @@ final class PlayerNameHistoryRepository extends AbstractRepository
     /**
      * @return PlayerNameHistory[]
      */
-    public function getNameChangesByWorld(WorldEnum $world): array
+    public function getNameChangesByWorld(WorldEnum $worldEnum): array
     {
         $sql = "SELECT * FROM players_name_history WHERE world = :world ORDER BY created DESC";
 
         $result = $this->database->select($sql, [
-            'world' => $world->value,
+            'world' => $worldEnum->value,
         ]);
 
         $playerNameHistories = [];
@@ -57,6 +57,26 @@ final class PlayerNameHistoryRepository extends AbstractRepository
         $result = $this->database->select($sql, [
             'world' => $player->getWorld()->value,
             'playerId' => $player->getPlayerId(),
+        ]);
+
+        $playerNameHistories = [];
+        foreach ($result as $row) {
+            /** @var array{world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
+            $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
+        }
+
+        return $playerNameHistories;
+    }
+
+    /**
+     * @return array<PlayerNameHistory>
+     */
+    public function getLast15NameChangesByWorld(WorldEnum $worldEnum): array
+    {
+        $sql = "SELECT * FROM players_name_history WHERE world = :world ORDER BY created DESC LIMIT 15";
+
+        $result = $this->database->select($sql, [
+            'world' => $worldEnum->value,
         ]);
 
         $playerNameHistories = [];

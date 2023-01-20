@@ -8,7 +8,6 @@ use Jesperbeisner\Fwstats\Command\AbstractCommand;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
-use Jesperbeisner\Fwstats\Interface\MiddlewareInterface;
 use Jesperbeisner\Fwstats\Interface\ProcessInterface;
 
 final class Config

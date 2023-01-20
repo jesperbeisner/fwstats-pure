@@ -18,3 +18,4 @@
 - ~~Change from e-mail to username (admin)~~
 - Make password changeable
 - Make possible to generate new token
+- Make domain configurable

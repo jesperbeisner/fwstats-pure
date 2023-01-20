@@ -27,7 +27,7 @@ final class RankingImageService extends AbstractImageService
         $players = $this->playerRepository->getTop50PlayersByWorld($world);
         $clans = $this->clanRepository->findAllByWorld($world);
 
-        $this->createImage(750, 1030);
+        $this->createImage(750, (int) (70 + (count($players) * 19.1)));
         $this->setBackgroundColor($this->colorWhite());
 
         if ($world === WorldEnum::AFSRV) {

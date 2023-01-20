@@ -15,6 +15,7 @@ use Jesperbeisner\Fwstats\Stdlib;
 return [
     'global' => [
         'app_env' => $_ENV['APP_ENV'],
+        'domain' => 'https://fwstats.de',
         'root_directory' => dirname(__DIR__),
         'views_directory' => __DIR__ . '/../views',
         'migrations_directory' => __DIR__ . '/../data/migrations',
@@ -29,8 +30,10 @@ return [
         ['route' => '/profile/{world}/{id}', 'methods' => ['GET'], 'controller' => Controller\ProfileController::class],
         ['route' => '/playtime', 'methods' => ['GET'], 'controller' => Controller\PlaytimeController::class],
         ['route' => '/changes/names', 'methods' => ['GET'], 'controller' => Controller\ChangeController::class],
-        ['route' => '/images/ranking', 'methods' => ['GET'], 'controller' => Controller\ImageController::class],
-        ['route' => '/images/{world}-ranking.png', 'methods' => ['GET'], 'controller' => Controller\ImageRenderController::class],
+        ['route' => '/images/ranking', 'methods' => ['GET'], 'controller' => Controller\RankingImageController::class],
+        ['route' => '/images/{world}-ranking.png', 'methods' => ['GET'], 'controller' => Controller\RankingImageDisplayController::class],
+        ['route' => '/images/name-changes', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageController::class],
+        ['route' => '/images/{world}-name-changes.png', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageDisplayController::class],
         ['route' => '/status', 'methods' => ['GET'], 'controller' => Controller\StatusController::class],
         ['route' => '/admin/logs', 'methods' => ['GET'], 'controller' => Controller\LogController::class],
         ['route' => '/login', 'methods' => ['GET', 'POST'], 'controller' => Controller\LoginController::class],
@@ -59,8 +62,10 @@ return [
         // Controller
         Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
         Controller\ProfileController::class => Controller\Factory\ProfileControllerFactory::class,
-        Controller\ImageController::class => Controller\Factory\ImageControllerFactory::class,
-        Controller\ImageRenderController::class => Controller\Factory\ImageRenderControllerFactory::class,
+        Controller\RankingImageController::class => Controller\Factory\RankingImageControllerFactory::class,
+        Controller\RankingImageDisplayController::class => Controller\Factory\RankingImageDisplayControllerFactory::class,
+        Controller\NameChangeImageController::class => Controller\Factory\NameChangeImageControllerFactory::class,
+        Controller\NameChangeImageDisplayController::class => Controller\Factory\NameChangeImageDisplayControllerFactory::class,
         Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
         Controller\StatusController::class => Controller\Factory\StatusControllerFactory::class,
         Controller\ChangeController::class => Controller\Factory\ChangeControllerFactory::class,
@@ -90,6 +95,7 @@ return [
 
         // ImageService
         Service\RankingImageService::class => Service\Factory\RankingImageServiceFactory::class,
+        Service\NameChangeImageService::class => Service\Factory\NameChangeImageServiceFactory::class,
 
         // Commands
         Command\AppCommand::class => Command\Factory\AppCommandFactory::class,
@@ -120,6 +126,7 @@ return [
         Repository\LogRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\UserRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\CronjobRepository::class => Repository\Factory\RepositoryFactory::class,
+        Repository\ConfigRepository::class => Repository\Factory\RepositoryFactory::class,
 
         // Stdlib
         Interface\LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,
