@@ -40,8 +40,8 @@ return [
     'text.search.no-players-found' => 'Es wurde kein Spieler mit "%SEARCH_QUERY%" im Namen gefunden',
     'text.button.search' => 'Suchen',
     'text.include-ranking-image-in-profile' => 'Ranking Bild im Profil einbinden',
-    'text.email-and-password-cant-be-empty' => 'E-Mail und/oder Passwort dürfen nicht leer sein',
-    'text.user-with-email-does-not-exist' => 'Ein User mit der E-Mail "%E-MAIL%" existiert nicht',
+    'text.username-and-password-cant-be-empty' => 'E-Mail und/oder Passwort dürfen nicht leer sein',
+    'text.user-with-username-does-not-exist' => 'Ein User mit dem Usernamen "%USERNAME%" existiert nicht',
     'text.password-does-not-match' => 'Das Passwort stimmt nicht mit dem hinterlegten Passwort überein',
     'text.login-success' => 'Du wurdest erfolgreich eingeloggt',
     'Du wurdest erfolgreich ausgeloggt.' => 'Du wurdest erfolgreich ausgeloggt',
@@ -74,7 +74,7 @@ return [
     'alt.german-flag' => 'Deutsches Flagge',
 
     'label.search' => 'Suche',
-    'label.email' => 'E-Mail',
+    'label.username' => 'Username',
     'label.password' => 'Passwort',
 
     // Races

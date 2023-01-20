@@ -50,7 +50,7 @@ docker-compose exec php php bin/console.php app:database-fixture
 
 ### 5. Finished
 
-Open your browser and visit http://localhost:8080. A test account with e-mail `admin@example.com` and password `password12345` was also created for you.
+Open your browser and visit http://localhost:8080. A test account with username `admin` and password `Password12345` was also created for you.
 
 
 ## First deployment
@@ -85,7 +85,7 @@ For this to run reliably, a service such as [cron-job.org](https://cron-job.org)
 
 ### 5. Finished!
 
-Point your reverse proxy on your published port (In this example 8888) and visit your domain. You can log in with the automatically created credentials `admin@example.com` as e-mail and `password12345` as password. **Change the password and e-mail after your first login**.  That's it, you're done. 🚀
+Point your reverse proxy on your published port (In this example 8888) and visit your domain. You can log in with the automatically created credentials `admin` as username and `Password12345` as password. **Change the password and e-mail after your first login**.  That's it, you're done. 🚀
 
 ## Additional deployments
 

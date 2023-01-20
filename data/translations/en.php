@@ -41,8 +41,8 @@ return [
     'text.search.no-players-found' => 'No player with "%SEARCH_QUERY%" in the name was found',
     'text.button.search' => 'Search',
     'text.include-ranking-image-in-profile' => 'Include ranking image in profile',
-    'text.email-and-password-cant-be-empty' => 'Email and/or password must not be empty',
-    'text.user-with-email-does-not-exist' => 'A user with the e-mail "%E-MAIL%" does not exist',
+    'text.username-and-password-cant-be-empty' => 'Email and/or password must not be empty',
+    'text.user-with-username-does-not-exist' => 'A user with the username "%USERNAME%" does not exist',
     'text.password-does-not-match' => 'The password does not match the stored password',
     'text.login-success' => 'You have been logged in successfully',
     'text.logout-success' => 'You have been logged out successfully',
@@ -75,7 +75,7 @@ return [
     'alt.german-flag' => 'German flag',
 
     'label.search' => 'Search',
-    'label.email' => 'E-Mail',
+    'label.username' => 'Username',
     'label.password' => 'Password',
 
     // Races

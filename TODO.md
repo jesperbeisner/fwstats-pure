@@ -14,3 +14,7 @@
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
 - ~~Translate login success/error messages~~
+- Add more tests
+- ~~Change from e-mail to username (admin)~~
+- Make password changeable
+- Make possible to generate new token

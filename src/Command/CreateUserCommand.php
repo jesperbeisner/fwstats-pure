@@ -23,13 +23,13 @@ final class CreateUserCommand extends AbstractCommand
         $this->writeLine("Starting the 'app:create-user' command...");
 
         if (!isset($this->arguments[2]) || !isset($this->arguments[3])) {
-            $this->writeLine("Error: You forgot to pass the email and/or password to the 'app:create-user' command.");
+            $this->writeLine("Error: You forgot to pass the username and/or password to the 'app:create-user' command.");
 
             return self::FAILURE;
         }
 
         try {
-            $this->createUserAction->configure(['email' => $this->arguments[2], 'password' => $this->arguments[3]]);
+            $this->createUserAction->configure(['username' => $this->arguments[2], 'password' => $this->arguments[3]]);
             $this->createUserAction->run();
         } catch (ActionException $e) {
             $this->writeLine($e->getMessage());
@@ -37,7 +37,7 @@ final class CreateUserCommand extends AbstractCommand
             return self::FAILURE;
         }
 
-        $this->writeLine("Success: A new user with email '{$this->arguments[2]}' was created.");
+        $this->writeLine(sprintf('Success: A new user with username "%s" was created.', $this->arguments[2]));
         $this->writeLine("Finished the 'app:create-user' command in {$this->getTime()} ms.");
 
         return self::SUCCESS;

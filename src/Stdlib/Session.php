@@ -57,24 +57,24 @@ final class Session implements SessionInterface
             return $this->user;
         }
 
-        $user = $this->get('user');
+        $username = $this->get('username');
 
-        if ($user === null) {
+        if ($username === null) {
             return null;
         }
 
-        if (is_string($user) === false) {
+        if (is_string($username) === false) {
             throw new SessionException("Method 'get' did not return a string.");
         }
 
-        $this->user = $this->userRepository->findOneByEmail($user);
+        $this->user = $this->userRepository->findOneByUsername($username);
 
         return $this->user;
     }
 
     public function setUser(User $user): void
     {
-        $this->set('user', $user->email);
+        $this->set('username', $user->username);
     }
 
     public function unset(string $key): void

@@ -24,17 +24,17 @@ final readonly class LoginController implements ControllerInterface
     public function execute(Request $request): Response
     {
         if ($request->isPost()) {
-            $email = $request->getPostParameter('email');
+            $username = $request->getPostParameter('username');
             $password = $request->getPostParameter('password');
 
-            if ($email === null || $password === null) {
-                $this->session->setFlash(FlashEnum::ERROR, 'text.email-and-password-cant-be-empty');
+            if ($username === null || $password === null) {
+                $this->session->setFlash(FlashEnum::ERROR, 'text.username-and-password-cant-be-empty');
 
                 return Response::redirect('/login');
             }
 
-            if (null === $user = $this->userRepository->findOneByEmail($email)) {
-                $this->session->setFlash(FlashEnum::ERROR, $this->translator->translate('text.user-with-email-does-not-exist', ['%E-MAIL%' => $email]));
+            if (null === $user = $this->userRepository->findOneByUsername($username)) {
+                $this->session->setFlash(FlashEnum::ERROR, $this->translator->translate('text.user-with-username-does-not-exist', ['%USERNAME%' => $username]));
 
                 return Response::redirect('/login');
             }

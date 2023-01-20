@@ -21,11 +21,11 @@ $this->setTitle('title.login');
                     <div class="column is-6 is-offset-3">
                         <form method="POST">
                             <div class="field">
-                                <label class="label" for="email">
-                                    <?= $this->text('label.email') ?>
+                                <label class="label" for="username">
+                                    <?= $this->text('label.username') ?>
                                 </label>
                                 <div class="control">
-                                    <input class="input is-rounded" type="email" name="email" id="email" required value="<?= $this->getAppEnv() === 'dev' ? 'admin@example.com' : '' ?>">
+                                    <input class="input is-rounded" type="text" name="username" id="username" required value="<?= $this->getAppEnv() === 'dev' ? 'admin' : '' ?>">
                                 </div>
                             </div>
 
@@ -34,7 +34,7 @@ $this->setTitle('title.login');
                                     <?= $this->text('label.password') ?>
                                 </label>
                                 <div class="control">
-                                    <input class="input is-rounded" type="password" name="password" id="password" required value="<?= $this->getAppEnv() === 'dev' ? 'password12345' : '' ?>">
+                                    <input class="input is-rounded" type="password" name="password" id="password" required value="<?= $this->getAppEnv() === 'dev' ? 'Password12345' : '' ?>">
                                 </div>
                             </div>
 

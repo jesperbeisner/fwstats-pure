@@ -16,7 +16,7 @@ use Jesperbeisner\Fwstats\Result\CreateUserActionResult;
 
 final class CreateUserAction implements ActionInterface
 {
-    private string $email;
+    private string $username;
     private string $password;
 
     public function __construct(
@@ -26,47 +26,47 @@ final class CreateUserAction implements ActionInterface
 
     public function configure(array $data): void
     {
-        if (!isset($data['email'])) {
-            throw new ActionException("No email set in the 'AbstractAction::configure' method.");
+        if (!isset($data['username'])) {
+            throw new ActionException('No username set in "CreateUserAction::configure".');
         }
 
         if (!isset($data['password'])) {
-            throw new ActionException("No password set in the 'AbstractAction::configure' method.");
+            throw new ActionException('No username set in "CreateUserAction::configure".');
         }
 
-        if (!is_string($data['email'])) {
-            throw new ActionException("The email set in the 'AbstractAction::configure' method is not a string.");
+        if (!is_string($data['username'])) {
+            throw new ActionException('The username set in the "CreateUserAction::configure" method is not a string.');
         }
 
         if (!is_string($data['password'])) {
-            throw new ActionException("The password set in the 'AbstractAction::configure' method is not a string.");
+            throw new ActionException('The password set in the "CreateUserAction::configure" method is not a string.');
         }
 
-        if (filter_var($data['email'], FILTER_VALIDATE_EMAIL) === false) {
-            throw new ActionException(sprintf('The email "%s" is not valid email address.', $data['email']));
+        if (strlen($data['username']) < 3) {
+            throw new ActionException('The username must be at least 3 characters long.');
         }
 
         if (strlen($data['password']) < 8) {
-            throw new ActionException("The password must be at least 8 characters long.");
+            throw new ActionException('The password must be at least 8 characters long.');
         }
 
-        $this->email = $data['email'];
+        $this->username = $data['username'];
         $this->password = $data['password'];
     }
 
     public function run(): CreateUserActionResult
     {
-        if (!isset($this->email) || !isset($this->password)) {
+        if (!isset($this->username) || !isset($this->password)) {
             throw new ActionException("You need to run 'configure' before you can use 'run'.");
         }
 
-        if (null !== $this->userRepository->findOneByEmail($this->email)) {
-            throw new ActionException("A user with email '$this->email' already exists.");
+        if (null !== $this->userRepository->findOneByUsername($this->username)) {
+            throw new ActionException(sprintf('A user with username "%s" already exists.', $this->username));
         }
 
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
 
-        $user = new User(null, UuidV4::create(), $this->email, $hashedPassword, Str::random(32), new DateTimeImmutable());
+        $user = new User(null, UuidV4::create(), $this->username, $hashedPassword, Str::random(32), new DateTimeImmutable());
 
         $user = $this->userRepository->insert($user);
 
