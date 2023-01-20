@@ -8,10 +8,10 @@ use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
-final readonly class UnauthorizedController implements ControllerInterface
+final readonly class MethodNotAllowedController implements ControllerInterface
 {
     public function execute(Request $request): Response
     {
-        return Response::json(['Error' => 'No token was specified or the token is not valid.'], 401);
+        return Response::json(['Error' => 'Method not allowed.'], 405);
     }
 }

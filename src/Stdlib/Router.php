@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Stdlib;
 
 use FastRoute\Dispatcher as DispatcherInterface;
+use Jesperbeisner\Fwstats\Controller\MethodNotAllowedController;
 use Jesperbeisner\Fwstats\Controller\NotFoundController;
 use Jesperbeisner\Fwstats\Interface\RouterInterface;
 
@@ -25,7 +26,10 @@ final readonly class Router implements RouterInterface
         }
 
         if ($routeInfo[0] === DispatcherInterface::METHOD_NOT_ALLOWED) {
-            $allowedMethods = $routeInfo[1];
+            $request->setController(MethodNotAllowedController::class);
+            // TODO: Display allowed methods
+            // $allowedMethods = $routeInfo[1];
+
             return;
         }
 

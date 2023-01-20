@@ -43,7 +43,7 @@ final readonly class SecurityProcess implements ProcessInterface
 
         if ([] !== $controllerReflectionClass->getAttributes(TokenRequired::class)) {
             if (null === $token = $request->getBearerToken()) {
-                $request->setController(SecurityController::class);
+                $request->setController(UnauthorizedController::class);
 
                 return;
             }

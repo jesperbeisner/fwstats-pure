@@ -67,6 +67,7 @@ return [
         Controller\LoginController::class => Controller\Factory\LoginControllerFactory::class,
         Controller\LogoutController::class => Controller\Factory\LogoutControllerFactory::class,
         Controller\NotFoundController::class => Controller\Factory\NotFoundControllerFactory::class,
+        Controller\MethodNotAllowedController::class => Controller\Factory\MethodNotAllowedControllerFactory::class,
         Controller\SecurityController::class => Controller\Factory\SecurityControllerFactory::class,
         Controller\UnauthorizedController::class => Controller\Factory\UnauthorizedControllerFactory::class,
         Controller\CronjobController::class => Controller\Factory\CronjobControllerFactory::class,
