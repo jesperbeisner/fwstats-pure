@@ -3,7 +3,7 @@
 - ~~Pagination on index page~~
 - ~~Add player search functionality~~
 - Generate race change/name change pictures as well and display on website
-- i18n
+- ~~i18n~~
 - Build usable prod docker image and autobuild in github action
 - Change database access logs
 - ~~Weltauswahl in LocalStorage speichern~~
@@ -13,3 +13,4 @@
 - Possibility to reset AF in backend
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
+- Translate login success/error messages

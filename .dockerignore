@@ -8,11 +8,8 @@ tests/
 data/database/*
 !data/database/.gitkeep
 
-data/images/*
-!data/images/.gitkeep
-
-data/logs/*
-!data/logs/.gitkeep
+var/*
+!var/.gitkeep
 
 composer.lock
 docker-compose.yml

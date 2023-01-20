@@ -68,7 +68,7 @@ final class Response
         return new Response(statusCode: 302, location: $location);
     }
 
-    public static function png(string $image, int $statusCode = 200, string $placeholderImage = __DIR__ . '/../../data/images/404-image.png'): Response
+    public static function png(string $image, int $statusCode = 200, string $placeholderImage = __DIR__ . '/../../data/404-image.png'): Response
     {
         if (is_file($image)) {
             $content = file_get_contents($image);

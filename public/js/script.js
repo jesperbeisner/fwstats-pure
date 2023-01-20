@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         actionFreewarTabContent.classList.add('is-hidden');
     }
 
-    if (activeTab !== null && actionFreewarTab !== null && chaosFreewarTab !== null && actionFreewarTabContent !== null && chaosFreewarTabContent !== null) {
+    if (actionFreewarTab !== null && chaosFreewarTab !== null && actionFreewarTabContent !== null && chaosFreewarTabContent !== null) {
         if (activeTab === 'action-freewar') {
             activateActionFreewarTab();
         }

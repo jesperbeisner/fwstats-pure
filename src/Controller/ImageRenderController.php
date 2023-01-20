@@ -20,7 +20,6 @@ final readonly class ImageRenderController implements ControllerInterface
 
     public function execute(Request $request): Response
     {
-        /** @var string $worldString */
         $worldString = $request->getRouteParameter('world');
 
         if (null === $world = WorldEnum::tryFrom($worldString)) {

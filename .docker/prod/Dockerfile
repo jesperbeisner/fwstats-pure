@@ -4,11 +4,8 @@ ARG USER="fwstats"
 ARG UID=1000
 
 ENV APACHE_DOCUMENT_ROOT="/var/www/html/public"
-ENV APP_ENV="prod"
 
-RUN apt update
-RUN apt install -y curl git nano unzip zip
-RUN apt clean
+WORKDIR "/var/www/html"
 
 # Install php extensions
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
