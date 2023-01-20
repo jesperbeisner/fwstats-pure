@@ -13,10 +13,8 @@ final readonly class ImageRenderControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): ImageRenderController
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-        $rootDir = $config->getRootDir();
-
-        return new ImageRenderController($rootDir);
+        return new ImageRenderController(
+            $container->get(Config::class)->getRootDir(),
+        );
     }
 }

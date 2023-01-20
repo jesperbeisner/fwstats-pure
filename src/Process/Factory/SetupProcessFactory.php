@@ -13,9 +13,8 @@ final readonly class SetupProcessFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): SetupProcess
     {
-        /** @var SetupService $setupService */
-        $setupService = $container->get(SetupService::class);
-
-        return new SetupProcess($setupService);
+        return new SetupProcess(
+            $container->get(SetupService::class),
+        );
     }
 }

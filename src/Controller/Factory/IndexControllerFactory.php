@@ -13,9 +13,8 @@ final readonly class IndexControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): IndexController
     {
-        /** @var PlayerRepository $playerRepository */
-        $playerRepository = $container->get(PlayerRepository::class);
-
-        return new IndexController($playerRepository);
+        return new IndexController(
+            $container->get(PlayerRepository::class),
+        );
     }
 }

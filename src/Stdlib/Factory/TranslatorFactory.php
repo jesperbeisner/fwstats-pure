@@ -14,11 +14,8 @@ final readonly class TranslatorFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): TranslatorInterface
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-
-        $translationsDirectory = $config->getString('translations_directory');
-
-        return new Translator($translationsDirectory);
+        return new Translator(
+            $container->get(Config::class)->getString('translations_directory'),
+        );
     }
 }

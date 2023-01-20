@@ -13,9 +13,8 @@ final readonly class LocaleControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): LocaleController
     {
-        /** @var SessionInterface $session */
-        $session = $container->get(SessionInterface::class);
-
-        return new LocaleController($session);
+        return new LocaleController(
+            $container->get(SessionInterface::class),
+        );
     }
 }

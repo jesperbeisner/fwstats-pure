@@ -13,9 +13,8 @@ final readonly class SessionProcessFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): SessionProcess
     {
-        /** @var SessionInterface $session */
-        $session = $container->get(SessionInterface::class);
-
-        return new SessionProcess($session);
+        return new SessionProcess(
+            $container->get(SessionInterface::class),
+        );
     }
 }

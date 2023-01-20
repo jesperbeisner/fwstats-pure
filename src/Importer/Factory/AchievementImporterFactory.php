@@ -15,19 +15,10 @@ final class AchievementImporterFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): AchievementImporter
     {
-        /** @var FreewarDumpServiceInterface $freewarDumpService */
-        $freewarDumpService = $container->get(FreewarDumpServiceInterface::class);
-
-        /** @var PlayerRepository $playerRepository */
-        $playerRepository = $container->get(PlayerRepository::class);
-
-        /** @var AchievementRepository $achievementRepository */
-        $achievementRepository = $container->get(AchievementRepository::class);
-
         return new AchievementImporter(
-            $freewarDumpService,
-            $playerRepository,
-            $achievementRepository
+            $container->get(FreewarDumpServiceInterface::class),
+            $container->get(PlayerRepository::class),
+            $container->get(AchievementRepository::class)
         );
     }
 }

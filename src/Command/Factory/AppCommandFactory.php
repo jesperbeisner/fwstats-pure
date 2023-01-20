@@ -17,27 +17,12 @@ class AppCommandFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): AppCommand
     {
-        /** @var ClanImporter $clanImporter */
-        $clanImporter = $container->get(ClanImporter::class);
-
-        /** @var PlayerImporter $playerImporter */
-        $playerImporter = $container->get(PlayerImporter::class);
-
-        /** @var AchievementImporter $achievementImporter */
-        $achievementImporter = $container->get(AchievementImporter::class);
-
-        /** @var RankingImageService $rankingImageService */
-        $rankingImageService = $container->get(RankingImageService::class);
-
-        /** @var PlaytimeImporter $playtimeImporter */
-        $playtimeImporter = $container->get(PlaytimeImporter::class);
-
         return new AppCommand(
-            $clanImporter,
-            $playerImporter,
-            $achievementImporter,
-            $rankingImageService,
-            $playtimeImporter,
+            $container->get(ClanImporter::class),
+            $container->get(PlayerImporter::class),
+            $container->get(AchievementImporter::class),
+            $container->get(RankingImageService::class),
+            $container->get(PlaytimeImporter::class),
         );
     }
 }

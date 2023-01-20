@@ -15,17 +15,10 @@ final readonly class SetupServiceFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): SetupService
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-
-        $setupFileName = $config->getString('setup_file');
-
-        /** @var MigrationService $migrationService */
-        $migrationService = $container->get(MigrationService::class);
-
-        /** @var CreateUserAction $createUserAction */
-        $createUserAction = $container->get(CreateUserAction::class);
-
-        return new SetupService($setupFileName, $migrationService, $createUserAction);
+        return new SetupService(
+            $container->get(Config::class)->getString('setup_file'),
+            $container->get(MigrationService::class),
+            $container->get(CreateUserAction::class),
+        );
     }
 }

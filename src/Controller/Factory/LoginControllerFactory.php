@@ -15,15 +15,10 @@ final readonly class LoginControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): LoginController
     {
-        /** @var SessionInterface $session */
-        $session = $container->get(SessionInterface::class);
-
-        /** @var UserRepository $userRepository */
-        $userRepository = $container->get(UserRepository::class);
-
-        /** @var TranslatorInterface $translator */
-        $translator = $container->get(TranslatorInterface::class);
-
-        return new LoginController($session, $userRepository, $translator);
+        return new LoginController(
+            $container->get(SessionInterface::class),
+            $container->get(UserRepository::class),
+            $container->get(TranslatorInterface::class),
+        );
     }
 }

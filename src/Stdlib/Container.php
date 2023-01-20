@@ -10,7 +10,7 @@ use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 
 final class Container implements ContainerInterface
 {
-    /** @var array<string, mixed> */
+    /** @var array<class-string, object> */
     private array $services = [];
 
     /**
@@ -21,21 +21,33 @@ final class Container implements ContainerInterface
     ) {
     }
 
-    public function set(string $key, mixed $value): void
+    public function set(string $key, object $value): void
     {
         $this->services[$key] = $value;
     }
 
-    public function get(string $key): mixed
+    public function get(string $key): object
     {
         if (array_key_exists($key, $this->services)) {
-            return $this->services[$key];
+            $service = $this->services[$key];
+
+            if (!$service instanceof $key) {
+                throw new ContainerException(sprintf('Returned service is not an instance of "%s".', $key));
+            }
+
+            return $service;
         }
 
         if (array_key_exists($key, $this->factories)) {
             $this->services[$key] = (new $this->factories[$key]())->build($this, $key);
 
-            return $this->services[$key];
+            $service = $this->services[$key];
+
+            if (!$service instanceof $key) {
+                throw new ContainerException(sprintf('Returned service is not an instance of "%s".', $key));
+            }
+
+            return $service;
         }
 
         throw new ContainerException(sprintf('Service with key "%s" does not exist in the container. Did you forget to register it in the "config.php" file?', $key));

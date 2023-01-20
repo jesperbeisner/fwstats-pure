@@ -19,6 +19,7 @@ return [
         'views_directory' => __DIR__ . '/../views',
         'migrations_directory' => __DIR__ . '/../data/migrations',
         'translations_directory' => __DIR__ . '/../data/translations',
+        'fixtures_directory' => __DIR__ . '/../data/fixtures',
         'log_file' => __DIR__ . '/../var/fwstats.log',
         'database_file' => __DIR__ . '/../data/database/sqlite.db',
         'setup_file' => __DIR__ . '/../data/database/setup.txt',

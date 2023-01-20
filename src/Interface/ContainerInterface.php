@@ -6,9 +6,22 @@ namespace Jesperbeisner\Fwstats\Interface;
 
 interface ContainerInterface
 {
-    public function set(string $key, mixed $value): void;
+    /**
+     * @template T of object
+     * @param class-string<T> $key
+     * @param T $value
+     */
+    public function set(string $key, object $value): void;
 
-    public function get(string $key): mixed;
+    /**
+     * @template T of object
+     * @param class-string<T> $key
+     * @return T
+     */
+    public function get(string $key): object;
 
+    /**
+     * @param class-string $key
+     */
     public function has(string $key): bool;
 }

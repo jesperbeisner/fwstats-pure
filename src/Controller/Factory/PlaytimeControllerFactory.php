@@ -13,9 +13,8 @@ final readonly class PlaytimeControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): PlaytimeController
     {
-        /** @var PlayerActiveSecondRepository $playerActiveSecondRepository */
-        $playerActiveSecondRepository = $container->get(PlayerActiveSecondRepository::class);
-
-        return new PlaytimeController($playerActiveSecondRepository);
+        return new PlaytimeController(
+            $container->get(PlayerActiveSecondRepository::class),
+        );
     }
 }

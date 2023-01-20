@@ -13,9 +13,8 @@ final readonly class LogoutControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): LogoutController
     {
-        /** @var SessionInterface $session */
-        $session = $container->get(SessionInterface::class);
-
-        return new LogoutController($session);
+        return new LogoutController(
+            $container->get(SessionInterface::class),
+        );
     }
 }

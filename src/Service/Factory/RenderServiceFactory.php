@@ -16,21 +16,12 @@ class RenderServiceFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): RenderService
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-
-        $viewsDirectory = $config->getString('views_directory');
-        $appEnv = $config->getAppEnv();
-
-        /** @var Request $request */
-        $request = $container->get(Request::class);
-
-        /** @var SessionInterface $session */
-        $session = $container->get(SessionInterface::class);
-
-        /** @var TranslatorInterface $translator */
-        $translator = $container->get(TranslatorInterface::class);
-
-        return new RenderService($viewsDirectory, $appEnv, $request, $session, $translator);
+        return new RenderService(
+            $container->get(Config::class)->getString('views_directory'),
+            $container->get(Config::class)->getAppEnv(),
+            $container->get(Request::class),
+            $container->get(SessionInterface::class),
+            $container->get(TranslatorInterface::class)
+        );
     }
 }

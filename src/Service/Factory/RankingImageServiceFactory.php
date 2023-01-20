@@ -15,15 +15,10 @@ final class RankingImageServiceFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): RankingImageService
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-
-        /** @var PlayerRepository $playerRepository */
-        $playerRepository = $container->get(PlayerRepository::class);
-
-        /** @var ClanRepository $clanRepository */
-        $clanRepository = $container->get(ClanRepository::class);
-
-        return new RankingImageService($config, $playerRepository, $clanRepository);
+        return new RankingImageService(
+            $container->get(Config::class),
+            $container->get(PlayerRepository::class),
+            $container->get(ClanRepository::class),
+        );
     }
 }

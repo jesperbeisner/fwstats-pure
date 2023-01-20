@@ -15,12 +15,11 @@ class RepositoryFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): AbstractRepository
     {
-        /** @var DatabaseInterface $database */
         $database = $container->get(DatabaseInterface::class);
 
         try {
             $repository = new $serviceId($database);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             throw new RuntimeException(sprintf('Looks like service with id "%s" is not a valid repository class.', $serviceId));
         }
 

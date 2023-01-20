@@ -17,21 +17,12 @@ final readonly class ProfileControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): ProfileController
     {
-        /** @var PlayerRepository $playerRepository */
-        $playerRepository = $container->get(PlayerRepository::class);
-
-        /** @var PlaytimeService $playtimeService */
-        $playtimeService = $container->get(PlaytimeService::class);
-
-        /** @var PlayerNameHistoryRepository $playerNameHistoryRepository */
-        $playerNameHistoryRepository = $container->get(PlayerNameHistoryRepository::class);
-
-        /** @var PlayerRaceHistoryRepository $playerRaceHistoryRepository */
-        $playerRaceHistoryRepository = $container->get(PlayerRaceHistoryRepository::class);
-
-        /** @var PlayerProfessionHistoryRepository $playerProfessionHistoryRepository */
-        $playerProfessionHistoryRepository = $container->get(PlayerProfessionHistoryRepository::class);
-
-        return new ProfileController($playerRepository, $playtimeService, $playerNameHistoryRepository, $playerRaceHistoryRepository, $playerProfessionHistoryRepository);
+        return new ProfileController(
+            $container->get(PlayerRepository::class),
+            $container->get(PlaytimeService::class),
+            $container->get(PlayerNameHistoryRepository::class),
+            $container->get(PlayerRaceHistoryRepository::class),
+            $container->get(PlayerProfessionHistoryRepository::class)
+        );
     }
 }

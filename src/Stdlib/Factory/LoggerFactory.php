@@ -14,11 +14,8 @@ final class LoggerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): LoggerInterface
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-
-        $logFile = $config->getString('log_file');
-
-        return new Logger($logFile);
+        return new Logger(
+            $container->get(Config::class)->getString('log_file'),
+        );
     }
 }

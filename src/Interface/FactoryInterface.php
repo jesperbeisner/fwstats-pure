@@ -6,5 +6,5 @@ namespace Jesperbeisner\Fwstats\Interface;
 
 interface FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): mixed;
+    public function build(ContainerInterface $container, string $serviceId): object;
 }

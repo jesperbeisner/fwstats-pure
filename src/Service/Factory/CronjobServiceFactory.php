@@ -18,24 +18,13 @@ class CronjobServiceFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): CronjobService
     {
-        /** @var CronjobRepository $cronjobRepository */
-        $cronjobRepository = $container->get(CronjobRepository::class);
-
-        /** @var ClanImporter $clanImporter */
-        $clanImporter = $container->get(ClanImporter::class);
-
-        /** @var PlayerImporter $playerImporter */
-        $playerImporter = $container->get(PlayerImporter::class);
-
-        /** @var AchievementImporter $achievementImporter */
-        $achievementImporter = $container->get(AchievementImporter::class);
-
-        /** @var PlaytimeImporter $playtimeImporter */
-        $playtimeImporter = $container->get(PlaytimeImporter::class);
-
-        /** @var RankingImageService $rankingImageService */
-        $rankingImageService = $container->get(RankingImageService::class);
-
-        return new CronjobService($cronjobRepository, $clanImporter, $playerImporter, $achievementImporter, $playtimeImporter, $rankingImageService);
+        return new CronjobService(
+            $container->get(CronjobRepository::class),
+            $container->get(ClanImporter::class),
+            $container->get(PlayerImporter::class),
+            $container->get(AchievementImporter::class),
+            $container->get(PlaytimeImporter::class),
+            $container->get(RankingImageService::class)
+        );
     }
 }

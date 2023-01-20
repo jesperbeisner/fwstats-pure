@@ -13,9 +13,8 @@ class CreateUserCommandFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): CreateUserCommand
     {
-        /** @var CreateUserAction $createUserAction */
-        $createUserAction = $container->get(CreateUserAction::class);
-
-        return new CreateUserCommand($createUserAction);
+        return new CreateUserCommand(
+            $container->get(CreateUserAction::class),
+        );
     }
 }

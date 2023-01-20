@@ -14,14 +14,9 @@ final readonly class MigrationServiceFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): MigrationService
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-
-        $migrationsDirectory = $config->getString('migrations_directory');
-
-        /** @var MigrationRepository $migrationRepository */
-        $migrationRepository = $container->get(MigrationRepository::class);
-
-        return new MigrationService($migrationsDirectory, $migrationRepository);
+        return new MigrationService(
+            $container->get(Config::class)->getString('migrations_directory'),
+            $container->get(MigrationRepository::class),
+        );
     }
 }

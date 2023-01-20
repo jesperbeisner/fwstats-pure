@@ -17,27 +17,12 @@ final class ClanImporterFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): ClanImporter
     {
-        /** @var FreewarDumpServiceInterface $freewarDumpService */
-        $freewarDumpService = $container->get(FreewarDumpServiceInterface::class);
-
-        /** @var ClanRepository $clanRepository */
-        $clanRepository = $container->get(ClanRepository::class);
-
-        /** @var ClanNameHistoryRepository $clanNamingHistoryRepository */
-        $clanNamingHistoryRepository = $container->get(ClanNameHistoryRepository::class);
-
-        /** @var ClanDeletedHistoryRepository $clanDeletedHistoryRepository */
-        $clanDeletedHistoryRepository = $container->get(ClanDeletedHistoryRepository::class);
-
-        /** @var ClanCreatedHistoryRepository $clanCreatedHistoryRepository */
-        $clanCreatedHistoryRepository = $container->get(ClanCreatedHistoryRepository::class);
-
         return new ClanImporter(
-            $freewarDumpService,
-            $clanRepository,
-            $clanNamingHistoryRepository,
-            $clanDeletedHistoryRepository,
-            $clanCreatedHistoryRepository
+            $container->get(FreewarDumpServiceInterface::class),
+            $container->get(ClanRepository::class),
+            $container->get(ClanNameHistoryRepository::class),
+            $container->get(ClanDeletedHistoryRepository::class),
+            $container->get(ClanCreatedHistoryRepository::class)
         );
     }
 }

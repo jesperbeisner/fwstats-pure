@@ -13,9 +13,8 @@ final readonly class LocaleProcessFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): LocaleProcess
     {
-        /** @var TranslatorInterface $translator */
-        $translator = $container->get(TranslatorInterface::class);
-
-        return new LocaleProcess($translator);
+        return new LocaleProcess(
+            $container->get(TranslatorInterface::class),
+        );
     }
 }

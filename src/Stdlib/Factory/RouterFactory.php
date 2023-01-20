@@ -14,7 +14,6 @@ final readonly class RouterFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): Router
     {
-        /** @var Config $config */
         $config = $container->get(Config::class);
 
         $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) use ($config) {

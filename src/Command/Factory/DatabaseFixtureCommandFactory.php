@@ -22,47 +22,18 @@ class DatabaseFixtureCommandFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): DatabaseFixtureCommand
     {
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-
-        /** @var PlayerRepository $playerRepository */
-        $playerRepository = $container->get(PlayerRepository::class);
-
-        /** @var ClanRepository $clanRepository */
-        $clanRepository = $container->get(ClanRepository::class);
-
-        /** @var PlayerActiveSecondRepository $playerActiveSecondRepository */
-        $playerActiveSecondRepository = $container->get(PlayerActiveSecondRepository::class);
-
-        /** @var PlayerNameHistoryRepository $playerNameHistoryRepository */
-        $playerNameHistoryRepository = $container->get(PlayerNameHistoryRepository::class);
-
-        /** @var PlayerRaceHistoryRepository $playerRaceHistoryRepository */
-        $playerRaceHistoryRepository = $container->get(PlayerRaceHistoryRepository::class);
-
-        /** @var PlayerProfessionHistoryRepository $playerProfessionHistoryRepository */
-        $playerProfessionHistoryRepository = $container->get(PlayerProfessionHistoryRepository::class);
-
-        /** @var RankingImageService $rankingImageService */
-        $rankingImageService = $container->get(RankingImageService::class);
-
-        /** @var UserRepository $userRepository */
-        $userRepository = $container->get(UserRepository::class);
-
-        /** @var CreateUserAction $createUserAction */
-        $createUserAction = $container->get(CreateUserAction::class);
-
         return new DatabaseFixtureCommand(
-            $config,
-            $playerRepository,
-            $clanRepository,
-            $playerActiveSecondRepository,
-            $playerNameHistoryRepository,
-            $playerRaceHistoryRepository,
-            $playerProfessionHistoryRepository,
-            $rankingImageService,
-            $userRepository,
-            $createUserAction,
+            $container->get(Config::class)->getAppEnv(),
+            $container->get(Config::class)->getString('fixtures_directory'),
+            $container->get(PlayerRepository::class),
+            $container->get(ClanRepository::class),
+            $container->get(PlayerActiveSecondRepository::class),
+            $container->get(PlayerNameHistoryRepository::class),
+            $container->get(PlayerRaceHistoryRepository::class),
+            $container->get(PlayerProfessionHistoryRepository::class),
+            $container->get(RankingImageService::class),
+            $container->get(UserRepository::class),
+            $container->get(CreateUserAction::class),
         );
     }
 }

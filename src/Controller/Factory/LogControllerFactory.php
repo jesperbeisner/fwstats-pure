@@ -13,9 +13,8 @@ final readonly class LogControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): LogController
     {
-        /** @var LogRepository $logRepository */
-        $logRepository = $container->get(LogRepository::class);
-
-        return new LogController($logRepository);
+        return new LogController(
+            $container->get(LogRepository::class),
+        );
     }
 }

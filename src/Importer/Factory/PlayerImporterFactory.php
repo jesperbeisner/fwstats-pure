@@ -21,43 +21,16 @@ final class PlayerImporterFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): PlayerImporter
     {
-        /** @var FreewarDumpServiceInterface $freewarDumpService */
-        $freewarDumpService = $container->get(FreewarDumpServiceInterface::class);
-
-        /** @var ClanRepository $clanRepository */
-        $clanRepository = $container->get(ClanRepository::class);
-
-        /** @var PlayerRepository $playerRepository */
-        $playerRepository = $container->get(PlayerRepository::class);
-
-        /** @var PlayerNameHistoryRepository $playerNameHistoryRepository */
-        $playerNameHistoryRepository = $container->get(PlayerNameHistoryRepository::class);
-
-        /** @var PlayerRaceHistoryRepository $playerRaceHistoryRepository */
-        $playerRaceHistoryRepository = $container->get(PlayerRaceHistoryRepository::class);
-
-        /** @var PlayerClanHistoryRepository $playerClanHistoryRepository */
-        $playerClanHistoryRepository = $container->get(PlayerClanHistoryRepository::class);
-
-        /** @var PlayerProfessionHistoryRepository $playerProfessionHistoryRepository */
-        $playerProfessionHistoryRepository = $container->get(PlayerProfessionHistoryRepository::class);
-
-        /** @var PlayerStatusHistoryRepository $playerStatusHistoryRepository */
-        $playerStatusHistoryRepository = $container->get(PlayerStatusHistoryRepository::class);
-
-        /** @var PlayerStatusService $playerStatusService */
-        $playerStatusService = $container->get(PlayerStatusService::class);
-
         return new PlayerImporter(
-            $freewarDumpService,
-            $clanRepository,
-            $playerRepository,
-            $playerNameHistoryRepository,
-            $playerRaceHistoryRepository,
-            $playerClanHistoryRepository,
-            $playerProfessionHistoryRepository,
-            $playerStatusHistoryRepository,
-            $playerStatusService
+            $container->get(FreewarDumpServiceInterface::class),
+            $container->get(ClanRepository::class),
+            $container->get(PlayerRepository::class),
+            $container->get(PlayerNameHistoryRepository::class),
+            $container->get(PlayerRaceHistoryRepository::class),
+            $container->get(PlayerClanHistoryRepository::class),
+            $container->get(PlayerProfessionHistoryRepository::class),
+            $container->get(PlayerStatusHistoryRepository::class),
+            $container->get(PlayerStatusService::class)
         );
     }
 }

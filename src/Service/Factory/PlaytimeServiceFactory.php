@@ -13,9 +13,8 @@ class PlaytimeServiceFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): PlaytimeService
     {
-        /** @var PlayerActiveSecondRepository $playerActiveSecondRepository */
-        $playerActiveSecondRepository = $container->get(PlayerActiveSecondRepository::class);
-
-        return new PlaytimeService($playerActiveSecondRepository);
+        return new PlaytimeService(
+            $container->get(PlayerActiveSecondRepository::class),
+        );
     }
 }

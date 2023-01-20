@@ -30,7 +30,6 @@ final class DatabaseFactory implements FactoryInterface
 
         $logger = null;
         if ($config->getAppEnv() !== 'prod') {
-            /** @var LoggerInterface $logger */
             $logger = $container->get(LoggerInterface::class);
         }
 

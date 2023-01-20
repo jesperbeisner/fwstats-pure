@@ -13,9 +13,8 @@ final readonly class ChangeControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): ChangeController
     {
-        /** @var PlayerNameHistoryRepository $playerNameHistoryRepository */
-        $playerNameHistoryRepository = $container->get(PlayerNameHistoryRepository::class);
-
-        return new ChangeController($playerNameHistoryRepository);
+        return new ChangeController(
+            $container->get(PlayerNameHistoryRepository::class),
+        );
     }
 }

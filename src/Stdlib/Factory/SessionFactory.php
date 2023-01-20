@@ -13,9 +13,8 @@ final class SessionFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): Session
     {
-        /** @var UserRepository $userRepository */
-        $userRepository = $container->get(UserRepository::class);
-
-        return new Session($userRepository);
+        return new Session(
+            $container->get(UserRepository::class),
+        );
     }
 }

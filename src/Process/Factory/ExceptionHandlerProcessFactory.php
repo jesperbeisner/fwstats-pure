@@ -14,14 +14,9 @@ final readonly class ExceptionHandlerProcessFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): ExceptionHandlerProcess
     {
-        /** @var LoggerInterface $logger */
-        $logger = $container->get(LoggerInterface::class);
-
-        /** @var Config $config */
-        $config = $container->get(Config::class);
-
-        $appEnv = $config->getAppEnv();
-
-        return new ExceptionHandlerProcess($logger, $appEnv);
+        return new ExceptionHandlerProcess(
+            $container->get(LoggerInterface::class),
+            $container->get(Config::class)->getAppEnv(),
+        );
     }
 }

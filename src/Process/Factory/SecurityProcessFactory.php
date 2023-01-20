@@ -14,12 +14,9 @@ final readonly class SecurityProcessFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): SecurityProcess
     {
-        /** @var SessionInterface $session */
-        $session = $container->get(SessionInterface::class);
-
-        /** @var UserRepository $userRepository */
-        $userRepository = $container->get(UserRepository::class);
-
-        return new SecurityProcess($session, $userRepository);
+        return new SecurityProcess(
+            $container->get(SessionInterface::class),
+            $container->get(UserRepository::class),
+        );
     }
 }

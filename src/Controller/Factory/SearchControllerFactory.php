@@ -13,9 +13,8 @@ final readonly class SearchControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): SearchController
     {
-        /** @var PlayerRepository $playerRepository */
-        $playerRepository = $container->get(PlayerRepository::class);
-
-        return new SearchController($playerRepository);
+        return new SearchController(
+            $container->get(PlayerRepository::class),
+        );
     }
 }

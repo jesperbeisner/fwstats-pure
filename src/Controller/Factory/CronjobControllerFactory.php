@@ -13,9 +13,8 @@ final readonly class CronjobControllerFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): CronjobController
     {
-        /** @var CronjobService $cronjobService */
-        $cronjobService = $container->get(CronjobService::class);
-
-        return new CronjobController($cronjobService);
+        return new CronjobController(
+            $container->get(CronjobService::class),
+        );
     }
 }

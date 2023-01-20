@@ -13,9 +13,8 @@ final readonly class RouterProcessFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): RouterProcess
     {
-        /** @var RouterInterface $router */
-        $router = $container->get(RouterInterface::class);
-
-        return new RouterProcess($router);
+        return new RouterProcess(
+            $container->get(RouterInterface::class)
+        );
     }
 }

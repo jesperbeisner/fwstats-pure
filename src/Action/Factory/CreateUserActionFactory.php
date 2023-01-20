@@ -13,9 +13,8 @@ class CreateUserActionFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): CreateUserAction
     {
-        /** @var UserRepository $userRepository */
-        $userRepository = $container->get(UserRepository::class);
-
-        return new CreateUserAction($userRepository);
+        return new CreateUserAction(
+            $container->get(UserRepository::class),
+        );
     }
 }

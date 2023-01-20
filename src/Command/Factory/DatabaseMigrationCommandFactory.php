@@ -13,9 +13,8 @@ final readonly class DatabaseMigrationCommandFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): DatabaseMigrationCommand
     {
-        /** @var MigrationService $migrationService */
-        $migrationService = $container->get(MigrationService::class);
-
-        return new DatabaseMigrationCommand($migrationService);
+        return new DatabaseMigrationCommand(
+            $container->get(MigrationService::class),
+        );
     }
 }

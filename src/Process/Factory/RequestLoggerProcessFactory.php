@@ -13,9 +13,8 @@ final readonly class RequestLoggerProcessFactory implements FactoryInterface
 {
     public function build(ContainerInterface $container, string $serviceId): RequestLoggerProcess
     {
-        /** @var LogRepository $logRepository */
-        $logRepository = $container->get(LogRepository::class);
-
-        return new RequestLoggerProcess($logRepository);
+        return new RequestLoggerProcess(
+            $container->get(LogRepository::class),
+        );
     }
 }
