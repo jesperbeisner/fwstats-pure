@@ -1,9 +1,5 @@
 FROM php:8.2.1-apache
 
-LABEL org.opencontainers.image.source=https://github.com/jesperbeisner/fwstats.de
-LABEL org.opencontainers.image.description="Container with a statistics website for the worlds 'ActionFreewar' and 'ChaosFreewar' in the browser game 'freewar.de'."
-LABEL org.opencontainers.image.licenses=MIT
-
 ARG USER="fwstats"
 ARG UID=1000
 
