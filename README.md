@@ -14,7 +14,7 @@ PHP 8.2, Bulma CSS, SQLite, Vanilla JS, Apache httpd with mod_php. All of this i
 
 ## Deployment strategy
 
-Push to the master branch runs a GitHub action which itself runs the full testsuite (PHP-CS-Fixer, PHPUnit, PHPStan) and when everything works, builds a new container image and pushes this image to the GitHub container registry.
+Creating a new tag and pushing this tag to GitHub runs a GitHub action which builds a new container image, tags the image with the new tag and pushes this image to the GitHub container registry.
 After this I will just stop the running container on my server and start a new one.
 No rolling update needed, not like I have tons of users. 🤷‍♂️
 
