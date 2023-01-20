@@ -79,6 +79,9 @@ docker exec fwstats.de-prod php bin/console.php app:database-migration
 
 ### 4 1/2. Use the `/cronjob` endpoint
 
+In addition to the cronjob, there is also a cronjob endpoint (`/cronjob`) that does the same thing as the normal cronjob. You need to send a post request with your bearer token which you can find in the admin panel when you log in.
+For this to run reliably, a service such as [cron-job.org](https://cron-job.org) can be used. Just call the endpoint every 5 minutes and that's it.
+
 
 ### 5. Finished!
 
