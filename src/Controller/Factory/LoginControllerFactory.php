@@ -8,6 +8,7 @@ use Jesperbeisner\Fwstats\Controller\LoginController;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
+use Jesperbeisner\Fwstats\Interface\TranslatorInterface;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 
 final readonly class LoginControllerFactory implements FactoryInterface
@@ -20,6 +21,9 @@ final readonly class LoginControllerFactory implements FactoryInterface
         /** @var UserRepository $userRepository */
         $userRepository = $container->get(UserRepository::class);
 
-        return new LoginController($session, $userRepository);
+        /** @var TranslatorInterface $translator */
+        $translator = $container->get(TranslatorInterface::class);
+
+        return new LoginController($session, $userRepository, $translator);
     }
 }

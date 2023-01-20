@@ -21,7 +21,7 @@ final readonly class LogoutController implements ControllerInterface
     {
         $this->session->destroy();
 
-        $this->session->setFlash(FlashEnum::SUCCESS, 'Du wurdest erfolgreich ausgeloggt.');
+        $this->session->setFlash(FlashEnum::SUCCESS, 'text.logout-success');
 
         return Response::redirect('/');
     }

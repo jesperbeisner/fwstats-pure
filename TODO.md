@@ -13,4 +13,4 @@
 - Possibility to reset AF in backend
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
-- Translate login success/error messages
+- ~~Translate login success/error messages~~
