@@ -19,52 +19,75 @@ $hasNextSite = $vars['hasNextSite'];
 /** @var bool $availablePages */
 $availablePages = $vars['availablePages'];
 
-$this->setTitle('Index');
+$this->setTitle('title.index');
 
 ?>
-<div id="ranking">
-    <div class="tabs is-centered is-medium mt-0">
-        <ul class="m-0 p-0">
-            <li id="action-freewar-tab"><a>ActionFreewar</a></li>
-            <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
-        </ul>
-    </div>
-    <div>
-        <div id="action-freewar-tab-content">
-            <?php
-            /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
-            $players = $vars['afsrvPlayers'];
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.index') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <div id="ranking">
+                    <div class="tabs is-centered is-medium">
+                        <ul class="m-0 p-0">
+                            <li class="is-active"  id="action-freewar-tab">
+                                <a>ActionFreewar</a>
+                            </li>
+                            <li id="chaos-freewar-tab">
+                                <a>ChaosFreewar</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div id="action-freewar-tab-content">
+                            <?php
+                            /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
+                            $players = $vars['afsrvPlayers'];
 
-            require __DIR__ . '/_ranking-table.phtml'
-            ?>
+                            require __DIR__ . '/_ranking-table.phtml'
+                            ?>
+                        </div>
+                        <div id="chaos-freewar-tab-content" class="is-hidden">
+                            <?php
+                            /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
+                            $players = $vars['chaosPlayers'];
+
+                            require __DIR__ . '/_ranking-table.phtml'
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="pagination is-centered mt-3 mb-0" aria-label="pagination">
+                        <?php if ($hasPreviousSite === true): ?>
+                            <a class="pagination-previous" href="/?page=<?= $page - 1 ?>">
+                                <?= $this->text('text.previous-page') ?>
+                            </a>
+                        <?php else: ?>
+                            <a class="pagination-previous is-disabled">
+                                <?= $this->text('text.previous-page') ?>
+                            </a>
+                        <?php endif; ?>
+
+                        <ul class="pagination-list">
+                            <li>
+                                <?= $this->text('text.page') . ' ' . $page . ' / ' . $availablePages ?>
+                            </li>
+                        </ul>
+
+                        <?php if ($hasNextSite === true): ?>
+                            <a class="pagination-next" href="/?page=<?= $page + 1 ?>">
+                                <?= $this->text('text.next-page') ?>
+                            </a>
+                        <?php else: ?>
+                            <a class="pagination-next is-disabled">
+                                <?= $this->text('text.next-page') ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="chaos-freewar-tab-content" class="is-hidden">
-            <?php
-            /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
-            $players = $vars['chaosPlayers'];
-
-            require __DIR__ . '/_ranking-table.phtml'
-            ?>
-        </div>
     </div>
-
-    <div class="pagination is-centered mt-3 mb-0" aria-label="pagination">
-        <?php if ($hasPreviousSite === true): ?>
-            <a class="pagination-previous" href="/?page=<?= $page - 1 ?>">Vorherige Seite</a>
-        <?php else: ?>
-            <a class="pagination-previous is-disabled">Vorherige Seite</a>
-        <?php endif; ?>
-
-        <ul class="pagination-list">
-            <li>
-                Seite <?= $page . ' / ' . $availablePages ?>
-            </li>
-        </ul>
-
-        <?php if ($hasNextSite === true): ?>
-            <a class="pagination-next" href="/?page=<?= $page + 1 ?>">Nächste Seite</a>
-        <?php else: ?>
-            <a class="pagination-next is-disabled">Nächste Seite</a>
-        <?php endif; ?>
-    </div>
-</div>
+</main>

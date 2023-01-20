@@ -15,9 +15,9 @@ use Jesperbeisner\Fwstats\Service\RenderService;
         <thead>
         <tr>
             <td>#</td>
-            <td>Alter Name</td>
-            <td>Neuer Name</td>
-            <td>Geändert</td>
+            <td><?= $this->text('table.new-name') ?></td>
+            <td><?= $this->text('table.old-name') ?></td>
+            <td><?= $this->text('table.date') ?></td>
             <td class="has-text-right"></td>
         </tr>
         </thead>
@@ -28,14 +28,16 @@ use Jesperbeisner\Fwstats\Service\RenderService;
                 <td>
                     <?= $i ?>
                 </td>
-                <td title="<?= Html::escape($nameChange->oldName) ?>">
-                    <?= Html::shortNames(Html::escape($nameChange->oldName)) ?>
+                <td title="<?= $this->escape($nameChange->newName) ?>">
+                    <a href="/profile/<?= $this->escape($nameChange->world->value) ?>/<?= $nameChange->playerId ?>">
+                        <?= Html::shortNames($this->escape($nameChange->newName)) ?>
+                    </a>
                 </td>
-                <td title="<?= Html::escape($nameChange->newName) ?>">
-                    <?= Html::shortNames(Html::escape($nameChange->newName)) ?>
+                <td title="<?= $this->escape($nameChange->oldName) ?>">
+                    <?= Html::shortNames($this->escape($nameChange->oldName)) ?>
                 </td>
-                <td>
-                    <?= $nameChange->created->format('d.m.Y H:i:s') ?>
+                <td title="<?= $nameChange->created->format('d.m.Y H:i:s') ?>">
+                    <?= $nameChange->created->format('d.m.Y') ?>
                 </td>
                 <td class="has-text-right">
                     <a href="https://<?= $nameChange->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $nameChange->playerId ?>" target="_blank" class="player_profile_link">

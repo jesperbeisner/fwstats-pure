@@ -31,16 +31,16 @@ final readonly class ProfileController implements ControllerInterface
     {
         $world = $request->getRouteParameter('world');
         if (null === $world = WorldEnum::tryFrom($world)) {
-            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
         $playerId = $request->getRouteParameter('id');
         if (!is_numeric($playerId)) {
-            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
         if (null === $player = $this->playerRepository->find($world, (int) $playerId)) {
-            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
         $weeklyPlaytimes = $this->playtimeService->getPlaytimesForPlayer($player, 7);

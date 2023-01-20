@@ -3,36 +3,43 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
-use Jesperbeisner\Fwstats\Service\ViewRenderService;
+use Jesperbeisner\Fwstats\Service\RenderService;
 
-/** @var ViewRenderService $this */
-/** @var PlayerProfessionHistory[] $professionChanges */
+/** @var RenderService $this */
+/** @var array<PlayerProfessionHistory> $professionChanges */
 
 ?>
-<div class="card mt-5 mb-5">
+<div class="card mt-5">
     <div class="card-header">
         <p class="card-header-title">
-            Berufsänderungen
+            <?= $this->text('title.profession-changes') ?>
         </p>
     </div>
     <div class="card-content">
         <div class="content">
-            <?php if (count($professionChanges) > 0): ?>
+            <?php if ($professionChanges !== []): ?>
                 <div class="table-container">
                     <table class="table is-hoverable is-fullwidth">
                         <thead>
                         <tr>
-                            <td>Alter Beruf</td>
-                            <td>Neuer Beruf</td>
-                            <td>Datum</td>
+                            <td><?= $this->text('table.old-profession') ?></td>
+                            <td><?= $this->text('table.new-profession') ?></td>
+                            <td><?= $this->text('table.date') ?></td>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($professionChanges as $professionChange): ?>
                             <tr>
-                                <td><?= $professionChange->oldProfession ?? '-' ?></td>
-                                <td><?= $professionChange->newProfession ?? '-' ?></td>
-                                <td><?= $professionChange->created->format('d.m.Y') ?></td>
+                                <td>
+                                    <?= $this->text($professionChange->oldProfession ?? '-') ?>
+                                </td>
+                                <td>
+                                    <?= $this->text($professionChange->newProfession ?? '-') ?>
+
+                                </td>
+                                <td title="<?= $professionChange->created->format('d.m.Y H:i:s') ?>">
+                                    <?= $professionChange->created->format('d.m.Y') ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -40,7 +47,7 @@ use Jesperbeisner\Fwstats\Service\ViewRenderService;
                 </div>
             <?php else: ?>
                 <p class="has-text-centered">
-                    Keine Berufsänderungen vorhanden.
+                    <?= $this->text('text.no-profession-changes-available') ?>
                 </p>
             <?php endif; ?>
         </div>

@@ -11,28 +11,39 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var Log[] $logs */
 $logs = $vars['logs'];
 
-$this->setTitle('Logs');
+$this->setTitle('title.logs');
 
 ?>
-<div class="table-container">
-    <table class="table is-hoverable is-fullwidth">
-        <thead>
-        <tr>
-            <td>#</td>
-            <td>Url</td>
-            <td>Datum</td>
-        </tr>
-        </thead>
-        <tbody>
-        <?php $i = 1; ?>
-        <?php foreach ($logs as $log): ?>
-            <tr>
-                <td><?= $i ?></td>
-                <td><a href="<?= $log->url ?>" target="_blank"><?= $log->url ?></a></td>
-                <td><?= $log->created->format('d.m.Y H:i:s') ?></td>
-            </tr>
-        <?php $i++ ?>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.logs') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <div class="table-container">
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Url</td>
+                            <td>Datum</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($logs as $log): ?>
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><a href="<?= $log->url ?>" target="_blank"><?= $log->url ?></a></td>
+                                <td><?= $log->created->format('d.m.Y H:i:s') ?></td>
+                            </tr>
+                            <?php $i++ ?>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

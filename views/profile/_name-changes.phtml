@@ -3,36 +3,42 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
-use Jesperbeisner\Fwstats\Service\ViewRenderService;
+use Jesperbeisner\Fwstats\Service\RenderService;
 
-/** @var ViewRenderService $this */
+/** @var RenderService $this */
 /** @var PlayerNameHistory[] $nameChanges */
 
 ?>
 <div class="card mt-5">
     <div class="card-header">
         <p class="card-header-title">
-            Namensänderungen
+            <?= $this->text('title.name-changes') ?>
         </p>
     </div>
     <div class="card-content">
         <div class="content">
-            <?php if (count($nameChanges) > 0): ?>
+            <?php if ($nameChanges !== []): ?>
                 <div class="table-container">
                     <table class="table is-hoverable is-fullwidth">
                         <thead>
                         <tr>
-                            <td>Alter Name</td>
-                            <td>Neuer Name</td>
-                            <td>Datum</td>
+                            <td><?= $this->text('table.new-name') ?></td>
+                            <td><?= $this->text('table.old-name') ?></td>
+                            <td><?= $this->text('table.date') ?></td>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($nameChanges as $nameChange): ?>
                             <tr>
-                                <td><?= $nameChange->oldName ?></td>
-                                <td><?= $nameChange->newName ?></td>
-                                <td><?= $nameChange->created->format('d.m.Y') ?></td>
+                                <td>
+                                    <?= $this->escape($nameChange->newName) ?>
+                                </td>
+                                <td>
+                                    <?= $this->escape($nameChange->oldName) ?>
+                                </td>
+                                <td title="<?= $nameChange->created->format('d.m.Y H:i:s') ?>">
+                                    <?= $nameChange->created->format('d.m.Y') ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -40,7 +46,7 @@ use Jesperbeisner\Fwstats\Service\ViewRenderService;
                 </div>
             <?php else: ?>
                 <p class="has-text-centered">
-                    Keine Namensänderungen vorhanden.
+                    <?= $this->text('text.no-name-changes-available') ?>
                 </p>
             <?php endif; ?>
         </div>

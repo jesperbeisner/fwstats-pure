@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\DTO\Playtime;
-use Jesperbeisner\Fwstats\Helper\Html;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
@@ -37,15 +36,14 @@ $professionChanges = $vars['professionChanges'];
 $this->setTitle($player->name . ' - ' . $player->world->worldString());
 
 ?>
-<div id="profile">
-    <h1 class="title is-2">
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
         <a href="https://<?= $player->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $player->playerId ?>" target="_blank" class="player_profile_link">
-            <?= Html::escape($player->name) ?>
+            <?= $this->escape($player->name) ?>
         </a>
     </h1>
-
     <?php require __DIR__ . '/_playtimes.phtml' ?>
     <?php require __DIR__ . '/_name-changes.phtml' ?>
     <?php require __DIR__ . '/_race-changes.phtml' ?>
     <?php require __DIR__ . '/_profession-changes.phtml' ?>
-</div>
+</main>

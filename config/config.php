@@ -18,6 +18,7 @@ return [
         'root_directory' => dirname(__DIR__),
         'views_directory' => __DIR__ . '/../views',
         'migrations_directory' => __DIR__ . '/../data/migrations',
+        'translations_directory' => __DIR__ . '/../data/translations',
         'log_file' => __DIR__ . '/../var/fwstats.log',
         'database_file' => __DIR__ . '/../data/database/sqlite.db',
         'setup_file' => __DIR__ . '/../data/database/setup.txt',
@@ -36,11 +37,13 @@ return [
         ['route' => '/cronjob', 'methods' => ['POST'], 'controller' => Controller\CronjobController::class],
         ['route' => '/search', 'methods' => ['GET'], 'controller' => Controller\SearchController::class],
         ['route' => '/admin', 'methods' => ['GET'], 'controller' => Controller\AdminController::class],
+        ['route' => '/locale', 'methods' => ['GET'], 'controller' => Controller\LocaleController::class],
     ],
     'processes' => [
         Process\ExceptionHandlerProcess::class,
         Process\SetupProcess::class,
         Process\RequestLoggerProcess::class,
+        Process\LocaleProcess::class,
         Process\RouterProcess::class,
         Process\SessionProcess::class,
         Process\SecurityProcess::class,
@@ -69,12 +72,13 @@ return [
         Controller\CronjobController::class => Controller\Factory\CronjobControllerFactory::class,
         Controller\SearchController::class => Controller\Factory\SearchControllerFactory::class,
         Controller\AdminController::class => Controller\Factory\AdminControllerFactory::class,
+        Controller\LocaleController::class => Controller\Factory\LocaleControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,
 
         // Services
-        \Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
+        Interface\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
         Service\PlayerStatusService::class => Service\Factory\PlayerStatusServiceFactory::class,
         Service\PlaytimeService::class => Service\Factory\PlaytimeServiceFactory::class,
         Service\RenderService::class => Service\Factory\RenderServiceFactory::class,
@@ -120,6 +124,7 @@ return [
         Interface\RouterInterface::class => Stdlib\Factory\RouterFactory::class,
         Interface\SessionInterface::class => Stdlib\Factory\SessionFactory::class,
         Interface\DatabaseInterface::class => Stdlib\Factory\DatabaseFactory::class,
+        Interface\TranslatorInterface::class => Stdlib\Factory\TranslatorFactory::class,
 
         // Processes
         Process\ExceptionHandlerProcess::class => Process\Factory\ExceptionHandlerProcessFactory::class,
@@ -128,5 +133,6 @@ return [
         Process\RouterProcess::class => Process\Factory\RouterProcessFactory::class,
         Process\SessionProcess::class => Process\Factory\SessionProcessFactory::class,
         Process\SecurityProcess::class => Process\Factory\SecurityProcessFactory::class,
+        Process\LocaleProcess::class => Process\Factory\LocaleProcessFactory::class,
     ],
 ];

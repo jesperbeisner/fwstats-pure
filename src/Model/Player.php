@@ -58,7 +58,7 @@ final readonly class Player implements PlayerInterface
     }
 
     /*
-     * You can certainly make it easier. I do not know... But it works.
+     * You can certainly make it easier! But I do not know how... But it works :^)
      */
     public static function getSoulLevel(int $xp, int $soulXp): ?int
     {

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $infoTexts.forEach((infoText) => {
         setTimeout(() => {
             infoText.classList.add('is-hidden');
-        }, 4000);
+        }, 3500);
     });
 
     const activeTab = window.localStorage.getItem('active-tab');

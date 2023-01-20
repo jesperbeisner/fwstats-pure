@@ -24,7 +24,7 @@ final readonly class ImageRenderController implements ControllerInterface
         $worldString = $request->getRouteParameter('world');
 
         if (null === $world = WorldEnum::tryFrom($worldString)) {
-            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
         $imageFileName = str_replace('[WORLD]', $world->value, $this->rootDir . ImageRenderController::RANKING_IMAGE);

@@ -16,14 +16,14 @@ use Jesperbeisner\Fwstats\Service\RenderService;
         <thead>
         <tr>
             <td>#</td>
-            <td>Name</td>
-            <td>Rasse</td>
-            <td class="has-text-centered">Clan</td>
-            <td>Beruf</td>
-            <td class="has-text-right">Xp</td>
-            <td class="has-text-right">Seelen-Xp</td>
-            <td class="has-text-right">Total-Xp</td>
-            <td class="has-text-centered">Seelenstufe</td>
+            <td><?= $this->text('table.name') ?></td>
+            <td><?= $this->text('table.race') ?></td>
+            <td class="has-text-centered"><?= $this->text('table.clan') ?></td>
+            <td><?= $this->text('table.profession') ?></td>
+            <td class="has-text-right"><?= $this->text('table.xp') ?></td>
+            <td class="has-text-right"><?= $this->text('table.soul-xp') ?></td>
+            <td class="has-text-right"><?= $this->text('table.total-xp') ?></td>
+            <td class="has-text-centered"><?= $this->text('table.soul-level') ?></td>
             <td class="has-text-right"></td>
         </tr>
         </thead>
@@ -34,45 +34,45 @@ use Jesperbeisner\Fwstats\Service\RenderService;
                 <td>
                     <?= $i ?>
                 </td>
-                <td title="<?= Html::escape($player['name']) ?>">
-                    <a href="/profile/<?= $player['world'] ?>/<?= $player['id'] ?>">
-                        <?= Html::shortNames(Html::escape($player['name'])) ?>
+                <td title="<?= $this->escape($player['name']) ?>">
+                    <a href="/profile/<?= $this->escape($player['world']) ?>/<?= $this->escape((string) $player['id']) ?>">
+                        <?= Html::shortNames($this->escape($player['name'])) ?>
                     </a>
                 </td>
                 <td>
-                    <?= Html::escape($player['race']) ?>
+                    <?= $this->text($player['race']) ?>
                 </td>
                 <td class="has-text-centered">
                     <?php if ($player['clan_id'] === null): ?>
                         -
                     <?php else: ?>
                         <a
-                            title="<?= Html::escape($player['clan_name']) ?>"
-                            href="https://<?= $player['world'] ?>.freewar.de/freewar/internal/fight.php?action=watchclan&act_clan_id=<?= $player['clan_id'] ?>"
+                            title="<?= $this->escape($player['clan_name']) ?>"
+                            href="https://<?= $this->escape($player['world']) ?>.freewar.de/freewar/internal/fight.php?action=watchclan&act_clan_id=<?= $this->escape((string) $player['clan_id']) ?>"
                             target="_blank"
                             class="clan_profile_link"
                         >
-                            <?= Html::escape($player['clan_shortcut']) ?>
+                            <?= $this->escape($player['clan_shortcut']) ?>
                         </a>
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?= $player['profession'] === null ? '-' : Html::escape($player['profession']) ?>
+                    <?= $player['profession'] === null ? '-' : $this->text($player['profession']) ?>
                 </td>
                 <td class="has-text-right">
-                    <?= Html::numberFormat($player['xp']) ?>
+                    <?= Html::numberFormat((int) $this->escape((string) $player['xp'])) ?>
                 </td>
                 <td class="has-text-right">
-                    <?= Html::numberFormat($player['soul_xp']) ?>
+                    <?= Html::numberFormat((int) $this->escape((string) $player['soul_xp'])) ?>
                 </td>
                 <td class="has-text-right">
-                    <?= Html::numberFormat($player['total_xp']) ?>
+                    <?= Html::numberFormat((int) $this->escape((string) $player['total_xp'])) ?>
                 </td>
                 <td class="has-text-centered">
-                    <?= Player::getSoulLevel($player['xp'], $player['soul_xp']) ?? '-' ?>
+                    <?= Player::getSoulLevel((int) $this->escape((string) $player['xp']), (int) $this->escape((string) $player['soul_xp'])) ?? '-' ?>
                 </td>
                 <td class="has-text-right">
-                    <a href="https://<?= $player['world'] ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $player['id'] ?>" target="_blank" class="player_profile_link">
+                    <a href="https://<?= $this->escape($player['world']) ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $this->escape((string) $player['id']) ?>" target="_blank" class="player_profile_link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
                             <path d="M128 32H32C14.31 32 0 46.31 0 64v96c0 17.69 14.31 32 32 32s32-14.31 32-32V96h64c17.69 0 32-14.31 32-32S145.7 32 128 32zM416 32h-96c-17.69 0-32 14.31-32 32s14.31 32 32 32h64v64c0 17.69 14.31 32 32 32s32-14.31 32-32V64C448 46.31 433.7 32 416 32zM128 416H64v-64c0-17.69-14.31-32-32-32s-32 14.31-32 32v96c0 17.69 14.31 32 32 32h96c17.69 0 32-14.31 32-32S145.7 416 128 416zM416 320c-17.69 0-32 14.31-32 32v64h-64c-17.69 0-32 14.31-32 32s14.31 32 32 32h96c17.69 0 32-14.31 32-32v-96C448 334.3 433.7 320 416 320z"/></svg>
                     </a>

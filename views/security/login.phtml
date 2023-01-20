@@ -7,29 +7,46 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var RenderService $this */
 /** @var array<string, mixed> $vars */
 
-$this->setTitle('Login');
+$this->setTitle('title.login');
 
 ?>
-<div class="columns">
-    <div class="column is-6 is-offset-3">
-        <form method="POST">
-            <div class="field">
-                <label class="label" for="email">E-Mail</label>
-                <div class="control">
-                    <input class="input is-rounded" type="email" name="email" id="email" required value="<?= $this->appEnv === 'dev' ? 'admin@example.com' : '' ?>">
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.login') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <div class="columns">
+                    <div class="column is-6 is-offset-3">
+                        <form method="POST">
+                            <div class="field">
+                                <label class="label" for="email">
+                                    <?= $this->text('label.email') ?>
+                                </label>
+                                <div class="control">
+                                    <input class="input is-rounded" type="email" name="email" id="email" required value="<?= $this->getAppEnv() === 'dev' ? 'admin@example.com' : '' ?>">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label" for="password">
+                                    <?= $this->text('label.password') ?>
+                                </label>
+                                <div class="control">
+                                    <input class="input is-rounded" type="password" name="password" id="password" required value="<?= $this->getAppEnv() === 'dev' ? 'password12345' : '' ?>">
+                                </div>
+                            </div>
+
+                            <div class="control">
+                                <button class="button is-danger is-rounded">
+                                    <?= $this->text('text.login') ?>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-            <div class="field">
-                <label class="label" for="password">Passwort</label>
-                <div class="control">
-                    <input class="input is-rounded" type="password" name="password" id="password" required value="<?= $this->appEnv === 'dev' ? 'password12345' : '' ?>">
-                </div>
-            </div>
-
-            <div class="control">
-                <button class="button is-danger is-rounded">Login</button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</main>

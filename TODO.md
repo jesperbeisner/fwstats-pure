@@ -11,3 +11,5 @@
 - ~~Change migration loading~~
 - Make container get generic return
 - Possibility to reset AF in backend
+- Search on small menu width 100%
+- Page number on small menu not displaying properly

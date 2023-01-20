@@ -31,6 +31,7 @@ final class FreewarDumpService implements FreewarDumpServiceInterface
             }
 
             $players[(int) $player[0]] = new Player(
+                id: null,
                 world: $world,
                 playerId: (int) $player[0],
                 name: $player[1],

@@ -14,24 +14,35 @@ $afsrvNameChanges = $vars['afsrvNameChanges'];
 /** @var PlayerNameHistory[] $chaosNameChanges */
 $chaosNameChanges = $vars['chaosNameChanges'];
 
-$this->setTitle('Namensänderungen');
+$this->setTitle('title.name-changes');
 
 ?>
-<div id="name-change" class="mb-5">
-    <div class="tabs is-centered is-medium">
-        <ul>
-            <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
-            <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
-        </ul>
-    </div>
-    <div>
-        <div id="action-freewar-tab-content">
-            <?php $nameChanges = $afsrvNameChanges ?>
-            <?php require __DIR__ . '/_name-change-table.phtml' ?>
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.name-changes') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <div id="name-change" class="mb-5">
+                    <div class="tabs is-centered is-medium">
+                        <ul>
+                            <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
+                            <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div id="action-freewar-tab-content">
+                            <?php $nameChanges = $afsrvNameChanges ?>
+                            <?php require __DIR__ . '/_name-change-table.phtml' ?>
+                        </div>
+                        <div id="chaos-freewar-tab-content" class="is-hidden">
+                            <?php $nameChanges = $chaosNameChanges ?>
+                            <?php require __DIR__ . '/_name-change-table.phtml' ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="chaos-freewar-tab-content" class="is-hidden">
-            <?php $nameChanges = $chaosNameChanges ?>
-            <?php require __DIR__ . '/_name-change-table.phtml' ?>
-        </div>
     </div>
-</div>
+</main>

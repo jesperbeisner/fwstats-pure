@@ -20,6 +20,9 @@ final class Response
     /** @var array<string, string> */
     private array $headers = [];
 
+    /** @var array<string, string> */
+    private array $cookies = [];
+
     /**
      * @param array<string, mixed> $vars
      */
@@ -97,9 +100,18 @@ final class Response
         $this->headers[$key] = $value;
     }
 
+    public function setCookie(string $key, string $value): void
+    {
+        $this->cookies[$key] = $value;
+    }
+
     public function send(): never
     {
         http_response_code($this->statusCode);
+
+        foreach ($this->cookies as $key => $value) {
+            setcookie($key, $value, ['expires' => time() + 60 * 60 * 24 * 365, 'path' => '/', 'secure' => true, 'httponly' => true]);
+        }
 
         foreach ($this->headers as $key => $value) {
             header(sprintf('%s: %s', $key, $value));

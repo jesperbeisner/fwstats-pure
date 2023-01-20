@@ -13,13 +13,21 @@ $message = $vars['message'];
 $this->setTitle($message);
 
 ?>
-
-<div class="container has-text-centered mt-5">
-    <h1 class="title is-3">
-        <?= $message ?>
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('text.error') ?>
     </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content has-text-centered">
+                <h1 class="title is-3">
+                    <?= $this->text($message) ?>
+                </h1>
 
-    <p class="is-bold">
-        ¯\_(ツ)_/¯
-    </p>
-</div>
+                <p class="is-bold">
+                    ¯\_(ツ)_/¯
+                </p>
+            </div>
+        </div>
+    </div>
+</main>

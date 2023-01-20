@@ -12,6 +12,6 @@ final readonly class NotFoundController implements ControllerInterface
 {
     public function execute(Request $request): Response
     {
-        return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
+        return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
     }
 }

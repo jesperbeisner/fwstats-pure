@@ -1,11 +1,20 @@
-<footer class="has-background-dark">
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+
+?>
+<footer id="site-footer" class="has-background-dark">
     <?php if ($this->getSession()->getUser() === null): ?>
         <a href="/login">
-            Login
+            <?= $this->text('text.login') ?>
         </a>
     <?php else: ?>
         <a href="/logout">
-            Logout
+            <?= $this->text('text.logout') ?>
         </a>
     <?php endif; ?>
 </footer>

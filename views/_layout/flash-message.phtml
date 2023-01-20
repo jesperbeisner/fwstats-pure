@@ -12,7 +12,7 @@ use Jesperbeisner\Fwstats\Service\RenderService;
     <article id="flash-message-success" class="container message is-success has-text-centered info-text">
         <div class="message-body">
             <?php foreach ($successFlashMessages as $successFlashMessage): ?>
-                <p class="has-text-weight-bold"><?= $successFlashMessage ?></p>
+                <p class="has-text-weight-bold"><?= $this->text($successFlashMessage) ?></p>
             <?php endforeach; ?>
         </div>
     </article>
@@ -22,7 +22,7 @@ use Jesperbeisner\Fwstats\Service\RenderService;
     <article id="flash-message-error" class="container message is-danger has-text-centered info-text">
         <div class="message-body">
             <?php foreach ($errorFlashMessages as $errorFlashMessage): ?>
-                <p class="has-text-weight-bold"><?= $errorFlashMessage ?></p>
+                <p class="has-text-weight-bold"><?= $this->text($errorFlashMessage) ?></p>
             <?php endforeach; ?>
         </div>
     </article>

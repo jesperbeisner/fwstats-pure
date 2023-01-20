@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Jesperbeisner\Fwstats\Enum\FlashEnum;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
@@ -10,7 +9,7 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 
 ?>
 <!doctype html>
-<html lang="de">
+<html lang="<?= $this->translator->getLocale()->value ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,15 +24,7 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 
     <?php require __DIR__ . '/flash-message.phtml' ?>
 
-    <main class="container mt-5 mb-5">
-        <div class=" card">
-            <div class="card-content">
-                <div class="content">
-                    <?= $content ?>
-                </div>
-            </div>
-        </div>
-    </main>
+    <?= $content ?>
 
     <?php require __DIR__ . '/footer.phtml' ?>
 </body>

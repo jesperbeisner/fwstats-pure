@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
-use Jesperbeisner\Fwstats\Service\ViewRenderService;
+use Jesperbeisner\Fwstats\Service\RenderService;
 
-/** @var ViewRenderService $this */
+/** @var RenderService $this */
 /** @var PlayerRaceHistory[] $raceChanges */
 
 ?>
@@ -13,27 +13,34 @@ use Jesperbeisner\Fwstats\Service\ViewRenderService;
 <div class="card mt-5">
     <div class="card-header">
         <p class="card-header-title">
-            Rassenänderungen
+            <?= $this->text('title.race-changes') ?>
         </p>
     </div>
     <div class="card-content">
         <div class="content">
-            <?php if (count($raceChanges) > 0): ?>
+            <?php if ($raceChanges !== []): ?>
                 <div class="table-container">
                     <table class="table is-hoverable is-fullwidth">
                         <thead>
                         <tr>
-                            <td>Alte Rasse</td>
-                            <td>Neue Rasse</td>
-                            <td>Datum</td>
+                            <td><?= $this->text('table.old-race') ?></td>
+                            <td><?= $this->text('table.new-race') ?></td>
+                            <td><?= $this->text('table.date') ?></td>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($raceChanges as $raceChange): ?>
                             <tr>
-                                <td><?= $raceChange->oldRace ?></td>
-                                <td><?= $raceChange->newRace ?></td>
-                                <td><?= $raceChange->created->format('d.m.Y') ?></td>
+                                <td>
+                                    <?= $this->text($raceChange->oldRace) ?>
+                                </td>
+                                <td>
+                                    <?= $this->text($raceChange->newRace) ?>
+
+                                </td>
+                                <td title="<?= $raceChange->created->format('d.m.Y H:i:s') ?>">
+                                    <?= $raceChange->created->format('d.m.Y') ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -41,7 +48,7 @@ use Jesperbeisner\Fwstats\Service\ViewRenderService;
                 </div>
             <?php else: ?>
                 <p class="has-text-centered">
-                    Keine Rassenänderungen vorhanden.
+                    <?= $this->text('text.no-race-changes-available') ?>
                 </p>
             <?php endif; ?>
         </div>

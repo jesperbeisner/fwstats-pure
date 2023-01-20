@@ -24,13 +24,13 @@ final readonly class IndexController implements ControllerInterface
         $offset = ($page * 100) - 100;
 
         if ($page < 1) {
-            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
         $maxAmountOfPlayersInSingleWorld = $this->playerRepository->getMaxAmountOfPlayersInSingleWorld();
 
         if ($offset > $maxAmountOfPlayersInSingleWorld) {
-            return Response::html('error/error.phtml', ['message' => '404 - Page not found'], 404);
+            return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
         return Response::html('index/index.phtml', [

@@ -1,19 +1,16 @@
 #github-logo {
     height: 32px;
     width: 32px;
-    color: #ffffff;
-}
-
-#github-logo:hover {
     color: #f14668;
 }
 
 body {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    background: linear-gradient(45deg, hsla(136, 82%, 72%, 0.3) 0%, hsla(205, 84%, 36%, 0.3) 100%);
 }
 
 header {
@@ -21,10 +18,11 @@ header {
 }
 
 main {
+    padding: 0 5px !important;
     width: 100% !important;
 }
 
-footer {
+#site-footer {
     display: flex;
     min-height: 3.25rem;
     flex-direction: column;
@@ -33,15 +31,15 @@ footer {
     width: 100%;
 }
 
-footer > a {
+#site-footer > a {
     color: #ffffff;
 }
 
-footer > a:hover {
+#site-footer > a:hover {
     color: #f14668;
 }
 
-main > #search {
+#site-main #search {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -61,4 +59,20 @@ ul {
     margin: 0 !important;
     padding: 0 !important;
     margin-top: 1.5rem !important
+}
+
+#english-icon, #german-icon {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+#english-icon > img, #german-icon > img {
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+}
+
+header .container {
+    padding: 0 5px !important;
 }

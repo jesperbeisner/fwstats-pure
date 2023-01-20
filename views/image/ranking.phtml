@@ -6,34 +6,45 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
 
-$this->setTitle('Ranking Bilder');
+$this->setTitle('title.ranking-pictures');
 
 ?>
-<div id="images">
-    <div class="tabs is-centered is-medium">
-        <ul>
-            <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
-            <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
-        </ul>
-    </div>
-    <div>
-        <div id="action-freewar-tab-content" class="has-text-centered">
-            <p class="is-size-5 has-text-weight-bold mb-3">
-                Ranking Bild im Profil einbinden:
-            </p>
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.ranking-pictures') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <div id="images">
+                    <div class="tabs is-centered is-medium">
+                        <ul>
+                            <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
+                            <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div id="action-freewar-tab-content" class="has-text-centered">
+                            <p class="is-size-5 has-text-weight-bold mb-3">
+                                <?= $this->text('text.include-ranking-image-in-profile') ?>:
+                            </p>
 
-            <pre class="mb-5">[center][url=https://fwstats.de/images/ranking][img]https://fwstats.de/images/afsrv-ranking.png[/img][/url][/center]</pre>
+                            <pre class="mb-5">[center][url=https://fwstats.de/images/ranking][img]https://fwstats.de/images/afsrv-ranking.png[/img][/url][/center]</pre>
 
-            <img src="/images/afsrv-ranking.png" alt="afsrv-anking image">
+                            <img src="/images/afsrv-ranking.png" alt="afsrv-anking image">
+                        </div>
+                        <div id="chaos-freewar-tab-content" class="is-hidden has-text-centered">
+                            <p class="is-size-5 has-text-weight-bold mb-3">
+                                <?= $this->text('text.include-ranking-image-in-profile') ?>:
+                            </p>
+
+                            <pre class="mb-5">[center][url=https://fwstats.de/images/ranking][img]https://fwstats.de/images/chaos-ranking.png[/img][/url][/center]</pre>
+
+                            <img src="/images/chaos-ranking.png" alt="chaos-ranking image">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="chaos-freewar-tab-content" class="is-hidden has-text-centered">
-            <p class="is-size-5 has-text-weight-bold mb-3">
-                Ranking Bild im Profil einbinden:
-            </p>
-
-            <pre class="mb-5">[center][url=https://fwstats.de/images/ranking][img]https://fwstats.de/images/chaos-ranking.png[/img][/url][/center]</pre>
-
-            <img src="/images/chaos-ranking.png" alt="chaos-ranking image">
-        </div>
     </div>
-</div>
+</main>

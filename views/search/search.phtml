@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Jesperbeisner\Fwstats\Helper\Html;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
@@ -11,28 +10,48 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var array $players */
 $players = $vars['players'];
 
-$this->setTitle('Search');
+$this->setTitle('title.search');
 
 $query = $this->getRequest()->getGetParameter('query');
 
 ?>
-<?php if ($query === null || $query === ''): ?>
-    <div id="search">
-        <form action="/search" method="GET">
-            <div class="field has-addons">
-                <div class="control" style="width: 500px;">
-                    <input class="input is-rounded" type="text" name="query" id="query" placeholder="…" required>
-                </div>
-                <div class="control">
-                    <button class="button is-danger is-rounded">Suchen</button>
-                </div>
+<main id="site-main" class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.search') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <?php if ($query === null || $query === ''): ?>
+                    <div id="search">
+                        <form action="/search" method="GET">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <label for="query" aria-hidden="true" style="display: none">Search query</label>
+                                    <input class="input is-rounded" type="text" name="query" id="query" placeholder="…" required>
+                                </div>
+                                <div class="control">
+                                    <button class="button is-danger is-rounded">
+                                        <?= $this->text('text.button.search') ?>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                <?php else: ?>
+                    <?php if ($players === []): ?>
+                        <p class="has-text-centered has-text-danger has-text-weight-bold">
+                            <?= $this->text('text.search.no-players-found', ['%SEARCH_QUERY%' => $query]) ?>
+                        </p>
+                    <?php else: ?>
+                        <p class="has-text-centered has-text-weight-bold mb-5">
+                            <?= $this->text('text.search.players-found', ['%SEARCH_QUERY%' => $query]) ?>
+                        </p>
+
+                        <?php require __DIR__ . '/_search-table.phtml' ?>
+                    <?php endif; ?>
+                <?php endif; ?>
             </div>
-        </form>
+        </div>
     </div>
-<?php else: ?>
-    <?php if ($players === []): ?>
-        <p class="has-text-centered has-text-danger has-text-weight-bold">Es wurde kein Spieler mit "<?= Html::escape($query) ?>" im Namen gefunden.</p>
-    <?php else: ?>
-        <?php require __DIR__ . '/_search-table.phtml' ?>
-    <?php endif; ?>
-<?php endif; ?>
+</main>
