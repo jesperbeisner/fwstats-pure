@@ -7,8 +7,8 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var RenderService $this */
 /** @var array<string, mixed> $vars */
 
-/** @var string $domain */
-$domain = $vars['domain'];
+/** @var string $domainName */
+$domainName = $vars['domainName'];
 
 $this->setTitle('title.name-changes-pictures');
 
@@ -33,7 +33,7 @@ $this->setTitle('title.name-changes-pictures');
                                 <?= $this->text('text.include-name-changes-image-in-profile') ?>:
                             </p>
 
-                            <pre class="mb-5">[center][url=<?= $domain ?>/images/name-changes][img]https://fwstats.de/images/afsrv-name-changes.png[/img][/url][/center]</pre>
+                            <pre class="mb-5">[center][url=<?= $domainName ?>/images/name-changes][img]<?= $domainName ?>/images/afsrv-name-changes.png[/img][/url][/center]</pre>
 
                             <img src="/images/afsrv-name-changes.png" alt="afsrv-anking image">
                         </div>
@@ -42,7 +42,7 @@ $this->setTitle('title.name-changes-pictures');
                                 <?= $this->text('text.include-name-changes-image-in-profile') ?>:
                             </p>
 
-                            <pre class="mb-5">[center][url=<?= $domain ?>/images/name-changes][img]https://fwstats.de/images/chaos-name-changes.png[/img][/url][/center]</pre>
+                            <pre class="mb-5">[center][url=<?= $domainName ?>/images/name-changes][img]<?= $domainName ?>/images/chaos-name-changes.png[/img][/url][/center]</pre>
 
                             <img src="/images/chaos-name-changes.png" alt="chaos-ranking image">
                         </div>

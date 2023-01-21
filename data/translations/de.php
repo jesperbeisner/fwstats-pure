@@ -57,6 +57,10 @@ return [
     'text.no-password-specified' => 'Es wurde kein Passwort angegeben',
     'text.bearer-token' => 'Bearer Token',
     'text.new-token-generated-successfully' => 'Ein neuer Bearer Token wurde erfolgreich generiert',
+    'text.domain-name' => 'Domain',
+    'text.no-domain-name-specified' => 'Es wurde keine Domain angegeben',
+    'text.domain-changed-successfully' => 'Die Domain wurde erfolgreich geändert',
+    'text.domain-name-wrong-start' => 'Die Domain muss mit "https://" beginnen',
 
     'table.name' => 'Name',
     'table.world' => 'Welt',
@@ -89,6 +93,7 @@ return [
     'label.username' => 'Username',
     'label.password' => 'Passwort',
     'label.bearer-token' => 'Bearer Token',
+    'label.domain-name' => 'Domain',
 
     'button.change' => 'Ändern',
     'button.generate-new-bearer-token' => 'Neu generieren',

@@ -58,6 +58,10 @@ return [
     'text.no-password-specified' => 'No password specified',
     'text.bearer-token' => 'Bearer Token',
     'text.new-token-generated-successfully' => 'A new bearer token was generated successfully',
+    'text.domain-name' => 'Domain name',
+    'text.no-domain-name-specified' => 'No domain name specified',
+    'text.domain-changed-successfully' => 'Domain name changed successfully',
+    'text.domain-name-wrong-start' => 'The domain name needs to start with "https://"',
 
     'table.name' => 'Name',
     'table.world' => 'World',
@@ -90,6 +94,7 @@ return [
     'label.username' => 'Username',
     'label.password' => 'Password',
     'label.bearer-token' => 'Bearer Token',
+    'label.domain-name' => 'Domain name',
 
     'button.change' => 'Change',
     'button.generate-new-bearer-token' => 'Generate new',

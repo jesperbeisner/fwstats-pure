@@ -5,7 +5,7 @@
 - Generate race change/name change pictures as well and display on website
 - ~~i18n~~
 - ~~Build usable prod docker image and autobuild in github action~~
-- Change database access logs
+- Change database access logs (Add up numbers)
 - ~~Weltauswahl in LocalStorage speichern~~
 - Track xp gains for a single day
 - ~~Change migration loading~~
@@ -16,6 +16,6 @@
 - ~~Translate login success/error messages~~
 - Add more tests
 - ~~Change from e-mail to username (admin)~~
-- Make password changeable
-- Make possible to generate new token
-- Make domain configurable
+- ~~Make password changeable~~
+- ~~Make possible to generate new token~~
+- ~~Make domain name configurable~~

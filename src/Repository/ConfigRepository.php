@@ -12,7 +12,7 @@ final class ConfigRepository extends AbstractRepository
 {
     public function findByKey(string $key): ?Config
     {
-        $sql = "SELECT id, key, value, created FROM config WHERE key = :key";
+        $sql = "SELECT id, key, value, created FROM configs WHERE key = :key";
 
         /** @var array<array{id: int, key: string, value: string, created: string}> $result */
         $result = $this->database->select($sql, [
@@ -30,9 +30,27 @@ final class ConfigRepository extends AbstractRepository
         return $this->hydrateConfig($result[0]);
     }
 
+    public function changeDomainName(string $domainName): void
+    {
+        $sql = "UPDATE configs SET value = :value WHERE key = :key";
+
+        $this->database->update($sql, [
+            'value' => $domainName,
+            'key' => 'domain-name',
+        ]);
+
+        $sql = "INSERT OR IGNORE INTO configs (key, value, created) VALUES (:key, :value, :created)";
+
+        $this->database->insert($sql, [
+            'key' => 'domain-name',
+            'value' => $domainName,
+            'created' => (new DateTimeImmutable())->format('Y-m-d')
+        ]);
+    }
+
     public function deleteAll(): void
     {
-        $sql = "DELETE FROM config";
+        $sql = "DELETE FROM configs";
 
         $this->database->delete($sql);
     }

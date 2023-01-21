@@ -8,6 +8,7 @@ use Jesperbeisner\Fwstats\Attribute\LoginRequired;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
+use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
@@ -16,6 +17,7 @@ final readonly class AdminController implements ControllerInterface
 {
     public function __construct(
         private SessionInterface $session,
+        private ConfigRepository $configRepository,
     ) {
     }
 
@@ -27,6 +29,7 @@ final readonly class AdminController implements ControllerInterface
 
         return Response::html('admin/admin.phtml', [
             'bearerToken' => $bearerToken,
+            'domainName' => $this->configRepository->findByKey('domain-name')?->value ?? 'https://fwstats.de',
         ]);
     }
 }

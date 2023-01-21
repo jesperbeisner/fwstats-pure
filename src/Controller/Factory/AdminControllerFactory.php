@@ -8,6 +8,7 @@ use Jesperbeisner\Fwstats\Controller\AdminController;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
+use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 
 final readonly class AdminControllerFactory implements FactoryInterface
 {
@@ -15,6 +16,7 @@ final readonly class AdminControllerFactory implements FactoryInterface
     {
         return new AdminController(
             $container->get(SessionInterface::class),
+            $container->get(ConfigRepository::class),
         );
     }
 }

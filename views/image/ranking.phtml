@@ -7,8 +7,8 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var RenderService $this */
 /** @var array<string, mixed> $vars */
 
-/** @var string $domain */
-$domain = $vars['domain'];
+/** @var string $domainName */
+$domainName = $vars['domainName'];
 
 $this->setTitle('title.ranking-pictures');
 
@@ -33,7 +33,7 @@ $this->setTitle('title.ranking-pictures');
                                 <?= $this->text('text.include-ranking-image-in-profile') ?>:
                             </p>
 
-                            <pre class="mb-5">[center][url=<?= $domain ?>/images/ranking][img]https://fwstats.de/images/afsrv-ranking.png[/img][/url][/center]</pre>
+                            <pre class="mb-5">[center][url=<?= $domainName ?>/images/ranking][img]<?= $domainName ?>/images/afsrv-ranking.png[/img][/url][/center]</pre>
 
                             <img src="/images/afsrv-ranking.png" alt="afsrv-anking image">
                         </div>
@@ -42,7 +42,7 @@ $this->setTitle('title.ranking-pictures');
                                 <?= $this->text('text.include-ranking-image-in-profile') ?>:
                             </p>
 
-                            <pre class="mb-5">[center][url=<?= $domain ?>/images/ranking][img]https://fwstats.de/images/chaos-ranking.png[/img][/url][/center]</pre>
+                            <pre class="mb-5">[center][url=<?= $domainName ?>/images/ranking][img]<?= $domainName ?>/images/chaos-ranking.png[/img][/url][/center]</pre>
 
                             <img src="/images/chaos-ranking.png" alt="chaos-ranking image">
                         </div>
