@@ -32,7 +32,7 @@ final readonly class ChangePasswordController implements ControllerInterface
         }
 
         if (null === $user = $this->session->getUser()) {
-            throw new RuntimeException('Should not be possible?');
+            throw new RuntimeException('This should not be possible? Looks like you messed up once again! :^)');
         }
 
         try {

@@ -56,6 +56,8 @@ return [
     'text.password-too long' => 'The password must not be longer than 100 characters',
     'text.password-changed-successfully' => 'Password changed successfully',
     'text.no-password-specified' => 'No password specified',
+    'text.bearer-token' => 'Bearer Token',
+    'text.new-token-generated-successfully' => 'A new bearer token was generated successfully',
 
     'table.name' => 'Name',
     'table.world' => 'World',
@@ -87,8 +89,10 @@ return [
     'label.search' => 'Search',
     'label.username' => 'Username',
     'label.password' => 'Password',
+    'label.bearer-token' => 'Bearer Token',
 
     'button.change' => 'Change',
+    'button.generate-new-bearer-token' => 'Generate new',
 
     // Races
     'Onlo' => 'Onlo',

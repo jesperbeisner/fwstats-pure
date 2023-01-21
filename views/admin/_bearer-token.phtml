@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
+
+/** @var string $bearerToken */
+$bearerToken = $vars['bearerToken'];
+
+?>
+<div class="card mt-5">
+    <div class="card-header">
+        <p class="card-header-title">
+            <?= $this->text('text.bearer-token') ?>
+        </p>
+    </div>
+    <div class="card-content">
+        <div class="content">
+            <form action="/admin/generate-new-bearer-token" method="POST">
+                <div class="field">
+                    <p class="control">
+                        <label for="bearer-token" aria-hidden="true" style="display: none"><?= $this->text('label.bearer-token') ?></label>
+                        <input name="bearer-token" id="bearer-token" class="input" type="text" value="<?= $bearerToken ?>" readonly>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control">
+                        <button class="button is-danger is-rounded" type="submit">
+                            <?= $this->text('button.generate-new-bearer-token') ?>
+                        </button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

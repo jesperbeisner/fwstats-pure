@@ -43,6 +43,7 @@ return [
         ['route' => '/locale', 'methods' => ['GET'], 'controller' => Controller\LocaleController::class],
         ['route' => '/admin', 'methods' => ['GET'], 'controller' => Controller\AdminController::class],
         ['route' => '/admin/change-password', 'methods' => ['POST'], 'controller' => Controller\ChangePasswordController::class],
+        ['route' => '/admin/generate-new-bearer-token', 'methods' => ['POST'], 'controller' => Controller\GenerateNewBearerTokenController::class],
     ],
     'processes' => [
         Process\ExceptionHandlerProcess::class,
@@ -82,10 +83,12 @@ return [
         Controller\AdminController::class => Controller\Factory\AdminControllerFactory::class,
         Controller\LocaleController::class => Controller\Factory\LocaleControllerFactory::class,
         Controller\ChangePasswordController::class => Controller\Factory\ChangePasswordControllerFactory::class,
+        Controller\GenerateNewBearerTokenController::class => Controller\Factory\GenerateNewBearerTokenControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,
         Action\ChangePasswordAction::class => Action\Factory\ChangePasswordActionFactory::class,
+        Action\GenerateNewBearerTokenAction::class => Action\Factory\GenerateNewBearerTokenActionFactory::class,
 
         // Services
         Interface\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,

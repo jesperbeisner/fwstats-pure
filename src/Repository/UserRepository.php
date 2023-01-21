@@ -80,6 +80,20 @@ final class UserRepository extends AbstractRepository
         ]);
     }
 
+    public function changeToken(User $user, string $token): void
+    {
+        $sql = "UPDATE users SET token = :token WHERE id = :id";
+
+        if ($user->id === null) {
+            throw new RuntimeException(sprintf('The user with username "%s" has no id, how is this possible?', $user->username));
+        }
+
+        $this->database->execute($sql, [
+            'token' => $token,
+            'id' => $user->id,
+        ]);
+    }
+
     public function deleteAll(): void
     {
         $sql = "DELETE FROM users";
