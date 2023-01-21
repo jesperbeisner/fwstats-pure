@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\Action\ChangeDomainNameAction;
+use Jesperbeisner\Fwstats\Attribute\LoginRequired;
 use Jesperbeisner\Fwstats\Enum\FlashEnum;
 use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Interface\ControllerInterface;
@@ -12,6 +13,7 @@ use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+#[LoginRequired]
 final readonly class ChangeDomainNameController implements ControllerInterface
 {
     public function __construct(
