@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\PlayerStatusHistory;
 
-final class PlayerStatusHistoryRepository extends AbstractRepository
+final class PlayerStatusHistoryRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     public function insert(PlayerStatusHistory $playerStatusHistory): void
     {
@@ -20,6 +22,15 @@ final class PlayerStatusHistoryRepository extends AbstractRepository
             'playerId' => $playerStatusHistory->playerId,
             'name' => $playerStatusHistory->name,
             'status' => $playerStatusHistory->status->value,
+        ]);
+    }
+
+    public function resetActionFreewar(): void
+    {
+        $sql = "DELETE FROM players_status_history WHERE world = :world";
+
+        $this->database->delete($sql, [
+            'world' => WorldEnum::AFSRV->value,
         ]);
     }
 }

@@ -62,6 +62,9 @@ return [
     'text.no-domain-name-specified' => 'No domain name specified',
     'text.domain-changed-successfully' => 'Domain name changed successfully',
     'text.domain-name-wrong-start' => 'The domain name needs to start with "https://"',
+    'text.user-created-successfully' => 'The new user with username "%USERNAME%" was created successfully',
+    'text.reset-action-freewar-success' => 'ActionFreewar was successfully reset',
+    'text.do-you-really-wanna-reset-action-freewar' => 'Do you really want to reset ActionFreewar?',
 
     'table.name' => 'Name',
     'table.world' => 'World',
@@ -98,6 +101,7 @@ return [
 
     'button.change' => 'Change',
     'button.generate-new-bearer-token' => 'Generate new',
+    'button.of-course' => 'Of course 🚀',
 
     // Races
     'Onlo' => 'Onlo',

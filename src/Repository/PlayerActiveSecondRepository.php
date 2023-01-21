@@ -9,10 +9,11 @@ use DateTimeImmutable;
 use Exception;
 use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 
-final class PlayerActiveSecondRepository extends AbstractRepository
+final class PlayerActiveSecondRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     public function insert(PlayerActiveSecond $playerActiveSecond): void
     {
@@ -170,5 +171,14 @@ final class PlayerActiveSecondRepository extends AbstractRepository
         $sql = "DELETE FROM players_active_seconds";
 
         $this->database->delete($sql);
+    }
+
+    public function resetActionFreewar(): void
+    {
+        $sql = "DELETE FROM players_active_seconds WHERE world = :world";
+
+        $this->database->delete($sql, [
+            'world' => WorldEnum::AFSRV->value,
+        ]);
     }
 }

@@ -29,14 +29,14 @@ final class CreateUserCommand extends AbstractCommand
         }
 
         try {
-            $this->createUserAction->configure(['username' => $this->arguments[2], 'password' => $this->arguments[3]])->run();
+            $result = $this->createUserAction->configure(['username' => $this->arguments[2], 'password' => $this->arguments[3]])->run();
         } catch (ActionException $e) {
             $this->writeLine($e->getMessage());
 
             return self::FAILURE;
         }
 
-        $this->writeLine(sprintf('Success: A new user with username "%s" was created.', $this->arguments[2]));
+        $this->writeLine($result->getMessage());
         $this->writeLine("Finished the 'app:create-user' command in {$this->getTime()} ms.");
 
         return self::SUCCESS;

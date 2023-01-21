@@ -7,10 +7,11 @@ namespace Jesperbeisner\Fwstats\Repository;
 use Exception;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\DatabaseException;
+use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Model\Player;
 
-final class AchievementRepository extends AbstractRepository
+final class AchievementRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     public function findByPlayer(Player $player): ?Achievement
     {
@@ -91,6 +92,15 @@ final class AchievementRepository extends AbstractRepository
 
             throw $e;
         }
+    }
+
+    public function resetActionFreewar(): void
+    {
+        $sql = "DELETE FROM achievements WHERE world = :world";
+
+        $this->database->delete($sql, [
+            'world' => WorldEnum::AFSRV->value,
+        ]);
     }
 
     /**

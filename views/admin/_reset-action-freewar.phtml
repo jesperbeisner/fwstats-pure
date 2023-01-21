@@ -1,0 +1,43 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
+
+?>
+<div class="card mt-5">
+    <div class="card-header">
+        <p class="card-header-title">
+            Reset ActionFreewar
+        </p>
+    </div>
+    <div class="card-content">
+        <div class="content">
+            <form action="/admin/reset-action-freewar" method="POST" id="reset-action-freewar-form">
+                <div class="field">
+                    <p class="control">
+                        <button class="button is-danger is-rounded js-modal-trigger" data-target="reset-action-freewar-modal">
+                            Reset ActionFreewar
+                        </button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="reset-action-freewar-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box has-text-centered">
+            <p><?= $this->text('text.do-you-really-wanna-reset-action-freewar') ?></p>
+            <button class="button is-rounded is-danger mt-5" id="reset-action-freewar-button">
+                <?= $this->text('button.of-course') ?>
+            </button>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>

@@ -9,9 +9,10 @@ use Exception;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\DatabaseException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
+use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Player;
 
-final class PlayerRepository extends AbstractRepository
+final class PlayerRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     public function find(WorldEnum $world, int $playerId): ?Player
     {
@@ -187,6 +188,15 @@ final class PlayerRepository extends AbstractRepository
         $sql = "DELETE FROM players";
 
         $this->database->delete($sql);
+    }
+
+    public function resetActionFreewar(): void
+    {
+        $sql = "DELETE FROM players WHERE world = :world";
+
+        $this->database->delete($sql, [
+            'world' => WorldEnum::AFSRV->value,
+        ]);
     }
 
     /**

@@ -11,14 +11,14 @@ class ActionResult implements ActionResultInterface
 {
     protected readonly int $result;
 
-    /** @var mixed[] */
+    /** @var array<string, mixed> */
     protected readonly array $data;
     protected readonly string $message;
 
     /**
-     * @param mixed[] $data
+     * @param array<string, mixed> $data
      */
-    public function __construct(int $result, array $data = [], string $message = '')
+    public function __construct(int $result, string $message = '', array $data = [])
     {
         if (!in_array($result, [self::SUCCESS, self::FAILURE], true)) {
             throw new ActionResultException('Only 0 and 1 are valid values for $result.');

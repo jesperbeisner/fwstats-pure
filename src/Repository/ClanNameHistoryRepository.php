@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\ClanNameHistory;
 
-final class ClanNameHistoryRepository extends AbstractRepository
+final class ClanNameHistoryRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     public function insert(ClanNameHistory $clanNameHistory): void
     {
@@ -22,6 +24,15 @@ final class ClanNameHistoryRepository extends AbstractRepository
             'newShortcut' => $clanNameHistory->newShortcut,
             'oldName' => $clanNameHistory->oldName,
             'newName' => $clanNameHistory->newName,
+        ]);
+    }
+
+    public function resetActionFreewar(): void
+    {
+        $sql = "DELETE FROM clans_name_history WHERE world = :world";
+
+        $this->database->delete($sql, [
+            'world' => WorldEnum::AFSRV->value,
         ]);
     }
 }

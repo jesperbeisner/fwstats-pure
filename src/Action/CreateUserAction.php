@@ -73,6 +73,6 @@ final class CreateUserAction implements ActionInterface
         $user = new User(null, UuidV4::create(), $this->username, $hashedPassword, Str::random(32), new DateTimeImmutable());
         $user = $this->userRepository->insert($user);
 
-        return new CreateUserActionResult(ActionResultInterface::SUCCESS, ['user' => $user]);
+        return new CreateUserActionResult(ActionResultInterface::SUCCESS, $this->translator->translate('text.user-created-successfully', ['%USERNAME%' => $user->username]), ['user' => $user]);
     }
 }

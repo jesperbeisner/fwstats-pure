@@ -39,7 +39,7 @@ class CreateUserActionResultTest extends TestCase
     {
         $user = new User(null, 'test', 'test@test.com', 'test', 'test', new DateTimeImmutable('2000-01-01'));
 
-        $createUserActionResultTest = new CreateUserActionResult(ActionResultInterface::SUCCESS, ['user' => $user]);
+        $createUserActionResultTest = new CreateUserActionResult(ActionResultInterface::SUCCESS, 'test', ['user' => $user]);
 
         $resultUser = $createUserActionResultTest->getUser();
 
@@ -55,9 +55,9 @@ class CreateUserActionResultTest extends TestCase
 
     public function test_data_returns_the_same_array(): void
     {
-        $array = ['test' => 'test', 1 => 2];
+        $array = ['test-1' => 'test', 'test-2' => 2];
 
-        $createUserActionResultTest = new CreateUserActionResult(ActionResultInterface::SUCCESS, $array);
+        $createUserActionResultTest = new CreateUserActionResult(ActionResultInterface::SUCCESS, 'test', $array);
 
         self::assertSame($array, $createUserActionResultTest->getData());
     }
@@ -71,7 +71,7 @@ class CreateUserActionResultTest extends TestCase
 
     public function test_message_is_the_same_when_set(): void
     {
-        $createUserActionResultTest = new CreateUserActionResult(ActionResultInterface::SUCCESS, [], 'test');
+        $createUserActionResultTest = new CreateUserActionResult(ActionResultInterface::SUCCESS, 'test', []);
 
         self::assertSame('test', $createUserActionResultTest->getMessage());
     }

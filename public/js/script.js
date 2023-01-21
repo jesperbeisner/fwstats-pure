@@ -58,4 +58,61 @@ document.addEventListener('DOMContentLoaded', () => {
             window.localStorage.setItem('active-tab', 'chaos-freewar');
         });
     }
+
+    const resetActionFreewarForm = document.getElementById('reset-action-freewar-form')
+
+    if (resetActionFreewarForm !== null) {
+        resetActionFreewarForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+        });
+    }
+
+    const resetActionFreewarButton = document.getElementById('reset-action-freewar-button');
+
+    if (resetActionFreewarButton !== null) {
+        resetActionFreewarButton.addEventListener('click', () => {
+            const resetActionFreewarForm = document.getElementById('reset-action-freewar-form');
+
+            if (resetActionFreewarForm !== null) {
+                resetActionFreewarForm.submit();
+            }
+        });
+    }
+
+    const openModal = (element) => {
+        element.classList.add('is-active');
+    }
+
+    const closeModal = (element) => {
+        element.classList.remove('is-active');
+    }
+
+    const closeAllModals = () => {
+        (document.querySelectorAll('.modal') || []).forEach((modal) => {
+            closeModal(modal);
+        });
+    }
+
+    (document.querySelectorAll('.js-modal-trigger') || []).forEach((trigger) => {
+        const modal = trigger.dataset.target;
+        const target = document.getElementById(modal);
+
+        trigger.addEventListener('click', () => {
+            openModal(target);
+        });
+    });
+
+    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach((close) => {
+        const target = close.closest('.modal');
+
+        close.addEventListener('click', () => {
+            closeModal(target);
+        });
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeAllModals();
+        }
+    });
 });

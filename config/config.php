@@ -45,6 +45,7 @@ return [
         ['route' => '/admin/change-password', 'methods' => ['POST'], 'controller' => Controller\ChangePasswordController::class],
         ['route' => '/admin/generate-new-bearer-token', 'methods' => ['POST'], 'controller' => Controller\GenerateNewBearerTokenController::class],
         ['route' => '/admin/change-domain-name', 'methods' => ['POST'], 'controller' => Controller\ChangeDomainNameController::class],
+        ['route' => '/admin/reset-action-freewar', 'methods' => ['POST'], 'controller' => Controller\ResetActionFreewarController::class],
     ],
     'processes' => [
         Process\ExceptionHandlerProcess::class,
@@ -86,12 +87,14 @@ return [
         Controller\ChangePasswordController::class => Controller\Factory\ChangePasswordControllerFactory::class,
         Controller\GenerateNewBearerTokenController::class => Controller\Factory\GenerateNewBearerTokenControllerFactory::class,
         Controller\ChangeDomainNameController::class => Controller\Factory\ChangeDomainNameControllerFactory::class,
+        Controller\ResetActionFreewarController::class => Controller\Factory\ResetActionFreewarControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,
         Action\ChangePasswordAction::class => Action\Factory\ChangePasswordActionFactory::class,
         Action\GenerateNewBearerTokenAction::class => Action\Factory\GenerateNewBearerTokenActionFactory::class,
         Action\ChangeDomainNameAction::class => Action\Factory\ChangeDomainNameActionFactory::class,
+        Action\ResetActionFreewarAction::class => Action\Factory\ResetActionFreewarActionFactory::class,
 
         // Services
         Interface\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,

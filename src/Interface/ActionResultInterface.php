@@ -12,7 +12,7 @@ interface ActionResultInterface
     public function isSuccess(): bool;
 
     /**
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     public function getData(): array;
 

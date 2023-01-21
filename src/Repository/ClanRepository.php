@@ -6,10 +6,11 @@ namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
 use Exception;
+use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-final class ClanRepository extends AbstractRepository
+final class ClanRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     /**
      * @return Clan[]
@@ -82,6 +83,15 @@ final class ClanRepository extends AbstractRepository
         $sql = "DELETE FROM clans";
 
         $this->database->delete($sql);
+    }
+
+    public function resetActionFreewar(): void
+    {
+        $sql = "DELETE FROM clans WHERE world = :world";
+
+        $this->database->delete($sql, [
+            'world' => WorldEnum::AFSRV->value,
+        ]);
     }
 
     /**

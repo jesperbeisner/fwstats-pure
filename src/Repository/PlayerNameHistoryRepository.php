@@ -7,9 +7,10 @@ namespace Jesperbeisner\Fwstats\Repository;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Interface\PlayerInterface;
+use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 
-final class PlayerNameHistoryRepository extends AbstractRepository
+final class PlayerNameHistoryRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     public function insert(PlayerNameHistory $playerNameHistory): void
     {
@@ -93,6 +94,15 @@ final class PlayerNameHistoryRepository extends AbstractRepository
         $sql = "DELETE FROM players_name_history";
 
         $this->database->delete($sql);
+    }
+
+    public function resetActionFreewar(): void
+    {
+        $sql = "DELETE FROM players_name_history WHERE world = :world";
+
+        $this->database->delete($sql, [
+            'world' => WorldEnum::AFSRV->value,
+        ]);
     }
 
     /**
