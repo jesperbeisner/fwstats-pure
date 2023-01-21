@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Model\RequestLog;
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
+
+/** @var array<RequestLog> $requestLogs */
+$requestLogs = $vars['requestLogs'];
+
+$this->setTitle('title.request-logs');
+
+?>
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.request-logs') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <div class="table-container">
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Url</td>
+                            <td><?= $this->text('table.method') ?></td>
+                            <td><?= $this->text('table.visits') ?></td>
+                            <td><?= $this->text('table.status-code') ?></td>
+                            <td><?= $this->text('table.day') ?></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i = 1; ?>
+                        <?php $totalVisits = 0 ?>
+                        <?php foreach ($requestLogs as $requestLog): ?>
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><a href="<?= $this->text($requestLog->url) ?>" target="_blank"><?= $this->text($requestLog->url) ?></a></td>
+                                <td><?= $this->text($requestLog->method) ?></td>
+                                <td><?= $requestLog->visits ?></td>
+                                <td><?= $requestLog->statusCode ?></td>
+                                <td><?= $requestLog->day->format('d.m.Y') ?></td>
+                            </tr>
+                            <?php $i++ ?>
+                            <?php $totalVisits += $requestLog->visits ?>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <footer class="card-footer">
+            <p class="card-footer-item">
+                <?= $this->text('text.total-visits') . ': ' . $totalVisits ?>
+            </p>
+        </footer>
+    </div>
+</main>

@@ -20,7 +20,7 @@ return [
     'title.profession-changes' => 'Profession changes',
     'title.admin' => 'Admin',
     'title.login' => 'Login',
-    'title.logs' => 'Logs',
+    'title.request-logs' => 'Request Logs',
     'title.search' => 'Search',
     'title.ranking-pictures' => 'Ranking pictures',
     'title.name-changes-pictures' => 'Name changes pictures',
@@ -65,6 +65,7 @@ return [
     'text.user-created-successfully' => 'The new user with username "%USERNAME%" was created successfully',
     'text.reset-action-freewar-success' => 'ActionFreewar was successfully reset',
     'text.do-you-really-wanna-reset-action-freewar' => 'Do you really want to reset ActionFreewar?',
+    'text.total-visits' => 'Total visits',
 
     'table.name' => 'Name',
     'table.world' => 'World',
@@ -85,6 +86,10 @@ return [
     'table.old-profession' => 'Old profession',
     'table.new-profession' => 'New profession',
     'table.date' => 'Date',
+    'table.method' => 'Method',
+    'table.visits' => 'Visits',
+    'table.status-code' => 'Status code',
+    'table.day' => 'Day',
 
     'hover.change-language-to-english' => 'Change language to english',
     'hover.change-language-to-german' => 'Change language to german',

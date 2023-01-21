@@ -5,7 +5,7 @@
 - Generate race change/name change pictures as well and display on website
 - ~~i18n~~
 - ~~Build usable prod docker image and autobuild in github action~~
-- Change database access logs (Add up numbers)
+- ~~Change request logs (Add up numbers)~~
 - ~~Weltauswahl in LocalStorage speichern~~
 - Track xp gains for a single day
 - ~~Change migration loading~~
