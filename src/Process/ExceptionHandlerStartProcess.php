@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Process;
 
 use Jesperbeisner\Fwstats\Interface\LoggerInterface;
-use Jesperbeisner\Fwstats\Interface\ProcessInterface;
+use Jesperbeisner\Fwstats\Interface\StartProcessInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Throwable;
 
-final readonly class ExceptionHandlerProcess implements ProcessInterface
+final readonly class ExceptionHandlerStartProcess implements StartProcessInterface
 {
     public function __construct(
         private LoggerInterface $logger,

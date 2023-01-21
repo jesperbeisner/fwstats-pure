@@ -6,8 +6,6 @@ namespace Jesperbeisner\Fwstats;
 
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
-use Jesperbeisner\Fwstats\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Interface\ProcessInterface;
 use Jesperbeisner\Fwstats\Service\RenderService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 use Jesperbeisner\Fwstats\Stdlib\Request;
@@ -22,27 +20,24 @@ final readonly class Application
 
     public function handle(Request $request): Response
     {
-        /** @var Config $config */
         $config = $this->container->get(Config::class);
 
-        foreach ($config->getProcesses() as $processClassString) {
-            /** @var ProcessInterface $process */
-            $process = $this->container->get($processClassString);
-            $process->run($request);
+        foreach ($config->getStartProcesses() as $startProcessClassString) {
+            $this->container->get($startProcessClassString)->run($request);
         }
 
         if (null === $controllerClassString = $request->getController()) {
             throw new RuntimeException('None of the processes has set a controller class string. This should not be possible?');
         }
 
-        /** @var ControllerInterface $controller */
-        $controller = $this->container->get($controllerClassString);
-        $response = $controller->execute($request);
+        $response = $this->container->get($controllerClassString)->execute($request);
 
         if ($response->contentType === Response::CONTENT_TYPE_HTML) {
-            /** @var RenderService $renderService */
-            $renderService = $this->container->get(RenderService::class);
-            $response->setRenderService($renderService);
+            $response->setRenderService($this->container->get(RenderService::class));
+        }
+
+        foreach ($config->getEndProcesses() as $endProcessClassString) {
+            $this->container->get($endProcessClassString)->run($request, $response);
         }
 
         return $response;

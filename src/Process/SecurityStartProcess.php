@@ -9,13 +9,13 @@ use Jesperbeisner\Fwstats\Attribute\TokenRequired;
 use Jesperbeisner\Fwstats\Controller\SecurityController;
 use Jesperbeisner\Fwstats\Controller\UnauthorizedController;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
-use Jesperbeisner\Fwstats\Interface\ProcessInterface;
+use Jesperbeisner\Fwstats\Interface\StartProcessInterface;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use ReflectionClass;
 
-final readonly class SecurityProcess implements ProcessInterface
+final readonly class SecurityStartProcess implements StartProcessInterface
 {
     public function __construct(
         private SessionInterface $session,

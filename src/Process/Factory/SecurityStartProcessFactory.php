@@ -7,14 +7,14 @@ namespace Jesperbeisner\Fwstats\Process\Factory;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
-use Jesperbeisner\Fwstats\Process\SecurityProcess;
+use Jesperbeisner\Fwstats\Process\SecurityStartProcess;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 
-final readonly class SecurityProcessFactory implements FactoryInterface
+final readonly class SecurityStartProcessFactory implements FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): SecurityProcess
+    public function build(ContainerInterface $container, string $serviceId): SecurityStartProcess
     {
-        return new SecurityProcess(
+        return new SecurityStartProcess(
             $container->get(SessionInterface::class),
             $container->get(UserRepository::class),
         );

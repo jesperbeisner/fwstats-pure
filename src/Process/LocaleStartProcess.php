@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Process;
 
 use Jesperbeisner\Fwstats\Enum\LocaleEnum;
-use Jesperbeisner\Fwstats\Interface\ProcessInterface;
+use Jesperbeisner\Fwstats\Interface\StartProcessInterface;
 use Jesperbeisner\Fwstats\Interface\TranslatorInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 
-final readonly class LocaleProcess implements ProcessInterface
+final readonly class LocaleStartProcess implements StartProcessInterface
 {
     public function __construct(
         private TranslatorInterface $translator,

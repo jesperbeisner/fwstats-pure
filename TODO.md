@@ -19,3 +19,4 @@
 - ~~Make password changeable~~
 - ~~Make possible to generate new token~~
 - ~~Make domain name configurable~~
+- ~~Split Processes in Start and End~~

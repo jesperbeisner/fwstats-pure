@@ -7,13 +7,13 @@ namespace Jesperbeisner\Fwstats\Process\Factory;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Interface\RouterInterface;
-use Jesperbeisner\Fwstats\Process\RouterProcess;
+use Jesperbeisner\Fwstats\Process\RouterStartProcess;
 
-final readonly class RouterProcessFactory implements FactoryInterface
+final readonly class RouterStartProcessFactory implements FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): RouterProcess
+    public function build(ContainerInterface $container, string $serviceId): RouterStartProcess
     {
-        return new RouterProcess(
+        return new RouterStartProcess(
             $container->get(RouterInterface::class)
         );
     }

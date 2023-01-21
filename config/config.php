@@ -47,14 +47,16 @@ return [
         ['route' => '/admin/change-domain-name', 'methods' => ['POST'], 'controller' => Controller\ChangeDomainNameController::class],
         ['route' => '/admin/reset-action-freewar', 'methods' => ['POST'], 'controller' => Controller\ResetActionFreewarController::class],
     ],
-    'processes' => [
-        Process\ExceptionHandlerProcess::class,
-        Process\SetupProcess::class,
-        Process\RequestLoggerProcess::class,
-        Process\LocaleProcess::class,
-        Process\RouterProcess::class,
-        Process\SessionProcess::class,
-        Process\SecurityProcess::class,
+    'startProcesses' => [
+        Process\ExceptionHandlerStartProcess::class,
+        Process\SetupStartProcess::class,
+        Process\LocaleStartProcess::class,
+        Process\RouterStartProcess::class,
+        Process\SessionStartProcess::class,
+        Process\SecurityStartProcess::class,
+    ],
+    'endProcesses' => [
+        Process\RequestLoggerEndProcess::class,
     ],
     'commands' => [
         Command\AppCommand::class,
@@ -147,13 +149,15 @@ return [
         Interface\DatabaseInterface::class => Stdlib\Factory\DatabaseFactory::class,
         Interface\TranslatorInterface::class => Stdlib\Factory\TranslatorFactory::class,
 
-        // Processes
-        Process\ExceptionHandlerProcess::class => Process\Factory\ExceptionHandlerProcessFactory::class,
-        Process\SetupProcess::class => Process\Factory\SetupProcessFactory::class,
-        Process\RequestLoggerProcess::class => Process\Factory\RequestLoggerProcessFactory::class,
-        Process\RouterProcess::class => Process\Factory\RouterProcessFactory::class,
-        Process\SessionProcess::class => Process\Factory\SessionProcessFactory::class,
-        Process\SecurityProcess::class => Process\Factory\SecurityProcessFactory::class,
-        Process\LocaleProcess::class => Process\Factory\LocaleProcessFactory::class,
+        // Start Processes
+        Process\ExceptionHandlerStartProcess::class => Process\Factory\ExceptionHandlerStartProcessFactory::class,
+        Process\SetupStartProcess::class => Process\Factory\SetupStartProcessFactory::class,
+        Process\RouterStartProcess::class => Process\Factory\RouterStartProcessFactory::class,
+        Process\SessionStartProcess::class => Process\Factory\SessionStartProcessFactory::class,
+        Process\SecurityStartProcess::class => Process\Factory\SecurityStartProcessFactory::class,
+        Process\LocaleStartProcess::class => Process\Factory\LocaleStartProcessFactory::class,
+
+        // End Processes
+        Process\RequestLoggerEndProcess::class => Process\Factory\RequestLoggerEndProcessFactory::class,
     ],
 ];

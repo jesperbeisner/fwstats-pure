@@ -7,8 +7,9 @@ namespace Jesperbeisner\Fwstats\Stdlib;
 use Jesperbeisner\Fwstats\Command\AbstractCommand;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ControllerInterface;
+use Jesperbeisner\Fwstats\Interface\EndProcessInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
-use Jesperbeisner\Fwstats\Interface\ProcessInterface;
+use Jesperbeisner\Fwstats\Interface\StartProcessInterface;
 
 final class Config
 {
@@ -16,7 +17,8 @@ final class Config
      * @param array{
      *     global: array<string, string|int|float|bool>,
      *     routes: array<array{route: string, methods: array<string>, controller: class-string<ControllerInterface>}>,
-     *     processes: array<class-string<ProcessInterface>>,
+     *     startProcesses: array<class-string<StartProcessInterface>>,
+     *     endProcesses: array<class-string<EndProcessInterface>>,
      *     commands: array<class-string<AbstractCommand>>,
      *     factories: array<string, class-string<FactoryInterface>>
      * } $configArray
@@ -103,11 +105,19 @@ final class Config
     }
 
     /**
-     * @return array<class-string<ProcessInterface>>
+     * @return array<class-string<StartProcessInterface>>
      */
-    public function getProcesses(): array
+    public function getStartProcesses(): array
     {
-        return $this->configArray['processes'];
+        return $this->configArray['startProcesses'];
+    }
+
+    /**
+     * @return array<class-string<EndProcessInterface>>
+     */
+    public function getEndProcesses(): array
+    {
+        return $this->configArray['endProcesses'];
     }
 
     /**

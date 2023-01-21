@@ -6,7 +6,7 @@ namespace Jesperbeisner\Fwstats\Interface;
 
 use Jesperbeisner\Fwstats\Stdlib\Request;
 
-interface ProcessInterface
+interface StartProcessInterface
 {
     public function run(Request $request): void;
 }

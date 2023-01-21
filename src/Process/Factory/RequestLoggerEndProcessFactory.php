@@ -6,14 +6,14 @@ namespace Jesperbeisner\Fwstats\Process\Factory;
 
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
-use Jesperbeisner\Fwstats\Process\RequestLoggerProcess;
+use Jesperbeisner\Fwstats\Process\RequestLoggerEndProcess;
 use Jesperbeisner\Fwstats\Repository\LogRepository;
 
-final readonly class RequestLoggerProcessFactory implements FactoryInterface
+final readonly class RequestLoggerEndProcessFactory implements FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): RequestLoggerProcess
+    public function build(ContainerInterface $container, string $serviceId): RequestLoggerEndProcess
     {
-        return new RequestLoggerProcess(
+        return new RequestLoggerEndProcess(
             $container->get(LogRepository::class),
         );
     }
