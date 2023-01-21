@@ -6,8 +6,10 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\Action;
 
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Exception\ActionException;
+use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
+use Jesperbeisner\Fwstats\Tests\Dummy\TranslatorDummy;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,37 +21,37 @@ class CreateUserActionTest extends TestCase
 
     public function setUp(): void
     {
-        $this->createUserAction = new CreateUserAction(new UserRepository(new DatabaseDummy()));
+        $this->createUserAction = new CreateUserAction(new UserRepository(new DatabaseDummy()), new TranslatorDummy());
     }
 
-    public function test_will_throw_ActionException_when_username_is_not_set(): void
+    public function test_will_throw_RuntimeException_when_username_is_not_set(): void
     {
-        self::expectException(ActionException::class);
-        self::expectExceptionMessage('No username set in "CreateUserAction::configure".');
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('No username and/or password set in "CreateUserAction::configure".');
 
         $this->createUserAction->configure(['no-username' => 'test', 'password' => 'Password123']);
     }
 
-    public function test_will_throw_ActionException_when_password_is_not_set(): void
+    public function test_will_throw_RuntimeException_when_password_is_not_set(): void
     {
-        self::expectException(ActionException::class);
-        self::expectExceptionMessage('No username set in "CreateUserAction::configure".');
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('No username and/or password set in "CreateUserAction::configure".');
 
         $this->createUserAction->configure(['username' => 'test', 'no-password' => 'Password123']);
     }
 
-    public function test_will_throw_ActionException_when_username_is_not_a_string(): void
+    public function test_will_throw_RuntimeException_when_username_is_not_a_string(): void
     {
-        self::expectException(ActionException::class);
-        self::expectExceptionMessage('The username set in the "CreateUserAction::configure" method is not a string.');
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('The username and/or password set in the "CreateUserAction::configure" method is not a string.');
 
         $this->createUserAction->configure(['username' => 123, 'password' => 'Password123']);
     }
 
-    public function test_will_throw_ActionException_when_password_is_not_a_string(): void
+    public function test_will_throw_RuntimeException_when_password_is_not_a_string(): void
     {
-        self::expectException(ActionException::class);
-        self::expectExceptionMessage('The password set in the "CreateUserAction::configure" method is not a string.');
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('The username and/or password set in the "CreateUserAction::configure" method is not a string.');
 
         $this->createUserAction->configure(['username' => 'test', 'password' => 123]);
     }
@@ -57,7 +59,7 @@ class CreateUserActionTest extends TestCase
     public function test_will_throw_ActionException_when_username_is_not_valid(): void
     {
         self::expectException(ActionException::class);
-        self::expectExceptionMessage('The username must be at least 3 characters long.');
+        self::expectExceptionMessage('text.username-not-long-enough');
 
         $this->createUserAction->configure(['username' => 'a', 'password' => 'Password123']);
     }
@@ -65,7 +67,7 @@ class CreateUserActionTest extends TestCase
     public function test_will_throw_ActionException_when_password_is_not_at_least_8_characters_long(): void
     {
         self::expectException(ActionException::class);
-        self::expectExceptionMessage('The password must be at least 8 characters long.');
+        self::expectExceptionMessage('text.password-not-long-enough');
 
         $this->createUserAction->configure(['username' => 'test', 'password' => 'test']);
     }
@@ -84,19 +86,19 @@ class CreateUserActionTest extends TestCase
             ],
         ]);
 
-        $createUserAction = new CreateUserAction(new UserRepository($database));
+        $createUserAction = new CreateUserAction(new UserRepository($database), new TranslatorDummy());
 
-        $createUserAction->configure(['username' => 'test', 'password' => 'Test12345']);
+        $createUserAction->configure(['username' => 'test', 'password' => 'Test1234567890']);
 
         self::expectException(ActionException::class);
-        self::expectExceptionMessage('A user with username "test" already exists.');
+        self::expectExceptionMessage('text.username-already-exists');
 
         $createUserAction->run();
     }
 
     public function test_will_create_a_new_user_and_returns_CreateUserActionResult_with_user(): void
     {
-        $this->createUserAction->configure(['username' => 'test', 'password' => 'Test12345']);
+        $this->createUserAction->configure(['username' => 'test', 'password' => 'Test1234567890']);
 
         $createUserActionResult = $this->createUserAction->run();
 

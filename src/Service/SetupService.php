@@ -24,8 +24,7 @@ final readonly class SetupService
 
         $this->migrationService->loadMigrations();
 
-        $this->createUserAction->configure(['username' => 'admin', 'password' => 'Password12345']);
-        $this->createUserAction->run();
+        $this->createUserAction->configure(['username' => 'admin', 'password' => 'Password12345'])->run();
 
         if (false === touch($this->setupFileName)) {
             throw new RuntimeException(sprintf('Could not create setup file "%s".', $this->setupFileName));

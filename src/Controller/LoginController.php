@@ -23,6 +23,10 @@ final readonly class LoginController implements ControllerInterface
 
     public function execute(Request $request): Response
     {
+        if ($this->session->getUser() !== null) {
+            return Response::redirect('/');
+        }
+
         if ($request->isPost()) {
             $username = $request->getPostParameter('username');
             $password = $request->getPostParameter('password');

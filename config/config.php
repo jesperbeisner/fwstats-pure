@@ -40,8 +40,9 @@ return [
         ['route' => '/logout', 'methods' => ['GET', 'POST'], 'controller' => Controller\LogoutController::class],
         ['route' => '/cronjob', 'methods' => ['POST'], 'controller' => Controller\CronjobController::class],
         ['route' => '/search', 'methods' => ['GET'], 'controller' => Controller\SearchController::class],
-        ['route' => '/admin', 'methods' => ['GET'], 'controller' => Controller\AdminController::class],
         ['route' => '/locale', 'methods' => ['GET'], 'controller' => Controller\LocaleController::class],
+        ['route' => '/admin', 'methods' => ['GET'], 'controller' => Controller\AdminController::class],
+        ['route' => '/admin/change-password', 'methods' => ['POST'], 'controller' => Controller\ChangePasswordController::class],
     ],
     'processes' => [
         Process\ExceptionHandlerProcess::class,
@@ -80,9 +81,11 @@ return [
         Controller\SearchController::class => Controller\Factory\SearchControllerFactory::class,
         Controller\AdminController::class => Controller\Factory\AdminControllerFactory::class,
         Controller\LocaleController::class => Controller\Factory\LocaleControllerFactory::class,
+        Controller\ChangePasswordController::class => Controller\Factory\ChangePasswordControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,
+        Action\ChangePasswordAction::class => Action\Factory\ChangePasswordActionFactory::class,
 
         // Services
         Interface\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,

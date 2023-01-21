@@ -29,8 +29,7 @@ final class CreateUserCommand extends AbstractCommand
         }
 
         try {
-            $this->createUserAction->configure(['username' => $this->arguments[2], 'password' => $this->arguments[3]]);
-            $this->createUserAction->run();
+            $this->createUserAction->configure(['username' => $this->arguments[2], 'password' => $this->arguments[3]])->run();
         } catch (ActionException $e) {
             $this->writeLine($e->getMessage());
 

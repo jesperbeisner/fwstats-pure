@@ -63,9 +63,9 @@ final class Response
         return new Response(statusCode: $statusCode, contentType: Response::CONTENT_TYPE_JSON, content: $content);
     }
 
-    public static function redirect(string $location): Response
+    public static function redirect(string $location, int $statusCode = 302): Response
     {
-        return new Response(statusCode: 302, location: $location);
+        return new Response(statusCode: $statusCode, location: $location);
     }
 
     public static function png(string $image, int $statusCode = 200, string $placeholderImage = __DIR__ . '/../../data/404-image.png'): Response

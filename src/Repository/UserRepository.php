@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Exception\DatabaseException;
+use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Model\User;
 
 final class UserRepository extends AbstractRepository
@@ -63,6 +64,20 @@ final class UserRepository extends AbstractRepository
         }
 
         return $this->hydrateUser($result[0]);
+    }
+
+    public function changePassword(User $user, string $hashedPassword): void
+    {
+        $sql = "UPDATE users SET password = :password WHERE id = :id";
+
+        if ($user->id === null) {
+            throw new RuntimeException(sprintf('The user with username "%s" has no id, how is this possible?', $user->username));
+        }
+
+        $this->database->execute($sql, [
+            'password' => $hashedPassword,
+            'id' => $user->id,
+        ]);
     }
 
     public function deleteAll(): void

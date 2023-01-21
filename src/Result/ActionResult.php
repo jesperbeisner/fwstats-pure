@@ -7,7 +7,7 @@ namespace Jesperbeisner\Fwstats\Result;
 use Jesperbeisner\Fwstats\Exception\ActionResultException;
 use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
 
-abstract class AbstractActionResult implements ActionResultInterface
+class ActionResult implements ActionResultInterface
 {
     protected readonly int $result;
 
