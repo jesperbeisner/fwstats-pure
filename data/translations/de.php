@@ -52,7 +52,7 @@ return [
     'text.username-not-long-enough' => 'Der Username muss mindestens 3 Zeichen lang sein',
     'text.username-already-exists' => 'Es existiert bereits ein User mit dem Usernamen "%USERNAME%"',
     'text.password-not-long-enough' => 'Das Passwort muss mindestens 10 Zeichen lang sein',
-    'text.password-too long' => 'Das Passwort darf nicht länger als 100 Zeichen sein',
+    'text.password-too-long' => 'Das Passwort darf nicht länger als 100 Zeichen sein',
     'text.password-changed-successfully' => 'Das Passwort wurde erfolgreich geändert',
     'text.no-password-specified' => 'Es wurde kein Passwort angegeben',
     'text.bearer-token' => 'Bearer Token',

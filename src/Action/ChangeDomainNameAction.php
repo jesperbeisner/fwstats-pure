@@ -11,6 +11,9 @@ use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
 use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Result\ActionResult;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Action\ChangeDomainNameActionTest
+ */
 final class ChangeDomainNameAction implements ActionInterface
 {
     private string $domainName;

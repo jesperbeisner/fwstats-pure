@@ -20,6 +20,9 @@ use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Result\ActionResult;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Action\ResetActionFreewarActionTest
+ */
 final readonly class ResetActionFreewarAction implements ActionInterface
 {
     public function __construct(

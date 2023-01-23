@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \Jesperbeisner\Fwstats\Action\CreateUserAction
  */
-class CreateUserActionTest extends TestCase
+final class CreateUserActionTest extends TestCase
 {
     private CreateUserAction $createUserAction;
 

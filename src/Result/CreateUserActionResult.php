@@ -7,6 +7,9 @@ namespace Jesperbeisner\Fwstats\Result;
 use Jesperbeisner\Fwstats\Exception\ActionResultException;
 use Jesperbeisner\Fwstats\Model\User;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Result\CreateUserActionResultTest
+ */
 final class CreateUserActionResult extends ActionResult
 {
     public function getUser(): User

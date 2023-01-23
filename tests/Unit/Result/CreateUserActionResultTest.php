@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Unit\Action\Result;
+namespace Jesperbeisner\Fwstats\Tests\Unit\Result;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Exception\ActionResultException;

@@ -12,6 +12,9 @@ use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Result\ActionResult;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Action\ChangePasswordActionTest
+ */
 final class ChangePasswordAction implements ActionInterface
 {
     private User $user;
@@ -41,7 +44,7 @@ final class ChangePasswordAction implements ActionInterface
         }
 
         if (strlen($data['password']) > 100) {
-            throw new ActionException('text.password-too long');
+            throw new ActionException('text.password-too-long');
         }
 
         $this->user = $data['user'];

@@ -11,6 +11,9 @@ use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Result\ActionResult;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Action\GenerateNewBearerTokenActionTest
+ */
 final class GenerateNewBearerTokenAction implements ActionInterface
 {
     private User $user;
