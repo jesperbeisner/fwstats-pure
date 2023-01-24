@@ -6,7 +6,7 @@ namespace Jesperbeisner\Fwstats\Controller;
 
 use Jesperbeisner\Fwstats\Attribute\TokenRequired;
 use Jesperbeisner\Fwstats\Interface\ControllerInterface;
-use Jesperbeisner\Fwstats\Service\CronjobService;
+use Jesperbeisner\Fwstats\Interface\CronjobInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
@@ -14,7 +14,7 @@ use Jesperbeisner\Fwstats\Stdlib\Response;
 final readonly class CronjobController implements ControllerInterface
 {
     public function __construct(
-        private CronjobService $cronjobService,
+        private CronjobInterface $cronjobService,
     ) {
     }
 

@@ -10,10 +10,11 @@ use Jesperbeisner\Fwstats\Importer\AchievementImporter;
 use Jesperbeisner\Fwstats\Importer\ClanImporter;
 use Jesperbeisner\Fwstats\Importer\PlayerImporter;
 use Jesperbeisner\Fwstats\Importer\PlaytimeImporter;
+use Jesperbeisner\Fwstats\Interface\CronjobInterface;
 use Jesperbeisner\Fwstats\Model\Cronjob;
 use Jesperbeisner\Fwstats\Repository\CronjobRepository;
 
-final readonly class CronjobService
+final readonly class CronjobService implements CronjobInterface
 {
     public function __construct(
         private CronjobRepository $cronjobRepository,

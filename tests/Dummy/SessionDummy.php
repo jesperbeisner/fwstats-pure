@@ -11,9 +11,13 @@ use Jesperbeisner\Fwstats\Model\User;
 
 final class SessionDummy implements SessionInterface
 {
-    /** @var array<mixed> */
-    private array $session = [];
     private ?User $user = null;
+
+    /** @var array<string, mixed> */
+    private array $session = [];
+
+    /** @var array<string, array<string>> */
+    private array $flashMessages = [];
 
     public function start(): void
     {
@@ -56,12 +60,12 @@ final class SessionDummy implements SessionInterface
 
     public function setFlash(FlashEnum $flashEnum, string $message): void
     {
-        $this->session[$flashEnum->value][] = $message;
+        $this->flashMessages[$flashEnum->value][] = $message;
     }
 
     public function getFlash(FlashEnum $flashEnum): array
     {
-        return $this->session[$flashEnum->value] ?? [];
+        return $this->flashMessages[$flashEnum->value] ?? [];
     }
 
     public function unset(string $key): void

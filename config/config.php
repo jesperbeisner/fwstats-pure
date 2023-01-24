@@ -103,7 +103,7 @@ return [
         Service\PlayerStatusService::class => Service\Factory\PlayerStatusServiceFactory::class,
         Service\PlaytimeService::class => Service\Factory\PlaytimeServiceFactory::class,
         Service\RenderService::class => Service\Factory\RenderServiceFactory::class,
-        Service\CronjobService::class => Service\Factory\CronjobServiceFactory::class,
+        Interface\CronjobInterface::class => Service\Factory\CronjobServiceFactory::class,
         Service\SetupService::class => Service\Factory\SetupServiceFactory::class,
         Service\MigrationService::class => Service\Factory\MigrationServiceFactory::class,
 
