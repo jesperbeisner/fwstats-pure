@@ -36,14 +36,14 @@ final readonly class ChangePasswordController implements ControllerInterface
         }
 
         try {
-            $this->changePasswordAction->configure(['user' => $user, 'password' => $password])->run();
+            $result = $this->changePasswordAction->configure(['user' => $user, 'password' => $password])->run();
         } catch (ActionException $e) {
             $this->session->setFlash(FlashEnum::ERROR, $e->getMessage());
 
             return Response::redirect('/admin', 303);
         }
 
-        $this->session->setFlash(FlashEnum::SUCCESS, 'text.password-changed-successfully');
+        $this->session->setFlash(FlashEnum::SUCCESS, $result->getMessage());
 
         return Response::redirect('/admin', 303);
     }

@@ -61,6 +61,6 @@ final class ChangePasswordAction implements ActionInterface
 
         $this->userRepository->changePassword($this->user, password_hash($this->password, PASSWORD_DEFAULT));
 
-        return new ActionResult(ActionResultInterface::SUCCESS);
+        return new ActionResult(ActionResultInterface::SUCCESS, 'text.password-changed-successfully');
     }
 }
