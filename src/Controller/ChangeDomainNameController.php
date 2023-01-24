@@ -31,14 +31,14 @@ final readonly class ChangeDomainNameController implements ControllerInterface
         }
 
         try {
-            $this->changeDomainNameAction->configure(['domainName' => $domainName])->run();
+            $result = $this->changeDomainNameAction->configure(['domainName' => $domainName])->run();
         } catch (ActionException $e) {
             $this->session->setFlash(FlashEnum::ERROR, $e->getMessage());
 
             return Response::redirect('/admin', 303);
         }
 
-        $this->session->setFlash(FlashEnum::SUCCESS, 'Domain name changed successfully');
+        $this->session->setFlash(FlashEnum::SUCCESS, $result->getMessage());
 
         return Response::redirect('/admin', 303);
     }

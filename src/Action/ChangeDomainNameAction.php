@@ -50,6 +50,6 @@ final class ChangeDomainNameAction implements ActionInterface
 
         $this->configRepository->changeDomainName($this->domainName);
 
-        return new ActionResult(ActionResultInterface::SUCCESS);
+        return new ActionResult(ActionResultInterface::SUCCESS, 'text.domain-name-changed-successfully');
     }
 }

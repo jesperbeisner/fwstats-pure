@@ -60,7 +60,7 @@ return [
     'text.new-token-generated-successfully' => 'A new bearer token was generated successfully',
     'text.domain-name' => 'Domain name',
     'text.no-domain-name-specified' => 'No domain name specified',
-    'text.domain-changed-successfully' => 'Domain name changed successfully',
+    'text.domain-name-changed-successfully' => 'Domain name changed successfully',
     'text.domain-name-wrong-start' => 'The domain name needs to start with "https://"',
     'text.user-created-successfully' => 'The new user with username "%USERNAME%" was created successfully',
     'text.reset-action-freewar-success' => 'ActionFreewar was successfully reset',

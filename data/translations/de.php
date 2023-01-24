@@ -59,7 +59,7 @@ return [
     'text.new-token-generated-successfully' => 'Ein neuer Bearer Token wurde erfolgreich generiert',
     'text.domain-name' => 'Domain',
     'text.no-domain-name-specified' => 'Es wurde keine Domain angegeben',
-    'text.domain-changed-successfully' => 'Die Domain wurde erfolgreich geändert',
+    'text.domain-name-changed-successfully' => 'Die Domain wurde erfolgreich geändert',
     'text.domain-name-wrong-start' => 'Die Domain muss mit "https://" beginnen',
     'text.user-created-successfully' => 'Der neue User mit dem Usernamen "%USERNAME%" wurde erfolgreich erstellt',
     'text.reset-action-freewar-success' => 'ActionFreewar wurde erfolgreich zurückgesetzt',
