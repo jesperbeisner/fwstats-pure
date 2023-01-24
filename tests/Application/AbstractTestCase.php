@@ -6,12 +6,13 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
+use Jesperbeisner\Fwstats\Service\MigrationService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 use Jesperbeisner\Fwstats\Tests\Dummy\SessionDummy;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use RuntimeException;
 
-abstract class TestCase extends PHPUnitTestCase
+abstract class AbstractTestCase extends PHPUnitTestCase
 {
     protected ?ContainerInterface $container = null;
 
@@ -41,6 +42,11 @@ abstract class TestCase extends PHPUnitTestCase
     protected function getContainer(): ContainerInterface
     {
         return $this->container ?? throw new RuntimeException('This should never happen?');
+    }
+
+    protected function setUpDatabase(): void
+    {
+        $this->getContainer()->get(MigrationService::class)->loadMigrations();
     }
 
     private function deleteTestFiles(): void

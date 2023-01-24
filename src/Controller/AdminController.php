@@ -12,6 +12,9 @@ use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\AdminControllerTest
+ */
 #[LoginRequired]
 final readonly class AdminController implements ControllerInterface
 {
