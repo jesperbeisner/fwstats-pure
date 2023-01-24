@@ -56,11 +56,12 @@ final class SessionDummy implements SessionInterface
 
     public function setFlash(FlashEnum $flashEnum, string $message): void
     {
+        $this->session[$flashEnum->value][] = $message;
     }
 
     public function getFlash(FlashEnum $flashEnum): array
     {
-        return [];
+        return $this->session[$flashEnum->value] ?? [];
     }
 
     public function unset(string $key): void
