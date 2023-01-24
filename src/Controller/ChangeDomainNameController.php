@@ -13,6 +13,9 @@ use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\ChangeDomainNameControllerTest
+ */
 #[LoginRequired]
 final readonly class ChangeDomainNameController implements ControllerInterface
 {

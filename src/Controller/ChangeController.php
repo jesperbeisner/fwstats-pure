@@ -10,6 +10,9 @@ use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\ChangeControllerTest
+ */
 final readonly class ChangeController implements ControllerInterface
 {
     public function __construct(

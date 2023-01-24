@@ -14,6 +14,9 @@ use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\ChangePasswordControllerTest
+ */
 #[LoginRequired]
 final readonly class ChangePasswordController implements ControllerInterface
 {
