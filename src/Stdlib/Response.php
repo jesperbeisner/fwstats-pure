@@ -105,6 +105,14 @@ final class Response
         $this->cookies[$key] = $value;
     }
 
+    /**
+     * @return array<string, string>
+     */
+    public function getCookies(): array
+    {
+        return $this->cookies;
+    }
+
     public function send(): never
     {
         http_response_code($this->statusCode);
