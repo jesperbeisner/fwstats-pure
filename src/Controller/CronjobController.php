@@ -10,6 +10,9 @@ use Jesperbeisner\Fwstats\Interface\CronjobInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\CronjobControllerTest
+ */
 #[TokenRequired]
 final readonly class CronjobController implements ControllerInterface
 {
@@ -21,11 +24,11 @@ final readonly class CronjobController implements ControllerInterface
     public function execute(Request $request): Response
     {
         if ($this->cronjobService->isAllowedToRun() === false) {
-            return Response::json(['success' => 'Request received but cronjob is currently not allowed to run.']);
+            return Response::json(['Success' => 'Request received but cronjob is currently not allowed to run.']);
         }
 
         $this->cronjobService->run();
 
-        return Response::json(['success' => 'Cronjob successfully executed.']);
+        return Response::json(['Success' => 'Cronjob successfully executed.']);
     }
 }
