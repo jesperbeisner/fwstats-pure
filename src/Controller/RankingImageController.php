@@ -9,6 +9,9 @@ use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\RankingImageControllerTest
+ */
 final readonly class RankingImageController implements ControllerInterface
 {
     public function __construct(

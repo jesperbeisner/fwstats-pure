@@ -10,6 +10,9 @@ use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\PlaytimeControllerTest
+ */
 final readonly class PlaytimeController implements ControllerInterface
 {
     public function __construct(

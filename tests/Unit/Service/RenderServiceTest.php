@@ -6,8 +6,8 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\Service;
 
 use Jesperbeisner\Fwstats\Service\RenderService;
 use Jesperbeisner\Fwstats\Stdlib\Request;
-use Jesperbeisner\Fwstats\Tests\Dummy\SessionDummy;
 use Jesperbeisner\Fwstats\Tests\Dummy\TranslatorDummy;
+use Jesperbeisner\Fwstats\Tests\Fake\SessionFake;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,7 +17,7 @@ final class RenderServiceTest extends TestCase
 {
     public function test_title_creation(): void
     {
-        $viewRenderService = new RenderService('', '', new Request([], [], [], [], []), new SessionDummy(), new TranslatorDummy());
+        $viewRenderService = new RenderService('', '', new Request([], [], [], [], []), new SessionFake(), new TranslatorDummy());
         self::assertSame('FWSTATS', $viewRenderService->getTitle());
 
         $viewRenderService->setTitle('Index');

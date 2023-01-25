@@ -16,6 +16,9 @@ use Jesperbeisner\Fwstats\Service\PlaytimeService;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\ProfileControllerTest
+ */
 final readonly class ProfileController implements ControllerInterface
 {
     public function __construct(

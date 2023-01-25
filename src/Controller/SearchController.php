@@ -9,6 +9,9 @@ use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\SearchControllerTest
+ */
 final readonly class SearchController implements ControllerInterface
 {
     public function __construct(

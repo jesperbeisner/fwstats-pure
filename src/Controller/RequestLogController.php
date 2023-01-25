@@ -11,6 +11,9 @@ use Jesperbeisner\Fwstats\Repository\RequestLogRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\RequestLogControllerTest
+ */
 #[LoginRequired]
 final readonly class RequestLogController implements ControllerInterface
 {

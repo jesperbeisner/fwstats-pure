@@ -12,6 +12,9 @@ use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\LoginControllerTest
+ */
 final readonly class LoginController implements ControllerInterface
 {
     public function __construct(

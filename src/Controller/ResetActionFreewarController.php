@@ -12,6 +12,9 @@ use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\ResetActionFreewarControllerTest
+ */
 #[LoginRequired]
 final readonly class ResetActionFreewarController implements ControllerInterface
 {

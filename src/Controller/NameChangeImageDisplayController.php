@@ -9,6 +9,9 @@ use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Application\NameChangeImageDisplayControllerTest
+ */
 final readonly class NameChangeImageDisplayController implements ControllerInterface
 {
     private const NAME_CHANGES_IMAGE = '/var/%WORLD%-name-changes.png';

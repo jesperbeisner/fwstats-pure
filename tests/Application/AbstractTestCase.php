@@ -9,8 +9,8 @@ use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Interface\TranslatorInterface;
 use Jesperbeisner\Fwstats\Service\MigrationService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
-use Jesperbeisner\Fwstats\Tests\Dummy\SessionDummy;
 use Jesperbeisner\Fwstats\Tests\Dummy\TranslatorDummy;
+use Jesperbeisner\Fwstats\Tests\Fake\SessionFake;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use RuntimeException;
 
@@ -30,7 +30,7 @@ abstract class AbstractTestCase extends PHPUnitTestCase
         $config->set('database_file', __DIR__ . '/../../var/sqlite-test.db');
         $config->set('setup_file', __DIR__ . '/../../var/setup-test.txt');
 
-        $container->set(SessionInterface::class, new SessionDummy());
+        $container->set(SessionInterface::class, new SessionFake());
         $container->set(TranslatorInterface::class, new TranslatorDummy());
 
         $container->get(MigrationService::class)->loadMigrations();

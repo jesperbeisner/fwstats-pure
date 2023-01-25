@@ -8,11 +8,11 @@ use Jesperbeisner\Fwstats\Interface\DatabaseInterface;
 
 final class DatabaseDummy implements DatabaseInterface
 {
-    /** @var mixed[] */
+    /** @var array<mixed> */
     private array $selectReturn = [];
 
     /**
-     * @param mixed[] $selectReturn
+     * @param array<mixed> $selectReturn
      */
     public function setSelectReturn(array $selectReturn): void
     {

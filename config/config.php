@@ -35,7 +35,6 @@ return [
         ['route' => '/images/name-changes', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageController::class],
         ['route' => '/images/{world}-name-changes.png', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageDisplayController::class],
         ['route' => '/status', 'methods' => ['GET'], 'controller' => Controller\StatusController::class],
-        ['route' => '/admin/request-logs', 'methods' => ['GET'], 'controller' => Controller\RequestLogController::class],
         ['route' => '/login', 'methods' => ['GET', 'POST'], 'controller' => Controller\LoginController::class],
         ['route' => '/logout', 'methods' => ['GET', 'POST'], 'controller' => Controller\LogoutController::class],
         ['route' => '/cronjob', 'methods' => ['POST'], 'controller' => Controller\CronjobController::class],
@@ -46,6 +45,7 @@ return [
         ['route' => '/admin/generate-new-bearer-token', 'methods' => ['POST'], 'controller' => Controller\GenerateNewBearerTokenController::class],
         ['route' => '/admin/change-domain-name', 'methods' => ['POST'], 'controller' => Controller\ChangeDomainNameController::class],
         ['route' => '/admin/reset-action-freewar', 'methods' => ['POST'], 'controller' => Controller\ResetActionFreewarController::class],
+        ['route' => '/admin/request-logs', 'methods' => ['GET'], 'controller' => Controller\RequestLogController::class],
     ],
     'startProcesses' => [
         Process\ExceptionHandlerStartProcess::class,
