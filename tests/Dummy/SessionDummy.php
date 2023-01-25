@@ -75,5 +75,7 @@ final class SessionDummy implements SessionInterface
 
     public function destroy(): void
     {
+        $this->session = [];
+        $this->user = null;
     }
 }
