@@ -56,6 +56,6 @@ final class GenerateNewBearerTokenAction implements ActionInterface
 
         $this->userRepository->changeToken($this->user, $this->token);
 
-        return new ActionResult(ActionResultInterface::SUCCESS);
+        return new ActionResult(ActionResultInterface::SUCCESS, 'text.new-token-generated-successfully');
     }
 }

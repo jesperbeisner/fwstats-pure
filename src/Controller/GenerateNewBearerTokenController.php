@@ -29,9 +29,9 @@ final readonly class GenerateNewBearerTokenController implements ControllerInter
             throw new RuntimeException('This should not be possible? Looks like you messed up once again! :^)');
         }
 
-        $this->generateNewBearerTokenAction->configure(['user' => $user, 'token' => Str::random(32)])->run();
+        $result = $this->generateNewBearerTokenAction->configure(['user' => $user, 'token' => Str::random(32)])->run();
 
-        $this->session->setFlash(FlashEnum::SUCCESS, 'text.new-token-generated-successfully');
+        $this->session->setFlash(FlashEnum::SUCCESS, $result->getMessage());
 
         return Response::redirect('/admin', 303);
     }
