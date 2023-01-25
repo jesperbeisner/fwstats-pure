@@ -29,6 +29,7 @@ abstract class AbstractTestCase extends PHPUnitTestCase
         $config->set('setup_file', __DIR__ . '/../../var/setup-test.txt');
 
         $container->set(SessionInterface::class, new SessionDummy());
+        $container->get(MigrationService::class)->loadMigrations();
 
         $this->container = $container;
     }
@@ -42,11 +43,6 @@ abstract class AbstractTestCase extends PHPUnitTestCase
     protected function getContainer(): ContainerInterface
     {
         return $this->container ?? throw new RuntimeException('This should never happen?');
-    }
-
-    protected function setUpDatabase(): void
-    {
-        $this->getContainer()->get(MigrationService::class)->loadMigrations();
     }
 
     private function deleteTestFiles(): void
