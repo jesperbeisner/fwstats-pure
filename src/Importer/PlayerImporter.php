@@ -76,12 +76,7 @@ final readonly class PlayerImporter implements ImporterInterface
                 $playerStatus = $this->playerStatusService->getStatus($world, $player);
 
                 if ($playerStatus !== PlayerStatusEnum::UNKNOWN) {
-                    $playerStatusHistory = new PlayerStatusHistory(
-                        world: $world,
-                        playerId: $player->playerId,
-                        name: $player->name,
-                        status: $playerStatus
-                    );
+                    $playerStatusHistory = new PlayerStatusHistory(null, $world, $player->playerId, $player->name, $playerStatus);
 
                     $this->playerStatusHistoryRepository->insert($playerStatusHistory);
                 }
@@ -111,13 +106,7 @@ final readonly class PlayerImporter implements ImporterInterface
         if ($player->name !== $playerDump->name) {
             $importResult->addMessage("Player with id '$player->playerId' changed his name in world '$world->value'.");
 
-            $playerNameHistory = new PlayerNameHistory(
-                world: $world,
-                playerId: $player->playerId,
-                oldName: $player->name,
-                newName: $playerDump->name,
-                created: new DateTimeImmutable(),
-            );
+            $playerNameHistory = new PlayerNameHistory(null, $world, $player->playerId, $player->name, $playerDump->name, new DateTimeImmutable());
 
             $this->playerNameHistoryRepository->insert($playerNameHistory);
         }
@@ -128,13 +117,7 @@ final readonly class PlayerImporter implements ImporterInterface
         if ($player->race !== $playerDump->race) {
             $importResult->addMessage("Player with id '$player->playerId' changed his race in world '$world->value'.");
 
-            $playerRaceHistory = new PlayerRaceHistory(
-                world: $world,
-                playerId: $player->playerId,
-                oldRace: $player->race,
-                newRace: $playerDump->race,
-                created: new DateTimeImmutable(),
-            );
+            $playerRaceHistory = new PlayerRaceHistory(null, $world, $player->playerId, $player->race, $playerDump->race, new DateTimeImmutable());
 
             $this->playerRaceHistoryRepository->insert($playerRaceHistory);
         }
@@ -180,16 +163,7 @@ final readonly class PlayerImporter implements ImporterInterface
                 }
             }
 
-            $playerClanHistory = new PlayerClanHistory(
-                world: $world,
-                playerId: $player->playerId,
-                oldClanId: $oldClanId,
-                newClanId: $newClanId,
-                oldShortcut: $oldShortcut,
-                newShortcut: $newShortcut,
-                oldName: $oldName,
-                newName: $newName,
-            );
+            $playerClanHistory = new PlayerClanHistory(null, $world, $player->playerId, $oldClanId, $newClanId, $oldShortcut, $newShortcut, $oldName, $newName);
 
             $this->playerClanHistoryRepository->insert($playerClanHistory);
         }
@@ -200,13 +174,7 @@ final readonly class PlayerImporter implements ImporterInterface
         if ($player->profession !== $playerDump->profession) {
             $importResult->addMessage("Player with id '$player->playerId' changed his profession in world '$world->value'.");
 
-            $playerProfessionHistory = new PlayerProfessionHistory(
-                world: $world,
-                playerId: $player->playerId,
-                oldProfession: $player->profession,
-                newProfession: $playerDump->profession,
-                created: new DateTimeImmutable(),
-            );
+            $playerProfessionHistory = new PlayerProfessionHistory(null, $world, $player->playerId, $player->profession, $playerDump->profession, new DateTimeImmutable());
 
             $this->playerProfessionHistoryRepository->insert($playerProfessionHistory);
         }

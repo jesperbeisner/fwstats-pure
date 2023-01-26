@@ -6,43 +6,45 @@ namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Interface\PlayerInterface;
 use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
+use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
 
 final class PlayerProfessionHistoryRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
-    public function insert(PlayerProfessionHistory $playerProfessionHistory): void
+    public function insert(PlayerProfessionHistory $playerProfessionHistory): PlayerProfessionHistory
     {
         $sql = <<<SQL
             INSERT INTO players_profession_history (world, player_id, old_profession, new_profession, created)
             VALUES (:world, :playerId, :oldProfession, :newProfession, :created)
         SQL;
 
-        $this->database->insert($sql, [
+        $id = $this->database->insert($sql, [
             'world' => $playerProfessionHistory->world->value,
             'playerId' => $playerProfessionHistory->playerId,
             'oldProfession' => $playerProfessionHistory->oldProfession,
             'newProfession' => $playerProfessionHistory->newProfession,
             'created' => $playerProfessionHistory->created->format('Y-m-d H:i:s'),
         ]);
+
+        return PlayerProfessionHistory::withId($id, $playerProfessionHistory);
     }
 
     /**
-     * @return PlayerProfessionHistory[]
+     * @return array<PlayerProfessionHistory>
      */
-    public function getProfessionChangesForPlayer(PlayerInterface $player): array
+    public function getProfessionChangesForPlayer(Player $player): array
     {
         $sql = "SELECT * FROM players_profession_history WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
 
         $result = $this->database->select($sql, [
-            'world' => $player->getWorld()->value,
-            'playerId' => $player->getPlayerId(),
+            'world' => $player->world->value,
+            'playerId' => $player->playerId,
         ]);
 
         $playerProfessionHistories = [];
         foreach ($result as $row) {
-            /** @var array{world: string, player_id: int, old_profession: string|null, new_profession: string|null, created: string} $row */
+            /** @var array{id: int, world: string, player_id: int, old_profession: string|null, new_profession: string|null, created: string} $row */
             $playerProfessionHistories[] = $this->hydratePlayerProfessionHistory($row);
         }
 
@@ -66,17 +68,12 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository impleme
     }
 
     /**
-     * @param array{
-     *     world: string,
-     *     player_id: int,
-     *     old_profession: string|null,
-     *     new_profession: string|null,
-     *     created: string
-     * } $row
+     * @param array{id: int, world: string, player_id: int, old_profession: string|null, new_profession: string|null, created: string} $row
      */
     private function hydratePlayerProfessionHistory(array $row): PlayerProfessionHistory
     {
         return new PlayerProfessionHistory(
+            id: $row['id'],
             world: WorldEnum::from($row['world']),
             playerId: $row['player_id'],
             oldProfession: $row['old_profession'],

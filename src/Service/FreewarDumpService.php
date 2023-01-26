@@ -56,6 +56,7 @@ final class FreewarDumpService implements FreewarDumpServiceInterface
             $clan = explode("\t", $clanDump);
 
             $clans[(int) $clan[0]] = new Clan(
+                id: null,
                 world: $world,
                 clanId: (int) $clan[0],
                 shortcut: $clan[1],

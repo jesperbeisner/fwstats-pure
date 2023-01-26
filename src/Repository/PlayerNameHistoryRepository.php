@@ -6,8 +6,8 @@ namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Interface\PlayerInterface;
 use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
+use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 
 final class PlayerNameHistoryRepository extends AbstractRepository implements ResetActionFreewarInterface
@@ -33,7 +33,7 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
      */
     public function getNameChangesByWorld(WorldEnum $worldEnum): array
     {
-        $sql = "SELECT * FROM players_name_history WHERE world = :world ORDER BY created DESC";
+        $sql = "SELECT id, world, player_id, old_name, new_name, created FROM players_name_history WHERE world = :world ORDER BY created DESC";
 
         $result = $this->database->select($sql, [
             'world' => $worldEnum->value,
@@ -41,7 +41,7 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
 
         $playerNameHistories = [];
         foreach ($result as $row) {
-            /** @var array{world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
+            /** @var array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 
@@ -49,20 +49,25 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
     }
 
     /**
-     * @return PlayerNameHistory[]
+     * @return array<PlayerNameHistory>
      */
-    public function getNameChangesForPlayer(PlayerInterface $player): array
+    public function getNameChangesForPlayer(Player $player): array
     {
-        $sql = "SELECT * FROM players_name_history WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
+        $sql = <<<SQL
+            SELECT id, world, player_id, old_name, new_name, created
+            FROM players_name_history
+            WHERE world = :world AND player_id = :playerId
+            ORDER BY created DESC
+        SQL;
 
         $result = $this->database->select($sql, [
-            'world' => $player->getWorld()->value,
-            'playerId' => $player->getPlayerId(),
+            'world' => $player->world->value,
+            'playerId' => $player->playerId,
         ]);
 
         $playerNameHistories = [];
         foreach ($result as $row) {
-            /** @var array{world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
+            /** @var array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 
@@ -74,7 +79,13 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
      */
     public function getLast15NameChangesByWorld(WorldEnum $worldEnum): array
     {
-        $sql = "SELECT * FROM players_name_history WHERE world = :world ORDER BY created DESC LIMIT 15";
+        $sql = <<<SQL
+            SELECT id, world, player_id, old_name, new_name, created
+            FROM players_name_history
+            WHERE world = :world
+            ORDER BY created
+            DESC LIMIT 15
+        SQL;
 
         $result = $this->database->select($sql, [
             'world' => $worldEnum->value,
@@ -82,7 +93,7 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
 
         $playerNameHistories = [];
         foreach ($result as $row) {
-            /** @var array{world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
+            /** @var array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 
@@ -106,17 +117,12 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
     }
 
     /**
-     * @param array{
-     *     world: string,
-     *     player_id: int,
-     *     old_name: string,
-     *     new_name: string,
-     *     created: string
-     * } $row
+     * @param array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string} $row
      */
     private function hydratePlayerNameHistory(array $row): PlayerNameHistory
     {
         return new PlayerNameHistory(
+            id: $row['id'],
             world: WorldEnum::from($row['world']),
             playerId: $row['player_id'],
             oldName: $row['old_name'],

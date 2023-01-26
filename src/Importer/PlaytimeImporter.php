@@ -40,12 +40,7 @@ final readonly class PlaytimeImporter implements ImporterInterface
 
                 $seconds = ($fieldsWalked * 4) + ($fieldsElixir * 3) + ($fieldsRun * 2) + $fieldsRunFast;
 
-                $playerActiveSeconds[] = new PlayerActiveSecond(
-                    $world,
-                    $player->playerId,
-                    $seconds,
-                    new DateTimeImmutable(),
-                );
+                $playerActiveSeconds[] = new PlayerActiveSecond(null, $world, $player->playerId, $seconds, new DateTimeImmutable());
             }
         }
 

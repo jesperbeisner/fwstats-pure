@@ -15,4 +15,14 @@ final readonly class Config
         public DateTimeImmutable $created,
     ) {
     }
+
+    public static function withId(int $id, Config $config): Config
+    {
+        return new Config(
+            $id,
+            $config->key,
+            $config->value,
+            $config->created,
+        );
+    }
 }

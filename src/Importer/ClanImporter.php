@@ -49,14 +49,7 @@ final readonly class ClanImporter implements ImporterInterface
                 if ($clan->shortcut !== $clanDump->shortcut || $clan->name !== $clanDump->name) {
                     $importResult->addMessage("Clan naming changed for clan '$clan->name' in world '$world->value'.");
 
-                    $clanNameHistory = new ClanNameHistory(
-                        world: $clan->world,
-                        clanId: $clan->clanId,
-                        oldShortcut: $clan->shortcut,
-                        newShortcut: $clanDump->shortcut,
-                        oldName: $clan->name,
-                        newName: $clanDump->name,
-                    );
+                    $clanNameHistory = new ClanNameHistory(null, $clan->world, $clan->clanId, $clan->shortcut, $clanDump->shortcut, $clan->name, $clanDump->name);
 
                     $this->clanNameHistoryRepository->insert($clanNameHistory);
                 }
@@ -64,16 +57,7 @@ final readonly class ClanImporter implements ImporterInterface
                 // Clan is in database but not in clan dump: Clan deleted
                 $importResult->addMessage("Clan '$clan->name' in world '$world->value' was deleted.");
 
-                $clanDeletedHistory = new ClanDeletedHistory(
-                    world: $clan->world,
-                    clanId: $clan->clanId,
-                    shortcut: $clan->shortcut,
-                    name: $clan->name,
-                    leaderId: $clan->leaderId,
-                    coLeaderId: $clan->coLeaderId,
-                    diplomatId: $clan->diplomatId,
-                    warPoints: $clan->warPoints,
-                );
+                $clanDeletedHistory = new ClanDeletedHistory(null, $clan->world, $clan->clanId, $clan->shortcut, $clan->name, $clan->leaderId, $clan->coLeaderId, $clan->diplomatId, $clan->warPoints);
 
                 $this->clanDeletedHistoryRepository->insert($clanDeletedHistory);
             }
@@ -84,16 +68,7 @@ final readonly class ClanImporter implements ImporterInterface
             if (!isset($clans[$clanDump->clanId])) {
                 $importResult->addMessage("Clan '$clanDump->name' in world '$world->value' was created.");
 
-                $clanCreatedHistory = new ClanCreatedHistory(
-                    world: $clanDump->world,
-                    clanId: $clanDump->clanId,
-                    shortcut: $clanDump->shortcut,
-                    name: $clanDump->name,
-                    leaderId: $clanDump->leaderId,
-                    coLeaderId: $clanDump->coLeaderId,
-                    diplomatId: $clanDump->diplomatId,
-                    warPoints: $clanDump->warPoints,
-                );
+                $clanCreatedHistory = new ClanCreatedHistory(null, $clanDump->world, $clanDump->clanId, $clanDump->shortcut, $clanDump->name, $clanDump->leaderId, $clanDump->coLeaderId, $clanDump->diplomatId, $clanDump->warPoints);
 
                 $this->clanCreatedHistoryRepository->insert($clanCreatedHistory);
             }

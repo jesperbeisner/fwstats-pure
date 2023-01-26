@@ -20,6 +20,13 @@ final readonly class User
 
     public static function withId(int $id, User $user): User
     {
-        return new User($id, $user->uuid, $user->username, $user->password, $user->token, $user->created);
+        return new User(
+            $id,
+            $user->uuid,
+            $user->username,
+            $user->password,
+            $user->token,
+            $user->created
+        );
     }
 }

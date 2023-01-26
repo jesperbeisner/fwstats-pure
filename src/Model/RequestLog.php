@@ -20,6 +20,13 @@ final readonly class RequestLog
 
     public static function withId(int $id, RequestLog $requestLog): RequestLog
     {
-        return new RequestLog($id, $requestLog->url, $requestLog->method, $requestLog->visits, $requestLog->statusCode, $requestLog->day);
+        return new RequestLog(
+            $id,
+            $requestLog->url,
+            $requestLog->method,
+            $requestLog->visits,
+            $requestLog->statusCode,
+            $requestLog->day
+        );
     }
 }

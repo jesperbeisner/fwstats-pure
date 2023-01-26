@@ -68,7 +68,7 @@ final class PlayerActiveSecondRepository extends AbstractRepository implements R
      */
     public function findAllByWorldAndDate(WorldEnum $world, string $created): array
     {
-        $sql = "SELECT * FROM players_active_seconds WHERE world = :world AND created = :created";
+        $sql = "SELECT id, world, player_id, seconds, created FROM players_active_seconds WHERE world = :world AND created = :created";
 
         $result = $this->database->select($sql, [
             'world' => $world->value,
@@ -77,8 +77,9 @@ final class PlayerActiveSecondRepository extends AbstractRepository implements R
 
         $playerActiveSeconds = [];
         foreach ($result as $row) {
-            /** @var array{world: string, player_id: int, seconds: int, created: string} $row */
+            /** @var array{id: int, world: string, player_id: int, seconds: int, created: string} $row */
             $playerActiveSeconds[$row['player_id']] = new PlayerActiveSecond(
+                id: $row['id'],
                 world: WorldEnum::from($row['world']),
                 playerId: $row['player_id'],
                 seconds: $row['seconds'],

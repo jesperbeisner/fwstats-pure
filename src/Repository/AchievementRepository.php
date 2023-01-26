@@ -34,7 +34,7 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
         return $this->hydrateAchievement($result[0]);
     }
 
-    public function insert(Achievement $achievement): void
+    public function insert(Achievement $achievement): Achievement
     {
         $sql = <<<SQL
             INSERT INTO achievements (
@@ -50,7 +50,7 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
             )
         SQL;
 
-        $this->database->insert($sql, [
+        $id = $this->database->insert($sql, [
             'world' => $achievement->world->value,
             'playerId' => $achievement->playerId,
             'fieldsWalked' => $achievement->fieldsWalked,
@@ -66,6 +66,8 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
             'groupNpcKilled' => $achievement->groupNpcKilled,
             'soulStonesGained' => $achievement->soulStonesGained,
         ]);
+
+        return Achievement::withId($id, $achievement);
     }
 
     /**
@@ -109,6 +111,7 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
     private function hydrateAchievement(array $row): Achievement
     {
         return new Achievement(
+            id: null,
             world: WorldEnum::from((string) $row['world']),
             playerId: (int) $row['player_id'],
             fieldsWalked: (int) $row['fields_walked'],

@@ -16,6 +16,9 @@ final readonly class Cronjob
 
     public static function withId(int $id, Cronjob $cronjob): Cronjob
     {
-        return new Cronjob($id, $cronjob->created);
+        return new Cronjob(
+            $id,
+            $cronjob->created
+        );
     }
 }

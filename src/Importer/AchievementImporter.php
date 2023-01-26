@@ -38,6 +38,7 @@ final readonly class AchievementImporter implements ImporterInterface
                 $playerAchievements = $achievementsDump[$player->playerId];
 
                 $achievements[] = new Achievement(
+                    id: null,
                     world: $world,
                     playerId: $player->playerId,
                     fieldsWalked: $playerAchievements[1019] ?? 0,

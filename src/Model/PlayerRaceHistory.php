@@ -7,14 +7,27 @@ namespace Jesperbeisner\Fwstats\Model;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-final class PlayerRaceHistory
+final readonly class PlayerRaceHistory
 {
     public function __construct(
-        public readonly WorldEnum $world,
-        public readonly int $playerId,
-        public readonly string $oldRace,
-        public readonly string $newRace,
-        public readonly DateTimeImmutable $created,
+        public ?int $id,
+        public WorldEnum $world,
+        public int $playerId,
+        public string $oldRace,
+        public string $newRace,
+        public DateTimeImmutable $created,
     ) {
+    }
+
+    public static function withId(int $id, PlayerRaceHistory $playerRaceHistory): PlayerRaceHistory
+    {
+        return new PlayerRaceHistory(
+            $id,
+            $playerRaceHistory->world,
+            $playerRaceHistory->playerId,
+            $playerRaceHistory->oldRace,
+            $playerRaceHistory->newRace,
+            $playerRaceHistory->created,
+        );
     }
 }

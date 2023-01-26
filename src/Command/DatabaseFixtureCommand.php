@@ -85,22 +85,11 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayers(): void
     {
+        /** @var array<array{world: WorldEnum, playerId: int, name: string, race: string, xp: int, soulXp: int, totalXp: int, clanId: int, profession: string}> $playersFixtureData */
         $playersFixtureData = require $this->fixturesDirectory . '/players.php';
 
         $this->playerRepository->deleteAll();
 
-        /** @var array{
-         *     world: WorldEnum,
-         *     playerId: int,
-         *     name: string,
-         *     race: string,
-         *     xp: int,
-         *     soulXp: int,
-         *     totalXp: int,
-         *     clanId: int,
-         *     profession: string
-         * } $playerData
-         */
         foreach ($playersFixtureData as $playerData) {
             $player = new Player(
                 id: null,
@@ -122,6 +111,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createClans(): void
     {
+        /** @var array<array{clanId: int, shortcut: string, name: string, leaderId: int, coLeaderId: int, diplomatId: int, warPoints: int}> $clansFixtureData */
         $clansFixtureData = require $this->fixturesDirectory . '/clans.php';
 
         $this->clanRepository->deleteAll();
@@ -129,18 +119,9 @@ final class DatabaseFixtureCommand extends AbstractCommand
         foreach (WorldEnum::cases() as $world) {
             $clans = [];
 
-            /** @var array{
-             *     clanId: int,
-             *     shortcut: string,
-             *     name: string,
-             *     leaderId: int,
-             *     coLeaderId: int,
-             *     diplomatId: int,
-             *     warPoints: int
-             * } $clanData
-             */
             foreach ($clansFixtureData as $clanData) {
                 $clans[] = new Clan(
+                    id: null,
                     world: $world,
                     clanId: $clanData['clanId'],
                     shortcut: $clanData['shortcut'],
@@ -159,19 +140,14 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerPlaytimes(): void
     {
+        /** @var array<array{world: WorldEnum, playerId: int, seconds: int, created: string}> $playerPlaytimesFixtureData */
         $playerPlaytimesFixtureData = require $this->fixturesDirectory . '/player-playtimes.php';
 
         $this->playerActiveSecondRepository->deleteAll();
 
-        /** @var array{
-         *     world: WorldEnum,
-         *     playerId: int,
-         *     seconds: int,
-         *     created: string
-         * } $playerPlaytimesData
-         */
         foreach ($playerPlaytimesFixtureData as $playerPlaytimesData) {
             $playerActiveSecond = new PlayerActiveSecond(
+                id: null,
                 world: $playerPlaytimesData['world'],
                 playerId: $playerPlaytimesData['playerId'],
                 seconds: $playerPlaytimesData['seconds'],
@@ -184,20 +160,14 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerNameHistories(): void
     {
+        /** @var array<array{world: WorldEnum, playerId: int, oldName: string, newName: string, created: DateTimeImmutable}> $playerNameHistoriesFixtureData */
         $playerNameHistoriesFixtureData = require $this->fixturesDirectory . '/player-name-histories.php';
 
         $this->playerNameHistoryRepository->deleteAll();
 
-        /** @var array{
-         *     world: WorldEnum,
-         *     playerId: int,
-         *     oldName: string,
-         *     newName: string,
-         *     created: DateTimeImmutable
-         * } $playerNameHistoryData
-         */
         foreach ($playerNameHistoriesFixtureData as $playerNameHistoryData) {
             $playerNameHistory = new PlayerNameHistory(
+                id: null,
                 world: $playerNameHistoryData['world'],
                 playerId: $playerNameHistoryData['playerId'],
                 oldName: $playerNameHistoryData['oldName'],
@@ -211,20 +181,14 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerRaceHistories(): void
     {
+        /** @var array<array{world: WorldEnum, playerId: int, oldRace: string, newRace: string, created: DateTimeImmutable}> $playerRaceHistoriesFixtureData */
         $playerRaceHistoriesFixtureData = require $this->fixturesDirectory . '/player-race-histories.php';
 
         $this->playerRaceHistoryRepository->deleteAll();
 
-        /** @var array{
-         *     world: WorldEnum,
-         *     playerId: int,
-         *     oldRace: string,
-         *     newRace: string,
-         *     created: DateTimeImmutable
-         * } $playerRaceHistoryData
-         */
         foreach ($playerRaceHistoriesFixtureData as $playerRaceHistoryData) {
             $playerRaceHistory = new PlayerRaceHistory(
+                id: null,
                 world: $playerRaceHistoryData['world'],
                 playerId: $playerRaceHistoryData['playerId'],
                 oldRace: $playerRaceHistoryData['oldRace'],
@@ -238,20 +202,14 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
     private function createPlayerProfessionHistories(): void
     {
+        /** @var array<array{world: WorldEnum, playerId: int, oldProfession: string|null, newProfession: string|null, created: DateTimeImmutable}> $playerProfessionHistoriesFixtureData */
         $playerProfessionHistoriesFixtureData = require $this->fixturesDirectory . '/player-profession-histories.php';
 
         $this->playerProfessionHistoryRepository->deleteAll();
 
-        /** @var array{
-         *     world: WorldEnum,
-         *     playerId: int,
-         *     oldProfession: string|null,
-         *     newProfession: string|null,
-         *     created: DateTimeImmutable
-         * } $playerProfessionFixtureData
-         */
         foreach ($playerProfessionHistoriesFixtureData as $playerProfessionFixtureData) {
             $playerProfessionHistory = new PlayerProfessionHistory(
+                id: null,
                 world: $playerProfessionFixtureData['world'],
                 playerId: $playerProfessionFixtureData['playerId'],
                 oldProfession: $playerProfessionFixtureData['oldProfession'],

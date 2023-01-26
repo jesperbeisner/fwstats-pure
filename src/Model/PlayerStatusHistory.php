@@ -7,13 +7,25 @@ namespace Jesperbeisner\Fwstats\Model;
 use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-final class PlayerStatusHistory
+final readonly class PlayerStatusHistory
 {
     public function __construct(
-        public readonly WorldEnum $world,
-        public readonly int $playerId,
-        public readonly string $name,
-        public readonly PlayerStatusEnum $status,
+        public ?int $id,
+        public WorldEnum $world,
+        public int $playerId,
+        public string $name,
+        public PlayerStatusEnum $status,
     ) {
+    }
+
+    public static function withId(int $id, PlayerStatusHistory $playerStatusHistory): PlayerStatusHistory
+    {
+        return new PlayerStatusHistory(
+            $id,
+            $playerStatusHistory->world,
+            $playerStatusHistory->playerId,
+            $playerStatusHistory->name,
+            $playerStatusHistory->status,
+        );
     }
 }

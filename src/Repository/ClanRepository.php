@@ -12,34 +12,14 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
 final class ClanRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
-    /**
-     * @return Clan[]
-     */
-    public function findAllByWorld(WorldEnum $world): array
-    {
-        $sql = "SELECT * FROM clans WHERE world = :world";
-
-        $result = $this->database->select($sql, [
-            'world' => $world->value,
-        ]);
-
-        $clans = [];
-        foreach ($result as $row) {
-            /** @var array<int|string|null> $row */
-            $clans[$row['clan_id']] = $this->hydrateClan($row);
-        }
-
-        return $clans;
-    }
-
-    public function insert(Clan $clan): void
+    public function insert(Clan $clan): Clan
     {
         $sql = <<<SQL
             INSERT INTO clans (world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points, created)
             VALUES (:world, :clanId, :shortcut, :name, :leaderId, :coLeaderId, :diplomatId, :warPoints, :created)
         SQL;
 
-        $this->database->insert($sql, [
+        $id = $this->database->insert($sql, [
             'world' => $clan->world->value,
             'clanId' => $clan->clanId,
             'shortcut' => $clan->shortcut,
@@ -50,10 +30,32 @@ final class ClanRepository extends AbstractRepository implements ResetActionFree
             'warPoints' => $clan->warPoints,
             'created' => $clan->created->format('Y-m-d H:i:s')
         ]);
+
+        return Clan::withId($id, $clan);
     }
 
     /**
-     * @param Clan[] $clans
+     * @return array<Clan>
+     */
+    public function findAllByWorld(WorldEnum $world): array
+    {
+        $sql = "SELECT id, world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points, created FROM clans WHERE world = :world";
+
+        $result = $this->database->select($sql, [
+            'world' => $world->value,
+        ]);
+
+        $clans = [];
+        foreach ($result as $row) {
+            /** @var array{id: int, world: string, clan_id: int, shortcut: string, name: string, leader_id: int, co_leader_id: int, diplomat_id: int, war_points: int, created: string} $row */
+            $clans[$row['clan_id']] = $this->hydrateClan($row);
+        }
+
+        return $clans;
+    }
+
+    /**
+     * @param array<Clan> $clans
      */
     public function insertClans(WorldEnum $world, array $clans): void
     {
@@ -95,20 +97,21 @@ final class ClanRepository extends AbstractRepository implements ResetActionFree
     }
 
     /**
-     * @param array<int|string|null> $row
+     * @param array{id: int, world: string, clan_id: int, shortcut: string, name: string, leader_id: int, co_leader_id: int, diplomat_id: int, war_points: int, created: string} $row
      */
     private function hydrateClan(array $row): Clan
     {
         return new Clan(
-            world: WorldEnum::from((string) $row['world']),
-            clanId: (int) $row['clan_id'],
-            shortcut: (string) $row['shortcut'],
-            name: (string) $row['name'],
-            leaderId: (int) $row['leader_id'],
-            coLeaderId: (int) $row['co_leader_id'],
-            diplomatId: (int) $row['diplomat_id'],
-            warPoints: (int) $row['war_points'],
-            created: new DateTimeImmutable((string) $row['created']),
+            id: $row['id'],
+            world: WorldEnum::from($row['world']),
+            clanId: $row['clan_id'],
+            shortcut: $row['shortcut'],
+            name: $row['name'],
+            leaderId: $row['leader_id'],
+            coLeaderId: $row['co_leader_id'],
+            diplomatId: $row['diplomat_id'],
+            warPoints: $row['war_points'],
+            created: new DateTimeImmutable($row['created']),
         );
     }
 }

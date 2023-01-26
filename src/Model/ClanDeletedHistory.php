@@ -6,17 +6,33 @@ namespace Jesperbeisner\Fwstats\Model;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-final class ClanDeletedHistory
+final readonly class ClanDeletedHistory
 {
     public function __construct(
-        public readonly WorldEnum $world,
-        public readonly int $clanId,
-        public readonly string $shortcut,
-        public readonly string $name,
-        public readonly int $leaderId,
-        public readonly int $coLeaderId,
-        public readonly int $diplomatId,
-        public readonly int $warPoints,
+        public ?int $id,
+        public WorldEnum $world,
+        public int $clanId,
+        public string $shortcut,
+        public string $name,
+        public int $leaderId,
+        public int $coLeaderId,
+        public int $diplomatId,
+        public int $warPoints,
     ) {
+    }
+
+    public static function withId(int $id, ClanDeletedHistory $clanDeletedHistory): ClanDeletedHistory
+    {
+        return new ClanDeletedHistory(
+            $id,
+            $clanDeletedHistory->world,
+            $clanDeletedHistory->clanId,
+            $clanDeletedHistory->shortcut,
+            $clanDeletedHistory->name,
+            $clanDeletedHistory->leaderId,
+            $clanDeletedHistory->coLeaderId,
+            $clanDeletedHistory->diplomatId,
+            $clanDeletedHistory->warPoints,
+        );
     }
 }

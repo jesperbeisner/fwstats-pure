@@ -17,6 +17,10 @@ final readonly class Migration
 
     public static function withId(int $id, Migration $migration): Migration
     {
-        return new Migration($id, $migration->name, $migration->created);
+        return new Migration(
+            $id,
+            $migration->name,
+            $migration->created
+        );
     }
 }
