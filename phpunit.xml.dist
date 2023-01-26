@@ -11,8 +11,15 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Application">
+            <directory>tests/Application</directory>
+        </testsuite>
+
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+
+        <testsuite name="PHPStan">
             <directory>.phpstan/tests</directory>
         </testsuite>
     </testsuites>
