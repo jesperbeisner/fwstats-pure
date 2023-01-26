@@ -20,6 +20,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Service\NameChangeImageService;
 use Jesperbeisner\Fwstats\Service\RankingImageService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
@@ -38,6 +39,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
         private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
         private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
         private readonly RankingImageService $rankingImageService,
+        private readonly NameChangeImageService $nameChangeImageService,
         private readonly UserRepository $userRepository,
         private readonly CreateUserAction $createUserAction,
     ) {
@@ -74,6 +76,9 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
         $this->writeLine("Creating ranking images...");
         $this->createRankingImages();
+
+        $this->writeLine("Creating name changes images...");
+        $this->createNameChangesImages();
 
         $this->writeLine("Creating user account...");
         $this->createUserAccount();
@@ -225,6 +230,13 @@ final class DatabaseFixtureCommand extends AbstractCommand
     {
         foreach (WorldEnum::cases() as $world) {
             $this->rankingImageService->create($world);
+        }
+    }
+
+    private function createNameChangesImages(): void
+    {
+        foreach (WorldEnum::cases() as $world) {
+            $this->nameChangeImageService->create($world);
         }
     }
 
