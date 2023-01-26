@@ -37,12 +37,12 @@ final readonly class ProfileController implements ControllerInterface
             return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
-        $playerId = $request->getRouteParameter('id');
-        if (!is_numeric($playerId)) {
+        $id = $request->getRouteParameter('id');
+        if (!is_numeric($id)) {
             return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
-        if (null === $player = $this->playerRepository->find($world, (int) $playerId)) {
+        if (null === $player = $this->playerRepository->find($world, (int) $id)) {
             return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 

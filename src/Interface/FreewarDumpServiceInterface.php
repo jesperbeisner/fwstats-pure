@@ -11,12 +11,12 @@ use Jesperbeisner\Fwstats\Model\Player;
 interface FreewarDumpServiceInterface
 {
     /**
-     * @return Player[]
+     * @return array<Player>
      */
     public function getPlayersDump(WorldEnum $world): array;
 
     /**
-     * @return Clan[]
+     * @return array<Clan>
      */
     public function getClansDump(WorldEnum $world): array;
 

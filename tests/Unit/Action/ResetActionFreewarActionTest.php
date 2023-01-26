@@ -18,7 +18,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
+use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\ResetActionFreewarAction

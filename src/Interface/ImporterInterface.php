@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Importer;
+namespace Jesperbeisner\Fwstats\Interface;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Result\ImportResult;
 
 interface ImporterInterface
 {

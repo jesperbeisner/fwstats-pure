@@ -9,8 +9,8 @@ use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Interface\TranslatorInterface;
 use Jesperbeisner\Fwstats\Service\MigrationService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
-use Jesperbeisner\Fwstats\Tests\Dummy\TranslatorDummy;
-use Jesperbeisner\Fwstats\Tests\Fake\SessionFake;
+use Jesperbeisner\Fwstats\Tests\Doubles\SessionFake;
+use Jesperbeisner\Fwstats\Tests\Doubles\TranslatorDummy;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use RuntimeException;
 

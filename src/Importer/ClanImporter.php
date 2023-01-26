@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Importer;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Interface\ImporterInterface;
 use Jesperbeisner\Fwstats\Model\ClanCreatedHistory;
 use Jesperbeisner\Fwstats\Model\ClanDeletedHistory;
 use Jesperbeisner\Fwstats\Model\ClanNameHistory;
@@ -13,15 +14,16 @@ use Jesperbeisner\Fwstats\Repository\ClanCreatedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
+use Jesperbeisner\Fwstats\Result\ImportResult;
 
-final class ClanImporter implements ImporterInterface
+final readonly class ClanImporter implements ImporterInterface
 {
     public function __construct(
-        private readonly FreewarDumpServiceInterface $freewarDumpService,
-        private readonly ClanRepository $clanRepository,
-        private readonly ClanNameHistoryRepository $clanNameHistoryRepository,
-        private readonly ClanDeletedHistoryRepository $clanDeletedHistoryRepository,
-        private readonly ClanCreatedHistoryRepository $clanCreatedHistoryRepository,
+        private FreewarDumpServiceInterface $freewarDumpService,
+        private ClanRepository $clanRepository,
+        private ClanNameHistoryRepository $clanNameHistoryRepository,
+        private ClanDeletedHistoryRepository $clanDeletedHistoryRepository,
+        private ClanCreatedHistoryRepository $clanCreatedHistoryRepository,
     ) {
     }
 

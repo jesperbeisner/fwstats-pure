@@ -9,7 +9,7 @@ use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
+use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\ChangeDomainNameAction

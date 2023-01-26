@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Importer;
+namespace Jesperbeisner\Fwstats\Result;
 
 final class ImportResult
 {
-    /** @var string[] */
+    /** @var array<string> */
     private array $messages = [];
 
     public function addMessage(string $message): void
@@ -15,7 +15,7 @@ final class ImportResult
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getMessages(): array
     {

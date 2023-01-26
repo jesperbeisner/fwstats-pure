@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Interface\ImporterInterface;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerClanHistory;
@@ -22,20 +23,21 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
+use Jesperbeisner\Fwstats\Result\ImportResult;
 use Jesperbeisner\Fwstats\Service\PlayerStatusService;
 
-final class PlayerImporter implements ImporterInterface
+final readonly class PlayerImporter implements ImporterInterface
 {
     public function __construct(
-        private readonly FreewarDumpServiceInterface $freewarDumpService,
-        private readonly ClanRepository $clanRepository,
-        private readonly PlayerRepository $playerRepository,
-        private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,
-        private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
-        private readonly PlayerClanHistoryRepository $playerClanHistoryRepository,
-        private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
-        private readonly PlayerStatusHistoryRepository $playerStatusHistoryRepository,
-        private readonly PlayerStatusService $playerStatusService,
+        private FreewarDumpServiceInterface $freewarDumpService,
+        private ClanRepository $clanRepository,
+        private PlayerRepository $playerRepository,
+        private PlayerNameHistoryRepository $playerNameHistoryRepository,
+        private PlayerRaceHistoryRepository $playerRaceHistoryRepository,
+        private PlayerClanHistoryRepository $playerClanHistoryRepository,
+        private PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
+        private PlayerStatusHistoryRepository $playerStatusHistoryRepository,
+        private PlayerStatusService $playerStatusService,
     ) {
     }
 

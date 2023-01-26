@@ -6,10 +6,15 @@ namespace Jesperbeisner\Fwstats\Importer;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Interface\ImporterInterface;
 use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
+use Jesperbeisner\Fwstats\Result\ImportResult;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Importer\AchievementImporterTest
+ */
 final readonly class AchievementImporter implements ImporterInterface
 {
     public function __construct(
@@ -24,8 +29,8 @@ final readonly class AchievementImporter implements ImporterInterface
         $importResult = new ImportResult();
         $importResult->addMessage('Starting AchievementImporter...');
 
-        $achievementsDump = $this->freewarDumpService->getAchievementsDump($world);
         $players = $this->playerRepository->findAllByWorld($world);
+        $achievementsDump = $this->freewarDumpService->getAchievementsDump($world);
 
         $achievements = [];
         foreach ($players as $player) {

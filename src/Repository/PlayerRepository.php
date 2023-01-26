@@ -14,14 +14,14 @@ use Jesperbeisner\Fwstats\Model\Player;
 
 final class PlayerRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
-    public function find(WorldEnum $world, int $playerId): ?Player
+    public function find(WorldEnum $world, int $id): ?Player
     {
-        $sql = "SELECT * FROM players WHERE world = :world AND player_id = :playerId";
+        $sql = "SELECT * FROM players WHERE world = :world AND id = :id";
 
         /** @var array<array{world: string, player_id: string, name: string, race: string, xp: string, soul_xp: string, total_xp: string, clan_id: string, profession: string}> $result */
         $result = $this->database->select($sql, [
             'world' => $world->value,
-            'playerId' => $playerId,
+            'id' => $id,
         ]);
 
         if (count($result) === 0) {
@@ -29,19 +29,19 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
         }
 
         if (count($result) > 1) {
-            throw new DatabaseException(sprintf('More than 1 player for the id "%s". How is this possible?', $playerId));
+            throw new DatabaseException(sprintf('More than one player for the id "%s". How is this possible?', $id));
         }
 
         return $this->hydratePlayer($result[0]);
     }
 
     /**
-     * @return array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}>
+     * @return array<array{id: int, world: string, player_id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}>
      */
     public function findAllByWorldAndOrderedByTotalXp(WorldEnum $world, int $offset): array
     {
         $sql = <<<SQL
-            SELECT players.world, players.id, players.name, players.race, players.xp, players.soul_xp, players.total_xp, players.profession, clans.id AS clan_id, clans.name AS clan_name, clans.shortcut AS clan_shortcut
+            SELECT players.id, players.world, players.player_id, players.name, players.race, players.xp, players.soul_xp, players.total_xp, players.profession, clans.id AS clan_id, clans.name AS clan_name, clans.shortcut AS clan_shortcut
             FROM players
             LEFT JOIN clans ON clans.clan_id = players.clan_id AND clans.world = players.world
             WHERE players.world = :world
@@ -49,7 +49,7 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
             LIMIT :offset, 100
         SQL;
 
-        /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $result */
+        /** @var array<array{id: int, world: string, player_id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $result */
         $result = $this->database->select($sql, [
             'world' => $world->value,
             'offset' => $offset,

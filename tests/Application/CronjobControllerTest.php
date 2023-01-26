@@ -13,7 +13,7 @@ use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\ContainerTrait;
-use Jesperbeisner\Fwstats\Tests\Dummy\CronjobDummy;
+use Jesperbeisner\Fwstats\Tests\Doubles\CronjobDummy;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\CronjobController

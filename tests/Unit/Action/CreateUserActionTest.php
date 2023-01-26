@@ -9,8 +9,8 @@ use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
-use Jesperbeisner\Fwstats\Tests\Dummy\TranslatorDummy;
+use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
+use Jesperbeisner\Fwstats\Tests\Doubles\TranslatorDummy;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\CreateUserAction

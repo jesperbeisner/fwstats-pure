@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Fake;
+namespace Jesperbeisner\Fwstats\Tests\Doubles;
 
 use Jesperbeisner\Fwstats\Enum\FlashEnum;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;

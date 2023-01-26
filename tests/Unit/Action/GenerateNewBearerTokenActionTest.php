@@ -10,7 +10,7 @@ use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
+use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\GenerateNewBearerTokenAction

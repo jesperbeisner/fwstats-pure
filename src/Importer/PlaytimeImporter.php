@@ -7,14 +7,16 @@ namespace Jesperbeisner\Fwstats\Importer;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
+use Jesperbeisner\Fwstats\Interface\ImporterInterface;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
+use Jesperbeisner\Fwstats\Result\ImportResult;
 
-final class PlaytimeImporter implements ImporterInterface
+final readonly class PlaytimeImporter implements ImporterInterface
 {
     public function __construct(
-        private readonly FreewarDumpServiceInterface $freewarDumpService,
-        private readonly PlayerActiveSecondRepository $playerActiveSecondRepository,
+        private FreewarDumpServiceInterface $freewarDumpService,
+        private PlayerActiveSecondRepository $playerActiveSecondRepository,
     ) {
     }
 

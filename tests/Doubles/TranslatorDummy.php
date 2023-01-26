@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Dummy;
+namespace Jesperbeisner\Fwstats\Tests\Doubles;
 
 use Jesperbeisner\Fwstats\Enum\LocaleEnum;
 use Jesperbeisner\Fwstats\Interface\TranslatorInterface;
