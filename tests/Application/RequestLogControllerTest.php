@@ -10,16 +10,19 @@ use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\RequestLogController
  */
 final class RequestLogControllerTest extends AbstractTestCase
 {
+    use ContainerTrait;
+
     public function test_get_request_without_login(): void
     {
         $request = new Request(['REQUEST_URI' => '/admin/request-logs', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -31,7 +34,6 @@ final class RequestLogControllerTest extends AbstractTestCase
     public function test_get_request_with_login(): void
     {
         $request = new Request(['REQUEST_URI' => '/admin/request-logs', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $user = new User(1, 'test', 'test', 'test', 'test', new DateTimeImmutable());

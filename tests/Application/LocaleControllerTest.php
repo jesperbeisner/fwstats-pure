@@ -6,16 +6,19 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use Jesperbeisner\Fwstats\Application;
 use Jesperbeisner\Fwstats\Stdlib\Request;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\LocaleController
  */
 final class LocaleControllerTest extends AbstractTestCase
 {
+    use ContainerTrait;
+
     public function test_get_request_without_locale(): void
     {
         $request = new Request(['REQUEST_URI' => '/locale', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -28,7 +31,6 @@ final class LocaleControllerTest extends AbstractTestCase
     public function test_get_request_with_wrong_locale(): void
     {
         $request = new Request(['REQUEST_URI' => '/locale', 'REQUEST_METHOD' => 'GET'], ['locale' => 'test'], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -41,7 +43,6 @@ final class LocaleControllerTest extends AbstractTestCase
     public function test_get_request_with_locale(): void
     {
         $request = new Request(['REQUEST_URI' => '/locale', 'REQUEST_METHOD' => 'GET'], ['locale' => 'de'], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);

@@ -9,12 +9,12 @@ use Jesperbeisner\Fwstats\Exception\ActionResultException;
 use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Result\CreateUserActionResult;
-use PHPUnit\Framework\TestCase;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Result\CreateUserActionResult
  */
-class CreateUserActionResultTest extends TestCase
+class CreateUserActionResultTest extends AbstractTestCase
 {
     public function test_will_return_right_boolean_result_when_calling_isSuccess(): void
     {

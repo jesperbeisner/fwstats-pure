@@ -7,16 +7,19 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 use Jesperbeisner\Fwstats\Application;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\LogoutController
  */
 final class LogoutControllerTest extends AbstractTestCase
 {
+    use ContainerTrait;
+
     public function test_get_request(): void
     {
         $request = new Request(['REQUEST_URI' => '/logout', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -28,7 +31,6 @@ final class LogoutControllerTest extends AbstractTestCase
     public function test_get_request_deletes_session(): void
     {
         $request = new Request(['REQUEST_URI' => '/logout', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $session = $this->getContainer()->get(SessionInterface::class);

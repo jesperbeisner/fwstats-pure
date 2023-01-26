@@ -7,16 +7,19 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 use Jesperbeisner\Fwstats\Application;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\IndexController
  */
 final class IndexControllerTest extends AbstractTestCase
 {
+    use ContainerTrait;
+
     public function test_get_request(): void
     {
         $request = new Request(['REQUEST_URI' => '/', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -30,7 +33,6 @@ final class IndexControllerTest extends AbstractTestCase
     public function test_get_request_with_available_page(): void
     {
         $request = new Request(['REQUEST_URI' => '/', 'REQUEST_METHOD' => 'GET'], ['page' => '1'], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -44,7 +46,6 @@ final class IndexControllerTest extends AbstractTestCase
     public function test_get_request_with_not_available_page(): void
     {
         $request = new Request(['REQUEST_URI' => '/', 'REQUEST_METHOD' => 'GET'], ['page' => '999'], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -58,7 +59,6 @@ final class IndexControllerTest extends AbstractTestCase
     public function test_get_request_with_negative_page(): void
     {
         $request = new Request(['REQUEST_URI' => '/', 'REQUEST_METHOD' => 'GET'], ['page' => '-999'], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);

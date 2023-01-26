@@ -8,13 +8,13 @@ use Jesperbeisner\Fwstats\Action\ChangeDomainNameAction;
 use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Repository\ConfigRepository;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\ChangeDomainNameAction
  */
-final class ChangeDomainNameActionTest extends TestCase
+final class ChangeDomainNameActionTest extends AbstractTestCase
 {
     public function test_it_throws_RuntimeException_when_domainName_is_not_set(): void
     {
@@ -73,5 +73,6 @@ final class ChangeDomainNameActionTest extends TestCase
         $result = $changeDomainNameAction->configure(['domainName' => 'https://example.com'])->run();
 
         self::assertTrue($result->isSuccess());
+        self::assertSame('text.domain-name-changed-successfully', $result->getMessage());
     }
 }

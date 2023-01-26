@@ -17,13 +17,13 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\ResetActionFreewarAction
  */
-final class ResetActionFreewarActionTest extends TestCase
+final class ResetActionFreewarActionTest extends AbstractTestCase
 {
     public function test_it_returns_a_success_ActionResult_when_everything_works(): void
     {
@@ -42,7 +42,7 @@ final class ResetActionFreewarActionTest extends TestCase
         $playerRepository = new PlayerRepository($database);
         $playerStatusHistoryRepository = new PlayerStatusHistoryRepository($database);
 
-        $generateNewBearerTokenAction = new ResetActionFreewarAction(
+        $resetActionFreewarAction = new ResetActionFreewarAction(
             $achievementRepository,
             $clanCreatedHistoryRepository,
             $clanDeletedHistoryRepository,
@@ -57,8 +57,9 @@ final class ResetActionFreewarActionTest extends TestCase
             $playerStatusHistoryRepository,
         );
 
-        $result = $generateNewBearerTokenAction->configure([])->run();
+        $result = $resetActionFreewarAction->configure([])->run();
 
         self::assertTrue($result->isSuccess());
+        self::assertSame('text.reset-action-freewar-success', $result->getMessage());
     }
 }

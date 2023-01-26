@@ -7,12 +7,16 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 use Jesperbeisner\Fwstats\Controller\NotFoundController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\NotFoundController
  */
 final class NotFoundControllerTest extends AbstractTestCase
 {
+    use ContainerTrait;
+
     public function test_get_request(): void
     {
         $request = new Request(['REQUEST_URI' => '/test', 'REQUEST_METHOD' => 'GET'], [], [], [], []);

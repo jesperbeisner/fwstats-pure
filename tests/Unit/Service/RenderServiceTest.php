@@ -6,14 +6,14 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\Service;
 
 use Jesperbeisner\Fwstats\Service\RenderService;
 use Jesperbeisner\Fwstats\Stdlib\Request;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Dummy\TranslatorDummy;
 use Jesperbeisner\Fwstats\Tests\Fake\SessionFake;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Service\RenderService
  */
-final class RenderServiceTest extends TestCase
+final class RenderServiceTest extends AbstractTestCase
 {
     public function test_title_creation(): void
     {

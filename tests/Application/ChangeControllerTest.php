@@ -7,16 +7,19 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 use Jesperbeisner\Fwstats\Application;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\ChangeController
  */
 final class ChangeControllerTest extends AbstractTestCase
 {
+    use ContainerTrait;
+
     public function test_get_request(): void
     {
         $request = new Request(['REQUEST_URI' => '/changes/names', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);

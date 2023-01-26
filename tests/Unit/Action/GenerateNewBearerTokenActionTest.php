@@ -9,13 +9,13 @@ use Jesperbeisner\Fwstats\Action\GenerateNewBearerTokenAction;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\GenerateNewBearerTokenAction
  */
-final class GenerateNewBearerTokenActionTest extends TestCase
+final class GenerateNewBearerTokenActionTest extends AbstractTestCase
 {
     public function test_it_throws_a_RuntimeException_when_no_user_is_set(): void
     {
@@ -104,5 +104,6 @@ final class GenerateNewBearerTokenActionTest extends TestCase
         $result = $generateNewBearerTokenAction->configure(['user' => $user, 'token' => str_repeat('0', 32)])->run();
 
         self::assertTrue($result->isSuccess());
+        self::assertSame('text.new-token-generated-successfully', $result->getMessage());
     }
 }

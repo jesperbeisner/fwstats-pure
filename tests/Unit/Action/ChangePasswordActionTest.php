@@ -10,13 +10,13 @@ use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\ChangePasswordAction
  */
-final class ChangePasswordActionTest extends TestCase
+final class ChangePasswordActionTest extends AbstractTestCase
 {
     public function test_it_throws_a_RuntimeException_when_the_user_is_not_set(): void
     {
@@ -119,5 +119,6 @@ final class ChangePasswordActionTest extends TestCase
         $result = $changePasswordAction->configure(['user' => $user, 'password' => '1234567890'])->run();
 
         self::assertTrue($result->isSuccess());
+        self::assertSame('text.password-changed-successfully', $result->getMessage());
     }
 }

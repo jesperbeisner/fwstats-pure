@@ -11,16 +11,19 @@ use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\SearchController
  */
 final class SearchControllerTest extends AbstractTestCase
 {
+    use ContainerTrait;
+
     public function test_get_request(): void
     {
         $request = new Request(['REQUEST_URI' => '/search', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -34,7 +37,6 @@ final class SearchControllerTest extends AbstractTestCase
     public function test_get_request_with_query_and_non_existing_player(): void
     {
         $request = new Request(['REQUEST_URI' => '/search', 'REQUEST_METHOD' => 'GET'], ['query' => 'test'], [], [], []);
-
         $this->getContainer()->set(Request::class, $request);
 
         $response = (new Application($this->getContainer()))->handle($request);
@@ -47,8 +49,9 @@ final class SearchControllerTest extends AbstractTestCase
 
     public function test_get_request_with_query_and_existing_player(): void
     {
-        $request = new Request(['REQUEST_URI' => '/search', 'REQUEST_METHOD' => 'GET'], ['query' => 'test'], [], [], []);
+        $this->loadMigrations();
 
+        $request = new Request(['REQUEST_URI' => '/search', 'REQUEST_METHOD' => 'GET'], ['query' => 'test'], [], [], []);
         $this->getContainer()->set(Request::class, $request);
 
         $player = new Player(null, WorldEnum::AFSRV, 1, 'test', 'Onlo', 1, 0, 1, null, null, new DateTimeImmutable());

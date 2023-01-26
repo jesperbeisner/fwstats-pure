@@ -7,16 +7,19 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 use Jesperbeisner\Fwstats\Controller\MethodNotAllowedController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\MethodNotAllowedController
  */
 final class MethodNotAllowedControllerTest extends AbstractTestCase
 {
+    use ContainerTrait;
+
     public function test_get_request(): void
     {
         $request = new Request(['REQUEST_URI' => '/', 'REQUEST_METHOD' => 'DELETE'], [], [], [], []);
-
         $response = (new MethodNotAllowedController())->execute($request);
 
         self::assertSame(405, $response->statusCode);

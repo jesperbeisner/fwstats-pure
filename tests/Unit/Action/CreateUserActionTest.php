@@ -8,14 +8,14 @@ use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
+use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Dummy\DatabaseDummy;
 use Jesperbeisner\Fwstats\Tests\Dummy\TranslatorDummy;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\CreateUserAction
  */
-final class CreateUserActionTest extends TestCase
+final class CreateUserActionTest extends AbstractTestCase
 {
     private CreateUserAction $createUserAction;
 
@@ -103,6 +103,7 @@ final class CreateUserActionTest extends TestCase
         $createUserActionResult = $this->createUserAction->run();
 
         self::assertTrue($createUserActionResult->isSuccess());
+        self::assertSame('text.user-created-successfully', $createUserActionResult->getMessage());
         self::assertArrayHasKey('user', $createUserActionResult->getData());
     }
 }
