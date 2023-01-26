@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Action;
 
+use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ActionInterface;
@@ -61,6 +62,6 @@ final class ChangePasswordAction implements ActionInterface
 
         $this->userRepository->changePassword($this->user, password_hash($this->password, PASSWORD_DEFAULT));
 
-        return new ActionResult(ActionResultInterface::SUCCESS, 'text.password-changed-successfully');
+        return new ActionResult(ResultEnum::SUCCESS, 'text.password-changed-successfully');
     }
 }

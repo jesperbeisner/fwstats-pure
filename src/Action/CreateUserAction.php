@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Action;
 
 use DateTimeImmutable;
+use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Helper\Str;
@@ -73,6 +74,6 @@ final class CreateUserAction implements ActionInterface
         $user = new User(null, UuidV4::create(), $this->username, $hashedPassword, Str::random(32), new DateTimeImmutable());
         $user = $this->userRepository->insert($user);
 
-        return new CreateUserActionResult(ActionResultInterface::SUCCESS, $this->translator->translate('text.user-created-successfully', ['%USERNAME%' => $user->username]), ['user' => $user]);
+        return new CreateUserActionResult(ResultEnum::SUCCESS, $this->translator->translate('text.user-created-successfully', ['%USERNAME%' => $user->username]), ['user' => $user]);
     }
 }

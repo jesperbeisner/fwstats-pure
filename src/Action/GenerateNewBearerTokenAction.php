@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Action;
 
+use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ActionInterface;
 use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
@@ -56,6 +57,6 @@ final class GenerateNewBearerTokenAction implements ActionInterface
 
         $this->userRepository->changeToken($this->user, $this->token);
 
-        return new ActionResult(ActionResultInterface::SUCCESS, 'text.new-token-generated-successfully');
+        return new ActionResult(ResultEnum::SUCCESS, 'text.new-token-generated-successfully');
     }
 }

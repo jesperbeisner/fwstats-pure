@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Action;
 
+use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ActionInterface;
@@ -50,6 +51,6 @@ final class ChangeDomainNameAction implements ActionInterface
 
         $this->configRepository->changeDomainName($this->domainName);
 
-        return new ActionResult(ActionResultInterface::SUCCESS, 'text.domain-name-changed-successfully');
+        return new ActionResult(ResultEnum::SUCCESS, 'text.domain-name-changed-successfully');
     }
 }

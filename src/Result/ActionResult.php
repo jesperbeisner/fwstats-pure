@@ -4,35 +4,29 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Result;
 
-use Jesperbeisner\Fwstats\Exception\ActionResultException;
+use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Result\ActionResultTest
+ */
 class ActionResult implements ActionResultInterface
 {
-    protected readonly int $result;
-
-    /** @var array<string, mixed> */
-    protected readonly array $data;
-    protected readonly string $message;
-
     /**
      * @param array<string, mixed> $data
      */
-    public function __construct(int $result, string $message = '', array $data = [])
-    {
-        if (!in_array($result, [self::SUCCESS, self::FAILURE], true)) {
-            throw new ActionResultException('Only 0 and 1 are valid values for $result.');
-        }
-
-        $this->result = $result;
-        $this->data = $data;
-        $this->message = $message;
+    public function __construct(
+        protected ResultEnum $result,
+        protected string $message = '',
+        protected array $data = [],
+    ) {
     }
 
     public function isSuccess(): bool
     {
-        return $this->result === self::SUCCESS;
+        return $this->result === ResultEnum::SUCCESS;
     }
+
     public function getData(): array
     {
         return $this->data;

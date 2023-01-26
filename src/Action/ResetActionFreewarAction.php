@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Action;
 
+use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Interface\ActionInterface;
 use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
@@ -61,6 +62,6 @@ final readonly class ResetActionFreewarAction implements ActionInterface
         $this->playerRepository->resetActionFreewar();
         $this->playerStatusHistoryRepository->resetActionFreewar();
 
-        return new ActionResult(ActionResultInterface::SUCCESS, 'text.reset-action-freewar-success');
+        return new ActionResult(ResultEnum::SUCCESS, 'text.reset-action-freewar-success');
     }
 }

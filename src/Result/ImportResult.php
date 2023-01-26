@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Result;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Result\ImportResultTest
+ */
 final class ImportResult
 {
     /** @var array<string> */
