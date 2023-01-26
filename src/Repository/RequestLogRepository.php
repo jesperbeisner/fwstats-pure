@@ -9,17 +9,22 @@ use Jesperbeisner\Fwstats\Model\RequestLog;
 
 final class RequestLogRepository extends AbstractRepository
 {
-    public function insert(RequestLog $requestLog): void
+    public function insert(RequestLog $requestLog): RequestLog
     {
-        $sql = "INSERT INTO request_logs (url, method, visits, status_code, day) VALUES (:url, :method, :visits, :statusCode, :created)";
+        $sql = <<<SQL
+            INSERT INTO request_logs (url, method, visits, status_code, day)
+            VALUES (:url, :method, :visits, :statusCode, :created)
+        SQL;
 
-        $this->database->insert($sql, [
+        $id = $this->database->insert($sql, [
             'url' => $requestLog->url,
             'method' => $requestLog->method,
             'visits' => $requestLog->visits,
             'status_code' => $requestLog->statusCode,
             'day' => $requestLog->day->format('Y-m-d'),
         ]);
+
+        return RequestLog::withId($id, $requestLog);
     }
 
     public function log(string $url, string $method, int $statusCode, DateTimeImmutable $day): void

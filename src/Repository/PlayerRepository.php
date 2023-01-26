@@ -7,32 +7,49 @@ namespace Jesperbeisner\Fwstats\Repository;
 use DateTimeImmutable;
 use Exception;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Exception\DatabaseException;
-use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Player;
 
 final class PlayerRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
-    public function find(WorldEnum $world, int $id): ?Player
+    public function insert(Player $player): Player
     {
-        $sql = "SELECT * FROM players WHERE world = :world AND id = :id";
+        $sql = <<<SQL
+            INSERT INTO players (world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp)
+            VALUES (:world, :playerId, :name, :race, :clanId, :profession, :xp, :soulXp, :totalXp)
+        SQL;
 
-        /** @var array<array{world: string, player_id: string, name: string, race: string, xp: string, soul_xp: string, total_xp: string, clan_id: string, profession: string}> $result */
-        $result = $this->database->select($sql, [
-            'world' => $world->value,
-            'id' => $id,
+        $id = $this->database->insert($sql, [
+            'world' => $player->world->value,
+            'playerId' => $player->playerId,
+            'name' => $player->name,
+            'race' => $player->race,
+            'clanId' => $player->clanId,
+            'profession' => $player->profession,
+            'xp' => $player->xp,
+            'soulXp' => $player->soulXp,
+            'totalXp' => $player->xp + $player->soulXp,
         ]);
 
-        if (count($result) === 0) {
+        return Player::withId($id, $player);
+    }
+
+    public function find(WorldEnum $world, int $id): ?Player
+    {
+        $sql = <<<SQL
+            SELECT id, world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp, created
+            FROM players
+            WHERE world = :world AND id = :id
+        SQL;
+
+        /** @var null|array{id: int, world: string, player_id: int, name: string, race: string, clan_id: null|int, profession: null|string, xp: int, soul_xp: int, total_xp: int, created: string} $result */
+        $result = $this->database->selectOne($sql, ['world' => $world->value, 'id' => $id]);
+
+        if ($result === null) {
             return null;
         }
 
-        if (count($result) > 1) {
-            throw new DatabaseException(sprintf('More than one player for the id "%s". How is this possible?', $id));
-        }
-
-        return $this->hydratePlayer($result[0]);
+        return $this->hydratePlayer($result);
     }
 
     /**
@@ -50,56 +67,35 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
         SQL;
 
         /** @var array<array{id: int, world: string, player_id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $result */
-        $result = $this->database->select($sql, [
-            'world' => $world->value,
-            'offset' => $offset,
-        ]);
+        $result = $this->database->select($sql, ['world' => $world->value, 'offset' => $offset]);
 
         return $result;
     }
 
     /**
-     * @return Player[]
+     * @return array<Player>
      */
     public function findAllByWorld(WorldEnum $world): array
     {
-        $sql = "SELECT * FROM players WHERE world = :world";
+        $sql = <<<SQL
+            SELECT id, world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp, created
+            FROM players
+            WHERE world = :world
+        SQL;
 
-        $result = $this->database->select($sql, [
-            'world' => $world->value,
-        ]);
+        /** @var array<array{id: int, world: string, player_id: int, name: string, race: string, clan_id: null|int, profession: null|string, xp: int, soul_xp: int, total_xp: int, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $world->value]);
 
         $players = [];
         foreach ($result as $row) {
-            /** @var array<int|string|null> $row */
             $players[$row['player_id']] = $this->hydratePlayer($row);
         }
 
         return $players;
     }
 
-    public function insert(Player $player): void
-    {
-        $sql = <<<SQL
-            INSERT INTO players (world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp)
-            VALUES (:world, :playerId, :name, :race, :clanId, :profession, :xp, :soulXp, :totalXp)
-        SQL;
-
-        $this->database->insert($sql, [
-            'world' => $player->world->value,
-            'playerId' => $player->playerId,
-            'name' => $player->name,
-            'race' => $player->race,
-            'clanId' => $player->clanId,
-            'profession' => $player->profession,
-            'xp' => $player->xp,
-            'soulXp' => $player->soulXp,
-            'totalXp' => $player->xp + $player->soulXp,
-        ]);
-    }
-
     /**
-     * @param Player[] $players
+     * @param array<Player> $players
      */
     public function insertPlayers(WorldEnum $world, array $players): void
     {
@@ -108,9 +104,7 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
         try {
             $this->database->beginTransaction();
 
-            $this->database->delete($sql, [
-                'world' => $world->value,
-            ]);
+            $this->database->delete($sql, ['world' => $world->value]);
 
             foreach ($players as $player) {
                 $this->insert($player);
@@ -125,19 +119,23 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
     }
 
     /**
-     * @return Player[]
+     * @return array<Player>
      */
     public function getTop50PlayersByWorld(WorldEnum $world): array
     {
-        $sql = "SELECT * FROM players WHERE world = :world ORDER BY total_xp DESC LIMIT 50";
+        $sql = <<<SQL
+            SELECT id, world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp, created
+            FROM players
+            WHERE world = :world
+            ORDER BY total_xp DESC
+            LIMIT 50
+        SQL;
 
-        $result = $this->database->select($sql, [
-            'world' => $world->value,
-        ]);
+        /** @var array<array{id: int, world: string, player_id: int, name: string, race: string, clan_id: null|int, profession: null|string, xp: int, soul_xp: int, total_xp: int, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $world->value]);
 
         $players = [];
         foreach ($result as $row) {
-            /** @var array<int|string|null> $row */
             $players[] = $this->hydratePlayer($row);
         }
 
@@ -148,18 +146,14 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
     {
         $sql = "SELECT COUNT(id) AS amount, world FROM players GROUP BY world ORDER BY COUNT(id) DESC LIMIT 1";
 
-        /** @var array<array{amount: int, world: string}> $result */
-        $result = $this->database->select($sql);
+        /** @var null|array{amount: int, world: string} $result */
+        $result = $this->database->selectOne($sql);
 
-        if (count($result) === 0) {
+        if ($result === null) {
             return 0;
         }
 
-        if (count($result) > 1) {
-            throw new RuntimeException('How did this query return more than one result?');
-        }
-
-        return $result[0]['amount'];
+        return $result['amount'];
     }
 
     /**
@@ -200,22 +194,22 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
     }
 
     /**
-     * @param array<int|string|null> $row
+     * @param array{id: int, world: string, player_id: int, name: string, race: string, clan_id: null|int, profession: null|string, xp: int, soul_xp: int, total_xp: int, created: string} $row
      */
     private function hydratePlayer(array $row): Player
     {
         return new Player(
-            id: (int) $row['id'],
-            world: WorldEnum::from((string) $row['world']),
-            playerId: (int) $row['player_id'],
-            name: (string) $row['name'],
-            race: (string) $row['race'],
-            xp: (int) $row['xp'],
-            soulXp: (int) $row['soul_xp'],
-            totalXp: (int) $row['total_xp'],
-            clanId: $row['clan_id'] === null ? null : (int) $row['clan_id'],
-            profession: $row['profession'] === null ? null : (string) $row['profession'],
-            created: new DateTimeImmutable((string) $row['created']),
+            id: $row['id'],
+            world: WorldEnum::from($row['world']),
+            playerId: $row['player_id'],
+            name: $row['name'],
+            race: $row['race'],
+            xp: $row['xp'],
+            soulXp: $row['soul_xp'],
+            totalXp: $row['total_xp'],
+            clanId: $row['clan_id'],
+            profession: $row['profession'],
+            created: new DateTimeImmutable($row['created']),
         );
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Importer;
 
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Interface\ImporterInterface;
@@ -53,6 +54,7 @@ final readonly class AchievementImporter implements ImporterInterface
                     uniqueNpcKilled: $playerAchievements[87] ?? 0,
                     groupNpcKilled: $playerAchievements[79] ?? 0,
                     soulStonesGained: $playerAchievements[18] ?? 0,
+                    created: new DateTimeImmutable(),
                 );
             }
         }

@@ -75,15 +75,13 @@ final class CreateUserActionTest extends AbstractTestCase
     public function test_will_throw_ActionException_when_user_with_this_username_already_exists(): void
     {
         $database = new DatabaseDummy();
-        $database->setSelectReturn([
-            [
-                'id' => 1,
-                'uuid' => 'test',
-                'username' => 'test',
-                'password' => 'test',
-                'token' => 'test',
-                'created' => '2022-01-01',
-            ],
+        $database->setSelectOneReturn([
+            'id' => 1,
+            'uuid' => 'test',
+            'username' => 'test',
+            'password' => 'test',
+            'token' => 'test',
+            'created' => '2022-01-01',
         ]);
 
         $createUserAction = new CreateUserAction(new UserRepository($database), new TranslatorDummy());

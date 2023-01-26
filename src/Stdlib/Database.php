@@ -31,10 +31,28 @@ final class Database implements DatabaseInterface
         $this->log($sql);
 
         $statement = $this->pdo->prepare($sql);
-
         $statement->execute($params);
 
         return $statement->fetchAll();
+    }
+
+    public function selectOne(string $sql, array $params = []): ?array
+    {
+        $this->log($sql);
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute($params);
+        $result = $statement->fetchAll();
+
+        if (count($result) === 0) {
+            return null;
+        }
+
+        if (count($result) === 1) {
+            return $result[0];
+        }
+
+        throw new DatabaseException('How can there be more than one result?');
     }
 
     public function insert(string $sql, array $params = []): int

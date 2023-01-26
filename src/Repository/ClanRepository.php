@@ -39,16 +39,19 @@ final class ClanRepository extends AbstractRepository implements ResetActionFree
      */
     public function findAllByWorld(WorldEnum $world): array
     {
-        $sql = "SELECT id, world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points, created FROM clans WHERE world = :world";
+        $sql = <<<SQL
+            SELECT id, world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points, created
+            FROM clans
+            WHERE world = :world
+        SQL;
 
-        $result = $this->database->select($sql, [
-            'world' => $world->value,
-        ]);
+        /** @var array<array{id: int, world: string, clan_id: int, shortcut: string, name: string, leader_id: int, co_leader_id: int, diplomat_id: int, war_points: int, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $world->value]);
 
         $clans = [];
         foreach ($result as $row) {
-            /** @var array{id: int, world: string, clan_id: int, shortcut: string, name: string, leader_id: int, co_leader_id: int, diplomat_id: int, war_points: int, created: string} $row */
-            $clans[$row['clan_id']] = $this->hydrateClan($row);
+            $clan = $this->hydrateClan($row);
+            $clans[$clan->clanId] = $clan;
         }
 
         return $clans;
@@ -64,9 +67,7 @@ final class ClanRepository extends AbstractRepository implements ResetActionFree
         try {
             $this->database->beginTransaction();
 
-            $this->database->delete($sql, [
-                'world' => $world->value,
-            ]);
+            $this->database->delete($sql, ['world' => $world->value]);
 
             foreach ($clans as $clan) {
                 $this->insert($clan);
@@ -91,9 +92,7 @@ final class ClanRepository extends AbstractRepository implements ResetActionFree
     {
         $sql = "DELETE FROM clans WHERE world = :world";
 
-        $this->database->delete($sql, [
-            'world' => WorldEnum::AFSRV->value,
-        ]);
+        $this->database->delete($sql, ['world' => WorldEnum::AFSRV->value]);
     }
 
     /**

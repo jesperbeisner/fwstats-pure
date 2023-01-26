@@ -4,36 +4,15 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Repository;
 
+use DateTimeImmutable;
 use Exception;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Exception\DatabaseException;
 use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Model\Player;
 
 final class AchievementRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
-    public function findByPlayer(Player $player): ?Achievement
-    {
-        $sql = "SELECT * FROM achievements WHERE world = :world AND player_id = :playerId";
-
-        /** @var array<array<string, int|string>> $result */
-        $result = $this->database->select($sql, [
-            'world' => $player->world->value,
-            'playerId' => $player->playerId,
-        ]);
-
-        if (count($result) === 0) {
-            return null;
-        }
-
-        if (count($result) > 1) {
-            throw new DatabaseException('How can there be more than 1 achievement row for a single player?');
-        }
-
-        return $this->hydrateAchievement($result[0]);
-    }
-
     public function insert(Achievement $achievement): Achievement
     {
         $sql = <<<SQL
@@ -41,12 +20,12 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
                 world, player_id, fields_walked, fields_elixir, fields_run,
                 fields_run_fast, npc_kills_gold, normal_npc_killed, phase_npc_killed,
                 aggressive_npc_killed, invasion_npc_killed, unique_npc_killed, group_npc_killed,
-                soul_stones_gained
+                soul_stones_gained, created
             ) VALUES (
                 :world, :playerId, :fieldsWalked, :fieldsElixir, :fieldsRun,
                 :fieldsRunFast, :npcKillsGold, :normalNpcKilled, :phaseNpcKilled,
                 :aggressiveNpcKilled, :invasionNpcKilled, :uniqueNpcKilled, :groupNpcKilled,
-                :soulStonesGained
+                :soulStonesGained, :created
             )
         SQL;
 
@@ -65,9 +44,28 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
             'uniqueNpcKilled' => $achievement->uniqueNpcKilled,
             'groupNpcKilled' => $achievement->groupNpcKilled,
             'soulStonesGained' => $achievement->soulStonesGained,
+            'created' => $achievement->created->format('Y-m-d H:i:s'),
         ]);
 
         return Achievement::withId($id, $achievement);
+    }
+
+    public function findByPlayer(Player $player): ?Achievement
+    {
+        $sql = <<<SQL
+            SELECT id, world, player_id, fields_walked, fields_elixir, fields_run, fields_run_fast, npc_kills_gold, normal_npc_killed, phase_npc_killed, aggressive_npc_killed, invasion_npc_killed, unique_npc_killed, group_npc_killed, soul_stones_gained, created
+            FROM achievements
+            WHERE world = :world AND player_id = :playerId
+        SQL;
+
+        /** @var null|array{id: int, world: string, player_id: int, fields_walked: int, fields_elixir: int, fields_run: int, fields_run_fast: int, npc_kills_gold: int, normal_npc_killed: int, phase_npc_killed: int, aggressive_npc_killed: int, invasion_npc_killed: int, unique_npc_killed: int, group_npc_killed: int, soul_stones_gained: int, created: string} $result */
+        $result = $this->database->selectOne($sql, ['world' => $player->world->value, 'playerId' => $player->playerId]);
+
+        if ($result === null) {
+            return null;
+        }
+
+        return $this->hydrateAchievement($result);
     }
 
     /**
@@ -100,32 +98,31 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
     {
         $sql = "DELETE FROM achievements WHERE world = :world";
 
-        $this->database->delete($sql, [
-            'world' => WorldEnum::AFSRV->value,
-        ]);
+        $this->database->delete($sql, ['world' => WorldEnum::AFSRV->value]);
     }
 
     /**
-     * @param array<string, int|string> $row
+     * @param array{id: int, world: string, player_id: int, fields_walked: int, fields_elixir: int, fields_run: int, fields_run_fast: int, npc_kills_gold: int, normal_npc_killed: int, phase_npc_killed: int, aggressive_npc_killed: int, invasion_npc_killed: int, unique_npc_killed: int, group_npc_killed: int, soul_stones_gained: int, created: string} $row
      */
     private function hydrateAchievement(array $row): Achievement
     {
         return new Achievement(
-            id: null,
-            world: WorldEnum::from((string) $row['world']),
-            playerId: (int) $row['player_id'],
-            fieldsWalked: (int) $row['fields_walked'],
-            fieldsElixir: (int) $row['fields_elixir'],
-            fieldsRun: (int) $row['fields_run'],
-            fieldsRunFast: (int) $row['fields_run_fast'],
-            npcKillsGold: (int) $row['npc_kills_gold'],
-            normalNpcKilled: (int) $row['normal_npc_killed'],
-            phaseNpcKilled: (int) $row['phase_npc_killed'],
-            aggressiveNpcKilled: (int) $row['aggressive_npc_killed'],
-            invasionNpcKilled: (int) $row['invasion_npc_killed'],
-            uniqueNpcKilled: (int) $row['unique_npc_killed'],
-            groupNpcKilled: (int) $row['group_npc_killed'],
-            soulStonesGained: (int) $row['soul_stones_gained'],
+            id: $row['id'],
+            world: WorldEnum::from($row['world']),
+            playerId: $row['player_id'],
+            fieldsWalked: $row['fields_walked'],
+            fieldsElixir: $row['fields_elixir'],
+            fieldsRun: $row['fields_run'],
+            fieldsRunFast: $row['fields_run_fast'],
+            npcKillsGold: $row['npc_kills_gold'],
+            normalNpcKilled: $row['normal_npc_killed'],
+            phaseNpcKilled: $row['phase_npc_killed'],
+            aggressiveNpcKilled: $row['aggressive_npc_killed'],
+            invasionNpcKilled: $row['invasion_npc_killed'],
+            uniqueNpcKilled: $row['unique_npc_killed'],
+            groupNpcKilled: $row['group_npc_killed'],
+            soulStonesGained: $row['soul_stones_gained'],
+            created: new DateTimeImmutable($row['created']),
         );
     }
 }

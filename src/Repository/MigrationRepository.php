@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
-use Jesperbeisner\Fwstats\Exception\DatabaseException;
 use Jesperbeisner\Fwstats\Model\Migration;
 
 final class MigrationRepository extends AbstractRepository
 {
-    public function create(Migration $migration): Migration
+    public function insert(Migration $migration): Migration
     {
         $sql = "INSERT INTO migrations (name, created) VALUES (:name, :created)";
 
@@ -38,20 +37,16 @@ final class MigrationRepository extends AbstractRepository
     {
         $sql = "SELECT * FROM migrations WHERE name = :migration";
 
-        /** @var array<array{id: int, name: string, created: string}> $result */
-        $result = $this->database->select($sql, [
+        /** @var null|array{id: int, name: string, created: string} $result */
+        $result = $this->database->selectOne($sql, [
             'migration' => $fileName,
         ]);
 
-        if (count($result) === 0) {
+        if ($result === null) {
             return null;
         }
 
-        if (count($result) > 1) {
-            throw new DatabaseException('How can there be more than one migration for a single file name?');
-        }
-
-        return $this->hydrateMigration($result[0]);
+        return $this->hydrateMigration($result);
     }
 
     public function execute(string $statement): void

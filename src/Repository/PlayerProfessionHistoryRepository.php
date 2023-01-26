@@ -35,16 +35,18 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository impleme
      */
     public function getProfessionChangesForPlayer(Player $player): array
     {
-        $sql = "SELECT * FROM players_profession_history WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
+        $sql = <<<SQL
+            SELECT id, world, player_id, old_profession, new_profession, created
+            FROM players_profession_history
+            WHERE world = :world AND player_id = :playerId
+            ORDER BY created DESC
+        SQL;
 
-        $result = $this->database->select($sql, [
-            'world' => $player->world->value,
-            'playerId' => $player->playerId,
-        ]);
+        /** @var array<array{id: int, world: string, player_id: int, old_profession: string|null, new_profession: string|null, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $player->world->value, 'playerId' => $player->playerId]);
 
         $playerProfessionHistories = [];
         foreach ($result as $row) {
-            /** @var array{id: int, world: string, player_id: int, old_profession: string|null, new_profession: string|null, created: string} $row */
             $playerProfessionHistories[] = $this->hydratePlayerProfessionHistory($row);
         }
 
@@ -62,9 +64,7 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository impleme
     {
         $sql = "DELETE FROM players_profession_history WHERE world = :world";
 
-        $this->database->delete($sql, [
-            'world' => WorldEnum::AFSRV->value,
-        ]);
+        $this->database->delete($sql, ['world' => WorldEnum::AFSRV->value]);
     }
 
     /**

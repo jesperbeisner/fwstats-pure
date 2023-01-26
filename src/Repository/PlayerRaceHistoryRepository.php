@@ -31,20 +31,22 @@ final class PlayerRaceHistoryRepository extends AbstractRepository implements Re
     }
 
     /**
-     * @return PlayerRaceHistory[]
+     * @return array<PlayerRaceHistory>
      */
     public function getRaceChangesForPlayer(Player $player): array
     {
-        $sql = "SELECT id, world, player_id, old_race, new_race, created FROM players_race_history WHERE world = :world AND player_id = :playerId ORDER BY created DESC";
+        $sql = <<<SQL
+            SELECT id, world, player_id, old_race, new_race, created
+            FROM players_race_history
+            WHERE world = :world AND player_id = :playerId
+            ORDER BY created DESC
+        SQL;
 
-        $result = $this->database->select($sql, [
-            'world' => $player->world->value,
-            'playerId' => $player->playerId,
-        ]);
+        /** @var array<array{id: int, world: string, player_id: int, old_race: string, new_race: string, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $player->world->value, 'playerId' => $player->playerId]);
 
         $playerRaceHistories = [];
         foreach ($result as $row) {
-            /** @var array{id: int, world: string, player_id: int, old_race: string, new_race: string, created: string} $row */
             $playerRaceHistories[] = $this->hydratePlayerRaceHistory($row);
         }
 
@@ -62,9 +64,7 @@ final class PlayerRaceHistoryRepository extends AbstractRepository implements Re
     {
         $sql = "DELETE FROM players_race_history WHERE world = :world";
 
-        $this->database->delete($sql, [
-            'world' => WorldEnum::AFSRV->value,
-        ]);
+        $this->database->delete($sql, ['world' => WorldEnum::AFSRV->value]);
     }
 
     /**

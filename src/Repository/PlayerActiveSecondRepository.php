@@ -44,7 +44,7 @@ final class PlayerActiveSecondRepository extends AbstractRepository implements R
     }
 
     /**
-     * @param PlayerActiveSecond[] $playerActiveSeconds
+     * @param array<PlayerActiveSecond> $playerActiveSeconds
      */
     public function insertPlayerActiveSeconds(array $playerActiveSeconds): void
     {
@@ -64,34 +64,7 @@ final class PlayerActiveSecondRepository extends AbstractRepository implements R
     }
 
     /**
-     * @return PlayerActiveSecond[]
-     */
-    public function findAllByWorldAndDate(WorldEnum $world, string $created): array
-    {
-        $sql = "SELECT id, world, player_id, seconds, created FROM players_active_seconds WHERE world = :world AND created = :created";
-
-        $result = $this->database->select($sql, [
-            'world' => $world->value,
-            'created' => $created,
-        ]);
-
-        $playerActiveSeconds = [];
-        foreach ($result as $row) {
-            /** @var array{id: int, world: string, player_id: int, seconds: int, created: string} $row */
-            $playerActiveSeconds[$row['player_id']] = new PlayerActiveSecond(
-                id: $row['id'],
-                world: WorldEnum::from($row['world']),
-                playerId: $row['player_id'],
-                seconds: $row['seconds'],
-                created: new DateTimeImmutable($row['created'])
-            );
-        }
-
-        return $playerActiveSeconds;
-    }
-
-    /**
-     * @return Playtime[]
+     * @return array<Playtime>
      */
     public function getPlaytimeByWorld(WorldEnum $world): array
     {
@@ -118,6 +91,7 @@ final class PlayerActiveSecondRepository extends AbstractRepository implements R
                 pas2.seconds - pas1.seconds DESC
         SQL;
 
+        /** @var array<array{world: string, name: string, player_id: int, playtime: int}> $result */
         $result = $this->database->select($sql, [
             'world' => $world->value,
             'yesterday' => (new DateTimeImmutable('-1 day'))->format('Y-m-d'),
@@ -126,7 +100,6 @@ final class PlayerActiveSecondRepository extends AbstractRepository implements R
 
         $playtime = [];
         foreach ($result as $row) {
-            /** @var array{world: string, name: string, player_id: int, playtime: int} $row */
             $playtime[] = new Playtime(
                 world: WorldEnum::from($row['world']),
                 name: $row['name'],

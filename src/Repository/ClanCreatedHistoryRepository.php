@@ -10,14 +10,14 @@ use Jesperbeisner\Fwstats\Model\ClanCreatedHistory;
 
 final class ClanCreatedHistoryRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
-    public function insert(ClanCreatedHistory $clanCreatedHistory): void
+    public function insert(ClanCreatedHistory $clanCreatedHistory): ClanCreatedHistory
     {
         $sql = <<<SQL
             INSERT INTO clans_created_history (world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points)
             VALUES (:world, :clanId, :shortcut, :name, :leaderId, :coLeaderId, :diplomatId, :warPoints)
         SQL;
 
-        $this->database->insert($sql, [
+        $id = $this->database->insert($sql, [
             'world' => $clanCreatedHistory->world->value,
             'clanId' => $clanCreatedHistory->clanId,
             'shortcut' => $clanCreatedHistory->shortcut,
@@ -27,14 +27,14 @@ final class ClanCreatedHistoryRepository extends AbstractRepository implements R
             'diplomatId' => $clanCreatedHistory->diplomatId,
             'warPoints' => $clanCreatedHistory->warPoints,
         ]);
+
+        return ClanCreatedHistory::withId($id, $clanCreatedHistory);
     }
 
     public function resetActionFreewar(): void
     {
         $sql = "DELETE FROM clans_created_history WHERE world = :world";
 
-        $this->database->delete($sql, [
-            'world' => WorldEnum::AFSRV->value,
-        ]);
+        $this->database->delete($sql, ['world' => WorldEnum::AFSRV->value]);
     }
 }

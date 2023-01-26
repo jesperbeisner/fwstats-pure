@@ -13,9 +13,15 @@ interface DatabaseInterface
 
     /**
      * @param array<string, string|int> $params
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function select(string $sql, array $params = []): array;
+
+    /**
+     * @param array<string, string|int> $params
+     * @return null|array{array<mixed>}
+     */
+    public function selectOne(string $sql, array $params = []): ?array;
 
     /**
      * @param array<string, string|int|null> $params

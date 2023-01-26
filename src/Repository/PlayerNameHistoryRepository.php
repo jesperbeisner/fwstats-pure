@@ -12,36 +12,41 @@ use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 
 final class PlayerNameHistoryRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
-    public function insert(PlayerNameHistory $playerNameHistory): void
+    public function insert(PlayerNameHistory $playerNameHistory): PlayerNameHistory
     {
         $sql = <<<SQL
             INSERT INTO players_name_history (world, player_id, old_name, new_name, created)
             VALUES (:world, :playerId, :oldName, :newName, :created)
         SQL;
 
-        $this->database->insert($sql, [
+        $id = $this->database->insert($sql, [
             'world' => $playerNameHistory->world->value,
             'playerId' => $playerNameHistory->playerId,
             'oldName' => $playerNameHistory->oldName,
             'newName' => $playerNameHistory->newName,
             'created' => $playerNameHistory->created->format('Y-m-d H:i:s'),
         ]);
+
+        return PlayerNameHistory::withId($id, $playerNameHistory);
     }
 
     /**
-     * @return PlayerNameHistory[]
+     * @return array<PlayerNameHistory>
      */
     public function getNameChangesByWorld(WorldEnum $worldEnum): array
     {
-        $sql = "SELECT id, world, player_id, old_name, new_name, created FROM players_name_history WHERE world = :world ORDER BY created DESC";
+        $sql = <<<SQL
+            SELECT id, world, player_id, old_name, new_name, created
+            FROM players_name_history
+            WHERE world = :world
+            ORDER BY created DESC
+        SQL;
 
-        $result = $this->database->select($sql, [
-            'world' => $worldEnum->value,
-        ]);
+        /** @var array<array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $worldEnum->value]);
 
         $playerNameHistories = [];
         foreach ($result as $row) {
-            /** @var array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 
@@ -60,14 +65,11 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
             ORDER BY created DESC
         SQL;
 
-        $result = $this->database->select($sql, [
-            'world' => $player->world->value,
-            'playerId' => $player->playerId,
-        ]);
+        /** @var array<array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $player->world->value, 'playerId' => $player->playerId]);
 
         $playerNameHistories = [];
         foreach ($result as $row) {
-            /** @var array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 
@@ -87,13 +89,11 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
             DESC LIMIT 15
         SQL;
 
-        $result = $this->database->select($sql, [
-            'world' => $worldEnum->value,
-        ]);
+        /** @var array<array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $worldEnum->value]);
 
         $playerNameHistories = [];
         foreach ($result as $row) {
-            /** @var array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string} $row */
             $playerNameHistories[] = $this->hydratePlayerNameHistory($row);
         }
 

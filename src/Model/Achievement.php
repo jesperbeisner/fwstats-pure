@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Model;
 
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
 final readonly class Achievement
@@ -24,6 +25,7 @@ final readonly class Achievement
         public int $uniqueNpcKilled,
         public int $groupNpcKilled,
         public int $soulStonesGained,
+        public DateTimeImmutable $created,
     ) {
     }
 
@@ -45,6 +47,7 @@ final readonly class Achievement
             $achievement->uniqueNpcKilled,
             $achievement->groupNpcKilled,
             $achievement->soulStonesGained,
+            $achievement->created
         );
     }
 }

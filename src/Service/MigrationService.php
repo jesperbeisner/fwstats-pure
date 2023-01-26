@@ -57,7 +57,7 @@ final readonly class MigrationService
                 $this->migrationRepository->execute($statement);
             }
 
-            $this->migrationRepository->create(new Migration(null, $fileName, new DateTimeImmutable()));
+            $this->migrationRepository->insert(new Migration(null, $fileName, new DateTimeImmutable()));
         }
     }
 }

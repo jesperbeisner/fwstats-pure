@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Repository;
 
 use DateTimeImmutable;
-use Jesperbeisner\Fwstats\Exception\DatabaseException;
 use Jesperbeisner\Fwstats\Model\Cronjob;
 
 final class CronjobRepository extends AbstractRepository
@@ -23,18 +22,14 @@ final class CronjobRepository extends AbstractRepository
     {
         $sql = "SELECT id, created FROM cronjobs ORDER BY id DESC LIMIT 1";
 
-        /** @var array<array{id: int, created: string}> $result */
-        $result = $this->database->select($sql);
+        /** @var null|array{id: int, created: string} $result */
+        $result = $this->database->selectOne($sql);
 
-        if (count($result) === 0) {
+        if ($result === null) {
             return null;
         }
 
-        if (count($result) > 1) {
-            throw new DatabaseException(sprintf('How can there be more than one entry when I use limit?'));
-        }
-
-        return $this->hydrateCronjob($result[0]);
+        return $this->hydrateCronjob($result);
     }
 
     /**

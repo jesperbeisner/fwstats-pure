@@ -13,7 +13,10 @@ final class UserRepository extends AbstractRepository
 {
     public function insert(User $user): User
     {
-        $sql = "INSERT INTO users (uuid, username, password, token, created) VALUES (:uuid, :username, :password, :token, :created)";
+        $sql = <<<SQL
+            INSERT INTO users (uuid, username, password, token, created)
+            VALUES (:uuid, :username, :password, :token, :created)
+        SQL;
 
         $id = $this->database->insert($sql, [
             'uuid' => $user->uuid,
@@ -30,40 +33,32 @@ final class UserRepository extends AbstractRepository
     {
         $sql = "SELECT id, uuid, username, password, token, created FROM users WHERE username = :username";
 
-        /** @var array<array{id: int, uuid: string, username: string, password: string, token: string, created: string}> $result */
-        $result = $this->database->select($sql, [
-            'username' => $username,
-        ]);
+        /** @var null|array{id: int, uuid: string, username: string, password: string, token: string, created: string} $result */
+        $result = $this->database->selectOne($sql, ['username' => $username]);
 
-        if (count($result) === 0) {
+        if ($result === null) {
             return null;
         }
 
-        if (count($result) > 1) {
-            throw new DatabaseException(sprintf('How can there be more than one user for username "%s"', $username));
-        }
-
-        return $this->hydrateUser($result[0]);
+        return $this->hydrateUser($result);
     }
 
     public function findOneByToken(string $token): ?User
     {
-        $sql = "SELECT id, uuid, username, password, token, created FROM users WHERE token = :token";
+        $sql = <<<SQL
+            SELECT id, uuid, username, password, token, created
+            FROM users
+            WHERE token = :token
+        SQL;
 
-        /** @var array<array{id: int, uuid: string, username: string, password: string, token: string, created: string}> $result */
-        $result = $this->database->select($sql, [
-            'token' => $token,
-        ]);
+        /** @var null|array{id: int, uuid: string, username: string, password: string, token: string, created: string} $result */
+        $result = $this->database->selectOne($sql, ['token' => $token]);
 
-        if (count($result) === 0) {
+        if ($result === null) {
             return null;
         }
 
-        if (count($result) > 1) {
-            throw new DatabaseException(sprintf('How can there be more than one user for token "%s"', $token));
-        }
-
-        return $this->hydrateUser($result[0]);
+        return $this->hydrateUser($result);
     }
 
     public function changePassword(User $user, string $hashedPassword): void
@@ -74,10 +69,7 @@ final class UserRepository extends AbstractRepository
             throw new RuntimeException(sprintf('The user with username "%s" has no id, how is this possible?', $user->username));
         }
 
-        $this->database->execute($sql, [
-            'password' => $hashedPassword,
-            'id' => $user->id,
-        ]);
+        $this->database->execute($sql, ['password' => $hashedPassword, 'id' => $user->id]);
     }
 
     public function changeToken(User $user, string $token): void
@@ -88,10 +80,7 @@ final class UserRepository extends AbstractRepository
             throw new RuntimeException(sprintf('The user with username "%s" has no id, how is this possible?', $user->username));
         }
 
-        $this->database->execute($sql, [
-            'token' => $token,
-            'id' => $user->id,
-        ]);
+        $this->database->execute($sql, ['token' => $token, 'id' => $user->id]);
     }
 
     public function deleteAll(): void
