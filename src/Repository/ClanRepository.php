@@ -10,6 +10,9 @@ use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\ClanRepositoryTest
+ */
 final class ClanRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     public function insert(Clan $clan): Clan

@@ -7,8 +7,27 @@ namespace Jesperbeisner\Fwstats\Repository;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Config;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\ConfigRepositoryTest
+ */
 final class ConfigRepository extends AbstractRepository
 {
+    public function insert(Config $config): Config
+    {
+        $sql = <<<SQL
+            INSERT INTO configs (key, value, created)
+            VALUES (:key, :value, :created)
+        SQL;
+
+        $id = $this->database->insert($sql, [
+            'key' => $config->key,
+            'value' => $config->value,
+            'created' => $config->created->format('Y-m-d H:i:s')
+        ]);
+
+        return Config::withId($id, $config);
+    }
+
     public function findByKey(string $key): ?Config
     {
         $sql = "SELECT id, key, value, created FROM configs WHERE key = :key";
