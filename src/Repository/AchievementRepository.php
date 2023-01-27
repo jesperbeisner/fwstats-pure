@@ -11,6 +11,9 @@ use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Model\Player;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\AchievementRepositoryTest
+ */
 final class AchievementRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
     public function insert(Achievement $achievement): Achievement
@@ -77,10 +80,7 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
 
         try {
             $this->database->beginTransaction();
-
-            $this->database->delete($sql, [
-                'world' => $world->value,
-            ]);
+            $this->database->delete($sql, ['world' => $world->value]);
 
             foreach ($achievements as $achievement) {
                 $this->insert($achievement);

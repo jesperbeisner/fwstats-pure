@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Model;
 
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
 final readonly class ClanNameHistory
@@ -16,6 +17,7 @@ final readonly class ClanNameHistory
         public string $newShortcut,
         public string $oldName,
         public string $newName,
+        public DateTimeImmutable $created,
     ) {
     }
 
@@ -29,6 +31,7 @@ final readonly class ClanNameHistory
             $clanNameHistory->newShortcut,
             $clanNameHistory->oldName,
             $clanNameHistory->newName,
+            $clanNameHistory->created,
         );
     }
 }

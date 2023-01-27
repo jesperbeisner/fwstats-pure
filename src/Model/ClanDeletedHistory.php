@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Model;
 
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
 final readonly class ClanDeletedHistory
@@ -18,6 +19,7 @@ final readonly class ClanDeletedHistory
         public int $coLeaderId,
         public int $diplomatId,
         public int $warPoints,
+        public DateTimeImmutable $created,
     ) {
     }
 
@@ -33,6 +35,7 @@ final readonly class ClanDeletedHistory
             $clanDeletedHistory->coLeaderId,
             $clanDeletedHistory->diplomatId,
             $clanDeletedHistory->warPoints,
+            $clanDeletedHistory->created,
         );
     }
 }
