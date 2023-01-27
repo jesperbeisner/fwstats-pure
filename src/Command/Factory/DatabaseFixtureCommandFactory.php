@@ -9,6 +9,7 @@ use Jesperbeisner\Fwstats\Command\DatabaseFixtureCommand;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
+use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
@@ -36,6 +37,7 @@ class DatabaseFixtureCommandFactory implements FactoryInterface
             $container->get(NameChangeImageService::class),
             $container->get(UserRepository::class),
             $container->get(CreateUserAction::class),
+            $container->get(ConfigRepository::class),
         );
     }
 }

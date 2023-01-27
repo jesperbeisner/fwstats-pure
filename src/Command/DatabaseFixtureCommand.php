@@ -14,6 +14,7 @@ use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
 use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
+use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
@@ -42,6 +43,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
         private readonly NameChangeImageService $nameChangeImageService,
         private readonly UserRepository $userRepository,
         private readonly CreateUserAction $createUserAction,
+        private readonly ConfigRepository $configRepository,
     ) {
     }
 
@@ -82,6 +84,9 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
         $this->writeLine("Creating user account...");
         $this->createUserAccount();
+
+        $this->writeLine("Deleting old config...");
+        $this->configRepository->deleteAll();
 
         $this->writeLine("Finished the 'app:database-fixture' command in {$this->getTime()} ms.");
 
