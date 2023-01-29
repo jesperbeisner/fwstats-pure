@@ -38,6 +38,7 @@ return [
     'text.on-average' => 'Im Durchschnitt',
     'text.no-name-changes-available' => 'Keine Namensänderungen vorhanden',
     'text.no-race-changes-available' => 'Keine Rassenänderungen vorhanden',
+    'text.no-profession-changes-available' => 'Keine Berufsänderungen vorhanden',
     'text.search.players-found' => 'Es wurden folgende Spieler mit "%SEARCH_QUERY%" im Namen gefunden',
     'text.search.no-players-found' => 'Es wurde kein Spieler mit "%SEARCH_QUERY%" im Namen gefunden',
     'text.button.search' => 'Suchen',
