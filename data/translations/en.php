@@ -14,7 +14,7 @@ return [
     'navigation.admin' => 'Admin',
     'navigation.admin.overview' => 'Overview',
     'navigation.admin.request-logs' => 'Request logs',
-    'navigation.xp' => 'XP',
+    'navigation.xp' => 'XP-changes',
 
     'title.index' => 'Index',
     'title.playtime' => 'Today\'s playtime',
@@ -27,7 +27,7 @@ return [
     'title.search' => 'Search',
     'title.ranking-pictures' => 'Ranking pictures',
     'title.name-changes-pictures' => 'Name changes pictures',
-    'title.xp' => 'XP',
+    'title.xp' => 'Today\'s XP changes',
 
     'text.404-page-not-found' => '404 - Page not found',
     'text.translation-change-success' => 'Your language settings have been successfully changed',

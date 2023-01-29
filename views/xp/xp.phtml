@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Helper\Html;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
@@ -9,15 +11,130 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 
 $this->setTitle('title.xp');
 
+/** @var array<array{player_id: int, name: string, xp: int, soul_xp: int, total_xp: int, xp_changes: int}> $afsrvXpChanges */
+$afsrvXpChanges = $vars['afsrvXpChanges'];
+
+/** @var array<array{player_id: int, name: string, xp: int, soul_xp: int, total_xp: int, xp_changes: int}> $chaosXpChanges */
+$chaosXpChanges = $vars['chaosXpChanges'];
+
 ?>
-<main id="site-main" class="container mt-0 mb-5">
+<main class="container mt-0 mb-5">
     <h1 class="is-size-1">
         <?= $this->text('title.xp') ?>
     </h1>
     <div class="card">
         <div class="card-content">
             <div class="content">
-                XpController
+                <div id="playtime">
+                    <div class="tabs is-centered is-medium">
+                        <ul>
+                            <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
+                            <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div id="action-freewar-tab-content">
+                            <div class="table-container">
+                                <table class="table is-hoverable is-fullwidth">
+                                    <thead>
+                                    <tr>
+                                        <td>#</td>
+                                        <td><?= $this->text('table.name') ?></td>
+                                        <td class="has-text-centered"><?= $this->text('table.xp') ?></td>
+                                        <td class="has-text-centered"><?= $this->text('table.soul-xp') ?></td>
+                                        <td class="has-text-centered"><?= $this->text('table.total-xp') ?></td>
+                                        <td class="has-text-centered"><?= $this->text('table.xp-changes') ?></td>
+                                        <td class="has-text-right"></td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $i = 1; ?>
+                                    <?php foreach ($afsrvXpChanges as $afsrvXpChange): ?>
+                                        <tr>
+                                            <td>
+                                                <?= $i ?>
+                                            </td>
+                                            <td title="<?= $this->escape($afsrvXpChange['name']) ?>">
+                                                <a href="/profile/<?= WorldEnum::AFSRV->value ?>/<?= $afsrvXpChange['player_id'] ?>">
+                                                    <?= Html::shortNames($this->escape($afsrvXpChange['name'])) ?>
+                                                </a>
+                                            </td>
+                                            <td class="has-text-centered"><?= Html::numberFormat($afsrvXpChange['xp']) ?></td>
+                                            <td class="has-text-centered"><?= Html::numberFormat($afsrvXpChange['soul_xp']) ?></td>
+                                            <td class="has-text-centered"><?= Html::numberFormat($afsrvXpChange['total_xp']) ?></td>
+                                            <td class="has-text-centered">
+                                                <?php if ($afsrvXpChange['xp_changes'] < 0): ?>
+                                                    <span class="has-text-danger-dark has-text-weight-bold"><?= Html::numberFormat($afsrvXpChange['xp_changes']) ?></span>
+                                                <?php else: ?>
+                                                    <span class="has-text-success-dark has-text-weight-bold">+<?= Html::numberFormat($afsrvXpChange['xp_changes']) ?></span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="has-text-right">
+                                                <a href="https://<?= WorldEnum::AFSRV->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $afsrvXpChange['player_id'] ?>" target="_blank" class="player_profile_link">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
+                                                        <path d="M128 32H32C14.31 32 0 46.31 0 64v96c0 17.69 14.31 32 32 32s32-14.31 32-32V96h64c17.69 0 32-14.31 32-32S145.7 32 128 32zM416 32h-96c-17.69 0-32 14.31-32 32s14.31 32 32 32h64v64c0 17.69 14.31 32 32 32s32-14.31 32-32V64C448 46.31 433.7 32 416 32zM128 416H64v-64c0-17.69-14.31-32-32-32s-32 14.31-32 32v96c0 17.69 14.31 32 32 32h96c17.69 0 32-14.31 32-32S145.7 416 128 416zM416 320c-17.69 0-32 14.31-32 32v64h-64c-17.69 0-32 14.31-32 32s14.31 32 32 32h96c17.69 0 32-14.31 32-32v-96C448 334.3 433.7 320 416 320z"/>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php $i++ ?>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="chaos-freewar-tab-content" class="is-hidden">
+                            <div class="table-container">
+                                <table class="table is-hoverable is-fullwidth">
+                                    <thead>
+                                    <tr>
+                                        <td>#</td>
+                                        <td><?= $this->text('table.name') ?></td>
+                                        <td class="has-text-centered"><?= $this->text('table.xp') ?></td>
+                                        <td class="has-text-centered"><?= $this->text('table.soul-xp') ?></td>
+                                        <td class="has-text-centered"><?= $this->text('table.total-xp') ?></td>
+                                        <td class="has-text-centered"><?= $this->text('table.xp-changes') ?></td>
+                                        <td class="has-text-right"></td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $i = 1; ?>
+                                    <?php foreach ($chaosXpChanges as $chaosXpChange): ?>
+                                        <tr>
+                                            <td>
+                                                <?= $i ?>
+                                            </td>
+                                            <td title="<?= $this->escape($chaosXpChange['name']) ?>">
+                                                <a href="/profile/<?= WorldEnum::CHAOS->value ?>/<?= $chaosXpChange['player_id'] ?>">
+                                                    <?= Html::shortNames($this->escape($chaosXpChange['name'])) ?>
+                                                </a>
+                                            </td>
+                                            <td class="has-text-centered"><?= Html::numberFormat($chaosXpChange['xp']) ?></td>
+                                            <td class="has-text-centered"><?= Html::numberFormat($chaosXpChange['soul_xp']) ?></td>
+                                            <td class="has-text-centered"><?= Html::numberFormat($chaosXpChange['total_xp']) ?></td>
+                                            <td class="has-text-centered">
+                                                <?php if ($chaosXpChange['xp_changes'] < 0): ?>
+                                                    <span class="has-text-danger-dark has-text-weight-bold"><?= Html::numberFormat($chaosXpChange['xp_changes']) ?></span>
+                                                <?php else: ?>
+                                                    <span class="has-text-success-dark has-text-weight-bold">+<?= Html::numberFormat($chaosXpChange['xp_changes']) ?></span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="has-text-right">
+                                                <a href="https://<?= WorldEnum::CHAOS->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $chaosXpChange['player_id'] ?>" target="_blank" class="player_profile_link">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
+                                                        <path d="M128 32H32C14.31 32 0 46.31 0 64v96c0 17.69 14.31 32 32 32s32-14.31 32-32V96h64c17.69 0 32-14.31 32-32S145.7 32 128 32zM416 32h-96c-17.69 0-32 14.31-32 32s14.31 32 32 32h64v64c0 17.69 14.31 32 32 32s32-14.31 32-32V64C448 46.31 433.7 32 416 32zM128 416H64v-64c0-17.69-14.31-32-32-32s-32 14.31-32 32v96c0 17.69 14.31 32 32 32h96c17.69 0 32-14.31 32-32S145.7 416 128 416zM416 320c-17.69 0-32 14.31-32 32v64h-64c-17.69 0-32 14.31-32 32s14.31 32 32 32h96c17.69 0 32-14.31 32-32v-96C448 334.3 433.7 320 416 320z"/>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php $i++ ?>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

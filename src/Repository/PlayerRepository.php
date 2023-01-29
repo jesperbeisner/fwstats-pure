@@ -177,6 +177,28 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
         return $result;
     }
 
+    /**
+     * @return array<array{player_id: int, name: string, xp: int, soul_xp: int, total_xp: int, xp_changes: int}>
+     */
+    public function getPlayerXpChangesForWorld(WorldEnum $worldEnum): array
+    {
+        $sql = <<<SQL
+            SELECT players.player_id, players.name, players.xp, players.soul_xp, players.total_xp, players_xp_history.start_xp, players_xp_history.end_xp, players_xp_history.end_xp - players_xp_history.start_xp AS xp_changes
+            FROM players
+            INNER JOIN players_xp_history ON players.player_id = players_xp_history.player_id AND players_xp_history.world = players.world
+            WHERE players.world = :world AND day = :day AND players_xp_history.end_xp - players_xp_history.start_xp != 0
+            ORDER BY players_xp_history.end_xp - players_xp_history.start_xp DESC
+        SQL;
+
+        /** @var array<array{player_id: int, name: string, xp: int, soul_xp: int, total_xp: int, start_xp: int, end_xp: int, xp_changes: int}> $result */
+        $result = $this->database->select($sql, [
+            'world' => $worldEnum->value,
+            'day' => (new DateTimeImmutable())->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
+        ]);
+
+        return $result;
+    }
+
     public function deleteAll(): void
     {
         $sql = "DELETE FROM players";

@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerXpHistory;
+use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerXpHistoryRepository;
 use Jesperbeisner\Fwstats\Service\XpService;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
@@ -24,7 +25,8 @@ final class XpServiceTest extends AbstractTestCase
         $database->setSelectReturn([]);
 
         $playerXpHistoryRepository = new PlayerXpHistoryRepository($database);
-        $xpService = new XpService($playerXpHistoryRepository);
+        $playerRepository = new PlayerRepository($database);
+        $xpService = new XpService($playerXpHistoryRepository, $playerRepository);
 
         $xpChanges = $xpService->getXpChangesForPlayer(new Player(null, WorldEnum::AFSRV, 1, 'test', 'Onlo', 1, 1, 2, null, null, new DateTimeImmutable()), 7);
 
@@ -49,7 +51,8 @@ final class XpServiceTest extends AbstractTestCase
         ]);
 
         $playerXpHistoryRepository = new PlayerXpHistoryRepository($database);
-        $xpService = new XpService($playerXpHistoryRepository);
+        $playerRepository = new PlayerRepository($database);
+        $xpService = new XpService($playerXpHistoryRepository, $playerRepository);
 
         $xpChanges = $xpService->getXpChangesForPlayer(new Player(null, WorldEnum::AFSRV, 1, 'test', 'Onlo', 1, 1, 2, null, null, new DateTimeImmutable()), 7);
 
@@ -70,7 +73,8 @@ final class XpServiceTest extends AbstractTestCase
         $database->setSelectReturn([]);
 
         $playerXpHistoryRepository = new PlayerXpHistoryRepository($database);
-        $xpService = new XpService($playerXpHistoryRepository);
+        $playerRepository = new PlayerRepository($database);
+        $xpService = new XpService($playerXpHistoryRepository, $playerRepository);
 
         $xpChanges = $xpService->getXpChangesForPlayer(new Player(null, WorldEnum::AFSRV, 1, 'test', 'Onlo', 1, 1, 2, null, null, new DateTimeImmutable()), 100);
 

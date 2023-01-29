@@ -14,7 +14,7 @@ return [
     'navigation.admin' => 'Admin',
     'navigation.admin.overview' => 'Übersicht',
     'navigation.admin.request-logs' => 'Request Logs',
-    'navigation.xp' => 'XP',
+    'navigation.xp' => 'XP-Änderungen',
 
     'title.index' => 'Index',
     'title.playtime' => 'Heutige Spielzeit',
@@ -27,7 +27,7 @@ return [
     'title.search' => 'Suche',
     'title.ranking-pictures' => 'Ranking Bilder',
     'title.name-changes-pictures' => 'Namensänderungsbilder',
-    'title.xp' => 'XP',
+    'title.xp' => 'Heutige XP Änderungen',
 
     'text.404-page-not-found' => '404 - Seite nicht gefunden',
     'text.translation-change-success' => 'Deine Spracheinstellungen wurden erfolgreich geändert',
@@ -97,7 +97,7 @@ return [
     'table.day' => 'Tag',
     'table.start-xp' => 'Start-XP',
     'table.end-xp' => 'End-XP',
-    'table.xp-changes' => 'Veränderung',
+    'table.xp-changes' => 'Änderung',
 
     'hover.change-language-to-english' => 'Sprache auf Englisch ändern',
     'hover.change-language-to-german' => 'Sprache auf Deutsch ändern',

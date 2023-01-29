@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Service;
 
 use DateTimeImmutable;
+use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerXpHistory;
+use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerXpHistoryRepository;
 
 /**
@@ -16,6 +18,7 @@ final readonly class XpService
 {
     public function __construct(
         private PlayerXpHistoryRepository $playerXpHistoryRepository,
+        private PlayerRepository $playerRepository,
     ) {
     }
 
@@ -37,5 +40,14 @@ final readonly class XpService
         }
 
         return $xpChanges;
+    }
+
+    /**
+     * @param WorldEnum $worldEnum
+     * @return array<array{player_id: int, name: string, xp: int, soul_xp: int, total_xp: int, xp_changes: int}>
+     */
+    public function getXpChangesForWorld(WorldEnum $worldEnum): array
+    {
+        return $this->playerRepository->getPlayerXpChangesForWorld($worldEnum);
     }
 }

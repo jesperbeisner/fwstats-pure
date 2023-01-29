@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Service\Factory;
 
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
+use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerXpHistoryRepository;
 use Jesperbeisner\Fwstats\Service\XpService;
 
@@ -15,6 +16,7 @@ class XpServiceFactory implements FactoryInterface
     {
         return new XpService(
             $container->get(PlayerXpHistoryRepository::class),
+            $container->get(PlayerRepository::class),
         );
     }
 }
