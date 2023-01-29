@@ -11,6 +11,9 @@ use Jesperbeisner\Fwstats\Interface\EndProcessInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Interface\StartProcessInterface;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Stdlib\ConfigTest
+ */
 final class Config
 {
     /**
