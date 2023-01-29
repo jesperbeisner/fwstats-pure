@@ -13,9 +13,12 @@ use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\PlayerActiveSecondRepositoryTest
+ */
 final class PlayerActiveSecondRepository extends AbstractRepository implements ResetActionFreewarInterface
 {
-    public function insert(PlayerActiveSecond $playerActiveSecond): void
+    public function insert(PlayerActiveSecond $playerActiveSecond): PlayerActiveSecond
     {
         $sql = <<<SQL
             UPDATE players_active_seconds
@@ -35,12 +38,14 @@ final class PlayerActiveSecondRepository extends AbstractRepository implements R
             VALUES (:world, :playerId, :seconds, :created)
         SQL;
 
-        $this->database->insert($sql, [
+        $id = $this->database->insert($sql, [
             'world' => $playerActiveSecond->world->value,
             'playerId' => $playerActiveSecond->playerId,
             'seconds' => $playerActiveSecond->seconds,
             'created' => $playerActiveSecond->created->format('Y-m-d')
         ]);
+
+        return PlayerActiveSecond::withId($id, $playerActiveSecond);
     }
 
     /**

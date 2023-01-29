@@ -7,6 +7,9 @@ namespace Jesperbeisner\Fwstats\Repository;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Cronjob;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\CronjobRepositoryTest
+ */
 final class CronjobRepository extends AbstractRepository
 {
     public function insert(Cronjob $cronjob): Cronjob
@@ -20,7 +23,7 @@ final class CronjobRepository extends AbstractRepository
 
     public function findLastCronjob(): ?Cronjob
     {
-        $sql = "SELECT id, created FROM cronjobs ORDER BY id DESC LIMIT 1";
+        $sql = "SELECT id, created FROM cronjobs ORDER BY created DESC LIMIT 1";
 
         /** @var null|array{id: int, created: string} $result */
         $result = $this->database->selectOne($sql);

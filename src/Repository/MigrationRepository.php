@@ -7,6 +7,9 @@ namespace Jesperbeisner\Fwstats\Repository;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Migration;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\MigrationRepositoryTest
+ */
 final class MigrationRepository extends AbstractRepository
 {
     public function insert(Migration $migration): Migration

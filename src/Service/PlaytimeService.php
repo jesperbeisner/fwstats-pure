@@ -8,10 +8,10 @@ use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 
-final class PlaytimeService
+final readonly class PlaytimeService
 {
     public function __construct(
-        private readonly PlayerActiveSecondRepository $playerActiveSecondRepository,
+        private PlayerActiveSecondRepository $playerActiveSecondRepository,
     ) {
     }
 
@@ -21,17 +21,11 @@ final class PlaytimeService
     public function getPlaytimesForPlayer(Player $player, int $days): array
     {
         $result = [];
-
-        $weeklyPlaytimes = $this->playerActiveSecondRepository->getPlaytimesForPlayer($player, $days);
+        $playtimes = $this->playerActiveSecondRepository->getPlaytimesForPlayer($player, $days);
 
         for ($i = 1; $i < $days + 1; $i++) {
-            if ($weeklyPlaytimes['day_' . $i] !== null && $weeklyPlaytimes['day_' . ($i + 1)] !== null) {
-                $result[] = new Playtime(
-                    $player->world,
-                    $player->name,
-                    $player->playerId,
-                    $weeklyPlaytimes['day_' . $i] - $weeklyPlaytimes['day_' . ($i + 1)]
-                );
+            if ($playtimes['day_' . $i] !== null && $playtimes['day_' . ($i + 1)] !== null) {
+                $result[] = new Playtime($player->world, $player->name, $player->playerId, $playtimes['day_' . $i] - $playtimes['day_' . ($i + 1)]);
             } else {
                 $result[] = null;
             }
