@@ -58,7 +58,7 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
     public function findAllByWorldAndOrderedByTotalXp(WorldEnum $world, int $offset): array
     {
         $sql = <<<SQL
-            SELECT players.id, players.world, players.player_id, players.name, players.race, players.xp, players.soul_xp, players.total_xp, players.profession, clans.id AS clan_id, clans.name AS clan_name, clans.shortcut AS clan_shortcut
+            SELECT players.id, players.world, players.player_id, players.name, players.race, players.xp, players.soul_xp, players.total_xp, players.profession, clans.clan_id AS clan_id, clans.name AS clan_name, clans.shortcut AS clan_shortcut
             FROM players
             LEFT JOIN clans ON clans.clan_id = players.clan_id AND clans.world = players.world
             WHERE players.world = :world
