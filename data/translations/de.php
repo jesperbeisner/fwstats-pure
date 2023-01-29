@@ -15,6 +15,8 @@ return [
     'navigation.admin.overview' => 'Übersicht',
     'navigation.admin.request-logs' => 'Request Logs',
     'navigation.xp' => 'XP-Änderungen',
+    'navigation.changes.races' => 'Rassen',
+    'navigation.changes.professions' => 'Berufe',
 
     'title.index' => 'Index',
     'title.playtime' => 'Heutige Spielzeit',
@@ -72,6 +74,9 @@ return [
     'text.total-visits' => 'Gesamtaufrufe',
     'text.xp-changes-last-7-days' => 'XP-Änderungen der letzten 7 Tage',
     'text.system-information' => 'Systeminformationen',
+    'text.no-name-changes-for-world-available' => 'Es sind noch keine Namensänderungen für %WORLD% vorhanden',
+    'text.no-race-changes-for-world-available' => 'Es sind noch keine Rassenänderungen für %WORLD% vorhanden',
+    'text.no-profession-changes-for-world-available' => 'Es sind noch keine Berufsänderungen für %WORLD% vorhanden',
 
     'table.name' => 'Name',
     'table.world' => 'Welt',

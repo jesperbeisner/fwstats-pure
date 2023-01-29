@@ -2,29 +2,28 @@
 
 declare(strict_types=1);
 
-use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
 /** @var array<string, mixed> $vars */
 
-/** @var PlayerNameHistory[] $afsrvNameChanges */
-$afsrvNameChanges = $vars['afsrvNameChanges'];
+$this->setTitle('title.race-changes');
 
-/** @var PlayerNameHistory[] $chaosNameChanges */
-$chaosNameChanges = $vars['chaosNameChanges'];
+/** @var array<array{world: string, player_id: int, name: string, old_race: string, new_race: string, created: string}> $afsrvRaceChanges */
+$afsrvRaceChanges = $vars['afsrvRaceChanges'];
 
-$this->setTitle('title.name-changes');
+/** @var array<array{world: string, player_id: int, name: string, old_race: string, new_race: string, created: string}> $chaosRaceChanges */
+$chaosRaceChanges = $vars['chaosRaceChanges'];
 
 ?>
 <main class="container mt-0 mb-5">
     <h1 class="is-size-1">
-        <?= $this->text('title.name-changes') ?>
+        <?= $this->text('title.race-changes') ?>
     </h1>
     <div class="card">
         <div class="card-content">
             <div class="content">
-                <div id="name-change">
+                <div id="race-change">
                     <div class="tabs is-centered is-medium">
                         <ul>
                             <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
@@ -33,22 +32,22 @@ $this->setTitle('title.name-changes');
                     </div>
                     <div>
                         <div id="action-freewar-tab-content">
-                            <?php if (count($afsrvNameChanges) > 0): ?>
-                                <?php $nameChanges = $afsrvNameChanges ?>
-                                <?php require __DIR__ . '/_name-changes-table.phtml' ?>
+                            <?php if (count($afsrvRaceChanges) > 0): ?>
+                                <?php $raceChanges = $afsrvRaceChanges ?>
+                                <?php require __DIR__ . '/_race-changes-table.phtml' ?>
                             <?php else: ?>
                                 <p class="has-text-centered">
-                                    <?= $this->text('text.no-name-changes-for-world-available', ['%WORLD%' => 'ActionFreewar']) ?>
+                                    <?= $this->text('text.no-race-changes-for-world-available', ['%WORLD%' => 'ActionFreewar']) ?>
                                 </p>
                             <?php endif; ?>
                         </div>
                         <div id="chaos-freewar-tab-content" class="is-hidden">
-                            <?php if (count($chaosNameChanges) > 0): ?>
-                                <?php $nameChanges = $chaosNameChanges ?>
-                                <?php require __DIR__ . '/_name-changes-table.phtml' ?>
+                            <?php if (count($chaosRaceChanges) > 0): ?>
+                                <?php $raceChanges = $chaosRaceChanges ?>
+                                <?php require __DIR__ . '/_race-changes-table.phtml' ?>
                             <?php else: ?>
                                 <p class="has-text-centered">
-                                    <?= $this->text('text.no-name-changes-for-world-available', ['%WORLD%' => 'ChaosFreewar']) ?>
+                                    <?= $this->text('text.no-race-changes-for-world-available', ['%WORLD%' => 'ChaosFreewar']) ?>
                                 </p>
                             <?php endif; ?>
                         </div>

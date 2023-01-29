@@ -1,0 +1,58 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
+$this->setTitle('title.profession-changes');
+
+/** @var array<array{world: string, player_id: int, name: string, old_profession: null|string, new_profession: null|string, created: string}> $afsrvProfessionChanges */
+$afsrvProfessionChanges = $vars['afsrvProfessionChanges'];
+
+/** @var array<array{world: string, player_id: int, name: string, old_profession: null|string, new_profession: null|string, created: string}> $chaosProfessionChanges */
+$chaosProfessionChanges = $vars['chaosProfessionChanges'];
+
+?>
+<main class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.profession-changes') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <div id="profession-change">
+                    <div class="tabs is-centered is-medium">
+                        <ul>
+                            <li class="is-active" id="action-freewar-tab"><a>ActionFreewar</a></li>
+                            <li id="chaos-freewar-tab"><a>ChaosFreewar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div id="action-freewar-tab-content">
+                            <?php if (count($afsrvProfessionChanges) > 0): ?>
+                                <?php $professionChanges = $afsrvProfessionChanges ?>
+                                <?php require __DIR__ . '/_profession-changes-table.phtml' ?>
+                            <?php else: ?>
+                                <p class="has-text-centered">
+                                    <?= $this->text('text.no-profession-changes-for-world-available', ['%WORLD%' => 'ActionFreewar']) ?>
+                                </p>
+                            <?php endif; ?>
+                        </div>
+                        <div id="chaos-freewar-tab-content" class="is-hidden">
+                            <?php if (count($chaosProfessionChanges) > 0): ?>
+                                <?php $professionChanges = $chaosProfessionChanges ?>
+                                <?php require __DIR__ . '/_profession-changes-table.phtml' ?>
+                            <?php else: ?>
+                                <p class="has-text-centered">
+                                    <?= $this->text('text.no-profession-changes-for-world-available', ['%WORLD%' => 'ChaosFreewar']) ?>
+                                </p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

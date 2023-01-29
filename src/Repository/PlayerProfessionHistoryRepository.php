@@ -53,6 +53,25 @@ final class PlayerProfessionHistoryRepository extends AbstractRepository impleme
         return $playerProfessionHistories;
     }
 
+    /**
+     * @return array<array{world: string, player_id: int, name: string, old_profession: null|string, new_profession: null|string, created: string}>
+     */
+    public function getProfessionChangesByWorld(WorldEnum $worldEnum): array
+    {
+        $sql = <<<SQL
+            SELECT pph.world, players.player_id, players.name, pph.old_profession, pph.new_profession, pph.created
+            FROM players_profession_history pph
+            INNER JOIN players ON players.player_id = pph.player_id AND players.world = pph.world
+            WHERE pph.world = :world
+            ORDER BY pph.created DESC
+        SQL;
+
+        /** @var array<array{world: string, player_id: int, name: string, old_profession: null|string, new_profession: null|string, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $worldEnum->value]);
+
+        return $result;
+    }
+
     public function deleteAll(): void
     {
         $sql = "DELETE FROM players_profession_history";

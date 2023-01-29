@@ -30,3 +30,4 @@
 - ~~Change admin navigation to include logs~~
 - ~~Track xp gains for a single day~~
 - ~~System information~~
+- ~~Race changed and profession changes sites added~~
