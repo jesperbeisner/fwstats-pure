@@ -71,6 +71,7 @@ return [
     'text.do-you-really-wanna-reset-action-freewar' => 'Do you really want to reset ActionFreewar?',
     'text.total-visits' => 'Total visits',
     'text.xp-changes-last-7-days' => 'XP changes for the last 7 days',
+    'text.system-information' => 'System information\'s',
 
     'table.name' => 'Name',
     'table.world' => 'World',
@@ -98,6 +99,8 @@ return [
     'table.start-xp' => 'Start-XP',
     'table.end-xp' => 'End-XP',
     'table.xp-changes' => 'Changes',
+    'table.php-version' => 'PHP-Version',
+    'table.database-size' => 'Database size',
 
     'hover.change-language-to-english' => 'Change language to english',
     'hover.change-language-to-german' => 'Change language to german',

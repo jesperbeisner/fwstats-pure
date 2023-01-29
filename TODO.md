@@ -2,14 +2,14 @@
 
 ## Ongoing
 - Add more tests
-- Track xp gains for a single day
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
 - Race change pictures
 - Profession change pictures
-- System information
 - Different days on request logs
 - Track deleted/banned players
+- Display user infos in profile
+- Display player achievements
 
 ## Finished
 - ~~Pagination on index page~~
@@ -28,3 +28,5 @@
 - ~~Make domain name configurable~~
 - ~~Split Processes in Start and End~~
 - ~~Change admin navigation to include logs~~
+- ~~Track xp gains for a single day~~
+- ~~System information~~

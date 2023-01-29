@@ -70,7 +70,8 @@ return [
     'text.reset-action-freewar-success' => 'ActionFreewar wurde erfolgreich zurückgesetzt',
     'text.do-you-really-wanna-reset-action-freewar' => 'Möchtest du ActionFreewar wirklich zurücksetzen?',
     'text.total-visits' => 'Gesamtaufrufe',
-    'text.xp-changes-last-7-days' => 'XP Veränderungen der letzten 7 Tage',
+    'text.xp-changes-last-7-days' => 'XP-Änderungen der letzten 7 Tage',
+    'text.system-information' => 'Systeminformationen',
 
     'table.name' => 'Name',
     'table.world' => 'Welt',
@@ -98,6 +99,8 @@ return [
     'table.start-xp' => 'Start-XP',
     'table.end-xp' => 'End-XP',
     'table.xp-changes' => 'Änderung',
+    'table.php-version' => 'PHP-Version',
+    'table.database-size' => 'Datenbankgröße',
 
     'hover.change-language-to-english' => 'Sprache auf Englisch ändern',
     'hover.change-language-to-german' => 'Sprache auf Deutsch ändern',

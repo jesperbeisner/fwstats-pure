@@ -7,16 +7,35 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var RenderService $this */
 /** @var array<string, mixed> $vars */
 
+/** @var string $phpVersion */
+$phpVersion = $vars['phpVersion'];
+
+/** @var string $databaseSize */
+$databaseSize = $vars['databaseSize'];
+
 ?>
 <div class="card mt-5">
     <div class="card-header">
         <p class="card-header-title">
-            System information
+            <?= $this->text('text.system-information') ?>
         </p>
     </div>
     <div class="card-content">
         <div class="content has-text-centered">
-            Hello World
+            <table class="table is-hoverable is-fullwidth">
+                <thead>
+                <tr>
+                    <td><?= $this->text('table.php-version') ?></td>
+                    <td><?= $this->text('table.database-size') ?></td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?= $phpVersion ?></td>
+                        <td><?= $databaseSize ?></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
