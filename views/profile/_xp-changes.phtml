@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Helper\Html;
+use Jesperbeisner\Fwstats\Model\PlayerXpHistory;
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, null|PlayerXpHistory> $weeklyXpChanges */
+
+?>
+<div class="card">
+    <div class="card-header">
+        <p class="card-header-title">
+            <?= $this->text('text.xp-changes-last-7-days') ?>
+        </p>
+    </div>
+    <div class="card-content">
+        <div class="content">
+            <div class="table-container">
+                <table class="table is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <td class="has-text-centered"><?= $this->text('table.start-xp') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.end-xp') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.xp-changes') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.date') ?></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $date = new DateTime('+1 day') ?>
+                    <?php foreach ($weeklyXpChanges as $weeklyXpChange): ?>
+                        <tr>
+                            <?php if ($weeklyXpChange === null): ?>
+                                <td class="has-text-centered">-</td>
+                                <td class="has-text-centered">-</td>
+                                <td class="has-text-centered has-text-weight-bold">-</td>
+                            <?php else: ?>
+                                <td class="has-text-centered"><?= Html::numberFormat($weeklyXpChange->startXp) ?></td>
+                                <td class="has-text-centered"><?= Html::numberFormat($weeklyXpChange->endXp) ?></td>
+                                <td class="has-text-centered">
+                                    <?php $xpChange = $weeklyXpChange->endXp - $weeklyXpChange->startXp; ?>
+
+                                    <?php if ($xpChange < 0): ?>
+                                        <span class="has-text-danger-dark has-text-weight-bold">-<?= Html::numberFormat($xpChange) ?></span>
+                                    <?php elseif ($xpChange === 0): ?>
+                                        <?= 0 ?>
+                                    <?php else: ?>
+                                        <span class="has-text-success-dark has-text-weight-bold">+<?= Html::numberFormat($xpChange) ?></span>
+                                    <?php endif; ?>
+                                </td>
+                            <?php endif; ?>
+                            <td class="has-text-centered"><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

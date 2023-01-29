@@ -27,8 +27,9 @@ return [
     ],
     'routes' => [
         ['route' => '/', 'methods' => ['GET'], 'controller' => Controller\IndexController::class],
-        ['route' => '/profile/{world}/{id}', 'methods' => ['GET'], 'controller' => Controller\ProfileController::class],
+        ['route' => '/profile/{world}/{player-id}', 'methods' => ['GET'], 'controller' => Controller\ProfileController::class],
         ['route' => '/playtime', 'methods' => ['GET'], 'controller' => Controller\PlaytimeController::class],
+        ['route' => '/xp', 'methods' => ['GET'], 'controller' => Controller\XpController::class],
         ['route' => '/changes/names', 'methods' => ['GET'], 'controller' => Controller\ChangeController::class],
         ['route' => '/images/ranking', 'methods' => ['GET'], 'controller' => Controller\RankingImageController::class],
         ['route' => '/images/{world}-ranking.png', 'methods' => ['GET'], 'controller' => Controller\RankingImageDisplayController::class],
@@ -90,6 +91,7 @@ return [
         Controller\GenerateNewBearerTokenController::class => Controller\Factory\GenerateNewBearerTokenControllerFactory::class,
         Controller\ChangeDomainNameController::class => Controller\Factory\ChangeDomainNameControllerFactory::class,
         Controller\ResetActionFreewarController::class => Controller\Factory\ResetActionFreewarControllerFactory::class,
+        Controller\XpController::class => Controller\Factory\XpControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,
@@ -106,6 +108,7 @@ return [
         Interface\CronjobInterface::class => Service\Factory\CronjobServiceFactory::class,
         Service\SetupService::class => Service\Factory\SetupServiceFactory::class,
         Service\MigrationService::class => Service\Factory\MigrationServiceFactory::class,
+        Service\XpService::class => Service\Factory\XpServiceFactory::class,
 
         // ImageService
         Service\RankingImageService::class => Service\Factory\RankingImageServiceFactory::class,
@@ -141,6 +144,7 @@ return [
         Repository\UserRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\CronjobRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\ConfigRepository::class => Repository\Factory\RepositoryFactory::class,
+        Repository\PlayerXpHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
 
         // Stdlib
         Interface\LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,

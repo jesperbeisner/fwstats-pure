@@ -16,6 +16,7 @@ use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
 use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
 use Jesperbeisner\Fwstats\Model\PlayerStatusHistory;
+use Jesperbeisner\Fwstats\Model\PlayerXpHistory;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerClanHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
@@ -23,6 +24,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerXpHistoryRepository;
 use Jesperbeisner\Fwstats\Result\ImportResult;
 use Jesperbeisner\Fwstats\Service\PlayerStatusService;
 
@@ -38,6 +40,7 @@ final readonly class PlayerImporter implements ImporterInterface
         private PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
         private PlayerStatusHistoryRepository $playerStatusHistoryRepository,
         private PlayerStatusService $playerStatusService,
+        private PlayerXpHistoryRepository $playerXpHistoryRepository,
     ) {
     }
 
@@ -52,7 +55,9 @@ final readonly class PlayerImporter implements ImporterInterface
         $players = $this->playerRepository->findAllByWorld($world);
 
         if (count($players) === 0) {
-            $importResult->addMessage("No players found for world '$world->value'. Inserting player dump into the database.");
+            $importResult->addMessage("No players found for world '$world->value'. Inserting initial player dump and player xp history into the database.");
+
+            $this->trackDailyXpChanges($playersDump);
             $this->playerRepository->insertPlayers($world, $playersDump);
 
             return $importResult;
@@ -67,29 +72,29 @@ final readonly class PlayerImporter implements ImporterInterface
                 $this->checkClan($world, $importResult, $player, $playerDump, $clans);
                 $this->checkProfession($world, $importResult, $player, $playerDump);
             } else {
+                // player_id not available in dump anymore: the player was deleted or banned
                 // TODO: player_id nicht mehr im Dump vorhanden. Spieler hat sich gelöscht/wurde gebannt?
                 // Gelöscht = PlayerName + ba + ID
                 // Gebannt = Name noch normal vorhanden
                 // Profil parsen und als gebannt/gelöscht einsortieren
                 // Bei neuen Spielern gucken, ob diese vorher gelöscht/gebannt waren
 
-                $playerStatus = $this->playerStatusService->getStatus($world, $player);
-
-                if ($playerStatus !== PlayerStatusEnum::UNKNOWN) {
-                    $playerStatusHistory = new PlayerStatusHistory(null, $world, $player->playerId, $player->name, $playerStatus);
-
-                    $this->playerStatusHistoryRepository->insert($playerStatusHistory);
+                if (PlayerStatusEnum::UNKNOWN !== $playerStatus = $this->playerStatusService->getStatus($world, $player)) {
+                    $this->playerStatusHistoryRepository->insert(new PlayerStatusHistory(null, $world, $player->playerId, $player->name, $playerStatus));
                 }
             }
         }
+
+        $this->trackDailyXpChanges($playersDump);
 
         foreach ($playersDump as $playerDump) {
             // Player is in dump but not in database: Player created
             if (!isset($players[$playerDump->playerId])) {
                 $importResult->addMessage("Player '$playerDump->name' in world '$world->value' was created.");
 
-                // TODO: Do stuff
-
+                // TODO: Check if player was deleted or banned
+                // If yes, it's not a new player. New StatusHistory needs to be created.
+                // Otherwise create a new PlayerCreatedHistory
                 // $this->playerCreatedHistoryRepository->insert($playerCreatedHistory);
             }
         }
@@ -101,14 +106,21 @@ final readonly class PlayerImporter implements ImporterInterface
         return $importResult;
     }
 
+    /**
+     * @param array<Player> $playersDump
+     */
+    private function trackDailyXpChanges(array $playersDump): void
+    {
+        foreach ($playersDump as $playerDump) {
+            $this->playerXpHistoryRepository->create(new PlayerXpHistory(null, $playerDump->world, $playerDump->playerId, $playerDump->totalXp, $playerDump->totalXp, (new DateTimeImmutable())->setTime(0, 0, 0)));
+        }
+    }
+
     private function checkName(WorldEnum $world, ImportResult $importResult, Player $player, Player $playerDump): void
     {
         if ($player->name !== $playerDump->name) {
             $importResult->addMessage("Player with id '$player->playerId' changed his name in world '$world->value'.");
-
-            $playerNameHistory = new PlayerNameHistory(null, $world, $player->playerId, $player->name, $playerDump->name, new DateTimeImmutable());
-
-            $this->playerNameHistoryRepository->insert($playerNameHistory);
+            $this->playerNameHistoryRepository->insert(new PlayerNameHistory(null, $world, $player->playerId, $player->name, $playerDump->name, new DateTimeImmutable()));
         }
     }
 
@@ -116,10 +128,7 @@ final readonly class PlayerImporter implements ImporterInterface
     {
         if ($player->race !== $playerDump->race) {
             $importResult->addMessage("Player with id '$player->playerId' changed his race in world '$world->value'.");
-
-            $playerRaceHistory = new PlayerRaceHistory(null, $world, $player->playerId, $player->race, $playerDump->race, new DateTimeImmutable());
-
-            $this->playerRaceHistoryRepository->insert($playerRaceHistory);
+            $this->playerRaceHistoryRepository->insert(new PlayerRaceHistory(null, $world, $player->playerId, $player->race, $playerDump->race, new DateTimeImmutable()));
         }
     }
 
@@ -163,9 +172,7 @@ final readonly class PlayerImporter implements ImporterInterface
                 }
             }
 
-            $playerClanHistory = new PlayerClanHistory(null, $world, $player->playerId, $oldClanId, $newClanId, $oldShortcut, $newShortcut, $oldName, $newName);
-
-            $this->playerClanHistoryRepository->insert($playerClanHistory);
+            $this->playerClanHistoryRepository->insert(new PlayerClanHistory(null, $world, $player->playerId, $oldClanId, $newClanId, $oldShortcut, $newShortcut, $oldName, $newName));
         }
     }
 
@@ -173,10 +180,7 @@ final readonly class PlayerImporter implements ImporterInterface
     {
         if ($player->profession !== $playerDump->profession) {
             $importResult->addMessage("Player with id '$player->playerId' changed his profession in world '$world->value'.");
-
-            $playerProfessionHistory = new PlayerProfessionHistory(null, $world, $player->playerId, $player->profession, $playerDump->profession, new DateTimeImmutable());
-
-            $this->playerProfessionHistoryRepository->insert($playerProfessionHistory);
+            $this->playerProfessionHistoryRepository->insert(new PlayerProfessionHistory(null, $world, $player->playerId, $player->profession, $playerDump->profession, new DateTimeImmutable()));
         }
     }
 }

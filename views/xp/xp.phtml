@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var array<string, mixed> $vars */
+
+$this->setTitle('title.xp');
+
+?>
+<main id="site-main" class="container mt-0 mb-5">
+    <h1 class="is-size-1">
+        <?= $this->text('title.xp') ?>
+    </h1>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                XpController
+            </div>
+        </div>
+    </div>
+</main>

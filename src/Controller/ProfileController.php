@@ -13,6 +13,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
+use Jesperbeisner\Fwstats\Service\XpService;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
@@ -23,6 +24,7 @@ final readonly class ProfileController implements ControllerInterface
 {
     public function __construct(
         private PlayerRepository $playerRepository,
+        private XpService $xpService,
         private PlaytimeService $playtimeService,
         private PlayerNameHistoryRepository $playerNameHistoryRepository,
         private PlayerRaceHistoryRepository $playerRaceHistoryRepository,
@@ -37,14 +39,16 @@ final readonly class ProfileController implements ControllerInterface
             return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
-        $id = $request->getRouteParameter('id');
-        if (!is_numeric($id)) {
+        $playerId = $request->getRouteParameter('player-id');
+        if (!is_numeric($playerId)) {
             return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
-        if (null === $player = $this->playerRepository->find($world, (int) $id)) {
+        if (null === $player = $this->playerRepository->find($world, (int) $playerId)) {
             return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
+
+        $weeklyXpChanges = $this->xpService->getXpChangesForPlayer($player, 7);
 
         $weeklyPlaytimes = $this->playtimeService->getPlaytimesForPlayer($player, 7);
         [$totalPlaytime, $averagePlaytime] = $this->getTotalAndAveragePlaytime($player, $weeklyPlaytimes);
@@ -55,6 +59,7 @@ final readonly class ProfileController implements ControllerInterface
 
         return Response::html('profile/profile.phtml', [
             'player' => $player,
+            'weeklyXpChanges' => $weeklyXpChanges,
             'weeklyPlaytimes' => $weeklyPlaytimes,
             'totalPlaytime' => $totalPlaytime,
             'averagePlaytime' => $averagePlaytime,

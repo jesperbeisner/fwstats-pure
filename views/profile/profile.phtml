@@ -7,6 +7,7 @@ use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
 use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
+use Jesperbeisner\Fwstats\Model\PlayerXpHistory;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
@@ -15,7 +16,10 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var Player $player */
 $player = $vars['player'];
 
-/** @var array<string, Playtime|null> $weeklyPlaytimes */
+/** @var array<string, null|PlayerXpHistory> $weeklyXpChanges */
+$weeklyXpChanges = $vars['weeklyXpChanges'];
+
+/** @var array<string, null|Playtime> $weeklyPlaytimes */
 $weeklyPlaytimes = $vars['weeklyPlaytimes'];
 
 /** @var Playtime $totalPlaytime */
@@ -24,13 +28,13 @@ $totalPlaytime = $vars['totalPlaytime'];
 /** @var Playtime $averagePlaytime */
 $averagePlaytime = $vars['averagePlaytime'];
 
-/** @var PlayerNameHistory[] $nameChanges */
+/** @var array<PlayerNameHistory> $nameChanges */
 $nameChanges = $vars['nameChanges'];
 
-/** @var PlayerRaceHistory[] $raceChanges */
+/** @var array<PlayerRaceHistory> $raceChanges */
 $raceChanges = $vars['raceChanges'];
 
-/** @var PlayerProfessionHistory[] $professionChanges */
+/** @var array<PlayerProfessionHistory> $professionChanges */
 $professionChanges = $vars['professionChanges'];
 
 $this->setTitle($player->name . ' - ' . $player->world->worldString());
@@ -42,6 +46,7 @@ $this->setTitle($player->name . ' - ' . $player->world->worldString());
             <?= $this->escape($player->name) ?>
         </a>
     </h1>
+    <?php require __DIR__ . '/_xp-changes.phtml' ?>
     <?php require __DIR__ . '/_playtimes.phtml' ?>
     <?php require __DIR__ . '/_name-changes.phtml' ?>
     <?php require __DIR__ . '/_race-changes.phtml' ?>

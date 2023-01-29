@@ -11,7 +11,7 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var Playtime $averagePlaytime */
 
 ?>
-<div class="card">
+<div class="card mt-5">
     <div class="card-header">
         <p class="card-header-title">
             <?= $this->text('text.playtime-last-7-days') ?>
@@ -23,20 +23,20 @@ use Jesperbeisner\Fwstats\Service\RenderService;
                 <table class="table is-hoverable is-fullwidth">
                     <thead>
                     <tr>
-                        <td><?= $this->text('table.hours') ?></td>
-                        <td><?= $this->text('table.minutes') ?></td>
-                        <td><?= $this->text('table.seconds') ?></td>
-                        <td><?= $this->text('table.date') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.hours') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.minutes') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.seconds') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.date') ?></td>
                     </tr>
                     </thead>
                     <tbody>
                     <?php $date = new DateTime('+1 day') ?>
                     <?php foreach ($weeklyPlaytimes as $playtime): ?>
                         <tr>
-                            <td><?= $playtime === null ? '-' : $playtime->getHours() ?></td>
-                            <td><?= $playtime === null ? '-' : $playtime->getMinutes() ?></td>
-                            <td><?= $playtime === null ? '-' : $playtime->getSeconds() ?></td>
-                            <td><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
+                            <td class="has-text-centered"><?= $playtime === null ? '-' : $playtime->getHours() ?></td>
+                            <td class="has-text-centered"><?= $playtime === null ? '-' : $playtime->getMinutes() ?></td>
+                            <td class="has-text-centered"><?= $playtime === null ? '-' : $playtime->getSeconds() ?></td>
+                            <td class="has-text-centered"><?= $date->modify('-1 day')->format('d.m.Y') ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

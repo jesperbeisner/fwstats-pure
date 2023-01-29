@@ -34,16 +34,16 @@ final class PlayerRepository extends AbstractRepository implements ResetActionFr
         return Player::withId($id, $player);
     }
 
-    public function find(WorldEnum $world, int $id): ?Player
+    public function find(WorldEnum $world, int $playerId): ?Player
     {
         $sql = <<<SQL
             SELECT id, world, player_id, name, race, clan_id, profession, xp, soul_xp, total_xp, created
             FROM players
-            WHERE world = :world AND id = :id
+            WHERE world = :world AND player_id = :playerId
         SQL;
 
         /** @var null|array{id: int, world: string, player_id: int, name: string, race: string, clan_id: null|int, profession: null|string, xp: int, soul_xp: int, total_xp: int, created: string} $result */
-        $result = $this->database->selectOne($sql, ['world' => $world->value, 'id' => $id]);
+        $result = $this->database->selectOne($sql, ['world' => $world->value, 'playerId' => $playerId]);
 
         if ($result === null) {
             return null;

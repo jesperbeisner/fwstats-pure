@@ -14,6 +14,7 @@ return [
     'navigation.admin' => 'Admin',
     'navigation.admin.overview' => 'Übersicht',
     'navigation.admin.request-logs' => 'Request Logs',
+    'navigation.xp' => 'XP',
 
     'title.index' => 'Index',
     'title.playtime' => 'Heutige Spielzeit',
@@ -26,6 +27,7 @@ return [
     'title.search' => 'Suche',
     'title.ranking-pictures' => 'Ranking Bilder',
     'title.name-changes-pictures' => 'Namensänderungsbilder',
+    'title.xp' => 'XP',
 
     'text.404-page-not-found' => '404 - Seite nicht gefunden',
     'text.translation-change-success' => 'Deine Spracheinstellungen wurden erfolgreich geändert',
@@ -68,6 +70,7 @@ return [
     'text.reset-action-freewar-success' => 'ActionFreewar wurde erfolgreich zurückgesetzt',
     'text.do-you-really-wanna-reset-action-freewar' => 'Möchtest du ActionFreewar wirklich zurücksetzen?',
     'text.total-visits' => 'Gesamtaufrufe',
+    'text.xp-changes-last-7-days' => 'XP Veränderungen der letzten 7 Tage',
 
     'table.name' => 'Name',
     'table.world' => 'Welt',
@@ -92,6 +95,9 @@ return [
     'table.visits' => 'Aufrufe',
     'table.status-code' => 'Statuscode',
     'table.day' => 'Tag',
+    'table.start-xp' => 'Start-XP',
+    'table.end-xp' => 'End-XP',
+    'table.xp-changes' => 'Veränderung',
 
     'hover.change-language-to-english' => 'Sprache auf Englisch ändern',
     'hover.change-language-to-german' => 'Sprache auf Deutsch ändern',

@@ -15,6 +15,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerXpHistoryRepository;
 use Jesperbeisner\Fwstats\Service\PlayerStatusService;
 
 final class PlayerImporterFactory implements FactoryInterface
@@ -30,7 +31,8 @@ final class PlayerImporterFactory implements FactoryInterface
             $container->get(PlayerClanHistoryRepository::class),
             $container->get(PlayerProfessionHistoryRepository::class),
             $container->get(PlayerStatusHistoryRepository::class),
-            $container->get(PlayerStatusService::class)
+            $container->get(PlayerStatusService::class),
+            $container->get(PlayerXpHistoryRepository::class),
         );
     }
 }

@@ -12,6 +12,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Service\PlaytimeService;
+use Jesperbeisner\Fwstats\Service\XpService;
 
 final readonly class ProfileControllerFactory implements FactoryInterface
 {
@@ -19,6 +20,7 @@ final readonly class ProfileControllerFactory implements FactoryInterface
     {
         return new ProfileController(
             $container->get(PlayerRepository::class),
+            $container->get(XpService::class),
             $container->get(PlaytimeService::class),
             $container->get(PlayerNameHistoryRepository::class),
             $container->get(PlayerRaceHistoryRepository::class),
