@@ -29,8 +29,8 @@ return [
         ['route' => '/', 'methods' => ['GET'], 'controller' => Controller\IndexController::class],
         ['route' => '/profile/{world}/{player-id}', 'methods' => ['GET'], 'controller' => Controller\ProfileController::class],
         ['route' => '/playtime', 'methods' => ['GET'], 'controller' => Controller\PlaytimeController::class],
-        ['route' => '/xp', 'methods' => ['GET'], 'controller' => Controller\XpController::class],
-        ['route' => '/changes/names', 'methods' => ['GET'], 'controller' => Controller\ChangeController::class],
+        ['route' => '/xp-changes', 'methods' => ['GET'], 'controller' => Controller\XpChangeController::class],
+        ['route' => '/changes/names', 'methods' => ['GET'], 'controller' => Controller\NameChangeController::class],
         ['route' => '/images/ranking', 'methods' => ['GET'], 'controller' => Controller\RankingImageController::class],
         ['route' => '/images/{world}-ranking.png', 'methods' => ['GET'], 'controller' => Controller\RankingImageDisplayController::class],
         ['route' => '/images/name-changes', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageController::class],
@@ -75,7 +75,7 @@ return [
         Controller\NameChangeImageDisplayController::class => Controller\Factory\NameChangeImageDisplayControllerFactory::class,
         Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
         Controller\StatusController::class => Controller\Factory\StatusControllerFactory::class,
-        Controller\ChangeController::class => Controller\Factory\ChangeControllerFactory::class,
+        Controller\NameChangeController::class => Controller\Factory\NameChangeControllerFactory::class,
         Controller\RequestLogController::class => Controller\Factory\RequestLogControllerFactory::class,
         Controller\LoginController::class => Controller\Factory\LoginControllerFactory::class,
         Controller\LogoutController::class => Controller\Factory\LogoutControllerFactory::class,
@@ -91,7 +91,7 @@ return [
         Controller\GenerateNewBearerTokenController::class => Controller\Factory\GenerateNewBearerTokenControllerFactory::class,
         Controller\ChangeDomainNameController::class => Controller\Factory\ChangeDomainNameControllerFactory::class,
         Controller\ResetActionFreewarController::class => Controller\Factory\ResetActionFreewarControllerFactory::class,
-        Controller\XpController::class => Controller\Factory\XpControllerFactory::class,
+        Controller\XpChangeController::class => Controller\Factory\XpChangeControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,

@@ -10,7 +10,7 @@ use Jesperbeisner\Fwstats\Service\XpService;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
-final readonly class XpController implements ControllerInterface
+final readonly class XpChangeController implements ControllerInterface
 {
     public function __construct(
         private XpService $xpService,

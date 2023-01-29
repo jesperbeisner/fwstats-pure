@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Controller\Factory;
 
-use Jesperbeisner\Fwstats\Controller\XpController;
+use Jesperbeisner\Fwstats\Controller\XpChangeController;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Service\XpService;
 
-final readonly class XpControllerFactory implements FactoryInterface
+final readonly class XpChangeControllerFactory implements FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): XpController
+    public function build(ContainerInterface $container, string $serviceId): XpChangeController
     {
-        return new XpController(
+        return new XpChangeController(
             $container->get(XpService::class),
         );
     }

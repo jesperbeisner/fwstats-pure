@@ -11,9 +11,9 @@ use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Application\ChangeControllerTest
+ * @see \Jesperbeisner\Fwstats\Tests\Application\NameChangeControllerTest
  */
-final readonly class ChangeController implements ControllerInterface
+final readonly class NameChangeController implements ControllerInterface
 {
     public function __construct(
         private PlayerNameHistoryRepository $playerNameHistoryRepository,

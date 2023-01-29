@@ -11,9 +11,9 @@ use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
- * @covers \Jesperbeisner\Fwstats\Controller\ChangeController
+ * @covers \Jesperbeisner\Fwstats\Controller\NameChangeController
  */
-final class ChangeControllerTest extends AbstractTestCase
+final class NameChangeControllerTest extends AbstractTestCase
 {
     use ContainerTrait;
 
