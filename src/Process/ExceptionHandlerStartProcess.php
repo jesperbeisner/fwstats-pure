@@ -24,7 +24,7 @@ final readonly class ExceptionHandlerStartProcess implements StartProcessInterfa
             $this->logger->error($e->getMessage());
 
             if ($this->appEnv === 'prod') {
-                Response::text('Something went wrong, please try again later.', 500);
+                Response::text('🔥 Error - Something went wrong on our side, please try again later or message https://github.com/jesperbeisner 🔥', 500)->send();
             }
 
             throw $e;
