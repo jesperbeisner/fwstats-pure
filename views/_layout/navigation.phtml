@@ -54,9 +54,19 @@ use Jesperbeisner\Fwstats\Service\RenderService;
                         </div>
                     </div>
                     <?php if ($this->getSession()->getUser() !== null): ?>
-                        <a class="navbar-item" href="/admin">
-                            <?= $this->text('navigation.admin') ?>
-                        </a>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                <?= $this->text('navigation.admin') ?>
+                            </a>
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item" href="/admin">
+                                    <?= $this->text('navigation.admin.overview') ?>
+                                </a>
+                                <a class="navbar-item" href="/admin/request-logs">
+                                    <?= $this->text('navigation.admin.request-logs') ?>
+                                </a>
+                            </div>
+                        </div>
                     <?php endif; ?>
                 </div>
                 <div class="navbar-end">
