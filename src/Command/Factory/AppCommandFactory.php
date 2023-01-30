@@ -12,6 +12,7 @@ use Jesperbeisner\Fwstats\Importer\PlaytimeImporter;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Service\NameChangeImageService;
+use Jesperbeisner\Fwstats\Service\ProfessionChangeImageService;
 use Jesperbeisner\Fwstats\Service\RaceChangeImageService;
 use Jesperbeisner\Fwstats\Service\RankingImageService;
 
@@ -27,6 +28,7 @@ class AppCommandFactory implements FactoryInterface
             $container->get(RankingImageService::class),
             $container->get(NameChangeImageService::class),
             $container->get(RaceChangeImageService::class),
+            $container->get(ProfessionChangeImageService::class),
         );
     }
 }

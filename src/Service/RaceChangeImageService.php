@@ -71,8 +71,7 @@ final class RaceChangeImageService extends AbstractImageService
         $this->write('Name', 40, 55, 12);
 
         foreach ($raceChanges as $id => $raceChange) {
-            $newName = strlen($raceChange['name']) > 15 ? substr($raceChange['name'], 0, 15) : $raceChange['name'];
-            $this->write($newName, 40, 19 * ($id + 1) + 60, 10);
+            $this->write(strlen($raceChange['name']) > 15 ? substr($raceChange['name'], 0, 15) : $raceChange['name'], 40, 19 * ($id + 1) + 60, 10);
         }
     }
 

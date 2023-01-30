@@ -10,6 +10,7 @@ return [
     'navigation.pictures' => 'Pictures',
     'navigation.pictures.ranking' => 'Ranking',
     'navigation.pictures.name-changes' => 'Names',
+    'navigation.pictures.profession-changes' => 'Professions',
     'navigation.pictures.race-changes' => 'Races',
     'navigation.search' => 'Search',
     'navigation.admin' => 'Admin',
@@ -30,6 +31,7 @@ return [
     'title.search' => 'Search',
     'title.ranking-pictures' => 'Ranking pictures',
     'title.name-changes-pictures' => 'Name changes pictures',
+    'title.profession-changes-pictures' => 'Profession changes pictures',
     'title.race-changes-pictures' => 'Race changes pictures',
     'title.xp' => 'Today\'s XP changes',
 
@@ -52,6 +54,7 @@ return [
     'text.button.search' => 'Search',
     'text.include-ranking-image-in-profile' => 'Include ranking image in profile',
     'text.include-name-changes-image-in-profile' => 'Include name changes image in profile',
+    'text.include-profession-changes-image-in-profile' => 'Include profession changes image in profile',
     'text.include-race-changes-image-in-profile' => 'Include race changes image in profile',
     'text.username-and-password-cant-be-empty' => 'Email and/or password must not be empty',
     'text.user-with-username-does-not-exist' => 'A user with the username "%USERNAME%" does not exist',

@@ -37,6 +37,8 @@ return [
         ['route' => '/images/{world}-ranking.png', 'methods' => ['GET'], 'controller' => Controller\RankingImageDisplayController::class],
         ['route' => '/images/changes/names', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageController::class],
         ['route' => '/images/{world}-name-changes.png', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageDisplayController::class],
+        ['route' => '/images/changes/professions', 'methods' => ['GET'], 'controller' => Controller\ProfessionChangeImageController::class],
+        ['route' => '/images/{world}-profession-changes.png', 'methods' => ['GET'], 'controller' => Controller\ProfessionChangeImageDisplayController::class],
         ['route' => '/images/changes/races', 'methods' => ['GET'], 'controller' => Controller\RaceChangeImageController::class],
         ['route' => '/images/{world}-race-changes.png', 'methods' => ['GET'], 'controller' => Controller\RaceChangeImageDisplayController::class],
         ['route' => '/status', 'methods' => ['GET'], 'controller' => Controller\StatusController::class],
@@ -77,6 +79,8 @@ return [
         Controller\RankingImageDisplayController::class => Controller\Factory\RankingImageDisplayControllerFactory::class,
         Controller\NameChangeImageController::class => Controller\Factory\NameChangeImageControllerFactory::class,
         Controller\NameChangeImageDisplayController::class => Controller\Factory\NameChangeImageDisplayControllerFactory::class,
+        Controller\ProfessionChangeImageController::class => Controller\Factory\ProfessionChangeImageControllerFactory::class,
+        Controller\ProfessionChangeImageDisplayController::class => Controller\Factory\ProfessionChangeImageDisplayControllerFactory::class,
         Controller\RaceChangeImageController::class => Controller\Factory\RaceChangeImageControllerFactory::class,
         Controller\RaceChangeImageDisplayController::class => Controller\Factory\RaceChangeImageDisplayControllerFactory::class,
         Controller\PlaytimeController::class => Controller\Factory\PlaytimeControllerFactory::class,
@@ -122,6 +126,7 @@ return [
         Service\RankingImageService::class => Service\Factory\RankingImageServiceFactory::class,
         Service\NameChangeImageService::class => Service\Factory\NameChangeImageServiceFactory::class,
         Service\RaceChangeImageService::class => Service\Factory\RaceChangeImageServiceFactory::class,
+        Service\ProfessionChangeImageService::class => Service\Factory\ProfessionChangeImageServiceFactory::class,
 
         // Commands
         Command\AppCommand::class => Command\Factory\AppCommandFactory::class,
