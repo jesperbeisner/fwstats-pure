@@ -10,6 +10,7 @@ return [
     'navigation.pictures' => 'Bilder',
     'navigation.pictures.ranking' => 'Ranking',
     'navigation.pictures.name-changes' => 'Namen',
+    'navigation.pictures.race-changes' => 'Rassen',
     'navigation.search' => 'Suchen',
     'navigation.admin' => 'Admin',
     'navigation.admin.overview' => 'Übersicht',
@@ -29,6 +30,7 @@ return [
     'title.search' => 'Suche',
     'title.ranking-pictures' => 'Ranking Bilder',
     'title.name-changes-pictures' => 'Namensänderungsbilder',
+    'title.race-changes-pictures' => 'Rassenänderungsbilder',
     'title.xp' => 'Heutige XP Änderungen',
 
     'text.404-page-not-found' => '404 - Seite nicht gefunden',
@@ -50,6 +52,7 @@ return [
     'text.button.search' => 'Suchen',
     'text.include-ranking-image-in-profile' => 'Ranking Bild im Profil einbinden',
     'text.include-name-changes-image-in-profile' => 'Namensänderungsbild im Profil einbinden',
+    'text.include-race-changes-image-in-profile' => 'Rassenänderungsbild im Profil einbinden',
     'text.username-and-password-cant-be-empty' => 'E-Mail und/oder Passwort dürfen nicht leer sein',
     'text.user-with-username-does-not-exist' => 'Ein User mit dem Usernamen "%USERNAME%" existiert nicht',
     'text.password-does-not-match' => 'Das Passwort stimmt nicht mit dem hinterlegten Passwort überein',
@@ -77,6 +80,7 @@ return [
     'text.no-name-changes-for-world-available' => 'Es sind noch keine Namensänderungen für %WORLD% vorhanden',
     'text.no-race-changes-for-world-available' => 'Es sind noch keine Rassenänderungen für %WORLD% vorhanden',
     'text.no-profession-changes-for-world-available' => 'Es sind noch keine Berufsänderungen für %WORLD% vorhanden',
+    'text.no-xp-changes-for-world-available' => 'Es sind noch keine XP-Änderungen für %WORLD% vorhanden',
 
     'table.name' => 'Name',
     'table.world' => 'Welt',

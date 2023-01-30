@@ -72,6 +72,26 @@ final class PlayerRaceHistoryRepository extends AbstractRepository implements Re
         return $result;
     }
 
+    /**
+     * @return array<array{world: string, player_id: int, name: string, old_race: string, new_race: string, created: string}>
+     */
+    public function getLast15RaceChangesByWorld(WorldEnum $worldEnum): array
+    {
+        $sql = <<<SQL
+            SELECT prh.world, players.player_id, players.name, prh.old_race, prh.new_race, prh.created
+            FROM players_race_history prh
+            INNER JOIN players ON players.player_id = prh.player_id AND players.world = prh.world
+            WHERE prh.world = :world
+            ORDER BY prh.created
+            DESC LIMIT 15
+        SQL;
+
+        /** @var array<array{world: string, player_id: int, name: string, old_race: string, new_race: string, created: string}> $result */
+        $result = $this->database->select($sql, ['world' => $worldEnum->value]);
+
+        return $result;
+    }
+
     public function deleteAll(): void
     {
         $sql = "DELETE FROM players_race_history";

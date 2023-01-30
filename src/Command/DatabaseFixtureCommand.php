@@ -23,11 +23,10 @@ use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Service\NameChangeImageService;
 use Jesperbeisner\Fwstats\Service\RankingImageService;
-use Jesperbeisner\Fwstats\Stdlib\Config;
 
 final class DatabaseFixtureCommand extends AbstractCommand
 {
-    public static string $name = 'app:database-fixture';
+    public static string $name = 'app:database-fixtures';
     public static string $description = 'Loads fixtures for local development into the database.';
 
     public function __construct(
@@ -50,7 +49,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
     public function execute(): int
     {
         if ($this->appEnv !== 'dev') {
-            $this->writeLine("The 'app:database-fixture' command can only be executed in the dev environment.");
+            $this->writeLine("The 'app:database-fixtures' command can only be executed in the dev environment.");
 
             return self::FAILURE;
         }

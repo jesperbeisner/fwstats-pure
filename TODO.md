@@ -4,12 +4,14 @@
 - Add more tests
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
-- Race change pictures
 - Profession change pictures
 - Different days on request logs
 - Track deleted/banned players
 - Display user infos in profile
 - Display player achievements
+- Update FixturesCommand
+- Update player achievements only daily
+- Change date on ranking image to bottom
 
 ## Finished
 - ~~Pagination on index page~~
@@ -31,3 +33,4 @@
 - ~~Track xp gains for a single day~~
 - ~~System information~~
 - ~~Race changed and profession changes sites added~~
+- ~~Race change pictures~~

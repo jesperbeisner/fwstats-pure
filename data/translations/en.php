@@ -10,11 +10,12 @@ return [
     'navigation.pictures' => 'Pictures',
     'navigation.pictures.ranking' => 'Ranking',
     'navigation.pictures.name-changes' => 'Names',
+    'navigation.pictures.race-changes' => 'Races',
     'navigation.search' => 'Search',
     'navigation.admin' => 'Admin',
     'navigation.admin.overview' => 'Overview',
     'navigation.admin.request-logs' => 'Request logs',
-    'navigation.xp' => 'XP-changes',
+    'navigation.xp' => 'XP changes',
     'navigation.changes.races' => 'Races',
     'navigation.changes.professions' => 'Professions',
 
@@ -29,6 +30,7 @@ return [
     'title.search' => 'Search',
     'title.ranking-pictures' => 'Ranking pictures',
     'title.name-changes-pictures' => 'Name changes pictures',
+    'title.race-changes-pictures' => 'Race changes pictures',
     'title.xp' => 'Today\'s XP changes',
 
     'text.404-page-not-found' => '404 - Page not found',
@@ -50,6 +52,7 @@ return [
     'text.button.search' => 'Search',
     'text.include-ranking-image-in-profile' => 'Include ranking image in profile',
     'text.include-name-changes-image-in-profile' => 'Include name changes image in profile',
+    'text.include-race-changes-image-in-profile' => 'Include race changes image in profile',
     'text.username-and-password-cant-be-empty' => 'Email and/or password must not be empty',
     'text.user-with-username-does-not-exist' => 'A user with the username "%USERNAME%" does not exist',
     'text.password-does-not-match' => 'The password does not match the stored password',
@@ -77,6 +80,7 @@ return [
     'text.no-name-changes-for-world-available' => 'There are no name changes for %WORLD% yet',
     'text.no-race-changes-for-world-available' => 'There are no race changes for %WORLD% yet',
     'text.no-profession-changes-for-world-available' => 'There are no profession changes for %WORLD% yet',
+    'text.no-xp-changes-for-world-available' => 'There are no XP changes for %WORLD% yet',
 
     'table.name' => 'Name',
     'table.world' => 'World',

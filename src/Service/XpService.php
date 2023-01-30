@@ -44,7 +44,7 @@ final readonly class XpService
 
     /**
      * @param WorldEnum $worldEnum
-     * @return array<array{player_id: int, name: string, xp: int, soul_xp: int, total_xp: int, xp_changes: int}>
+     * @return array<array{world: string, player_id: int, name: string, xp: int, soul_xp: int, total_xp: int, xp_changes: int}>
      */
     public function getXpChangesForWorld(WorldEnum $worldEnum): array
     {

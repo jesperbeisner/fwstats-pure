@@ -10,6 +10,7 @@ use Jesperbeisner\Fwstats\Importer\ClanImporter;
 use Jesperbeisner\Fwstats\Importer\PlayerImporter;
 use Jesperbeisner\Fwstats\Importer\PlaytimeImporter;
 use Jesperbeisner\Fwstats\Service\NameChangeImageService;
+use Jesperbeisner\Fwstats\Service\RaceChangeImageService;
 use Jesperbeisner\Fwstats\Service\RankingImageService;
 
 final class AppCommand extends AbstractCommand
@@ -24,6 +25,7 @@ final class AppCommand extends AbstractCommand
         private readonly PlaytimeImporter $playtimeImporter,
         private readonly RankingImageService $rankingImageService,
         private readonly NameChangeImageService $nameChangeImageService,
+        private readonly RaceChangeImageService $raceChangeImageService,
     ) {
     }
 
@@ -50,8 +52,11 @@ final class AppCommand extends AbstractCommand
             $this->writeLine("Creating ranking image for world '$world->value'...");
             $this->rankingImageService->create($world);
 
-            $this->writeLine("Creating name change ranking image for world '$world->value'...");
+            $this->writeLine("Creating name change image for world '$world->value'...");
             $this->nameChangeImageService->create($world);
+
+            $this->writeLine("Creating race change image for world '$world->value'...");
+            $this->raceChangeImageService->create($world);
 
             $this->writeLine();
         }
