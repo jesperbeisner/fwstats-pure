@@ -92,7 +92,7 @@ final readonly class PlayerImporter implements ImporterInterface
             if (!isset($players[$playerDump->playerId])) {
                 $importResult->addMessage("Player '$playerDump->name' in world '$world->value' was created.");
 
-                // TODO: Check if player was deleted or banned
+                // TODO: Check if player was deleted or banned before
                 // If yes, it's not a new player. New StatusHistory needs to be created.
                 // Otherwise create a new PlayerCreatedHistory
                 // $this->playerCreatedHistoryRepository->insert($playerCreatedHistory);

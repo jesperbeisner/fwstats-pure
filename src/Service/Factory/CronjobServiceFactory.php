@@ -12,6 +12,9 @@ use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\CronjobRepository;
 use Jesperbeisner\Fwstats\Service\CronjobService;
+use Jesperbeisner\Fwstats\Service\NameChangeImageService;
+use Jesperbeisner\Fwstats\Service\ProfessionChangeImageService;
+use Jesperbeisner\Fwstats\Service\RaceChangeImageService;
 use Jesperbeisner\Fwstats\Service\RankingImageService;
 
 class CronjobServiceFactory implements FactoryInterface
@@ -24,7 +27,10 @@ class CronjobServiceFactory implements FactoryInterface
             $container->get(PlayerImporter::class),
             $container->get(AchievementImporter::class),
             $container->get(PlaytimeImporter::class),
-            $container->get(RankingImageService::class)
+            $container->get(RankingImageService::class),
+            $container->get(NameChangeImageService::class),
+            $container->get(RaceChangeImageService::class),
+            $container->get(ProfessionChangeImageService::class),
         );
     }
 }

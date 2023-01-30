@@ -23,6 +23,9 @@ final readonly class CronjobService implements CronjobInterface
         private AchievementImporter $achievementImporter,
         private PlaytimeImporter $playtimeImporter,
         private RankingImageService $rankingImageService,
+        private NameChangeImageService $nameChangeImageService,
+        private RaceChangeImageService $raceChangeImageService,
+        private ProfessionChangeImageService $professionChangeImageService,
     ) {
     }
 
@@ -49,6 +52,9 @@ final readonly class CronjobService implements CronjobInterface
             $this->achievementImporter->import($world);
             $this->playtimeImporter->import($world);
             $this->rankingImageService->create($world);
+            $this->nameChangeImageService->create($world);
+            $this->raceChangeImageService->create($world);
+            $this->professionChangeImageService->create($world);
         }
     }
 }
