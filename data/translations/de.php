@@ -9,7 +9,7 @@ return [
     'navigation.changes.names' => 'Namen',
     'navigation.pictures' => 'Bilder',
     'navigation.pictures.ranking' => 'Ranking',
-    'navigation.pictures.name-changes' => 'Namensänderungen',
+    'navigation.pictures.name-changes' => 'Namen',
     'navigation.search' => 'Suchen',
     'navigation.admin' => 'Admin',
     'navigation.admin.overview' => 'Übersicht',

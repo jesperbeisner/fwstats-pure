@@ -35,7 +35,7 @@ return [
         ['route' => '/changes/professions', 'methods' => ['GET'], 'controller' => Controller\ProfessionChangeController::class],
         ['route' => '/images/ranking', 'methods' => ['GET'], 'controller' => Controller\RankingImageController::class],
         ['route' => '/images/{world}-ranking.png', 'methods' => ['GET'], 'controller' => Controller\RankingImageDisplayController::class],
-        ['route' => '/images/name-changes', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageController::class],
+        ['route' => '/images/changes/names', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageController::class],
         ['route' => '/images/{world}-name-changes.png', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageDisplayController::class],
         ['route' => '/status', 'methods' => ['GET'], 'controller' => Controller\StatusController::class],
         ['route' => '/login', 'methods' => ['GET', 'POST'], 'controller' => Controller\LoginController::class],
