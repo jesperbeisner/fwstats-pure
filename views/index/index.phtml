@@ -19,6 +19,12 @@ $hasNextSite = $vars['hasNextSite'];
 /** @var bool $availablePages */
 $availablePages = $vars['availablePages'];
 
+/** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $afsrvPlayers */
+$afsrvPlayers = $vars['afsrvPlayers'];
+
+/** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $chaosPlayers */
+$chaosPlayers = $vars['chaosPlayers'];
+
 $this->setTitle('title.index');
 
 ?>
@@ -42,50 +48,58 @@ $this->setTitle('title.index');
                     </div>
                     <div>
                         <div id="action-freewar-tab-content">
-                            <?php
-                            /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
-                            $players = $vars['afsrvPlayers'];
-
-                            require __DIR__ . '/_ranking-table.phtml'
-                            ?>
+                            <?php if ($afsrvPlayers !== [] || $chaosPlayers !== []): ?>
+                                <?php $players = $afsrvPlayers ?>
+                                <?php $worldName = 'ActionFreewar' ?>
+                                <?php require __DIR__ . '/_ranking-table.phtml' ?>
+                            <?php else: ?>
+                                <p class="has-text-centered">
+                                    <?= $this->text('text.no-players-for-world-available', ['%WORLD%' => 'ActionFreewar']) ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                         <div id="chaos-freewar-tab-content" class="is-hidden">
-                            <?php
-                            /** @var array<array{world: string, id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
-                            $players = $vars['chaosPlayers'];
-
-                            require __DIR__ . '/_ranking-table.phtml'
-                            ?>
+                            <?php if ($afsrvPlayers !== [] || $chaosPlayers !== []): ?>
+                                <?php $players = $chaosPlayers ?>
+                                <?php $worldName = 'ChaosFreewar' ?>
+                                <?php require __DIR__ . '/_ranking-table.phtml' ?>
+                            <?php else: ?>
+                                <p class="has-text-centered">
+                                    <?= $this->text('text.no-players-for-world-available', ['%WORLD%' => 'ChaosFreewar']) ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                     </div>
 
-                    <div class="pagination is-centered mt-3 mb-0" aria-label="pagination">
-                        <?php if ($hasPreviousSite === true): ?>
-                            <a class="pagination-previous" href="/?page=<?= $page - 1 ?>">
-                                <?= $this->text('text.previous-page') ?>
-                            </a>
-                        <?php else: ?>
-                            <a class="pagination-previous is-disabled">
-                                <?= $this->text('text.previous-page') ?>
-                            </a>
-                        <?php endif; ?>
+                    <?php if ($afsrvPlayers !== [] || $chaosPlayers !== []): ?>
+                        <div class="pagination is-centered mt-3 mb-0" aria-label="pagination">
+                            <?php if ($hasPreviousSite === true): ?>
+                                <a class="pagination-previous" href="/?page=<?= $page - 1 ?>">
+                                    <?= $this->text('text.previous-page') ?>
+                                </a>
+                            <?php else: ?>
+                                <a class="pagination-previous is-disabled">
+                                    <?= $this->text('text.previous-page') ?>
+                                </a>
+                            <?php endif; ?>
 
-                        <ul class="pagination-list">
-                            <li>
-                                <?= $this->text('text.page') . ' ' . $page . ' / ' . $availablePages ?>
-                            </li>
-                        </ul>
+                            <ul class="pagination-list">
+                                <li>
+                                    <?= $this->text('text.page') . ' ' . $page . ' / ' . $availablePages ?>
+                                </li>
+                            </ul>
 
-                        <?php if ($hasNextSite === true): ?>
-                            <a class="pagination-next" href="/?page=<?= $page + 1 ?>">
-                                <?= $this->text('text.next-page') ?>
-                            </a>
-                        <?php else: ?>
-                            <a class="pagination-next is-disabled">
-                                <?= $this->text('text.next-page') ?>
-                            </a>
-                        <?php endif; ?>
-                    </div>
+                            <?php if ($hasNextSite === true): ?>
+                                <a class="pagination-next" href="/?page=<?= $page + 1 ?>">
+                                    <?= $this->text('text.next-page') ?>
+                                </a>
+                            <?php else: ?>
+                                <a class="pagination-next is-disabled">
+                                    <?= $this->text('text.next-page') ?>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

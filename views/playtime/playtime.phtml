@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\DTO\Playtime;
-use Jesperbeisner\Fwstats\Helper\Html;
 use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
@@ -34,98 +33,24 @@ $chaosPlaytime = $vars['chaosPlaytime'];
                     </div>
                     <div>
                         <div id="action-freewar-tab-content">
-                            <div class="table-container">
-                                <table class="table is-hoverable is-fullwidth">
-                                    <thead>
-                                    <tr>
-                                        <td>#</td>
-                                        <td><?= $this->text('table.name') ?></td>
-                                        <td><?= $this->text('table.hours') ?></td>
-                                        <td><?= $this->text('table.minutes') ?></td>
-                                        <td><?= $this->text('table.seconds') ?></td>
-                                        <td class="has-text-right"></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $i = 1; ?>
-                                    <?php foreach ($afsrvPlaytime as $playtime): ?>
-                                        <tr>
-                                            <td>
-                                                <?= $i ?>
-                                            </td>
-                                            <td title="<?= $this->escape($playtime->name) ?>">
-                                                <a href="/profile/<?= $playtime->world->value ?>/<?= $playtime->playerId ?>">
-                                                    <?= Html::shortNames($this->escape($playtime->name)) ?>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <?= $playtime->getHours() ?>
-                                            </td>
-                                            <td>
-                                                <?= $playtime->getMinutes() ?>
-                                            </td>
-                                            <td>
-                                                <?= $playtime->getSeconds() ?>
-                                            </td>
-                                            <td class="has-text-right">
-                                                <a href="https://<?= $playtime->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $playtime->playerId ?>" target="_blank" class="player_profile_link">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
-                                                        <path d="M128 32H32C14.31 32 0 46.31 0 64v96c0 17.69 14.31 32 32 32s32-14.31 32-32V96h64c17.69 0 32-14.31 32-32S145.7 32 128 32zM416 32h-96c-17.69 0-32 14.31-32 32s14.31 32 32 32h64v64c0 17.69 14.31 32 32 32s32-14.31 32-32V64C448 46.31 433.7 32 416 32zM128 416H64v-64c0-17.69-14.31-32-32-32s-32 14.31-32 32v96c0 17.69 14.31 32 32 32h96c17.69 0 32-14.31 32-32S145.7 416 128 416zM416 320c-17.69 0-32 14.31-32 32v64h-64c-17.69 0-32 14.31-32 32s14.31 32 32 32h96c17.69 0 32-14.31 32-32v-96C448 334.3 433.7 320 416 320z"/></svg>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <?php $i++ ?>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <?php if ($afsrvPlaytime !== []): ?>
+                                <?php $playtimes = $afsrvPlaytime ?>
+                                <?php require __DIR__ . '/_playtime-table.phtml' ?>
+                            <?php else: ?>
+                                <p class="has-text-centered">
+                                    <?= $this->text('text.no-playtimes-for-world-available', ['%WORLD%' => 'ActionFreewar']) ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                         <div id="chaos-freewar-tab-content" class="is-hidden">
-                            <div class="table-container">
-                                <table class="table is-hoverable is-fullwidth">
-                                    <thead>
-                                    <tr>
-                                        <td>#</td>
-                                        <td><?= $this->text('table.name') ?></td>
-                                        <td><?= $this->text('table.hours') ?></td>
-                                        <td><?= $this->text('table.minutes') ?></td>
-                                        <td><?= $this->text('table.seconds') ?></td>
-                                        <td class="has-text-right"></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $i = 1; ?>
-                                    <?php foreach ($chaosPlaytime as $playtime): ?>
-                                        <tr>
-                                            <td>
-                                                <?= $i ?>
-                                            </td>
-                                            <td title="<?= $this->escape($playtime->name) ?>">
-                                                <a href="/profile/<?= $playtime->world->value ?>/<?= $playtime->playerId ?>">
-                                                    <?= Html::shortNames($this->escape($playtime->name)) ?>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <?= $playtime->getHours() ?>
-                                            </td>
-                                            <td>
-                                                <?= $playtime->getMinutes() ?>
-                                            </td>
-                                            <td>
-                                                <?= $playtime->getSeconds() ?>
-                                            </td>
-                                            <td class="has-text-right">
-                                                <a href="https://<?= $playtime->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $playtime->playerId ?>" target="_blank" class="player_profile_link">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
-                                                        <path d="M128 32H32C14.31 32 0 46.31 0 64v96c0 17.69 14.31 32 32 32s32-14.31 32-32V96h64c17.69 0 32-14.31 32-32S145.7 32 128 32zM416 32h-96c-17.69 0-32 14.31-32 32s14.31 32 32 32h64v64c0 17.69 14.31 32 32 32s32-14.31 32-32V64C448 46.31 433.7 32 416 32zM128 416H64v-64c0-17.69-14.31-32-32-32s-32 14.31-32 32v96c0 17.69 14.31 32 32 32h96c17.69 0 32-14.31 32-32S145.7 416 128 416zM416 320c-17.69 0-32 14.31-32 32v64h-64c-17.69 0-32 14.31-32 32s14.31 32 32 32h96c17.69 0 32-14.31 32-32v-96C448 334.3 433.7 320 416 320z"/></svg>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <?php $i++ ?>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <?php if ($chaosPlaytime !== []): ?>
+                                <?php $playtimes = $chaosPlaytime ?>
+                                <?php require __DIR__ . '/_playtime-table.phtml' ?>
+                            <?php else: ?>
+                                <p class="has-text-centered">
+                                    <?= $this->text('text.no-playtimes-for-world-available', ['%WORLD%' => 'ChaosFreewar']) ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

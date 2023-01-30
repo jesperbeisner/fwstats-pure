@@ -32,7 +32,7 @@ $chaosXpChanges = $vars['chaosXpChanges'];
                     </div>
                     <div>
                         <div id="action-freewar-tab-content">
-                            <?php if (count($afsrvXpChanges) > 0): ?>
+                            <?php if ($afsrvXpChanges !== []): ?>
                                 <?php $xpChanges = $afsrvXpChanges ?>
                                 <?php require __DIR__ . '/_xp-table.phtml' ?>
                             <?php else: ?>
@@ -42,7 +42,7 @@ $chaosXpChanges = $vars['chaosXpChanges'];
                             <?php endif; ?>
                         </div>
                         <div id="chaos-freewar-tab-content" class="is-hidden">
-                            <?php if (count($chaosXpChanges) > 0): ?>
+                            <?php if ($chaosXpChanges !== []): ?>
                                 <?php $xpChanges = $chaosXpChanges ?>
                                 <?php require __DIR__ . '/_xp-table.phtml' ?>
                             <?php else: ?>

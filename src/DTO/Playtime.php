@@ -6,13 +6,13 @@ namespace Jesperbeisner\Fwstats\DTO;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-final class Playtime
+final readonly class Playtime
 {
     public function __construct(
-        public readonly WorldEnum $world,
-        public readonly string $name,
-        public readonly int $playerId,
-        public readonly int $playtime,
+        public WorldEnum $world,
+        public string $name,
+        public int $playerId,
+        public int $playtime,
     ) {
     }
 

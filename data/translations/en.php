@@ -84,6 +84,9 @@ return [
     'text.no-race-changes-for-world-available' => 'There are no race changes for %WORLD% yet',
     'text.no-profession-changes-for-world-available' => 'There are no profession changes for %WORLD% yet',
     'text.no-xp-changes-for-world-available' => 'There are no XP changes for %WORLD% yet',
+    'text.no-players-for-world-available' => 'There are no players for %WORLD% yet',
+    'text.no-more-players-available' => 'There are no more players for %WORLD% available',
+    'text.no-playtimes-for-world-available' => 'There are no playtimes for %WORLD% yet',
 
     'table.name' => 'Name',
     'table.world' => 'World',

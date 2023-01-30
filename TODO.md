@@ -11,7 +11,7 @@
 - Update FixturesCommand
 - Update player achievements only daily
 - Change date on ranking image to bottom
-- Info text when ranking table and playtime table is empty
+
 
 ## Finished
 - ~~Pagination on index page~~
@@ -35,3 +35,4 @@
 - ~~Race changed and profession changes sites added~~
 - ~~Race change pictures~~
 - ~~Profession change pictures~~
+- ~~Info text when ranking table and playtime table is empty~~

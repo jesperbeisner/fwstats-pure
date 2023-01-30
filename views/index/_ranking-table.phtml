@@ -9,8 +9,10 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var RenderService $this */
 /** @var array<array{id: int, world: string, player_id: int, name: string, race: string, xp: int, soul_xp: int, total_xp: int, profession: null|string, clan_id: null|int, clan_name: null|string, clan_shortcut: null|string}> $players */
 /** @var int $page */
+/** @var string $worldName */
 
 ?>
+<?php if ($players !== []): ?>
 <div class="table-container">
     <table class="table is-hoverable is-fullwidth">
         <thead>
@@ -83,3 +85,8 @@ use Jesperbeisner\Fwstats\Service\RenderService;
         </tbody>
     </table>
 </div>
+<?php else: ?>
+    <p class="has-text-centered">
+        <?= $this->text('text.no-more-players-available', ['%WORLD%' => $worldName]) ?>
+    </p>
+<?php endif; ?>
