@@ -10,7 +10,6 @@ use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Interface\ImporterInterface;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
-use Jesperbeisner\Fwstats\Result\ImportResult;
 
 final readonly class PlaytimeImporter implements ImporterInterface
 {
@@ -20,11 +19,8 @@ final readonly class PlaytimeImporter implements ImporterInterface
     ) {
     }
 
-    public function import(WorldEnum $world): ImportResult
+    public function import(WorldEnum $world): void
     {
-        $importResult = new ImportResult();
-        $importResult->addMessage('Starting PlaytimeImporter...');
-
         $players = $this->freewarDumpService->getPlayersDump($world);
         $achievements = $this->freewarDumpService->getAchievementsDump($world);
 
@@ -44,9 +40,5 @@ final readonly class PlaytimeImporter implements ImporterInterface
         }
 
         $this->playerActiveSecondRepository->insertPlayerActiveSeconds($playerActiveSeconds);
-
-        $importResult->addMessage('Finishing PlaytimeImporter...');
-
-        return $importResult;
     }
 }

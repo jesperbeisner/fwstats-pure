@@ -28,20 +28,14 @@ final readonly class ClanImporter implements ImporterInterface
     ) {
     }
 
-    public function import(WorldEnum $world): ImportResult
+    public function import(WorldEnum $world): void
     {
-        $importResult = new ImportResult();
-        $importResult->addMessage('Starting ClanImporter.');
-
         $clans = $this->clanRepository->findAllByWorld($world);
         $clansDump = $this->freewarDumpService->getClansDump($world);
 
         // First import. No comparison needed.
         if (count($clans) === 0) {
-            $importResult->addMessage(sprintf('No clans found for world "%s". Inserting clans dump into the database.', $world->value));
             $this->clanRepository->insertClans($world, $clansDump);
-
-            return $importResult;
         }
 
         foreach ($clans as $clan) {
@@ -49,12 +43,10 @@ final readonly class ClanImporter implements ImporterInterface
                 $clanDump = $clansDump[$clan->clanId];
 
                 if ($clan->shortcut !== $clanDump->shortcut || $clan->name !== $clanDump->name) {
-                    $importResult->addMessage(sprintf('Clan naming changed for clan "%s" in world "%s".', $clan->name, $world->value));
                     $this->clanNameHistoryRepository->insert(new ClanNameHistory(null, $clan->world, $clan->clanId, $clan->shortcut, $clanDump->shortcut, $clan->name, $clanDump->name, new DateTimeImmutable()));
                 }
             } else {
                 // Clan is in database but not in clan dump: Clan deleted
-                $importResult->addMessage(sprintf('Clan "%s" in world "%s" was deleted.', $clan->name, $world->value));
                 $this->clanDeletedHistoryRepository->insert(new ClanDeletedHistory(null, $clan->world, $clan->clanId, $clan->shortcut, $clan->name, $clan->leaderId, $clan->coLeaderId, $clan->diplomatId, $clan->warPoints, new DateTimeImmutable()));
             }
         }
@@ -62,15 +54,10 @@ final readonly class ClanImporter implements ImporterInterface
         foreach ($clansDump as $clanDump) {
             // Clan is in dump but not in database: Clan created
             if (!isset($clans[$clanDump->clanId])) {
-                $importResult->addMessage(sprintf('Clan "%s" in world "%s" was created.', $clanDump->name, $world->value));
                 $this->clanCreatedHistoryRepository->insert(new ClanCreatedHistory(null, $clanDump->world, $clanDump->clanId, $clanDump->shortcut, $clanDump->name, $clanDump->leaderId, $clanDump->coLeaderId, $clanDump->diplomatId, $clanDump->warPoints, new DateTimeImmutable()));
             }
         }
 
         $this->clanRepository->insertClans($world, $clansDump);
-
-        $importResult->addMessage('Finishing ClanImporter.');
-
-        return $importResult;
     }
 }

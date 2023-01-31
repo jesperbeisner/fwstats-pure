@@ -114,7 +114,7 @@ return [
 
         // Services
         Interface\FreewarDumpServiceInterface::class => Service\Factory\FreewarDumpServiceFactory::class,
-        Service\PlayerStatusService::class => Service\Factory\PlayerStatusServiceFactory::class,
+        Interface\PlayerStatusServiceInterface::class => Service\Factory\PlayerStatusServiceFactory::class,
         Service\PlaytimeService::class => Service\Factory\PlaytimeServiceFactory::class,
         Service\RenderService::class => Service\Factory\RenderServiceFactory::class,
         Interface\CronjobInterface::class => Service\Factory\CronjobServiceFactory::class,
@@ -159,6 +159,7 @@ return [
         Repository\CronjobRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\ConfigRepository::class => Repository\Factory\RepositoryFactory::class,
         Repository\PlayerXpHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
+        Repository\PlayerCreatedHistoryRepository::class => Repository\Factory\RepositoryFactory::class,
 
         // Stdlib
         Interface\LoggerInterface::class => Stdlib\Factory\LoggerFactory::class,

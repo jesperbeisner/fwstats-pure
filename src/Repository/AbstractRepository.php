@@ -12,9 +12,4 @@ abstract class AbstractRepository
         protected readonly DatabaseInterface $database,
     ) {
     }
-
-    public function getDatabase(): DatabaseInterface
-    {
-        return $this->database;
-    }
 }

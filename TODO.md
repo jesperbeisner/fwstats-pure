@@ -11,7 +11,7 @@
 - Update FixturesCommand
 - Update player achievements only daily
 - Change date on ranking image to bottom
-
+- Clans created/deleted/changes history
 
 ## Finished
 - ~~Pagination on index page~~

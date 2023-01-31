@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Model;
 
+use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
@@ -15,6 +16,9 @@ final readonly class PlayerStatusHistory
         public int $playerId,
         public string $name,
         public PlayerStatusEnum $status,
+        public DateTimeImmutable $created,
+        public ?DateTimeImmutable $deleted,
+        public DateTimeImmutable $updated,
     ) {
     }
 
@@ -26,6 +30,9 @@ final readonly class PlayerStatusHistory
             $playerStatusHistory->playerId,
             $playerStatusHistory->name,
             $playerStatusHistory->status,
+            $playerStatusHistory->created,
+            $playerStatusHistory->deleted,
+            $playerStatusHistory->updated,
         );
     }
 }

@@ -11,11 +11,7 @@ use Jesperbeisner\Fwstats\Interface\ImporterInterface;
 use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
-use Jesperbeisner\Fwstats\Result\ImportResult;
 
-/**
- * @see \Jesperbeisner\Fwstats\Tests\Unit\Importer\AchievementImporterTest
- */
 final readonly class AchievementImporter implements ImporterInterface
 {
     public function __construct(
@@ -25,11 +21,8 @@ final readonly class AchievementImporter implements ImporterInterface
     ) {
     }
 
-    public function import(WorldEnum $world): ImportResult
+    public function import(WorldEnum $world): void
     {
-        $importResult = new ImportResult();
-        $importResult->addMessage('Starting AchievementImporter...');
-
         $players = $this->playerRepository->findAllByWorld($world);
         $achievementsDump = $this->freewarDumpService->getAchievementsDump($world);
 
@@ -60,9 +53,5 @@ final readonly class AchievementImporter implements ImporterInterface
         }
 
         $this->achievementRepository->insertAchievements($world, $achievements);
-
-        $importResult->addMessage('Finishing AchievementImporter...');
-
-        return $importResult;
     }
 }
