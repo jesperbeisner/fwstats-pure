@@ -7,14 +7,17 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 use Jesperbeisner\Fwstats\Controller\SecurityController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\SecurityController
  */
 final class SecurityControllerTest extends AbstractTestCase
 {
-    use ContainerTrait;
+    protected function setUp(): void
+    {
+        self::setUpContainer();
+        self::setUpDatabase();
+    }
 
     public function test_get_request(): void
     {

@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Migration;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\MigrationRepositoryTest
+ * @see \Jesperbeisner\Fwstats\Tests\Functional\Repository\MigrationRepositoryTest
  */
 final class MigrationRepository extends AbstractRepository
 {

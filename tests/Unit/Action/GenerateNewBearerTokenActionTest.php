@@ -9,13 +9,13 @@ use Jesperbeisner\Fwstats\Action\GenerateNewBearerTokenAction;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\GenerateNewBearerTokenAction
  */
-final class GenerateNewBearerTokenActionTest extends AbstractTestCase
+final class GenerateNewBearerTokenActionTest extends TestCase
 {
     public function test_it_throws_a_RuntimeException_when_no_user_is_set(): void
     {

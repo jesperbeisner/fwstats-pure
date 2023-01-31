@@ -9,7 +9,7 @@ use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\ClanDeletedHistory;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\ClanDeletedHistoryRepositoryTest
+ * @see \Jesperbeisner\Fwstats\Tests\Functional\Repository\ClanDeletedHistoryRepositoryTest
  */
 final class ClanDeletedHistoryRepository extends AbstractRepository implements ResetActionFreewarInterface
 {

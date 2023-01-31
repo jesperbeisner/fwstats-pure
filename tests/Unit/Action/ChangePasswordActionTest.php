@@ -10,13 +10,13 @@ use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\ChangePasswordAction
  */
-final class ChangePasswordActionTest extends AbstractTestCase
+final class ChangePasswordActionTest extends TestCase
 {
     public function test_it_throws_a_RuntimeException_when_the_user_is_not_set(): void
     {

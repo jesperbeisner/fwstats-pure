@@ -12,7 +12,6 @@ use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 use Jesperbeisner\Fwstats\Tests\Doubles\CronjobDummy;
 
 /**
@@ -20,16 +19,20 @@ use Jesperbeisner\Fwstats\Tests\Doubles\CronjobDummy;
  */
 final class CronjobControllerTest extends AbstractTestCase
 {
-    use ContainerTrait;
+    protected function setUp(): void
+    {
+        self::setUpContainer();
+        self::setUpDatabase();
+    }
 
     public function test_get_request(): void
     {
         $request = new Request(['REQUEST_URI' => '/cronjob', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-        $this->getContainer()->set(Request::class, $request);
+        self::getContainer()->set(Request::class, $request);
 
-        $this->getContainer()->set(CronjobInterface::class, new CronjobDummy());
+        self::getContainer()->set(CronjobInterface::class, new CronjobDummy());
 
-        $response = (new Application($this->getContainer()))->handle($request);
+        $response = (new Application(self::getContainer()))->handle($request);
 
         self::assertSame(405, $response->statusCode);
         self::assertSame(Response::CONTENT_TYPE_JSON, $response->contentType);
@@ -39,11 +42,11 @@ final class CronjobControllerTest extends AbstractTestCase
     public function test_post_request_without_token(): void
     {
         $request = new Request(['REQUEST_URI' => '/cronjob', 'REQUEST_METHOD' => 'POST'], [], [], [], []);
-        $this->getContainer()->set(Request::class, $request);
+        self::getContainer()->set(Request::class, $request);
 
-        $this->getContainer()->set(CronjobInterface::class, new CronjobDummy());
+        self::getContainer()->set(CronjobInterface::class, new CronjobDummy());
 
-        $response = (new Application($this->getContainer()))->handle($request);
+        $response = (new Application(self::getContainer()))->handle($request);
 
         self::assertSame(401, $response->statusCode);
         self::assertSame(Response::CONTENT_TYPE_JSON, $response->contentType);
@@ -53,11 +56,11 @@ final class CronjobControllerTest extends AbstractTestCase
     public function test_post_request_with_non_valid_token(): void
     {
         $request = new Request(['REQUEST_URI' => '/cronjob', 'REQUEST_METHOD' => 'POST'], [], [], [], ['Authorization' => 'Bearer test']);
-        $this->getContainer()->set(Request::class, $request);
+        self::getContainer()->set(Request::class, $request);
 
-        $this->getContainer()->set(CronjobInterface::class, new CronjobDummy());
+        self::getContainer()->set(CronjobInterface::class, new CronjobDummy());
 
-        $response = (new Application($this->getContainer()))->handle($request);
+        $response = (new Application(self::getContainer()))->handle($request);
 
         self::assertSame(401, $response->statusCode);
         self::assertSame(Response::CONTENT_TYPE_JSON, $response->contentType);
@@ -66,17 +69,15 @@ final class CronjobControllerTest extends AbstractTestCase
 
     public function test_post_request_with_valid_token_but_cronjob_not_allowed_to_run(): void
     {
-        $this->loadMigrations();
-
         $request = new Request(['REQUEST_URI' => '/cronjob', 'REQUEST_METHOD' => 'POST'], [], [], [], ['Authorization' => 'Bearer test']);
-        $this->getContainer()->set(Request::class, $request);
+        self::getContainer()->set(Request::class, $request);
 
-        $this->getContainer()->set(CronjobInterface::class, new CronjobDummy(false));
+        self::getContainer()->set(CronjobInterface::class, new CronjobDummy(false));
 
         $user = new User(1, 'test', 'test', 'test', 'test', new DateTimeImmutable());
-        $this->getContainer()->get(UserRepository::class)->insert($user);
+        self::getContainer()->get(UserRepository::class)->insert($user);
 
-        $response = (new Application($this->getContainer()))->handle($request);
+        $response = (new Application(self::getContainer()))->handle($request);
 
         self::assertSame(200, $response->statusCode);
         self::assertSame(Response::CONTENT_TYPE_JSON, $response->contentType);
@@ -85,17 +86,15 @@ final class CronjobControllerTest extends AbstractTestCase
 
     public function test_post_request_with_valid_token(): void
     {
-        $this->loadMigrations();
-
         $request = new Request(['REQUEST_URI' => '/cronjob', 'REQUEST_METHOD' => 'POST'], [], [], [], ['Authorization' => 'Bearer test']);
-        $this->getContainer()->set(Request::class, $request);
+        self::getContainer()->set(Request::class, $request);
 
-        $this->getContainer()->set(CronjobInterface::class, new CronjobDummy());
+        self::getContainer()->set(CronjobInterface::class, new CronjobDummy());
 
         $user = new User(1, 'test', 'test', 'test', 'test', new DateTimeImmutable());
-        $this->getContainer()->get(UserRepository::class)->insert($user);
+        self::getContainer()->get(UserRepository::class)->insert($user);
 
-        $response = (new Application($this->getContainer()))->handle($request);
+        $response = (new Application(self::getContainer()))->handle($request);
 
         self::assertSame(200, $response->statusCode);
         self::assertSame(Response::CONTENT_TYPE_JSON, $response->contentType);

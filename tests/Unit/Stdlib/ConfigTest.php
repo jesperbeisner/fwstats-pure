@@ -6,12 +6,12 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\Stdlib;
 
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Stdlib\Config;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Stdlib\Config
  */
-final class ConfigTest extends AbstractTestCase
+final class ConfigTest extends TestCase
 {
     public function test_throws_a_RuntimeException_when_config_does_not_exist(): void
     {

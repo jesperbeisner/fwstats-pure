@@ -2,29 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Unit\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Config;
 use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Repository\ConfigRepository
  */
 final class ConfigRepositoryTest extends AbstractTestCase
 {
-    use ContainerTrait;
-
     private ConfigRepository $configRepository;
 
     protected function setUp(): void
     {
-        $this->setUpContainer();
-        $this->loadMigrations();
+        self::setUpContainer();
+        self::setUpDatabase();
 
-        $this->configRepository = $this->getContainer()->get(ConfigRepository::class);
+        $this->configRepository = self::getContainer()->get(ConfigRepository::class);
     }
 
     public function test_insert(): void

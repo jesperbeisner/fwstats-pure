@@ -14,7 +14,7 @@ use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\PlayerActiveSecondRepositoryTest
+ * @see \Jesperbeisner\Fwstats\Tests\Functional\Repository\PlayerActiveSecondRepositoryTest
  */
 final class PlayerActiveSecondRepository extends AbstractRepository implements ResetActionFreewarInterface
 {

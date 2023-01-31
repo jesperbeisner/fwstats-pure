@@ -8,14 +8,14 @@ use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Exception\ActionException;
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
 use Jesperbeisner\Fwstats\Tests\Doubles\TranslatorDummy;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Action\CreateUserAction
  */
-final class CreateUserActionTest extends AbstractTestCase
+final class CreateUserActionTest extends TestCase
 {
     private CreateUserAction $createUserAction;
 

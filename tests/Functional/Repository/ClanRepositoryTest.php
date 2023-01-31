@@ -2,30 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Unit\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Repository\ClanRepository
  */
 final class ClanRepositoryTest extends AbstractTestCase
 {
-    use ContainerTrait;
-
     private ClanRepository $clanRepository;
 
     protected function setUp(): void
     {
-        $this->setUpContainer();
-        $this->loadMigrations();
+        self::setUpContainer();
+        self::setUpDatabase();
 
-        $this->clanRepository = $this->getContainer()->get(ClanRepository::class);
+        $this->clanRepository = self::getContainer()->get(ClanRepository::class);
     }
 
     public function test_insert(): void

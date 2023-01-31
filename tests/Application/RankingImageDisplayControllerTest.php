@@ -8,21 +8,24 @@ use Jesperbeisner\Fwstats\Application;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\RankingImageDisplayController
  */
 final class RankingImageDisplayControllerTest extends AbstractTestCase
 {
-    use ContainerTrait;
+    protected function setUp(): void
+    {
+        self::setUpContainer();
+        self::setUpDatabase();
+    }
 
     public function test_get_request_with_non_existing_world(): void
     {
         $request = new Request(['REQUEST_URI' => '/images/test-ranking.png', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-        $this->getContainer()->set(Request::class, $request);
+        self::getContainer()->set(Request::class, $request);
 
-        $response = (new Application($this->getContainer()))->handle($request);
+        $response = (new Application(self::getContainer()))->handle($request);
 
         self::assertSame(404, $response->statusCode);
         self::assertSame('error/error.phtml', $response->template);
@@ -32,9 +35,9 @@ final class RankingImageDisplayControllerTest extends AbstractTestCase
     public function test_get_request_with_afsrv_world(): void
     {
         $request = new Request(['REQUEST_URI' => '/images/afsrv-ranking.png', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-        $this->getContainer()->set(Request::class, $request);
+        self::getContainer()->set(Request::class, $request);
 
-        $response = (new Application($this->getContainer()))->handle($request);
+        $response = (new Application(self::getContainer()))->handle($request);
 
         self::assertSame(200, $response->statusCode);
         self::assertSame(Response::CONTENT_TYPE_IMAGE, $response->contentType);
@@ -43,9 +46,9 @@ final class RankingImageDisplayControllerTest extends AbstractTestCase
     public function test_get_request_with_chaos_world(): void
     {
         $request = new Request(['REQUEST_URI' => '/images/chaos-ranking.png', 'REQUEST_METHOD' => 'GET'], [], [], [], []);
-        $this->getContainer()->set(Request::class, $request);
+        self::getContainer()->set(Request::class, $request);
 
-        $response = (new Application($this->getContainer()))->handle($request);
+        $response = (new Application(self::getContainer()))->handle($request);
 
         self::assertSame(200, $response->statusCode);
         self::assertSame(Response::CONTENT_TYPE_IMAGE, $response->contentType);

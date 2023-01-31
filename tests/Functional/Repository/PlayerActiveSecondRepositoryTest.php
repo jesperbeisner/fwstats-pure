@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Unit\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -10,23 +10,20 @@ use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository
  */
 final class PlayerActiveSecondRepositoryTest extends AbstractTestCase
 {
-    use ContainerTrait;
-
     private PlayerActiveSecondRepository $playerActiveSecondRepository;
 
     protected function setUp(): void
     {
-        $this->setUpContainer();
-        $this->loadMigrations();
+        self::setUpContainer();
+        self::setUpDatabase();
 
-        $this->playerActiveSecondRepository = $this->getContainer()->get(PlayerActiveSecondRepository::class);
+        $this->playerActiveSecondRepository = self::getContainer()->get(PlayerActiveSecondRepository::class);
     }
 
     public function test_insert(): void

@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Cronjob;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Unit\Repository\CronjobRepositoryTest
+ * @see \Jesperbeisner\Fwstats\Tests\Functional\Repository\CronjobRepositoryTest
  */
 final class CronjobRepository extends AbstractRepository
 {

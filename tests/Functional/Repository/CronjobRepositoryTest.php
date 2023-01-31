@@ -2,29 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Unit\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Cronjob;
 use Jesperbeisner\Fwstats\Repository\CronjobRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Repository\CronjobRepository
  */
 final class CronjobRepositoryTest extends AbstractTestCase
 {
-    use ContainerTrait;
-
     private CronjobRepository $cronjobRepository;
 
     protected function setUp(): void
     {
-        $this->setUpContainer();
-        $this->loadMigrations();
+        self::setUpContainer();
+        self::setUpDatabase();
 
-        $this->cronjobRepository = $this->getContainer()->get(CronjobRepository::class);
+        $this->cronjobRepository = self::getContainer()->get(CronjobRepository::class);
     }
 
     public function test_insert(): void

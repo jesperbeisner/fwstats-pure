@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Unit\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -10,23 +10,20 @@ use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Repository\AchievementRepository
  */
 final class AchievementRepositoryTest extends AbstractTestCase
 {
-    use ContainerTrait;
-
     private AchievementRepository $achievementRepository;
 
     protected function setUp(): void
     {
-        $this->setUpContainer();
-        $this->loadMigrations();
+        self::setUpContainer();
+        self::setUpDatabase();
 
-        $this->achievementRepository = $this->getContainer()->get(AchievementRepository::class);
+        $this->achievementRepository = self::getContainer()->get(AchievementRepository::class);
     }
 
     public function test_insert(): void

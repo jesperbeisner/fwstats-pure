@@ -6,12 +6,12 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\Result;
 
 use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Result\ActionResult;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Result\ActionResult
  */
-final class ActionResultTest extends AbstractTestCase
+final class ActionResultTest extends TestCase
 {
     public function test_it_works(): void
     {

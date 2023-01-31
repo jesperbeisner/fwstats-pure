@@ -7,12 +7,12 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\DTO;
 use Generator;
 use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\DTO\Playtime
  */
-class PlaytimeTest extends AbstractTestCase
+class PlaytimeTest extends TestCase
 {
     /**
      * @dataProvider providePlaytimeData

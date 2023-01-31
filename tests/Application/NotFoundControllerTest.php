@@ -8,14 +8,17 @@ use Jesperbeisner\Fwstats\Controller\NotFoundController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Controller\NotFoundController
  */
 final class NotFoundControllerTest extends AbstractTestCase
 {
-    use ContainerTrait;
+    protected function setUp(): void
+    {
+        self::setUpContainer();
+        self::setUpDatabase();
+    }
 
     public function test_get_request(): void
     {

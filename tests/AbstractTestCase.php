@@ -16,12 +16,10 @@ use RuntimeException;
 
 abstract class AbstractTestCase extends PHPUnitTestCase
 {
-    protected ?ContainerInterface $container = null;
+    protected static ?ContainerInterface $container = null;
 
-    protected function setUpContainer(): void
+    protected static function setUpContainer(): void
     {
-        $this->deleteTestFiles();
-
         /** @var ContainerInterface $container */
         $container = require __DIR__ . '/../bootstrap.php';
 
@@ -33,27 +31,22 @@ abstract class AbstractTestCase extends PHPUnitTestCase
         $container->set(SessionInterface::class, new SessionFake());
         $container->set(TranslatorInterface::class, new TranslatorDummy());
 
-        $this->container = $container;
+        static::$container = $container;
     }
 
-    protected function tearDownContainer(): void
+    protected static function setUpDatabase(): void
     {
-        $this->deleteTestFiles();
+        self::deleteDatabaseFiles();
 
-        $this->container = null;
+        static::getContainer()->get(MigrationService::class)->loadMigrations();
     }
 
-    protected function getContainer(): ContainerInterface
+    protected static function getContainer(): ContainerInterface
     {
-        return $this->container ?? throw new RuntimeException('Did you forget to call "setUpContainer" beforehand?');
+        return static::$container ?? throw new RuntimeException('Did you forget to call "setUpContainer" beforehand?');
     }
 
-    protected function loadMigrations(): void
-    {
-        $this->getContainer()->get(MigrationService::class)->loadMigrations();
-    }
-
-    private function deleteTestFiles(): void
+    private static function deleteDatabaseFiles(): void
     {
         $dbTestFile = __DIR__ . '/../var/sqlite-test.db';
         if (file_exists($dbTestFile) && false === unlink($dbTestFile)) {

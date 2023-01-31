@@ -2,29 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Unit\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Migration;
 use Jesperbeisner\Fwstats\Repository\MigrationRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Repository\MigrationRepository
  */
 final class MigrationRepositoryTest extends AbstractTestCase
 {
-    use ContainerTrait;
-
     private MigrationRepository $migrationRepository;
 
     protected function setUp(): void
     {
-        $this->setUpContainer();
-        $this->loadMigrations();
+        self::setUpContainer();
+        self::setUpDatabase();
 
-        $this->migrationRepository = $this->getContainer()->get(MigrationRepository::class);
+        $this->migrationRepository = self::getContainer()->get(MigrationRepository::class);
     }
 
     public function test_insert(): void

@@ -8,13 +8,13 @@ use Jesperbeisner\Fwstats\Exception\ContainerException;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Stdlib\Container;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Stdlib\Container
  */
-final class ContainerTest extends AbstractTestCase
+final class ContainerTest extends TestCase
 {
     public function test_get_throws_a_ContainerException_when_the_service_does_not_exist(): void
     {

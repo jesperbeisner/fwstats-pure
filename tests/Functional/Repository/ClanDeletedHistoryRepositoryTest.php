@@ -2,30 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Unit\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\ClanDeletedHistory;
 use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
-use Jesperbeisner\Fwstats\Tests\ContainerTrait;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository
  */
 final class ClanDeletedHistoryRepositoryTest extends AbstractTestCase
 {
-    use ContainerTrait;
-
     private ClanDeletedHistoryRepository $clanDeletedHistoryRepository;
 
     protected function setUp(): void
     {
-        $this->setUpContainer();
-        $this->loadMigrations();
+        self::setUpContainer();
+        self::setUpDatabase();
 
-        $this->clanDeletedHistoryRepository = $this->getContainer()->get(ClanDeletedHistoryRepository::class);
+        $this->clanDeletedHistoryRepository = self::getContainer()->get(ClanDeletedHistoryRepository::class);
     }
 
     public function test_insert(): void

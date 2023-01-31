@@ -7,15 +7,14 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\Result;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Exception\ActionResultException;
-use Jesperbeisner\Fwstats\Interface\ActionResultInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Result\CreateUserActionResult;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Result\CreateUserActionResult
  */
-class CreateUserActionResultTest extends AbstractTestCase
+class CreateUserActionResultTest extends TestCase
 {
     public function test_will_return_right_boolean_result_when_calling_isSuccess(): void
     {

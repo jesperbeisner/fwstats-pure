@@ -11,13 +11,13 @@ use Jesperbeisner\Fwstats\Model\PlayerXpHistory;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerXpHistoryRepository;
 use Jesperbeisner\Fwstats\Service\XpService;
-use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jesperbeisner\Fwstats\Service\XpService
  */
-final class XpServiceTest extends AbstractTestCase
+final class XpServiceTest extends TestCase
 {
     public function test_it_returns_an_array_with_the_last_7_days_as_keys_and_null_as_values_when_no_xp_histories_are_found(): void
     {
