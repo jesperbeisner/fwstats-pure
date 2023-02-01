@@ -100,8 +100,6 @@ final class PlayerImporterTest extends AbstractTestCase
     {
         $database = self::getContainer()->get(DatabaseInterface::class);
 
-        self::getContainer()->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::BANNED));
-
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             2 => new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
@@ -128,8 +126,6 @@ final class PlayerImporterTest extends AbstractTestCase
     {
         $database = self::getContainer()->get(DatabaseInterface::class);
 
-        self::getContainer()->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::BANNED));
-
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             2 => new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
@@ -149,10 +145,86 @@ final class PlayerImporterTest extends AbstractTestCase
         self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_name_history");
+
         self::assertCount(1, $histories);
+
         self::assertIsArray($histories[0]);
         self::assertSame(3, $histories[0]['player_id']);
         self::assertSame('Test-3', $histories[0]['old_name']);
         self::assertSame('name-change', $histories[0]['new_name']);
+    }
+
+    public function test_it_will_create_player_race_change_history(): void
+    {
+        $database = self::getContainer()->get(DatabaseInterface::class);
+
+        $freewarDumpService = new FreewarDumpServiceDummy([
+            1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
+            2 => new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
+            3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, null, new DateTimeImmutable()),
+        ]);
+
+        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+
+        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+            new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
+            new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
+            new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, null, new DateTimeImmutable()),
+        ]);
+
+        self::assertCount(0, $database->select("SELECT * FROM players_race_history"));
+
+        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+
+        $histories = $database->select("SELECT * FROM players_race_history");
+
+        self::assertCount(1, $histories);
+
+        self::assertIsArray($histories[0]);
+        self::assertSame(3, $histories[0]['player_id']);
+        self::assertSame('Keuroner', $histories[0]['old_race']);
+        self::assertSame('Serum-Geist', $histories[0]['new_race']);
+    }
+
+    public function test_it_will_create_player_profession_change_history(): void
+    {
+        $database = self::getContainer()->get(DatabaseInterface::class);
+
+        $freewarDumpService = new FreewarDumpServiceDummy([
+            1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, 'Magieverlängerer', new DateTimeImmutable()),
+            2 => new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
+            3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, 'Sammler', new DateTimeImmutable()),
+        ]);
+
+        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+
+        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+            new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
+            new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, 'Maschinenbauer', new DateTimeImmutable()),
+            new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, 'Schützer', new DateTimeImmutable()),
+        ]);
+
+        self::assertCount(0, $database->select("SELECT * FROM players_profession_history"));
+
+        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+
+        $histories = $database->select("SELECT * FROM players_profession_history");
+
+        self::assertCount(3, $histories);
+
+        self::assertIsArray($histories[0]);
+        self::assertSame(1, $histories[0]['player_id']);
+        self::assertNull($histories[0]['old_profession']);
+        self::assertSame('Magieverlängerer', $histories[0]['new_profession']);
+
+        self::assertIsArray($histories[1]);
+        self::assertSame(2, $histories[1]['player_id']);
+        self::assertSame('Maschinenbauer', $histories[1]['old_profession']);
+        self::assertNull($histories[1]['new_profession']);
+
+        self::assertIsArray($histories[2]);
+        self::assertSame(3, $histories[2]['player_id']);
+        self::assertSame('Schützer', $histories[2]['old_profession']);
+        self::assertSame('Sammler', $histories[2]['new_profession']);
     }
 }
