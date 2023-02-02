@@ -34,9 +34,10 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_import_players_dump_successfully(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
-        self::getContainer()->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::BANNED));
+        $container->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::BANNED));
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
@@ -44,20 +45,21 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
         self::assertCount(0, $database->select("SELECT * FROM players"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         self::assertCount(3, $database->select("SELECT * FROM players"));
     }
 
     public function test_it_will_update_daily_xp_changes_successfully(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
-        self::getContainer()->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::BANNED));
+        $container->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::BANNED));
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
@@ -65,12 +67,12 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
         self::assertCount(0, $database->select("SELECT * FROM players"));
         self::assertCount(0, $database->select("SELECT * FROM players_xp_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         self::assertCount(3, $database->select("SELECT * FROM players"));
         self::assertCount(3, $database->select("SELECT * FROM players_xp_history"));
@@ -82,6 +84,7 @@ final class PlayerImporterTest extends AbstractTestCase
 
         // We need to set up the container once again so the PlayerImporter gets the new FreewarDumpService
         self::setUpContainer();
+        $container = self::getContainer();
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 500, 0, 500, null, null, new DateTimeImmutable()),
@@ -89,9 +92,9 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 700, 0, 700, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         self::assertSame([
             ['id' => 1, 'world' => 'afsrv', 'player_id' => 1, 'start_xp' => 100, 'end_xp' => 500, 'day' => (new DateTimeImmutable())->setTime(0, 0, 0)->format('Y-m-d H:i:s')],
@@ -102,7 +105,8 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_create_a_new_player_created_entry_when_dump_has_a_new_player(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
@@ -110,9 +114,9 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
         ]);
@@ -120,7 +124,7 @@ final class PlayerImporterTest extends AbstractTestCase
         self::assertCount(2, $database->select("SELECT * FROM players"));
         self::assertCount(0, $database->select("SELECT * FROM players_created_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         self::assertCount(3, $database->select("SELECT * FROM players"));
         self::assertCount(1, $database->select("SELECT * FROM players_created_history"));
@@ -128,7 +132,8 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_create_player_name_change_history(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
@@ -136,9 +141,9 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'name-change', 'Keuroner', 300, 0, 300, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, null, new DateTimeImmutable()),
@@ -146,7 +151,7 @@ final class PlayerImporterTest extends AbstractTestCase
 
         self::assertCount(0, $database->select("SELECT * FROM players_name_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_name_history");
 
@@ -160,7 +165,8 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_create_player_race_change_history(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
@@ -168,9 +174,9 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, null, new DateTimeImmutable()),
@@ -178,7 +184,7 @@ final class PlayerImporterTest extends AbstractTestCase
 
         self::assertCount(0, $database->select("SELECT * FROM players_race_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_race_history");
 
@@ -192,7 +198,8 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_create_player_profession_change_history(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, 'Magieverlängerer', new DateTimeImmutable()),
@@ -200,9 +207,9 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, 'Sammler', new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, 'Maschinenbauer', new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, 'Schützer', new DateTimeImmutable()),
@@ -210,7 +217,7 @@ final class PlayerImporterTest extends AbstractTestCase
 
         self::assertCount(0, $database->select("SELECT * FROM players_profession_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_profession_history");
 
@@ -234,7 +241,8 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_create_player_clan_change_history_and_fills_it_with_nulls_when_no_clan_is_available(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, 1, 'Magieverlängerer', new DateTimeImmutable()),
@@ -242,9 +250,9 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, 'Sammler', new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, 'Maschinenbauer', new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Keuroner', 300, 0, 300, null, 'Schützer', new DateTimeImmutable()),
@@ -252,7 +260,7 @@ final class PlayerImporterTest extends AbstractTestCase
 
         self::assertCount(0, $database->select("SELECT * FROM players_clan_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_clan_history");
 
@@ -270,9 +278,10 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_create_player_clan_change_history(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
-        self::getContainer()->get(ClanRepository::class)->insertClans(WorldEnum::AFSRV, [
+        $container->get(ClanRepository::class)->insertClans(WorldEnum::AFSRV, [
             new Clan(null, WorldEnum::AFSRV, 1, 'test-1', 'Test-1', 100, 0, 0, 0, new DateTimeImmutable()),
             new Clan(null, WorldEnum::AFSRV, 2, 'test-2', 'Test-2', 200, 0, 0, 0, new DateTimeImmutable()),
             new Clan(null, WorldEnum::AFSRV, 3, 'test-3', 'Test-3', 300, 0, 0, 0, new DateTimeImmutable()),
@@ -284,9 +293,9 @@ final class PlayerImporterTest extends AbstractTestCase
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, 1, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, 3, null, new DateTimeImmutable()),
@@ -294,7 +303,7 @@ final class PlayerImporterTest extends AbstractTestCase
 
         self::assertCount(0, $database->select("SELECT * FROM players_clan_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_clan_history");
 
@@ -330,18 +339,19 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_create_a_new_banned_player_status_history_entry_when_player_is_not_found_in_dump_anymore(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
-        self::getContainer()->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::BANNED));
+        $container->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::BANNED));
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             2 => new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, null, new DateTimeImmutable()),
@@ -349,7 +359,7 @@ final class PlayerImporterTest extends AbstractTestCase
 
         self::assertCount(0, $database->select("SELECT * FROM players_status_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_status_history");
 
@@ -363,18 +373,19 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_create_a_new_deleted_player_status_history_entry_when_player_is_not_found_in_dump_anymore(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
-        self::getContainer()->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::DELETED));
+        $container->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::DELETED));
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             2 => new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, null, new DateTimeImmutable()),
@@ -382,7 +393,7 @@ final class PlayerImporterTest extends AbstractTestCase
 
         self::assertCount(0, $database->select("SELECT * FROM players_status_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_status_history");
 
@@ -396,18 +407,19 @@ final class PlayerImporterTest extends AbstractTestCase
 
     public function test_it_will_not_create_a_player_status_history_entry_when_status_is_unknown(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
-        self::getContainer()->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::UNKNOWN));
+        $container->set(PlayerStatusServiceInterface::class, new PlayerStatusServiceDummy(PlayerStatusEnum::UNKNOWN));
 
         $freewarDumpService = new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             2 => new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
         ]);
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
+        $container->set(FreewarDumpServiceInterface::class, $freewarDumpService);
 
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, null, new DateTimeImmutable()),
@@ -415,27 +427,26 @@ final class PlayerImporterTest extends AbstractTestCase
 
         self::assertCount(0, $database->select("SELECT * FROM players_status_history"));
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         self::assertCount(0, $database->select("SELECT * FROM players_status_history"));
     }
 
     public function test_it_when_player_dump_has_a_new_player_which_has_open_status_history_it_will_be_updated(): void
     {
-        $database = self::getContainer()->get(DatabaseInterface::class);
+        $container = self::getContainer();
+        $database = $container->get(DatabaseInterface::class);
 
-        self::getContainer()->get(PlayerStatusHistoryRepository::class)->insert(new PlayerStatusHistory(null, WorldEnum::AFSRV, 4, 'Test-4', PlayerStatusEnum::BANNED, new DateTimeImmutable(), null, new DateTimeImmutable()));
+        $container->get(PlayerStatusHistoryRepository::class)->insert(new PlayerStatusHistory(null, WorldEnum::AFSRV, 4, 'Test-4', PlayerStatusEnum::BANNED, new DateTimeImmutable(), null, new DateTimeImmutable()));
 
-        $freewarDumpService = new FreewarDumpServiceDummy([
+        $container->set(FreewarDumpServiceInterface::class, new FreewarDumpServiceDummy([
             1 => new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             2 => new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
             3 => new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, null, new DateTimeImmutable()),
             4 => new Player(null, WorldEnum::AFSRV, 4, 'Test-4', 'Keuroner', 400, 0, 400, null, null, new DateTimeImmutable()),
-        ]);
+        ]));
 
-        self::getContainer()->set(FreewarDumpServiceInterface::class, $freewarDumpService);
-
-        self::getContainer()->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
+        $container->get(PlayerRepository::class)->insertPlayers(WorldEnum::AFSRV, [
             new Player(null, WorldEnum::AFSRV, 1, 'Test-1', 'Onlo', 100, 0, 100, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 2, 'Test-2', 'Taruner', 200, 0, 200, null, null, new DateTimeImmutable()),
             new Player(null, WorldEnum::AFSRV, 3, 'Test-3', 'Serum-Geist', 300, 0, 300, null, null, new DateTimeImmutable()),
@@ -448,7 +459,7 @@ final class PlayerImporterTest extends AbstractTestCase
         self::assertSame(1, $histories[0]['id']);
         self::assertNull($histories[0]['deleted']);
 
-        self::getContainer()->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
+        $container->get(PlayerImporter::class)->import(WorldEnum::AFSRV);
 
         $histories = $database->select("SELECT * FROM players_status_history");
 
