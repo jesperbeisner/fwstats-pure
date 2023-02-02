@@ -11,6 +11,9 @@ use Jesperbeisner\Fwstats\Interface\ImporterInterface;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Functional\Importer\PlaytimeImporterTest
+ */
 final readonly class PlaytimeImporter implements ImporterInterface
 {
     public function __construct(
