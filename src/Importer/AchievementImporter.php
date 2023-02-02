@@ -12,6 +12,9 @@ use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Functional\Importer\AchievementImporterTest
+ */
 final readonly class AchievementImporter implements ImporterInterface
 {
     public function __construct(
