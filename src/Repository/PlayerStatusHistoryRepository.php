@@ -38,7 +38,7 @@ final class PlayerStatusHistoryRepository extends AbstractRepository implements 
     {
         $sql = <<<SQL
             UPDATE players_status_history
-            SET deleted = :deleted AND updated = :updated
+            SET deleted = :deleted, updated = :updated
             WHERE id = :id
         SQL;
 
