@@ -15,8 +15,10 @@ use Jesperbeisner\Fwstats\Repository\ClanCreatedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
-use Jesperbeisner\Fwstats\Result\ImportResult;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Functional\Importer\ClanImporterTest
+ */
 final readonly class ClanImporter implements ImporterInterface
 {
     public function __construct(
