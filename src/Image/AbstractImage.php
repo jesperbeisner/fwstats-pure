@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service;
+namespace Jesperbeisner\Fwstats\Image;
 
 use GdImage;
 use Jesperbeisner\Fwstats\Exception\ImageException;
-use Jesperbeisner\Fwstats\Interface\ImageServiceInterface;
+use Jesperbeisner\Fwstats\Interface\ImageInterface;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
-abstract class AbstractImageService implements ImageServiceInterface
+abstract class AbstractImage implements ImageInterface
 {
     private const IMAGE_FOLDER = '/var/';
     private const ROBOTO_FONT = '/data/Roboto-Light.ttf';

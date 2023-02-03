@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service;
+namespace Jesperbeisner\Fwstats\Image;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -11,7 +11,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
-final class ProfessionChangeImageService extends AbstractImageService
+final class ProfessionChangeImage extends AbstractImage
 {
     public function __construct(
         Config $config,

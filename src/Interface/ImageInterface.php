@@ -6,7 +6,7 @@ namespace Jesperbeisner\Fwstats\Interface;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 
-interface ImageServiceInterface
+interface ImageInterface
 {
     public function create(WorldEnum $world): void;
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service;
+namespace Jesperbeisner\Fwstats\Image;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -10,7 +10,7 @@ use Jesperbeisner\Fwstats\Exception\ImageException;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
-final class RaceChangeImageService extends AbstractImageService
+final class RaceChangeImage extends AbstractImage
 {
     public function __construct(
         Config $config,

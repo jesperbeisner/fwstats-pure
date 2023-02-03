@@ -6,6 +6,10 @@ namespace Jesperbeisner\Fwstats\Command\Factory;
 
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Command\DatabaseFixtureCommand;
+use Jesperbeisner\Fwstats\Image\NameChangeImage;
+use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
+use Jesperbeisner\Fwstats\Image\RaceChangeImage;
+use Jesperbeisner\Fwstats\Image\RankingImage;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
@@ -16,8 +20,6 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
-use Jesperbeisner\Fwstats\Service\NameChangeImageService;
-use Jesperbeisner\Fwstats\Service\RankingImageService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
 class DatabaseFixtureCommandFactory implements FactoryInterface
@@ -33,11 +35,13 @@ class DatabaseFixtureCommandFactory implements FactoryInterface
             $container->get(PlayerNameHistoryRepository::class),
             $container->get(PlayerRaceHistoryRepository::class),
             $container->get(PlayerProfessionHistoryRepository::class),
-            $container->get(RankingImageService::class),
-            $container->get(NameChangeImageService::class),
             $container->get(UserRepository::class),
-            $container->get(CreateUserAction::class),
             $container->get(ConfigRepository::class),
+            $container->get(CreateUserAction::class),
+            $container->get(RankingImage::class),
+            $container->get(NameChangeImage::class),
+            $container->get(ProfessionChangeImage::class),
+            $container->get(RaceChangeImage::class),
         );
     }
 }

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service\Factory;
+namespace Jesperbeisner\Fwstats\Image\Factory;
 
+use Jesperbeisner\Fwstats\Image\NameChangeImage;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
-use Jesperbeisner\Fwstats\Service\NameChangeImageService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
-final class NameChangeImageServiceFactory implements FactoryInterface
+final class NameChangeImageFactory implements FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): NameChangeImageService
+    public function build(ContainerInterface $container, string $serviceId): NameChangeImage
     {
-        return new NameChangeImageService(
+        return new NameChangeImage(
             $container->get(Config::class),
             $container->get(PlayerNameHistoryRepository::class),
         );

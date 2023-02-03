@@ -6,6 +6,10 @@ namespace Jesperbeisner\Fwstats\Service;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Image\NameChangeImage;
+use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
+use Jesperbeisner\Fwstats\Image\RaceChangeImage;
+use Jesperbeisner\Fwstats\Image\RankingImage;
 use Jesperbeisner\Fwstats\Importer\AchievementImporter;
 use Jesperbeisner\Fwstats\Importer\ClanImporter;
 use Jesperbeisner\Fwstats\Importer\PlayerImporter;
@@ -22,10 +26,10 @@ final readonly class CronjobService implements CronjobInterface
         private PlayerImporter $playerImporter,
         private AchievementImporter $achievementImporter,
         private PlaytimeImporter $playtimeImporter,
-        private RankingImageService $rankingImageService,
-        private NameChangeImageService $nameChangeImageService,
-        private RaceChangeImageService $raceChangeImageService,
-        private ProfessionChangeImageService $professionChangeImageService,
+        private RankingImage $rankingImage,
+        private NameChangeImage $nameChangeImage,
+        private RaceChangeImage $raceChangeImage,
+        private ProfessionChangeImage $professionChangeImage,
     ) {
     }
 
@@ -51,10 +55,10 @@ final readonly class CronjobService implements CronjobInterface
             $this->playerImporter->import($world);
             $this->achievementImporter->import($world);
             $this->playtimeImporter->import($world);
-            $this->rankingImageService->create($world);
-            $this->nameChangeImageService->create($world);
-            $this->raceChangeImageService->create($world);
-            $this->professionChangeImageService->create($world);
+            $this->rankingImage->create($world);
+            $this->nameChangeImage->create($world);
+            $this->raceChangeImage->create($world);
+            $this->professionChangeImage->create($world);
         }
     }
 }

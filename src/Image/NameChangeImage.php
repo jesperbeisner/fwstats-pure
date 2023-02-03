@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service;
+namespace Jesperbeisner\Fwstats\Image;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\ImageException;
@@ -10,7 +10,7 @@ use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
-final class NameChangeImageService extends AbstractImageService
+final class NameChangeImage extends AbstractImage
 {
     public function __construct(
         Config $config,

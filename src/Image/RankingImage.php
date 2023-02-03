@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service;
+namespace Jesperbeisner\Fwstats\Image;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\ImageException;
@@ -12,7 +12,7 @@ use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
-final class RankingImageService extends AbstractImageService
+final class RankingImage extends AbstractImage
 {
     public function __construct(
         Config $config,

@@ -4,11 +4,12 @@
 - Display user infos in profile
 - Display player achievements
 - Update player achievements only daily
-- Search on small menu width 100%
-- Page number on small menu not displaying properly
+- Bans & deletion image
 - Update FixturesCommand
 - Change date on ranking image to bottom
 - Clans created/deleted/changes history
+- Search on small menu width 100%
+- Page number on small menu not displaying properly
 - Add more tests :^)
 
 ## Finished

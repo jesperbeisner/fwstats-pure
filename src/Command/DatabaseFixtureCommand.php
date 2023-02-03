@@ -7,6 +7,10 @@ namespace Jesperbeisner\Fwstats\Command;
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Image\NameChangeImage;
+use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
+use Jesperbeisner\Fwstats\Image\RaceChangeImage;
+use Jesperbeisner\Fwstats\Image\RankingImage;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
@@ -21,8 +25,6 @@ use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
-use Jesperbeisner\Fwstats\Service\NameChangeImageService;
-use Jesperbeisner\Fwstats\Service\RankingImageService;
 
 final class DatabaseFixtureCommand extends AbstractCommand
 {
@@ -38,11 +40,13 @@ final class DatabaseFixtureCommand extends AbstractCommand
         private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,
         private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
         private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
-        private readonly RankingImageService $rankingImageService,
-        private readonly NameChangeImageService $nameChangeImageService,
         private readonly UserRepository $userRepository,
-        private readonly CreateUserAction $createUserAction,
         private readonly ConfigRepository $configRepository,
+        private readonly CreateUserAction $createUserAction,
+        private readonly RankingImage $rankingImage,
+        private readonly NameChangeImage $nameChangeImage,
+        private readonly ProfessionChangeImage $professionChangeImage,
+        private readonly RaceChangeImage $raceChangeImage,
     ) {
     }
 
@@ -75,17 +79,14 @@ final class DatabaseFixtureCommand extends AbstractCommand
         $this->writeLine("Creating player profession histories...");
         $this->createPlayerProfessionHistories();
 
-        $this->writeLine("Creating ranking images...");
-        $this->createRankingImages();
-
-        $this->writeLine("Creating name changes images...");
-        $this->createNameChangesImages();
+        $this->writeLine("Deleting old config...");
+        $this->configRepository->deleteAll();
 
         $this->writeLine("Creating user account...");
         $this->createUserAccount();
 
-        $this->writeLine("Deleting old config...");
-        $this->configRepository->deleteAll();
+        $this->writeLine("Creating images...");
+        $this->createImages();
 
         $this->writeLine("Finished the 'app:database-fixture' command in {$this->getTime()} ms.");
 
@@ -230,25 +231,21 @@ final class DatabaseFixtureCommand extends AbstractCommand
         }
     }
 
-    private function createRankingImages(): void
-    {
-        foreach (WorldEnum::cases() as $world) {
-            $this->rankingImageService->create($world);
-        }
-    }
-
-    private function createNameChangesImages(): void
-    {
-        foreach (WorldEnum::cases() as $world) {
-            $this->nameChangeImageService->create($world);
-        }
-    }
-
     private function createUserAccount(): void
     {
         $this->userRepository->deleteAll();
 
         $this->createUserAction->configure(['username' => 'admin', 'password' => 'Password12345']);
         $this->createUserAction->run();
+    }
+
+    private function createImages(): void
+    {
+        foreach (WorldEnum::cases() as $world) {
+            $this->rankingImage->create($world);
+            $this->nameChangeImage->create($world);
+            $this->professionChangeImage->create($world);
+            $this->raceChangeImage->create($world);
+        }
     }
 }

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service\Factory;
+namespace Jesperbeisner\Fwstats\Image\Factory;
 
+use Jesperbeisner\Fwstats\Image\RaceChangeImage;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
-use Jesperbeisner\Fwstats\Service\RaceChangeImageService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
-final class RaceChangeImageServiceFactory implements FactoryInterface
+final class RaceChangeImageFactory implements FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): RaceChangeImageService
+    public function build(ContainerInterface $container, string $serviceId): RaceChangeImage
     {
-        return new RaceChangeImageService(
+        return new RaceChangeImage(
             $container->get(Config::class),
             $container->get(PlayerRaceHistoryRepository::class),
         );

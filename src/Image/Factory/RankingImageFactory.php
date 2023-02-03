@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Service\Factory;
+namespace Jesperbeisner\Fwstats\Image\Factory;
 
+use Jesperbeisner\Fwstats\Image\RankingImage;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
-use Jesperbeisner\Fwstats\Service\RankingImageService;
 use Jesperbeisner\Fwstats\Stdlib\Config;
 
-final class RankingImageServiceFactory implements FactoryInterface
+final class RankingImageFactory implements FactoryInterface
 {
-    public function build(ContainerInterface $container, string $serviceId): RankingImageService
+    public function build(ContainerInterface $container, string $serviceId): RankingImage
     {
-        return new RankingImageService(
+        return new RankingImage(
             $container->get(Config::class),
             $container->get(PlayerRepository::class),
             $container->get(ClanRepository::class),

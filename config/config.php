@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Jesperbeisner\Fwstats\Action;
 use Jesperbeisner\Fwstats\Command;
 use Jesperbeisner\Fwstats\Controller;
+use Jesperbeisner\Fwstats\Image;
 use Jesperbeisner\Fwstats\Importer;
 use Jesperbeisner\Fwstats\Interface;
 use Jesperbeisner\Fwstats\Process;
@@ -124,11 +125,11 @@ return [
         Service\MigrationService::class => Service\Factory\MigrationServiceFactory::class,
         Service\XpService::class => Service\Factory\XpServiceFactory::class,
 
-        // ImageService
-        Service\RankingImageService::class => Service\Factory\RankingImageServiceFactory::class,
-        Service\NameChangeImageService::class => Service\Factory\NameChangeImageServiceFactory::class,
-        Service\RaceChangeImageService::class => Service\Factory\RaceChangeImageServiceFactory::class,
-        Service\ProfessionChangeImageService::class => Service\Factory\ProfessionChangeImageServiceFactory::class,
+        // Images
+        Image\RankingImage::class => Image\Factory\RankingImageFactory::class,
+        Image\NameChangeImage::class => Image\Factory\NameChangeImageFactory::class,
+        Image\RaceChangeImage::class => Image\Factory\RaceChangeImageFactory::class,
+        Image\ProfessionChangeImage::class => Image\Factory\ProfessionChangeImageFactory::class,
 
         // Commands
         Command\AppCommand::class => Command\Factory\AppCommandFactory::class,

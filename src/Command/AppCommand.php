@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Command;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Image\NameChangeImage;
+use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
+use Jesperbeisner\Fwstats\Image\RaceChangeImage;
+use Jesperbeisner\Fwstats\Image\RankingImage;
 use Jesperbeisner\Fwstats\Importer\AchievementImporter;
 use Jesperbeisner\Fwstats\Importer\ClanImporter;
 use Jesperbeisner\Fwstats\Importer\PlayerImporter;
 use Jesperbeisner\Fwstats\Importer\PlaytimeImporter;
-use Jesperbeisner\Fwstats\Service\NameChangeImageService;
-use Jesperbeisner\Fwstats\Service\ProfessionChangeImageService;
-use Jesperbeisner\Fwstats\Service\RaceChangeImageService;
-use Jesperbeisner\Fwstats\Service\RankingImageService;
 
 final class AppCommand extends AbstractCommand
 {
@@ -24,10 +24,10 @@ final class AppCommand extends AbstractCommand
         private readonly PlayerImporter $playerImporter,
         private readonly AchievementImporter $achievementImporter,
         private readonly PlaytimeImporter $playtimeImporter,
-        private readonly RankingImageService $rankingImageService,
-        private readonly NameChangeImageService $nameChangeImageService,
-        private readonly RaceChangeImageService $raceChangeImageService,
-        private readonly ProfessionChangeImageService $professionChangeImageService,
+        private readonly RankingImage $rankingImage,
+        private readonly NameChangeImage $nameChangeImage,
+        private readonly RaceChangeImage $raceChangeImage,
+        private readonly ProfessionChangeImage $professionChangeImage,
     ) {
     }
 
@@ -52,16 +52,16 @@ final class AppCommand extends AbstractCommand
             $this->playtimeImporter->import($world);
 
             $this->writeLine("Creating ranking image for world '$world->value'...");
-            $this->rankingImageService->create($world);
+            $this->rankingImage->create($world);
 
             $this->writeLine("Creating name change image for world '$world->value'...");
-            $this->nameChangeImageService->create($world);
+            $this->nameChangeImage->create($world);
 
             $this->writeLine("Creating race change image for world '$world->value'...");
-            $this->raceChangeImageService->create($world);
+            $this->raceChangeImage->create($world);
 
             $this->writeLine("Creating profession change image for world '$world->value'...");
-            $this->professionChangeImageService->create($world);
+            $this->professionChangeImage->create($world);
 
             $this->writeLine();
         }

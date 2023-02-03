@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Service\Factory;
 
+use Jesperbeisner\Fwstats\Image\NameChangeImage;
+use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
+use Jesperbeisner\Fwstats\Image\RaceChangeImage;
+use Jesperbeisner\Fwstats\Image\RankingImage;
 use Jesperbeisner\Fwstats\Importer\AchievementImporter;
 use Jesperbeisner\Fwstats\Importer\ClanImporter;
 use Jesperbeisner\Fwstats\Importer\PlayerImporter;
@@ -12,10 +16,6 @@ use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
 use Jesperbeisner\Fwstats\Repository\CronjobRepository;
 use Jesperbeisner\Fwstats\Service\CronjobService;
-use Jesperbeisner\Fwstats\Service\NameChangeImageService;
-use Jesperbeisner\Fwstats\Service\ProfessionChangeImageService;
-use Jesperbeisner\Fwstats\Service\RaceChangeImageService;
-use Jesperbeisner\Fwstats\Service\RankingImageService;
 
 class CronjobServiceFactory implements FactoryInterface
 {
@@ -27,10 +27,10 @@ class CronjobServiceFactory implements FactoryInterface
             $container->get(PlayerImporter::class),
             $container->get(AchievementImporter::class),
             $container->get(PlaytimeImporter::class),
-            $container->get(RankingImageService::class),
-            $container->get(NameChangeImageService::class),
-            $container->get(RaceChangeImageService::class),
-            $container->get(ProfessionChangeImageService::class),
+            $container->get(RankingImage::class),
+            $container->get(NameChangeImage::class),
+            $container->get(RaceChangeImage::class),
+            $container->get(ProfessionChangeImage::class),
         );
     }
 }
