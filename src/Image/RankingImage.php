@@ -27,7 +27,7 @@ final class RankingImage extends AbstractImage
         $players = $this->playerRepository->getTop50PlayersByWorld($world);
         $clans = $this->clanRepository->findAllByWorld($world);
 
-        $this->createImage(750, (int) (70 + (count($players) * 19.1)));
+        $this->createImage(750, (int) (105 + (count($players) * 19.1)));
         $this->setBackgroundColor($this->colorWhite());
 
         if ($world === WorldEnum::AFSRV) {
@@ -35,8 +35,6 @@ final class RankingImage extends AbstractImage
         } else {
             $this->write('Top 50 ChaosFreewar', 262, 25, 17);
         }
-
-        $this->write(date('d.m.Y - H:i:s'), 624, 15, 10);
 
         $this->createRankColumn($players);
         $this->createNameColumn($players);
@@ -47,6 +45,9 @@ final class RankingImage extends AbstractImage
         $this->createSoulXpColumn($players);
         $this->createTotalXpColumn($players);
         $this->createSoulLevelColumn($players);
+
+        $this->write('www.fwstats.de', 10, (int) (93 + (count($players) * 19.1)), 10);
+        $this->write(date('Y-m-d - H:i:s'), 615, (int) (93 + (count($players) * 19.1)), 10);
 
         $this->save($this->getImageFolder() . $world->value . '-ranking.png');
     }

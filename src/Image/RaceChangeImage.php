@@ -23,7 +23,7 @@ final class RaceChangeImage extends AbstractImage
     {
         $raceChanges = $this->playerRaceHistoryRepository->getLast15RaceChangesByWorld($world);
 
-        $this->createImage(475, (int) (90 + (count($raceChanges) * 19.1)));
+        $this->createImage(475, (int) (95 + (count($raceChanges) * 19.1)));
         $this->setBackgroundColor($this->colorWhite());
 
         if ($world === WorldEnum::AFSRV) {
@@ -38,7 +38,8 @@ final class RaceChangeImage extends AbstractImage
         $this->createNewRaceColumn($raceChanges);
         $this->createDateColumn($raceChanges);
 
-        $this->write(date('d.m.Y - H:i:s'), 176, (int) (85 + (count($raceChanges) * 19.1)), 10);
+        $this->write('www.fwstats.de', 10, (int) (85 + (count($raceChanges) * 19.1)), 10);
+        $this->write(date('Y-m-d - H:i:s'), 343, (int) (85 + (count($raceChanges) * 19.1)), 10);
 
         $this->save($this->getImageFolder() . $world->value . '-race-changes.png');
     }

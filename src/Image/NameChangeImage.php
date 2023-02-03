@@ -23,7 +23,7 @@ final class NameChangeImage extends AbstractImage
     {
         $nameChanges = $this->playerNameHistoryRepository->getLast15NameChangesByWorld($world);
 
-        $this->createImage(435, (int) (90 + (count($nameChanges) * 19.1)));
+        $this->createImage(435, (int) (95 + (count($nameChanges) * 19.1)));
         $this->setBackgroundColor($this->colorWhite());
 
         if ($world === WorldEnum::AFSRV) {
@@ -37,7 +37,8 @@ final class NameChangeImage extends AbstractImage
         $this->createOldNameColumn($nameChanges);
         $this->createDateColumn($nameChanges);
 
-        $this->write(date('d.m.Y - H:i:s'), 157, (int) (85 + (count($nameChanges) * 19.1)), 10);
+        $this->write('www.fwstats.de', 10, (int) (85 + (count($nameChanges) * 19.1)), 10);
+        $this->write(date('Y-m-d - H:i:s'), 303, (int) (85 + (count($nameChanges) * 19.1)), 10);
 
         $this->save($this->getImageFolder() . $world->value . '-name-changes.png');
     }

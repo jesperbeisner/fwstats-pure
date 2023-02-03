@@ -24,7 +24,7 @@ final class ProfessionChangeImage extends AbstractImage
     {
         $professionChanges = $this->playerProfessionHistoryRepository->getLast15ProfessionChangesByWorld($world);
 
-        $this->createImage(475, (int) (90 + (count($professionChanges) * 19.1)));
+        $this->createImage(475, (int) (95 + (count($professionChanges) * 19.1)));
         $this->setBackgroundColor($this->colorWhite());
 
         if ($world === WorldEnum::AFSRV) {
@@ -39,7 +39,8 @@ final class ProfessionChangeImage extends AbstractImage
         $this->createNewProfessionColumn($professionChanges);
         $this->createDateColumn($professionChanges);
 
-        $this->write(date('d.m.Y - H:i:s'), 176, (int) (85 + (count($professionChanges) * 19.1)), 10);
+        $this->write('www.fwstats.de', 10, (int) (85 + (count($professionChanges) * 19.1)), 10);
+        $this->write(date('Y-m-d - H:i:s'), 343, (int) (85 + (count($professionChanges) * 19.1)), 10);
 
         $this->save($this->getImageFolder() . $world->value . '-profession-changes.png');
     }

@@ -6,7 +6,6 @@
 - Update player achievements only daily
 - Bans & deletion image
 - Update FixturesCommand
-- Change date on ranking image to bottom
 - Clans created/deleted/changes history
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
@@ -37,3 +36,4 @@
 - ~~Info text when ranking table and playtime table is empty~~
 - ~~Different days on request logs~~
 - ~~Track and display deleted/banned players~~
+- ~~Change date on ranking image to bottom~~
