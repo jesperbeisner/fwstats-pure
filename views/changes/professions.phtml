@@ -6,13 +6,14 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var RenderService $this */
 /** @var array<string, mixed> $vars */
-$this->setTitle('title.profession-changes');
 
 /** @var array<array{world: string, player_id: int, name: string, old_profession: null|string, new_profession: null|string, created: string}> $afsrvProfessionChanges */
 $afsrvProfessionChanges = $vars['afsrvProfessionChanges'];
 
 /** @var array<array{world: string, player_id: int, name: string, old_profession: null|string, new_profession: null|string, created: string}> $chaosProfessionChanges */
 $chaosProfessionChanges = $vars['chaosProfessionChanges'];
+
+$this->setTitle('title.profession-changes');
 
 ?>
 <main class="container mt-0 mb-5">

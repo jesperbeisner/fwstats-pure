@@ -19,6 +19,7 @@ return [
     'navigation.xp' => 'XP-Änderungen',
     'navigation.changes.races' => 'Rassen',
     'navigation.changes.professions' => 'Berufe',
+    'navigation.changes.bans-and-deletions' => 'Bans & Löschungen',
 
     'title.index' => 'Index',
     'title.playtime' => 'Heutige Spielzeit',
@@ -34,6 +35,7 @@ return [
     'title.profession-changes-pictures' => 'Berufsänderungsbilder',
     'title.race-changes-pictures' => 'Rassenänderungsbilder',
     'title.xp' => 'Heutige XP Änderungen',
+    'title.bans-and-deletions-changes' => 'Bans & Löschungen',
 
     'text.404-page-not-found' => '404 - Seite nicht gefunden',
     'text.translation-change-success' => 'Deine Spracheinstellungen wurden erfolgreich geändert',
@@ -87,10 +89,14 @@ return [
     'text.no-players-for-world-available' => 'Es sind noch keine Spieler für %WORLD% vorhanden',
     'text.no-more-players-available' => 'Es sind keine weiteren Spieler für %WORLD% vorhanden',
     'text.no-playtimes-for-world-available' => 'Es sind noch keine Spielzeiten für %WORLD% vorhanden',
+    'text.no-bans-or-deletions-for-world-available' => 'Es sind noch keine Bans oder Löschungen für %WORLD% vorhanden',
     'text.next-day' => 'Nächster Tag',
     'text.previous-day' => 'Vorheriger Tag',
     'text.no-request-logs-available-for-this-day' => 'Für den ausgewählten Tag sind keine Request Logs vorhanden',
     'text.current-day' => 'Heutiger Tag',
+    'text.status-deleted' => 'Gelöscht',
+    'text.status-banned' => 'Gebannt',
+    'text.status-unknown' => 'Unbekannt',
 
     'table.name' => 'Name',
     'table.world' => 'Welt',
@@ -120,6 +126,10 @@ return [
     'table.xp-changes' => 'Änderung',
     'table.php-version' => 'PHP-Version',
     'table.database-size' => 'Datenbankgröße',
+    'table.status' => 'Status',
+    'table.created' => 'Erstellt',
+    'table.deleted' => 'Aufgehoben',
+    'table.updated' => 'Aktualisiert',
 
     'hover.change-language-to-english' => 'Sprache auf Englisch ändern',
     'hover.change-language-to-german' => 'Sprache auf Deutsch ändern',

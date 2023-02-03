@@ -33,6 +33,7 @@ return [
         ['route' => '/changes/names', 'methods' => ['GET'], 'controller' => Controller\NameChangeController::class],
         ['route' => '/changes/races', 'methods' => ['GET'], 'controller' => Controller\RaceChangeController::class],
         ['route' => '/changes/professions', 'methods' => ['GET'], 'controller' => Controller\ProfessionChangeController::class],
+        ['route' => '/changes/bans-and-deletions', 'methods' => ['GET'], 'controller' => Controller\BanAndDeletionChangeController::class],
         ['route' => '/images/ranking', 'methods' => ['GET'], 'controller' => Controller\RankingImageController::class],
         ['route' => '/images/{world}-ranking.png', 'methods' => ['GET'], 'controller' => Controller\RankingImageDisplayController::class],
         ['route' => '/images/changes/names', 'methods' => ['GET'], 'controller' => Controller\NameChangeImageController::class],
@@ -104,6 +105,7 @@ return [
         Controller\ChangeDomainNameController::class => Controller\Factory\ChangeDomainNameControllerFactory::class,
         Controller\ResetActionFreewarController::class => Controller\Factory\ResetActionFreewarControllerFactory::class,
         Controller\XpChangeController::class => Controller\Factory\XpChangeControllerFactory::class,
+        Controller\BanAndDeletionChangeController::class => Controller\Factory\BanAndDeletionChangeControllerFactory::class,
 
         // Actions
         Action\CreateUserAction::class => Action\Factory\CreateUserActionFactory::class,

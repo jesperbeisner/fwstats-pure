@@ -76,6 +76,31 @@ final class PlayerStatusHistoryRepository extends AbstractRepository implements 
         return $this->hydratePlayerStatusHistory($result);
     }
 
+    /**
+     * @return array<PlayerStatusHistory>
+     */
+    public function findBansAndDeletionsByWorld(WorldEnum $worldEnum): array
+    {
+        $sql = <<<SQL
+            SELECT id, world, player_id, name, status, created, deleted, updated
+            FROM players_status_history
+            WHERE world = :world
+            ORDER BY updated
+        SQL;
+
+        /** @var array<array{id: int, world: string, player_id: int, name: string, status: string, created: string, deleted: null|string, updated: string}> $result */
+        $result = $this->database->select($sql, [
+            'world' => $worldEnum->value,
+        ]);
+
+        $playerStatusHistories = [];
+        foreach ($result as $row) {
+            $playerStatusHistories[] = $this->hydratePlayerStatusHistory($row);
+        }
+
+        return $playerStatusHistories;
+    }
+
     public function resetActionFreewar(): void
     {
         $sql = "DELETE FROM players_status_history WHERE world = :world";

@@ -1,7 +1,6 @@
 # TODOs
 
 ## Ongoing
-- Track deleted/banned players
 - Display user infos in profile
 - Display player achievements
 - Update player achievements only daily
@@ -10,7 +9,7 @@
 - Update FixturesCommand
 - Change date on ranking image to bottom
 - Clans created/deleted/changes history
-- Add more tests
+- Add more tests :^)
 
 ## Finished
 - ~~Pagination on index page~~
@@ -36,3 +35,4 @@
 - ~~Profession change pictures~~
 - ~~Info text when ranking table and playtime table is empty~~
 - ~~Different days on request logs~~
+- ~~Track and display deleted/banned players~~

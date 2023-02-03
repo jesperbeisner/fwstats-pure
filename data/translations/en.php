@@ -19,6 +19,7 @@ return [
     'navigation.xp' => 'XP changes',
     'navigation.changes.races' => 'Races',
     'navigation.changes.professions' => 'Professions',
+    'navigation.changes.bans-and-deletions' => 'Bans & Deletions',
 
     'title.index' => 'Index',
     'title.playtime' => 'Today\'s playtime',
@@ -34,6 +35,7 @@ return [
     'title.profession-changes-pictures' => 'Profession changes pictures',
     'title.race-changes-pictures' => 'Race changes pictures',
     'title.xp' => 'Today\'s XP changes',
+    'title.bans-and-deletions-changes' => 'Bans & Deletions',
 
     'text.404-page-not-found' => '404 - Page not found',
     'text.translation-change-success' => 'Your language settings have been successfully changed',
@@ -86,11 +88,15 @@ return [
     'text.no-xp-changes-for-world-available' => 'There are no XP changes for %WORLD% yet',
     'text.no-players-for-world-available' => 'There are no players for %WORLD% yet',
     'text.no-more-players-available' => 'There are no more players for %WORLD% available',
-    'text.no-playtimes-for-world-available' => 'There are no playtimes for %WORLD% yet',#
+    'text.no-playtimes-for-world-available' => 'There are no playtimes for %WORLD% yet',
+    'text.no-bans-or-deletions-for-world-available' => 'There are no bans or deletions for %WORLD% yet',
     'text.next-day' => 'Next day',
     'text.previous-day' => 'Previous day',
     'text.no-request-logs-available-for-this-day' => 'There are no request logs for the selected day',
     'text.current-day' => 'Current day',
+    'text.status-deleted' => 'Deleted',
+    'text.status-banned' => 'Banned',
+    'text.status-unknown' => 'Unknown',
 
     'table.name' => 'Name',
     'table.world' => 'World',
@@ -120,6 +126,10 @@ return [
     'table.xp-changes' => 'Changes',
     'table.php-version' => 'PHP-Version',
     'table.database-size' => 'Database size',
+    'table.status' => 'Status',
+    'table.created' => 'Created',
+    'table.deleted' => 'Lifted',
+    'table.updated' => 'Updated',
 
     'hover.change-language-to-english' => 'Change language to english',
     'hover.change-language-to-german' => 'Change language to german',
