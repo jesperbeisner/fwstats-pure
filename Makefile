@@ -22,3 +22,6 @@ phpunit-unit: ## Run PHPUnit with the Unit testsuite
 
 phpstan: ## Run PHPStan
 	docker-compose exec php composer phpstan
+
+app-run:
+	docker-compose exec php php bin/console.php app:run
