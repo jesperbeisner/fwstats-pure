@@ -86,7 +86,11 @@ return [
     'text.no-xp-changes-for-world-available' => 'There are no XP changes for %WORLD% yet',
     'text.no-players-for-world-available' => 'There are no players for %WORLD% yet',
     'text.no-more-players-available' => 'There are no more players for %WORLD% available',
-    'text.no-playtimes-for-world-available' => 'There are no playtimes for %WORLD% yet',
+    'text.no-playtimes-for-world-available' => 'There are no playtimes for %WORLD% yet',#
+    'text.next-day' => 'Next day',
+    'text.previous-day' => 'Previous day',
+    'text.no-request-logs-available-for-this-day' => 'There are no request logs for the selected day',
+    'text.current-day' => 'Current day',
 
     'table.name' => 'Name',
     'table.world' => 'World',
@@ -133,6 +137,7 @@ return [
     'button.change' => 'Change',
     'button.generate-new-bearer-token' => 'Generate new',
     'button.of-course' => 'Of course 🚀',
+    'button.search' => 'Suchen',
 
     // Races
     'Onlo' => 'Onlo',

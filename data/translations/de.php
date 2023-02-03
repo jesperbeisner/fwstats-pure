@@ -87,6 +87,10 @@ return [
     'text.no-players-for-world-available' => 'Es sind noch keine Spieler für %WORLD% vorhanden',
     'text.no-more-players-available' => 'Es sind keine weiteren Spieler für %WORLD% vorhanden',
     'text.no-playtimes-for-world-available' => 'Es sind noch keine Spielzeiten für %WORLD% vorhanden',
+    'text.next-day' => 'Nächster Tag',
+    'text.previous-day' => 'Vorheriger Tag',
+    'text.no-request-logs-available-for-this-day' => 'Für den ausgewählten Tag sind keine Request Logs vorhanden',
+    'text.current-day' => 'Heutiger Tag',
 
     'table.name' => 'Name',
     'table.world' => 'Welt',
@@ -133,6 +137,7 @@ return [
     'button.change' => 'Ändern',
     'button.generate-new-bearer-token' => 'Neu generieren',
     'button.of-course' => 'Na klar 🚀',
+    'button.search' => 'Suchen',
 
     // Races
     'Onlo' => 'Onlo',

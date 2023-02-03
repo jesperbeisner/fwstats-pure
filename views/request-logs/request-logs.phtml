@@ -11,6 +11,11 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 /** @var array<RequestLog> $requestLogs */
 $requestLogs = $vars['requestLogs'];
 
+/** @var DateTimeImmutable $day */
+$day = $vars['day'];
+
+$totalVisits = 0;
+
 $this->setTitle('title.admin.request-logs');
 
 ?>
@@ -19,44 +24,86 @@ $this->setTitle('title.admin.request-logs');
         <?= $this->text('title.admin.request-logs') ?>
     </h1>
     <div class="card">
-        <div class="card-content">
-            <div class="content">
-                <div class="table-container">
-                    <table class="table is-hoverable is-fullwidth">
-                        <thead>
-                        <tr>
-                            <td>#</td>
-                            <td>Url</td>
-                            <td><?= $this->text('table.method') ?></td>
-                            <td><?= $this->text('table.visits') ?></td>
-                            <td><?= $this->text('table.status-code') ?></td>
-                            <td><?= $this->text('table.day') ?></td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php $i = 1; ?>
-                        <?php $totalVisits = 0 ?>
-                        <?php foreach ($requestLogs as $requestLog): ?>
-                            <tr>
-                                <td><?= $i ?></td>
-                                <td><a href="<?= $this->text($requestLog->url) ?>" target="_blank"><?= $this->text($requestLog->url) ?></a></td>
-                                <td><?= $this->text($requestLog->method) ?></td>
-                                <td><?= $requestLog->visits ?></td>
-                                <td><?= $requestLog->statusCode ?></td>
-                                <td><?= $requestLog->day->format('d.m.Y') ?></td>
-                            </tr>
-                            <?php $i++ ?>
-                            <?php $totalVisits += $requestLog->visits ?>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
+        <div class="card-header">
+            <div class="columns is-align-items-center" style="width: 100%; margin: 0; padding: 0">
+                <div class="column">
+                    <h2 class="is-size-4"><?= $day->format('Y-m-d') ?></h2>
+                </div>
+                <div class="column is-flex is-justify-content-end">
+                    <form method="GET">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <label for="day" aria-hidden="true" style="display: none">Day</label>
+                                <input class="input is-rounded" type="date" name="day" id="day" pattern="\d{4}-\d{2}-\d{2}" value="<?= $day->format('Y-m-d') ?>" max="<?= date('Y-m-d') ?>" required>
+                            </div>
+                            <div class="control">
+                                <button class="button is-danger is-rounded" type="submit"><?= $this->text('button.search') ?></button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <footer class="card-footer">
-            <p class="card-footer-item">
-                <?= $this->text('text.total-visits') . ': ' . $totalVisits ?>
-            </p>
-        </footer>
+        <div class="card-content">
+            <div class="content">
+                <?php if ($requestLogs !== []): ?>
+                    <div class="table-container">
+                        <table class="table is-hoverable is-fullwidth">
+                            <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>Url</td>
+                                <td><?= $this->text('table.method') ?></td>
+                                <td><?= $this->text('table.visits') ?></td>
+                                <td><?= $this->text('table.status-code') ?></td>
+                                <td><?= $this->text('table.day') ?></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $i = 1; ?>
+                            <?php foreach ($requestLogs as $requestLog): ?>
+                                <tr>
+                                    <td><?= $i ?></td>
+                                    <td><a href="<?= $this->text($requestLog->url) ?>" target="_blank"><?= $this->text($requestLog->url) ?></a></td>
+                                    <td><?= $this->text($requestLog->method) ?></td>
+                                    <td><?= $requestLog->visits ?></td>
+                                    <td><?= $requestLog->statusCode ?></td>
+                                    <td><?= $requestLog->day->format('d.m.Y') ?></td>
+                                </tr>
+                                <?php $i++ ?>
+                                <?php $totalVisits += $requestLog->visits ?>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <div class="has-text-centered mt-5 mb-5">
+                        <p class="has-text-weight-bold"><?= $this->text('text.no-request-logs-available-for-this-day') ?></p>
+                        <p><a href="/admin/request-logs" class="button is-danger is-rounded"><?= $this->text('text.current-day') ?></a></p>
+                    </div>
+                <?php endif; ?>
+
+                <div class="pagination is-centered mt-3 mb-0" aria-label="pagination">
+                    <?php $nextDay = $day->modify('+1 day') ?>
+                    <?php if ($nextDay < new DateTimeImmutable()): ?>
+                        <a class="pagination-previous" style="min-width: 150px" href="/admin/request-logs?day=<?= $nextDay->format('Y-m-d') ?>">
+                            <?= $this->text('text.next-day') ?>
+                        </a>
+                    <?php else: ?>
+                        <a class="pagination-previous is-disabled" style="min-width: 150px">
+                            <?= $this->text('text.next-day') ?>
+                        </a>
+                    <?php endif; ?>
+                    <ul class="pagination-list">
+                        <li>
+                            <?= $this->text('text.total-visits') . ': ' . $totalVisits ?>
+                        </li>
+                    </ul>
+                    <a class="pagination-next" style="min-width: 150px" href="/admin/request-logs?day=<?= $day->modify('-1 day')->format('Y-m-d') ?>">
+                        <?= $this->text('text.previous-day') ?>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </main>

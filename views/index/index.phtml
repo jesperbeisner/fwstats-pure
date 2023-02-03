@@ -74,11 +74,11 @@ $this->setTitle('title.index');
                     <?php if ($afsrvPlayers !== [] || $chaosPlayers !== []): ?>
                         <div class="pagination is-centered mt-3 mb-0" aria-label="pagination">
                             <?php if ($hasPreviousSite === true): ?>
-                                <a class="pagination-previous" href="/?page=<?= $page - 1 ?>">
+                                <a class="pagination-previous" style="min-width: 150px" href="/?page=<?= $page - 1 ?>">
                                     <?= $this->text('text.previous-page') ?>
                                 </a>
                             <?php else: ?>
-                                <a class="pagination-previous is-disabled">
+                                <a class="pagination-previous is-disabled" style="min-width: 150px">
                                     <?= $this->text('text.previous-page') ?>
                                 </a>
                             <?php endif; ?>
@@ -90,11 +90,11 @@ $this->setTitle('title.index');
                             </ul>
 
                             <?php if ($hasNextSite === true): ?>
-                                <a class="pagination-next" href="/?page=<?= $page + 1 ?>">
+                                <a class="pagination-next" style="min-width: 150px" href="/?page=<?= $page + 1 ?>">
                                     <?= $this->text('text.next-page') ?>
                                 </a>
                             <?php else: ?>
-                                <a class="pagination-next is-disabled">
+                                <a class="pagination-next is-disabled" style="min-width: 150px">
                                     <?= $this->text('text.next-page') ?>
                                 </a>
                             <?php endif; ?>

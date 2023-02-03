@@ -1,17 +1,16 @@
 # TODOs
 
 ## Ongoing
-- Add more tests
-- Search on small menu width 100%
-- Page number on small menu not displaying properly
-- Different days on request logs
 - Track deleted/banned players
 - Display user infos in profile
 - Display player achievements
-- Update FixturesCommand
 - Update player achievements only daily
+- Search on small menu width 100%
+- Page number on small menu not displaying properly
+- Update FixturesCommand
 - Change date on ranking image to bottom
 - Clans created/deleted/changes history
+- Add more tests
 
 ## Finished
 - ~~Pagination on index page~~
@@ -36,3 +35,4 @@
 - ~~Race change pictures~~
 - ~~Profession change pictures~~
 - ~~Info text when ranking table and playtime table is empty~~
+- ~~Different days on request logs~~
