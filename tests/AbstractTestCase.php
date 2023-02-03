@@ -46,6 +46,11 @@ abstract class AbstractTestCase extends PHPUnitTestCase
         return static::$container ?? throw new RuntimeException('Did you forget to call "setUpContainer" beforehand?');
     }
 
+    protected function tearDown(): void
+    {
+        self::deleteDatabaseFiles();
+    }
+
     private static function deleteDatabaseFiles(): void
     {
         $dbTestFile = __DIR__ . '/../var/sqlite-test.db';
