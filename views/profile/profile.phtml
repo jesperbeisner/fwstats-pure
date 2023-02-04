@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Jesperbeisner\Fwstats\DTO\Playtime;
+use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
@@ -15,6 +16,9 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 
 /** @var Player $player */
 $player = $vars['player'];
+
+/** @var null|Clan $clan */
+$clan = $vars['clan'];
 
 /** @var array<string, null|PlayerXpHistory> $weeklyXpChanges */
 $weeklyXpChanges = $vars['weeklyXpChanges'];
@@ -46,6 +50,7 @@ $this->setTitle($player->name . ' - ' . $player->world->worldString());
             <?= $this->escape($player->name) ?>
         </a>
     </h1>
+    <?php require __DIR__ . '/_player-infos.phtml' ?>
     <?php require __DIR__ . '/_playtimes.phtml' ?>
     <?php require __DIR__ . '/_xp-changes.phtml' ?>
     <?php require __DIR__ . '/_name-changes.phtml' ?>

@@ -36,6 +36,7 @@ return [
     'title.race-changes-pictures' => 'Rassenänderungsbilder',
     'title.xp' => 'Heutige XP Änderungen',
     'title.bans-and-deletions-changes' => 'Bans & Löschungen',
+    'title.player-infos' => 'Infos',
 
     'text.404-page-not-found' => '404 - Seite nicht gefunden',
     'text.translation-change-success' => 'Deine Spracheinstellungen wurden erfolgreich geändert',

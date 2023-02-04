@@ -36,6 +36,7 @@ return [
     'title.race-changes-pictures' => 'Race changes pictures',
     'title.xp' => 'Today\'s XP changes',
     'title.bans-and-deletions-changes' => 'Bans & Deletions',
+    'title.player-infos' => 'Infos',
 
     'text.404-page-not-found' => '404 - Page not found',
     'text.translation-change-success' => 'Your language settings have been successfully changed',

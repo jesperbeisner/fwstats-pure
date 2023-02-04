@@ -9,6 +9,7 @@ use Exception;
 use Jesperbeisner\Fwstats\Interface\ResetActionFreewarInterface;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Model\Player;
 
 /**
  * @see \Jesperbeisner\Fwstats\Tests\Functional\Repository\ClanRepositoryTest
@@ -58,6 +59,31 @@ final class ClanRepository extends AbstractRepository implements ResetActionFree
         }
 
         return $clans;
+    }
+
+    public function findByPlayer(Player $player): ?Clan
+    {
+        $sql = <<<SQL
+            SELECT id, world, clan_id, shortcut, name, leader_id, co_leader_id, diplomat_id, war_points, created
+            FROM clans
+            WHERE world = :world AND clan_id = :clanId
+        SQL;
+
+        if ($player->clanId === null) {
+            return null;
+        }
+
+        /** @var null|array{id: int, world: string, clan_id: int, shortcut: string, name: string, leader_id: int, co_leader_id: int, diplomat_id: int, war_points: int, created: string} $result */
+        $result = $this->database->selectOne($sql, [
+            'world' => $player->world->value,
+            'clanId' => $player->clanId,
+        ]);
+
+        if ($result === null) {
+            return null;
+        }
+
+        return $this->hydrateClan($result);
     }
 
     /**

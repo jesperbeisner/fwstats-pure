@@ -8,6 +8,7 @@ use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Interface\ControllerInterface;
 use Jesperbeisner\Fwstats\Model\Player;
+use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
@@ -24,6 +25,7 @@ final readonly class ProfileController implements ControllerInterface
 {
     public function __construct(
         private PlayerRepository $playerRepository,
+        private ClanRepository $clanRepository,
         private XpService $xpService,
         private PlaytimeService $playtimeService,
         private PlayerNameHistoryRepository $playerNameHistoryRepository,
@@ -48,6 +50,8 @@ final readonly class ProfileController implements ControllerInterface
             return Response::html('error/error.phtml', ['message' => 'text.404-page-not-found'], 404);
         }
 
+        $clan = $this->clanRepository->findByPlayer($player);
+
         $weeklyXpChanges = $this->xpService->getXpChangesForPlayer($player, 7);
 
         $weeklyPlaytimes = $this->playtimeService->getPlaytimesForPlayer($player, 7);
@@ -59,6 +63,7 @@ final readonly class ProfileController implements ControllerInterface
 
         return Response::html('profile/profile.phtml', [
             'player' => $player,
+            'clan' => $clan,
             'weeklyXpChanges' => $weeklyXpChanges,
             'weeklyPlaytimes' => $weeklyPlaytimes,
             'totalPlaytime' => $totalPlaytime,

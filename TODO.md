@@ -1,7 +1,6 @@
 # TODOs
 
 ## Ongoing
-- Display user infos in profile
 - Display player achievements
 - Update player achievements only daily
 - Bans & deletion image
@@ -9,6 +8,7 @@
 - Clans created/deleted/changes history
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
+- Test image creations
 - Add more tests :^)
 
 ## Finished
@@ -37,3 +37,4 @@
 - ~~Different days on request logs~~
 - ~~Track and display deleted/banned players~~
 - ~~Change date on ranking image to bottom~~
+- ~~Display player infos in profile~~

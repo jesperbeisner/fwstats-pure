@@ -7,6 +7,7 @@ namespace Jesperbeisner\Fwstats\Controller\Factory;
 use Jesperbeisner\Fwstats\Controller\ProfileController;
 use Jesperbeisner\Fwstats\Interface\ContainerInterface;
 use Jesperbeisner\Fwstats\Interface\FactoryInterface;
+use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
@@ -20,6 +21,7 @@ final readonly class ProfileControllerFactory implements FactoryInterface
     {
         return new ProfileController(
             $container->get(PlayerRepository::class),
+            $container->get(ClanRepository::class),
             $container->get(XpService::class),
             $container->get(PlaytimeService::class),
             $container->get(PlayerNameHistoryRepository::class),

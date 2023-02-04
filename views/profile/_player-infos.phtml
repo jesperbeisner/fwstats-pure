@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+use Jesperbeisner\Fwstats\Helper\Html;
+use Jesperbeisner\Fwstats\Model\Clan;
+use Jesperbeisner\Fwstats\Model\Player;
+use Jesperbeisner\Fwstats\Service\RenderService;
+
+/** @var RenderService $this */
+/** @var Player $player */
+/** @var null|Clan $clan */
+
+?>
+<div class="card">
+    <div class="card-header">
+        <p class="card-header-title">
+            <?= $this->text('title.player-infos') ?>
+        </p>
+    </div>
+    <div class="card-content">
+        <div class="content">
+            <div class="table-container">
+                <table class="table is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <td><?= $this->text('table.name') ?></td>
+                        <td><?= $this->text('table.race') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.clan') ?></td>
+                        <td><?= $this->text('table.profession') ?></td>
+                        <td class="has-text-right"><?= $this->text('table.xp') ?></td>
+                        <td class="has-text-right"><?= $this->text('table.soul-xp') ?></td>
+                        <td class="has-text-right"><?= $this->text('table.total-xp') ?></td>
+                        <td class="has-text-centered"><?= $this->text('table.soul-level') ?></td>
+                        <td class="has-text-right"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td title="<?= $this->escape($player->name) ?>">
+                                <a href="/profile/<?= $this->escape($player->world->value) ?>/<?= $player->id ?>">
+                                    <?= Html::shortNames($this->escape($player->name)) ?>
+                                </a>
+                            </td>
+                            <td>
+                                <?= $this->text($player->race) ?>
+                            </td>
+                            <td class="has-text-centered">
+                                <?php if ($clan === null): ?>
+                                    -
+                                <?php else: ?>
+                                    <a
+                                        title="<?= $this->escape($clan->name) ?>"
+                                        href="https://<?= $this->escape($clan->world->value) ?>.freewar.de/freewar/internal/fight.php?action=watchclan&act_clan_id=<?= $clan->clanId ?>"
+                                        target="_blank"
+                                        class="clan_profile_link"
+                                    >
+                                        <?= $this->escape($clan->shortcut) ?>
+                                    </a>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?= $player->profession === null ? '-' : $this->text($player->profession) ?>
+                            </td>
+                            <td class="has-text-right">
+                                <?= Html::numberFormat($player->xp) ?>
+                            </td>
+                            <td class="has-text-right">
+                                <?= Html::numberFormat($player->soulXp) ?>
+                            </td>
+                            <td class="has-text-right">
+                                <?= Html::numberFormat($player->totalXp) ?>
+                            </td>
+                            <td class="has-text-centered">
+                                <?= Player::getSoulLevel($player->xp, $player->soulXp) ?? '-' ?>
+                            </td>
+                            <td class="has-text-right">
+                                <a href="https://<?= $player->world->value ?>.freewar.de/freewar/internal/fight.php?action=watchuser&act_user_id=<?= $player->playerId ?>" target="_blank" class="player_profile_link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="currentColor">
+                                        <path d="M128 32H32C14.31 32 0 46.31 0 64v96c0 17.69 14.31 32 32 32s32-14.31 32-32V96h64c17.69 0 32-14.31 32-32S145.7 32 128 32zM416 32h-96c-17.69 0-32 14.31-32 32s14.31 32 32 32h64v64c0 17.69 14.31 32 32 32s32-14.31 32-32V64C448 46.31 433.7 32 416 32zM128 416H64v-64c0-17.69-14.31-32-32-32s-32 14.31-32 32v96c0 17.69 14.31 32 32 32h96c17.69 0 32-14.31 32-32S145.7 416 128 416zM416 320c-17.69 0-32 14.31-32 32v64h-64c-17.69 0-32 14.31-32 32s14.31 32 32 32h96c17.69 0 32-14.31 32-32v-96C448 334.3 433.7 320 416 320z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
