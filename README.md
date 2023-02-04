@@ -18,7 +18,7 @@ Creating a new tag and pushing this tag to GitHub runs a GitHub action which bui
 After this I will just stop the running container on my server and start a new one.
 No rolling update needed, not like I have tons of users. 🤷‍♂️
 
-Check the newest docker image [here](https://github.com/jesperbeisner/fwstats.de/pkgs/container/fwstats.de).
+Check the newest docker image [here](https://github.com/jesperbeisner/fwstats/pkgs/container/fwstats).
 
 ## Local setup
 
@@ -59,22 +59,22 @@ Open your browser and visit http://localhost:8080. A test account with username 
 ### 1. Create a named volume
 
 ```bash
-docker volume create fwstats.de-prod
+docker volume create fwstats-prod
 ```
 
 ### 2. Run the docker image
 ```bash
-docker run --detach --volume fwstats.de-prod:/var/www/html/data/database --publish 8888:80 --name fwstats.de-prod ghcr.io/jesperbeisner/fwstats.de:latest
+docker run --detach --volume fwstats-prod:/var/www/html/data/database --publish 8888:80 --name fwstats-prod ghcr.io/jesperbeisner/fwstats:latest
 ```
 
 ### 3. Run the migrations
 ```bash
-docker exec fwstats.de-prod php bin/console.php app:database-migration
+docker exec fwstats-prod php bin/console.php app:database-migration
 ```
 
 ### 4. Run one cronjob for everything every 5 minutes
 ```bash
-*/5 * * * * docker exec fwstats.de-prod php bin/console.php app:run > /dev/null 2>&1 
+*/5 * * * * docker exec fwstats-prod php bin/console.php app:run > /dev/null 2>&1 
 ```
 
 ### 4 1/2. Use the `/cronjob` endpoint
@@ -92,25 +92,25 @@ Point your reverse proxy on your published port (In this example 8888) and visit
 ### 1. Remove your running container
 
 ```bash
-docker rm -f fwstats.de-prod
+docker rm -f fwstats-prod
 ```
 
 ### 2. Remove the old image
 
 ```bash
-docker rmi -f ghcr.io/jesperbeisner/fwstats.de:latest
+docker rmi -f ghcr.io/jesperbeisner/fwstats:latest
 ```
 
 ### 3. Start a new container with the new image
 
 ```bash
-docker run --detach --volume fwstats.de-prod:/var/www/html/data/database --publish 8888:80 --name fwstats.de-prod ghcr.io/jesperbeisner/fwstats.de:latest
+docker run --detach --volume fwstats-prod:/var/www/html/data/database --publish 8888:80 --name fwstats-prod ghcr.io/jesperbeisner/fwstats:latest
 ```
 
 ### 4. Run the migrations
 
 ```bash
-docker exec fwstats.de-prod php bin/console.php app:database-migration
+docker exec fwstats-prod php bin/console.php app:database-migration
 ```
 
 ### 5. Finished

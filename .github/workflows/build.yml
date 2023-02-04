@@ -16,7 +16,7 @@ jobs:
                 id: meta
                 uses: docker/metadata-action@v4
                 with:
-                    images: "ghcr.io/jesperbeisner/fwstats.de"
+                    images: "ghcr.io/jesperbeisner/fwstats"
                     flavor: latest=true
                     tags: type=semver,pattern={{version}}
 

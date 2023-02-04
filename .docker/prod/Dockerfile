@@ -1,4 +1,4 @@
-FROM php:8.2.1-apache
+FROM php:8.2.2-apache
 
 ARG USER="fwstats"
 ARG UID=1000
