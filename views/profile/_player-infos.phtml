@@ -37,10 +37,8 @@ use Jesperbeisner\Fwstats\Service\RenderService;
                     </thead>
                     <tbody>
                         <tr>
-                            <td title="<?= $this->escape($player->name) ?>">
-                                <a href="/profile/<?= $this->escape($player->world->value) ?>/<?= $player->id ?>">
-                                    <?= Html::shortNames($this->escape($player->name)) ?>
-                                </a>
+                            <td>
+                                <?= $this->escape($player->name) ?>
                             </td>
                             <td>
                                 <?= $this->text($player->race) ?>
