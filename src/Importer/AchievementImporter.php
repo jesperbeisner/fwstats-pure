@@ -50,7 +50,7 @@ final readonly class AchievementImporter implements ImporterInterface
                     uniqueNpcKilled: $playerAchievements[87] ?? 0,
                     groupNpcKilled: $playerAchievements[79] ?? 0,
                     soulStonesGained: $playerAchievements[18] ?? 0,
-                    created: new DateTimeImmutable(),
+                    day: new DateTimeImmutable('today'),
                 );
             }
         }

@@ -19,16 +19,52 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
     public function insert(Achievement $achievement): Achievement
     {
         $sql = <<<SQL
-            INSERT INTO achievements (
+            UPDATE achievements
+            SET
+                fields_walked = :fieldsWalked,
+                fields_elixir = :fieldsElixir,
+                fields_run = :fieldsRun,
+                fields_run_fast = :fieldsRunFast,
+                npc_kills_gold = :npcKillsGold,
+                normal_npc_killed = :normalNpcKilled,
+                phase_npc_killed = :phaseNpcKilled,
+                aggressive_npc_killed = :aggressiveNpcKilled,
+                invasion_npc_killed = :invasionNpcKilled,
+                unique_npc_killed = :uniqueNpcKilled,
+                group_npc_killed = :groupNpcKilled,
+                soul_stones_gained = :soulStonesGained
+            WHERE world = :world AND player_id = :playerId AND day = :day
+        SQL;
+
+        $this->database->update($sql, [
+            'world' => $achievement->world->value,
+            'playerId' => $achievement->playerId,
+            'day' => $achievement->day->format('Y-m-d H:i:s'),
+            'fieldsWalked' => $achievement->fieldsWalked,
+            'fieldsElixir' => $achievement->fieldsElixir,
+            'fieldsRun' => $achievement->fieldsRun,
+            'fieldsRunFast' => $achievement->fieldsRunFast,
+            'npcKillsGold' => $achievement->npcKillsGold,
+            'normalNpcKilled' => $achievement->normalNpcKilled,
+            'phaseNpcKilled' => $achievement->phaseNpcKilled,
+            'aggressiveNpcKilled' => $achievement->aggressiveNpcKilled,
+            'invasionNpcKilled' => $achievement->invasionNpcKilled,
+            'uniqueNpcKilled' => $achievement->uniqueNpcKilled,
+            'groupNpcKilled' => $achievement->groupNpcKilled,
+            'soulStonesGained' => $achievement->soulStonesGained,
+        ]);
+
+        $sql = <<<SQL
+            INSERT OR IGNORE INTO achievements (
                 world, player_id, fields_walked, fields_elixir, fields_run,
                 fields_run_fast, npc_kills_gold, normal_npc_killed, phase_npc_killed,
                 aggressive_npc_killed, invasion_npc_killed, unique_npc_killed, group_npc_killed,
-                soul_stones_gained, created
+                soul_stones_gained, day
             ) VALUES (
                 :world, :playerId, :fieldsWalked, :fieldsElixir, :fieldsRun,
                 :fieldsRunFast, :npcKillsGold, :normalNpcKilled, :phaseNpcKilled,
                 :aggressiveNpcKilled, :invasionNpcKilled, :uniqueNpcKilled, :groupNpcKilled,
-                :soulStonesGained, :created
+                :soulStonesGained, :day
             )
         SQL;
 
@@ -47,7 +83,7 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
             'uniqueNpcKilled' => $achievement->uniqueNpcKilled,
             'groupNpcKilled' => $achievement->groupNpcKilled,
             'soulStonesGained' => $achievement->soulStonesGained,
-            'created' => $achievement->created->format('Y-m-d H:i:s'),
+            'day' => $achievement->day->format('Y-m-d H:i:s'),
         ]);
 
         return Achievement::withId($id, $achievement);
@@ -56,12 +92,12 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
     public function findByPlayer(Player $player): ?Achievement
     {
         $sql = <<<SQL
-            SELECT id, world, player_id, fields_walked, fields_elixir, fields_run, fields_run_fast, npc_kills_gold, normal_npc_killed, phase_npc_killed, aggressive_npc_killed, invasion_npc_killed, unique_npc_killed, group_npc_killed, soul_stones_gained, created
+            SELECT id, world, player_id, fields_walked, fields_elixir, fields_run, fields_run_fast, npc_kills_gold, normal_npc_killed, phase_npc_killed, aggressive_npc_killed, invasion_npc_killed, unique_npc_killed, group_npc_killed, soul_stones_gained, day
             FROM achievements
             WHERE world = :world AND player_id = :playerId
         SQL;
 
-        /** @var null|array{id: int, world: string, player_id: int, fields_walked: int, fields_elixir: int, fields_run: int, fields_run_fast: int, npc_kills_gold: int, normal_npc_killed: int, phase_npc_killed: int, aggressive_npc_killed: int, invasion_npc_killed: int, unique_npc_killed: int, group_npc_killed: int, soul_stones_gained: int, created: string} $result */
+        /** @var null|array{id: int, world: string, player_id: int, fields_walked: int, fields_elixir: int, fields_run: int, fields_run_fast: int, npc_kills_gold: int, normal_npc_killed: int, phase_npc_killed: int, aggressive_npc_killed: int, invasion_npc_killed: int, unique_npc_killed: int, group_npc_killed: int, soul_stones_gained: int, day: string} $result */
         $result = $this->database->selectOne($sql, ['world' => $player->world->value, 'playerId' => $player->playerId]);
 
         if ($result === null) {
@@ -102,7 +138,7 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
     }
 
     /**
-     * @param array{id: int, world: string, player_id: int, fields_walked: int, fields_elixir: int, fields_run: int, fields_run_fast: int, npc_kills_gold: int, normal_npc_killed: int, phase_npc_killed: int, aggressive_npc_killed: int, invasion_npc_killed: int, unique_npc_killed: int, group_npc_killed: int, soul_stones_gained: int, created: string} $row
+     * @param array{id: int, world: string, player_id: int, fields_walked: int, fields_elixir: int, fields_run: int, fields_run_fast: int, npc_kills_gold: int, normal_npc_killed: int, phase_npc_killed: int, aggressive_npc_killed: int, invasion_npc_killed: int, unique_npc_killed: int, group_npc_killed: int, soul_stones_gained: int, day: string} $row
      */
     private function hydrateAchievement(array $row): Achievement
     {
@@ -122,7 +158,7 @@ final class AchievementRepository extends AbstractRepository implements ResetAct
             uniqueNpcKilled: $row['unique_npc_killed'],
             groupNpcKilled: $row['group_npc_killed'],
             soulStonesGained: $row['soul_stones_gained'],
-            created: new DateTimeImmutable($row['created']),
+            day: new DateTimeImmutable($row['day']),
         );
     }
 }

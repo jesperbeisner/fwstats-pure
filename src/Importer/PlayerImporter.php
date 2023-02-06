@@ -99,7 +99,7 @@ final readonly class PlayerImporter implements ImporterInterface
     private function trackDailyXpChanges(array $playersDump): void
     {
         foreach ($playersDump as $playerDump) {
-            $this->playerXpHistoryRepository->create(new PlayerXpHistory(null, $playerDump->world, $playerDump->playerId, $playerDump->totalXp, $playerDump->totalXp, (new DateTimeImmutable())->setTime(0, 0, 0)));
+            $this->playerXpHistoryRepository->create(new PlayerXpHistory(null, $playerDump->world, $playerDump->playerId, $playerDump->totalXp, $playerDump->totalXp, new DateTimeImmutable('today')));
         }
     }
 

@@ -25,7 +25,7 @@ final readonly class Achievement
         public int $uniqueNpcKilled,
         public int $groupNpcKilled,
         public int $soulStonesGained,
-        public DateTimeImmutable $created,
+        public DateTimeImmutable $day,
     ) {
     }
 
@@ -47,7 +47,7 @@ final readonly class Achievement
             $achievement->uniqueNpcKilled,
             $achievement->groupNpcKilled,
             $achievement->soulStonesGained,
-            $achievement->created
+            $achievement->day
         );
     }
 }

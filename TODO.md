@@ -1,14 +1,14 @@
 # TODOs
 
 ## Ongoing
-- Display player achievements
-- Update player achievements only daily
+- FreewarDumpService add retries
 - Bans & deletion image
+- Display player achievements
 - Update FixturesCommand
 - Clans created/deleted/changes history
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
-- Test image creations
+- Write tests for image creations
 - Add more tests :^)
 
 ## Finished
@@ -38,3 +38,4 @@
 - ~~Track and display deleted/banned players~~
 - ~~Change date on ranking image to bottom~~
 - ~~Display player infos in profile~~
+- ~~Track daily player achievements~~
