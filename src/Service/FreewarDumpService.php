@@ -11,7 +11,7 @@ use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Model\Clan;
 use Jesperbeisner\Fwstats\Model\Player;
 
-final class FreewarDumpService implements FreewarDumpServiceInterface
+final readonly class FreewarDumpService implements FreewarDumpServiceInterface
 {
     private const ADMINS = ['Sotrax', 'bwoebi', 'Nyrea', 'Andocai', 'alexa'];
 
@@ -96,8 +96,15 @@ final class FreewarDumpService implements FreewarDumpServiceInterface
     {
         $dumpUrl = str_replace('[WORLD]', $world->value, $url);
 
+        // Retries for idiots :^)
         if (false === $dump = file_get_contents($dumpUrl)) {
-            throw new RuntimeException("Could not get the dump url '$dumpUrl'.");
+            sleep(1);
+            if (false === $dump = file_get_contents($dumpUrl)) {
+                sleep(2);
+                if (false === $dump = file_get_contents($dumpUrl)) {
+                    throw new RuntimeException(sprintf('Could not get freewar dump url "%s".', $dumpUrl));
+                }
+            }
         }
 
         $dump = trim($dump);

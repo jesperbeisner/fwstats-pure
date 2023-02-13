@@ -1,7 +1,6 @@
 # TODOs
 
 ## Ongoing
-- FreewarDumpService add retries
 - Bans & deletion image
 - Display player achievements
 - Update FixturesCommand
@@ -39,3 +38,4 @@
 - ~~Change date on ranking image to bottom~~
 - ~~Display player infos in profile~~
 - ~~Track daily player achievements~~
+- ~~FreewarDumpService add retries~~
