@@ -25,3 +25,6 @@ phpstan: ## Run PHPStan
 
 app-run:
 	docker-compose exec php php bin/console.php app:run
+
+fixtures:
+	docker-compose exec php php bin/console.php app:database-fixtures

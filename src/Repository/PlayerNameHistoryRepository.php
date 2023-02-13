@@ -85,8 +85,8 @@ final class PlayerNameHistoryRepository extends AbstractRepository implements Re
             SELECT id, world, player_id, old_name, new_name, created
             FROM players_name_history
             WHERE world = :world
-            ORDER BY created
-            DESC LIMIT 15
+            ORDER BY created DESC
+            LIMIT 15
         SQL;
 
         /** @var array<array{id: int, world: string, player_id: int, old_name: string, new_name: string, created: string}> $result */

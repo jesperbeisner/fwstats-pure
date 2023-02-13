@@ -1,7 +1,7 @@
 # TODOs
 
 ## Ongoing
-- Bans & deletion image
+- Display Bans & deletion image
 - Display player achievements
 - Update FixturesCommand
 - Clans created/deleted/changes history
@@ -39,3 +39,4 @@
 - ~~Display player infos in profile~~
 - ~~Track daily player achievements~~
 - ~~FreewarDumpService add retries~~
+- ~~Create Bans & deletion image~~

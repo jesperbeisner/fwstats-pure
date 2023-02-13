@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jesperbeisner\Fwstats\Service\Factory;
 
+use Jesperbeisner\Fwstats\Image\BanAndDeletionImage;
 use Jesperbeisner\Fwstats\Image\NameChangeImage;
 use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
 use Jesperbeisner\Fwstats\Image\RaceChangeImage;
@@ -31,6 +32,7 @@ class CronjobServiceFactory implements FactoryInterface
             $container->get(NameChangeImage::class),
             $container->get(RaceChangeImage::class),
             $container->get(ProfessionChangeImage::class),
+            $container->get(BanAndDeletionImage::class),
         );
     }
 }

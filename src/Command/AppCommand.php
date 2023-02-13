@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Command;
 
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Image\BanAndDeletionImage;
 use Jesperbeisner\Fwstats\Image\NameChangeImage;
 use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
 use Jesperbeisner\Fwstats\Image\RaceChangeImage;
@@ -20,6 +21,7 @@ final class AppCommand extends AbstractCommand
     public static string $description = 'Runs all needed imports and image creations in a single command.';
 
     public function __construct(
+        private readonly string $appEnv,
         private readonly ClanImporter $clanImporter,
         private readonly PlayerImporter $playerImporter,
         private readonly AchievementImporter $achievementImporter,
@@ -28,6 +30,7 @@ final class AppCommand extends AbstractCommand
         private readonly NameChangeImage $nameChangeImage,
         private readonly RaceChangeImage $raceChangeImage,
         private readonly ProfessionChangeImage $professionChangeImage,
+        private readonly BanAndDeletionImage $banAndDeletionImage,
     ) {
     }
 
@@ -39,17 +42,20 @@ final class AppCommand extends AbstractCommand
         $this->writeLine();
 
         foreach (WorldEnum::cases() as $world) {
-            $this->writeLine("Importing clans for world '$world->value'...");
-            $this->clanImporter->import($world);
+            // Only import dumps in prod env. Use fixtures in dev.
+            if ($this->appEnv === 'prod') {
+                $this->writeLine("Importing clans for world '$world->value'...");
+                $this->clanImporter->import($world);
 
-            $this->writeLine("Importing players for world '$world->value'...");
-            $this->playerImporter->import($world);
+                $this->writeLine("Importing players for world '$world->value'...");
+                $this->playerImporter->import($world);
 
-            $this->writeLine("Importing achievements for world '$world->value'...");
-            $this->achievementImporter->import($world);
+                $this->writeLine("Importing achievements for world '$world->value'...");
+                $this->achievementImporter->import($world);
 
-            $this->writeLine("Importing playtime for world '$world->value'...");
-            $this->playtimeImporter->import($world);
+                $this->writeLine("Importing playtime for world '$world->value'...");
+                $this->playtimeImporter->import($world);
+            }
 
             $this->writeLine("Creating ranking image for world '$world->value'...");
             $this->rankingImage->create($world);
@@ -62,6 +68,9 @@ final class AppCommand extends AbstractCommand
 
             $this->writeLine("Creating profession change image for world '$world->value'...");
             $this->professionChangeImage->create($world);
+
+            $this->writeLine("Creating ban and deletion image for world '$world->value'...");
+            $this->banAndDeletionImage->create($world);
 
             $this->writeLine();
         }

@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Service;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use Jesperbeisner\Fwstats\Image\BanAndDeletionImage;
 use Jesperbeisner\Fwstats\Image\NameChangeImage;
 use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
 use Jesperbeisner\Fwstats\Image\RaceChangeImage;
@@ -30,6 +31,7 @@ final readonly class CronjobService implements CronjobInterface
         private NameChangeImage $nameChangeImage,
         private RaceChangeImage $raceChangeImage,
         private ProfessionChangeImage $professionChangeImage,
+        private BanAndDeletionImage $banAndDeletionImage,
     ) {
     }
 
@@ -59,6 +61,7 @@ final readonly class CronjobService implements CronjobInterface
             $this->nameChangeImage->create($world);
             $this->raceChangeImage->create($world);
             $this->professionChangeImage->create($world);
+            $this->banAndDeletionImage->create($world);
         }
     }
 }

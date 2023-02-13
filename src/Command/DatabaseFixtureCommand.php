@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Command;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Action\CreateUserAction;
+use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Image\NameChangeImage;
 use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
@@ -17,6 +18,7 @@ use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Model\PlayerProfessionHistory;
 use Jesperbeisner\Fwstats\Model\PlayerRaceHistory;
+use Jesperbeisner\Fwstats\Model\PlayerStatusHistory;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
@@ -24,6 +26,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
+use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 
 final class DatabaseFixtureCommand extends AbstractCommand
@@ -40,6 +43,7 @@ final class DatabaseFixtureCommand extends AbstractCommand
         private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,
         private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
         private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
+        private readonly PlayerStatusHistoryRepository $playerStatusHistoryRepository,
         private readonly UserRepository $userRepository,
         private readonly ConfigRepository $configRepository,
         private readonly CreateUserAction $createUserAction,
@@ -78,6 +82,9 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
         $this->writeLine("Creating player profession histories...");
         $this->createPlayerProfessionHistories();
+
+        $this->writeLine("Creating player status histories...");
+        $this->createPlayerStatusHistories();
 
         $this->writeLine("Deleting old config...");
         $this->configRepository->deleteAll();
@@ -217,17 +224,40 @@ final class DatabaseFixtureCommand extends AbstractCommand
 
         $this->playerProfessionHistoryRepository->deleteAll();
 
-        foreach ($playerProfessionHistoriesFixtureData as $playerProfessionFixtureData) {
+        foreach ($playerProfessionHistoriesFixtureData as $playerProfessionHistoryData) {
             $playerProfessionHistory = new PlayerProfessionHistory(
                 id: null,
-                world: $playerProfessionFixtureData['world'],
-                playerId: $playerProfessionFixtureData['playerId'],
-                oldProfession: $playerProfessionFixtureData['oldProfession'],
-                newProfession: $playerProfessionFixtureData['newProfession'],
-                created: $playerProfessionFixtureData['created'],
+                world: $playerProfessionHistoryData['world'],
+                playerId: $playerProfessionHistoryData['playerId'],
+                oldProfession: $playerProfessionHistoryData['oldProfession'],
+                newProfession: $playerProfessionHistoryData['newProfession'],
+                created: $playerProfessionHistoryData['created'],
             );
 
             $this->playerProfessionHistoryRepository->insert($playerProfessionHistory);
+        }
+    }
+
+    private function createPlayerStatusHistories(): void
+    {
+        /** @var array<array{world: WorldEnum, playerId: int, name: string, status: PlayerStatusEnum, created: DateTimeImmutable, deleted: null|DateTimeImmutable, updated: DateTimeImmutable}> $playerStatusHistoriesFixtureData */
+        $playerStatusHistoriesFixtureData = require $this->fixturesDirectory . '/player-status-histories.php';
+
+        $this->playerStatusHistoryRepository->deleteAll();
+
+        foreach ($playerStatusHistoriesFixtureData as $playerStatusHistoryData) {
+            $playerProfessionHistory = new PlayerStatusHistory(
+                id: null,
+                world: $playerStatusHistoryData['world'],
+                playerId: $playerStatusHistoryData['playerId'],
+                name: $playerStatusHistoryData['name'],
+                status: $playerStatusHistoryData['status'],
+                created: $playerStatusHistoryData['created'],
+                deleted: $playerStatusHistoryData['deleted'],
+                updated: $playerStatusHistoryData['updated'],
+            );
+
+            $this->playerStatusHistoryRepository->insert($playerProfessionHistory);
         }
     }
 

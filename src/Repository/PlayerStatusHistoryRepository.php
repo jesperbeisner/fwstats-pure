@@ -27,7 +27,7 @@ final class PlayerStatusHistoryRepository extends AbstractRepository implements 
             'name' => $playerStatusHistory->name,
             'status' => $playerStatusHistory->status->value,
             'created' => $playerStatusHistory->created->format('Y-m-d H:i:s'),
-            'deleted' => null,
+            'deleted' => $playerStatusHistory->deleted?->format('Y-m-d H:i:s'),
             'updated' => $playerStatusHistory->updated->format('Y-m-d H:i:s'),
         ]);
 
@@ -99,6 +99,39 @@ final class PlayerStatusHistoryRepository extends AbstractRepository implements 
         }
 
         return $playerStatusHistories;
+    }
+
+    /**
+     * @return array<PlayerStatusHistory>
+     */
+    public function getLast15BansAndDeletionsByWorld(WorldEnum $worldEnum): array
+    {
+        $sql = <<<SQL
+            SELECT id, world, player_id, name, status, created, deleted, updated
+            FROM players_status_history
+            WHERE world = :world
+            ORDER BY updated
+            LIMIT 15
+        SQL;
+
+        /** @var array<array{id: int, world: string, player_id: int, name: string, status: string, created: string, deleted: null|string, updated: string}> $result */
+        $result = $this->database->select($sql, [
+            'world' => $worldEnum->value,
+        ]);
+
+        $playerStatusHistories = [];
+        foreach ($result as $row) {
+            $playerStatusHistories[] = $this->hydratePlayerStatusHistory($row);
+        }
+
+        return $playerStatusHistories;
+    }
+
+    public function deleteAll(): void
+    {
+        $sql = "DELETE FROM players_status_history";
+
+        $this->database->delete($sql);
     }
 
     public function resetActionFreewar(): void

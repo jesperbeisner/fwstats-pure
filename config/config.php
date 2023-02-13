@@ -130,6 +130,7 @@ return [
         Image\NameChangeImage::class => Image\Factory\NameChangeImageFactory::class,
         Image\RaceChangeImage::class => Image\Factory\RaceChangeImageFactory::class,
         Image\ProfessionChangeImage::class => Image\Factory\ProfessionChangeImageFactory::class,
+        Image\BanAndDeletionImage::class => Image\Factory\BanAndDeletionImageFactory::class,
 
         // Commands
         Command\AppCommand::class => Command\Factory\AppCommandFactory::class,
