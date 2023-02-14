@@ -37,6 +37,8 @@ return [
     'title.xp' => 'Today\'s XP changes',
     'title.bans-and-deletions-changes' => 'Bans & Deletions',
     'title.player-infos' => 'Infos',
+    'title.bans-and-deletions-pictures' => 'Bans & Deletions',
+    'navigation.pictures.bans-and-deletions' => 'Bans & Deletions',
 
     'text.404-page-not-found' => '404 - Page not found',
     'text.translation-change-success' => 'Your language settings have been successfully changed',
@@ -59,6 +61,7 @@ return [
     'text.include-name-changes-image-in-profile' => 'Include name changes image in profile',
     'text.include-profession-changes-image-in-profile' => 'Include profession changes image in profile',
     'text.include-race-changes-image-in-profile' => 'Include race changes image in profile',
+    'text.include-bans-and-deletions-image-in-profile' => 'Include ban & deletion image in profile',
     'text.username-and-password-cant-be-empty' => 'Email and/or password must not be empty',
     'text.user-with-username-does-not-exist' => 'A user with the username "%USERNAME%" does not exist',
     'text.password-does-not-match' => 'The password does not match the stored password',

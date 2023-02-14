@@ -1,13 +1,13 @@
 # TODOs
 
 ## Ongoing
-- Display Bans & deletion image
 - Display player achievements
-- Update FixturesCommand
-- Clans created/deleted/changes history
+- Update FixturesCommand (Daily xp changes)
+- Write tests for image creations
+
+- Clans history (Only website)
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
-- Write tests for image creations
 - Add more tests :^)
 
 ## Finished
@@ -40,3 +40,4 @@
 - ~~Track daily player achievements~~
 - ~~FreewarDumpService add retries~~
 - ~~Create Bans & deletion image~~
+- ~~Display Bans & deletion image~~

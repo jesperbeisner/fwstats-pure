@@ -20,6 +20,7 @@ return [
     'navigation.changes.races' => 'Rassen',
     'navigation.changes.professions' => 'Berufe',
     'navigation.changes.bans-and-deletions' => 'Bans & Löschungen',
+    'navigation.pictures.bans-and-deletions' => 'Bans & Löschungen',
 
     'title.index' => 'Index',
     'title.playtime' => 'Heutige Spielzeit',
@@ -37,6 +38,7 @@ return [
     'title.xp' => 'Heutige XP Änderungen',
     'title.bans-and-deletions-changes' => 'Bans & Löschungen',
     'title.player-infos' => 'Infos',
+    'title.bans-and-deletions-pictures' => 'Bans & Löschungen',
 
     'text.404-page-not-found' => '404 - Seite nicht gefunden',
     'text.translation-change-success' => 'Deine Spracheinstellungen wurden erfolgreich geändert',
@@ -59,6 +61,7 @@ return [
     'text.include-name-changes-image-in-profile' => 'Namensänderungsbild im Profil einbinden',
     'text.include-profession-changes-image-in-profile' => 'Berufsänderungsbild im Profil einbinden',
     'text.include-race-changes-image-in-profile' => 'Rassenänderungsbild im Profil einbinden',
+    'text.include-bans-and-deletions-image-in-profile' => 'Ban- & Löschungsbild im Profil einbinden',
     'text.username-and-password-cant-be-empty' => 'E-Mail und/oder Passwort dürfen nicht leer sein',
     'text.user-with-username-does-not-exist' => 'Ein User mit dem Usernamen "%USERNAME%" existiert nicht',
     'text.password-does-not-match' => 'Das Passwort stimmt nicht mit dem hinterlegten Passwort überein',
