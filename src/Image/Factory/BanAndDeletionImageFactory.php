@@ -15,7 +15,9 @@ final class BanAndDeletionImageFactory implements FactoryInterface
     public function build(ContainerInterface $container, string $serviceId): BanAndDeletionImage
     {
         return new BanAndDeletionImage(
-            $container->get(Config::class),
+            $container->get(Config::class)->getRootDir() . '/var',
+            $container->get(Config::class)->getRootDir() . '/data/Roboto-Light.ttf',
+            'bans-and-deletions.png',
             $container->get(PlayerStatusHistoryRepository::class),
         );
     }

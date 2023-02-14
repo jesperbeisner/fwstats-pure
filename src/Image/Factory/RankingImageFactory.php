@@ -16,7 +16,9 @@ final class RankingImageFactory implements FactoryInterface
     public function build(ContainerInterface $container, string $serviceId): RankingImage
     {
         return new RankingImage(
-            $container->get(Config::class),
+            $container->get(Config::class)->getRootDir() . '/var',
+            $container->get(Config::class)->getRootDir() . '/data/Roboto-Light.ttf',
+            'ranking.png',
             $container->get(PlayerRepository::class),
             $container->get(ClanRepository::class),
         );

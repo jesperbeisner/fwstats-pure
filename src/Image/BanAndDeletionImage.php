@@ -9,15 +9,19 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\ImageException;
 use Jesperbeisner\Fwstats\Model\PlayerStatusHistory;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
-use Jesperbeisner\Fwstats\Stdlib\Config;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Image\BanAndDeletionImageTest
+ */
 final class BanAndDeletionImage extends AbstractImage
 {
     public function __construct(
-        Config $config,
+        string $imageFolder,
+        string $font,
+        private readonly string $imageName,
         private readonly PlayerStatusHistoryRepository $playerStatusHistoryRepository,
     ) {
-        parent::__construct($config);
+        parent::__construct($imageFolder, $font);
     }
 
     public function create(WorldEnum $world): void
@@ -42,7 +46,7 @@ final class BanAndDeletionImage extends AbstractImage
         $this->write('www.fwstats.de', 10, (int) (85 + (count($bansAndDeletions) * 19.1)), 10);
         $this->write(date('Y-m-d - H:i:s'), 333, (int) (85 + (count($bansAndDeletions) * 19.1)), 10);
 
-        $this->save($this->getImageFolder() . $world->value . '-bans-and-deletions.png');
+        $this->save($this->getImageFolder() . sprintf('/%s-%s', $world->value, $this->imageName));
     }
 
     /**

@@ -15,7 +15,9 @@ final class ProfessionChangeImageFactory implements FactoryInterface
     public function build(ContainerInterface $container, string $serviceId): ProfessionChangeImage
     {
         return new ProfessionChangeImage(
-            $container->get(Config::class),
+            $container->get(Config::class)->getRootDir() . '/var',
+            $container->get(Config::class)->getRootDir() . '/data/Roboto-Light.ttf',
+            'profession-changes.png',
             $container->get(PlayerProfessionHistoryRepository::class),
         );
     }

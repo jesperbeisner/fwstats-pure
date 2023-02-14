@@ -15,7 +15,9 @@ final class NameChangeImageFactory implements FactoryInterface
     public function build(ContainerInterface $container, string $serviceId): NameChangeImage
     {
         return new NameChangeImage(
-            $container->get(Config::class),
+            $container->get(Config::class)->getRootDir() . '/var',
+            $container->get(Config::class)->getRootDir() . '/data/Roboto-Light.ttf',
+            'name-changes.png',
             $container->get(PlayerNameHistoryRepository::class),
         );
     }

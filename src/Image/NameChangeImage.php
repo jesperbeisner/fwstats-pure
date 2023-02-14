@@ -8,15 +8,19 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\ImageException;
 use Jesperbeisner\Fwstats\Model\PlayerNameHistory;
 use Jesperbeisner\Fwstats\Repository\PlayerNameHistoryRepository;
-use Jesperbeisner\Fwstats\Stdlib\Config;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Image\NameChangeImageTest
+ */
 final class NameChangeImage extends AbstractImage
 {
     public function __construct(
-        Config $config,
+        string $imageFolder,
+        string $font,
+        private readonly string $imageName,
         private readonly PlayerNameHistoryRepository $playerNameHistoryRepository,
     ) {
-        parent::__construct($config);
+        parent::__construct($imageFolder, $font);
     }
 
     public function create(WorldEnum $world): void
@@ -40,7 +44,7 @@ final class NameChangeImage extends AbstractImage
         $this->write('www.fwstats.de', 10, (int) (85 + (count($nameChanges) * 19.1)), 10);
         $this->write(date('Y-m-d - H:i:s'), 303, (int) (85 + (count($nameChanges) * 19.1)), 10);
 
-        $this->save($this->getImageFolder() . $world->value . '-name-changes.png');
+        $this->save($this->getImageFolder() . sprintf('/%s-%s', $world->value, $this->imageName));
     }
 
     /**

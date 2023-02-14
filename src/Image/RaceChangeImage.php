@@ -8,15 +8,19 @@ use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\ImageException;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
-use Jesperbeisner\Fwstats\Stdlib\Config;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Image\RaceChangeImageTest
+ */
 final class RaceChangeImage extends AbstractImage
 {
     public function __construct(
-        Config $config,
+        string $imageFolder,
+        string $font,
+        private readonly string $imageName,
         private readonly PlayerRaceHistoryRepository $playerRaceHistoryRepository,
     ) {
-        parent::__construct($config);
+        parent::__construct($imageFolder, $font);
     }
 
     public function create(WorldEnum $world): void
@@ -41,7 +45,7 @@ final class RaceChangeImage extends AbstractImage
         $this->write('www.fwstats.de', 10, (int) (85 + (count($raceChanges) * 19.1)), 10);
         $this->write(date('Y-m-d - H:i:s'), 343, (int) (85 + (count($raceChanges) * 19.1)), 10);
 
-        $this->save($this->getImageFolder() . $world->value . '-race-changes.png');
+        $this->save($this->getImageFolder() . sprintf('/%s-%s', $world->value, $this->imageName));
     }
 
     /**

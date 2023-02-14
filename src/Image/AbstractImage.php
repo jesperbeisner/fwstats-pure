@@ -11,16 +11,14 @@ use Jesperbeisner\Fwstats\Stdlib\Config;
 
 abstract class AbstractImage implements ImageInterface
 {
-    private const IMAGE_FOLDER = '/var/';
-    private const ROBOTO_FONT = '/data/Roboto-Light.ttf';
-
     protected ?GdImage $image = null;
 
-    /** @var int[] */
+    /** @var array<int> */
     protected array $colors = [];
 
     public function __construct(
-        private readonly Config $config,
+        private readonly string $imageFolder,
+        private readonly string $font,
     ) {
     }
 
@@ -53,7 +51,7 @@ abstract class AbstractImage implements ImageInterface
         $size = $size ?? 14;
         $color = $color ?? $this->colorBlack();
 
-        if (false === imagettftext($this->image, $size, $angle, $x, $y, $color, $this->config->getRootDir() . self::ROBOTO_FONT, $text)) {
+        if (false === imagettftext($this->image, $size, $angle, $x, $y, $color, $this->font, $text)) {
             throw new ImageException('Could not write to image.');
         }
     }
@@ -118,6 +116,6 @@ abstract class AbstractImage implements ImageInterface
 
     protected function getImageFolder(): string
     {
-        return $this->config->getRootDir() . self::IMAGE_FOLDER;
+        return $this->imageFolder;
     }
 }

@@ -3,8 +3,7 @@
 ## Ongoing
 - Display player achievements
 - Update FixturesCommand (Daily xp changes)
-- Write tests for image creations
-
+- PHPUnit 10
 - Clans history (Only website)
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
@@ -41,3 +40,4 @@
 - ~~FreewarDumpService add retries~~
 - ~~Create Bans & deletion image~~
 - ~~Display Bans & deletion image~~
+- ~~Write tests for image creations~~

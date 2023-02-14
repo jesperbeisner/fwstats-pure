@@ -8,16 +8,19 @@ use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Exception\ImageException;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
-use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
-use Jesperbeisner\Fwstats\Stdlib\Config;
 
+/**
+ * @see \Jesperbeisner\Fwstats\Tests\Unit\Image\ProfessionChangeImageTest
+ */
 final class ProfessionChangeImage extends AbstractImage
 {
     public function __construct(
-        Config $config,
+        string $imageFolder,
+        string $font,
+        private readonly string $imageName,
         private readonly PlayerProfessionHistoryRepository $playerProfessionHistoryRepository,
     ) {
-        parent::__construct($config);
+        parent::__construct($imageFolder, $font);
     }
 
     public function create(WorldEnum $world): void
@@ -42,7 +45,7 @@ final class ProfessionChangeImage extends AbstractImage
         $this->write('www.fwstats.de', 10, (int) (85 + (count($professionChanges) * 19.1)), 10);
         $this->write(date('Y-m-d - H:i:s'), 343, (int) (85 + (count($professionChanges) * 19.1)), 10);
 
-        $this->save($this->getImageFolder() . $world->value . '-profession-changes.png');
+        $this->save($this->getImageFolder() . sprintf('/%s-%s', $world->value, $this->imageName));
     }
 
     /**
