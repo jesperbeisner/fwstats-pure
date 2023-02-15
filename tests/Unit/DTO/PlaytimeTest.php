@@ -7,16 +7,14 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\DTO;
 use Generator;
 use Jesperbeisner\Fwstats\DTO\Playtime;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\DTO\Playtime
- */
+#[CoversClass(Playtime::class)]
 class PlaytimeTest extends TestCase
 {
-    /**
-     * @dataProvider providePlaytimeData
-     */
+    #[DataProvider('providePlaytimeData')]
     public function test_right_hours_minutes_and_seconds_from_playtime(int $hours, int $minutes, int $seconds, int $playtime): void
     {
         $playtime = new Playtime(WorldEnum::AFSRV, 'Test', 1, $playtime);
@@ -26,7 +24,7 @@ class PlaytimeTest extends TestCase
         self::assertSame($seconds, $playtime->getSeconds());
     }
 
-    public function providePlaytimeData(): Generator
+    public static function providePlaytimeData(): Generator
     {
         yield '0 hours, 0min, 0 seconds' => [0, 0, 0, 0];
         yield '0 hours, 0min, 1 seconds' => [0, 0, 1, 1];

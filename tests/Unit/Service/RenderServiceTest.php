@@ -8,11 +8,10 @@ use Jesperbeisner\Fwstats\Service\RenderService;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Tests\Doubles\SessionFake;
 use Jesperbeisner\Fwstats\Tests\Doubles\TranslatorDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Service\RenderService
- */
+#[CoversClass(RenderService::class)]
 final class RenderServiceTest extends TestCase
 {
     public function test_title_creation(): void

@@ -18,11 +18,10 @@ use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Action\ResetActionFreewarAction
- */
+#[CoversClass(ResetActionFreewarAction::class)]
 final class ResetActionFreewarActionTest extends TestCase
 {
     public function test_it_returns_a_success_ActionResult_when_everything_works(): void

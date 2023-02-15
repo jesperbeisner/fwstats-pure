@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Config;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Functional\Repository\ConfigRepositoryTest
+ * @see \Jesperbeisner\Fwstats\Tests\Integration\Repository\ConfigRepositoryTest
  */
 final class ConfigRepository extends AbstractRepository
 {

@@ -6,16 +6,16 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\ProfileController;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\ProfileController
- */
+#[CoversClass(ProfileController::class)]
 final class ProfileControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

@@ -14,8 +14,8 @@ phpunit: ## Run PHPUnit
 phpunit-application: ## Run PHPUnit with the Application testsuite
 	docker-compose exec php composer phpunit -- --testsuite Application
 
-phpunit-functional: ## Run PHPUnit with the Functional testsuite
-	docker-compose exec php composer phpunit -- --testsuite Functional
+phpunit-integration: ## Run PHPUnit with the Integration testsuite
+	docker-compose exec php composer phpunit -- --testsuite Integration
 
 phpunit-unit: ## Run PHPUnit with the Unit testsuite
 	docker-compose exec php composer phpunit -- --testsuite Unit

@@ -9,11 +9,10 @@ use Jesperbeisner\Fwstats\Enum\ResultEnum;
 use Jesperbeisner\Fwstats\Exception\ActionResultException;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Result\CreateUserActionResult;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Result\CreateUserActionResult
- */
+#[CoversClass(CreateUserActionResult::class)]
 class CreateUserActionResultTest extends TestCase
 {
     public function test_will_return_right_boolean_result_when_calling_isSuccess(): void

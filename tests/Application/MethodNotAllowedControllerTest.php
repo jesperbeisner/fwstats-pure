@@ -8,10 +8,9 @@ use Jesperbeisner\Fwstats\Controller\MethodNotAllowedController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\MethodNotAllowedController
- */
+#[CoversClass(MethodNotAllowedController::class)]
 final class MethodNotAllowedControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

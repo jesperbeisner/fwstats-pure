@@ -10,16 +10,14 @@ use Jesperbeisner\Fwstats\Image\RankingImage;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Image\RankingImage
- */
+#[CoversClass(RankingImage::class)]
 final class RankingImageTest extends TestCase
 {
-    /**
-     * @dataProvider provideWorldEnumData
-     */
+    #[DataProvider('provideWorldEnumData')]
     public function test_it_creates_an_image_successfully(WorldEnum $worldEnum): void
     {
         $fileName = __DIR__ . sprintf('/../../../var/%s-ranking-test.png', $worldEnum->value);
@@ -61,7 +59,7 @@ final class RankingImageTest extends TestCase
     /**
      * @return Generator<array<WorldEnum>>
      */
-    public function provideWorldEnumData(): Generator
+    public static function provideWorldEnumData(): Generator
     {
         yield 'ActionFreewar' => [WorldEnum::AFSRV];
         yield 'ChaosFreewar' => [WorldEnum::CHAOS];

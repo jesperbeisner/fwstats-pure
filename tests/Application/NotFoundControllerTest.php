@@ -8,10 +8,9 @@ use Jesperbeisner\Fwstats\Controller\NotFoundController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\NotFoundController
- */
+#[CoversClass(NotFoundController::class)]
 final class NotFoundControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

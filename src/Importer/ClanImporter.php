@@ -17,7 +17,7 @@ use Jesperbeisner\Fwstats\Repository\ClanNameHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\ClanRepository;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Functional\Importer\ClanImporterTest
+ * @see \Jesperbeisner\Fwstats\Tests\Integration\Importer\ClanImporterTest
  */
 final readonly class ClanImporter implements ImporterInterface
 {

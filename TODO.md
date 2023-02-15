@@ -3,7 +3,6 @@
 ## Ongoing
 - Display player achievements
 - Update FixturesCommand (Daily xp changes)
-- PHPUnit 10
 - Clans history (Only website)
 - Search on small menu width 100%
 - Page number on small menu not displaying properly
@@ -41,3 +40,4 @@
 - ~~Create Bans & deletion image~~
 - ~~Display Bans & deletion image~~
 - ~~Write tests for image creations~~
+- ~~Upgrade PHPUnit to v10~~

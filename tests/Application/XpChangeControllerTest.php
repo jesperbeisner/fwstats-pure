@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\XpChangeController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\XpChangeController
- */
+#[CoversClass(XpChangeController::class)]
 final class XpChangeControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

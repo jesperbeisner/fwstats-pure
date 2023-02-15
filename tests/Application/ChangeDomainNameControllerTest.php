@@ -6,16 +6,16 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\ChangeDomainNameController;
 use Jesperbeisner\Fwstats\Enum\FlashEnum;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\ChangeDomainNameController
- */
+#[CoversClass(ChangeDomainNameController::class)]
 final class ChangeDomainNameControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

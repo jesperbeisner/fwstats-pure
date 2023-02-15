@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Functional\Importer;
+namespace Jesperbeisner\Fwstats\Tests\Integration\Importer;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -12,10 +12,9 @@ use Jesperbeisner\Fwstats\Interface\FreewarDumpServiceInterface;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Doubles\FreewarDumpServiceDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Importer\PlaytimeImporter
- */
+#[CoversClass(PlaytimeImporter::class)]
 final class PlaytimeImporterTest extends AbstractTestCase
 {
     protected function setUp(): void

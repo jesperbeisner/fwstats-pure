@@ -7,10 +7,9 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 use Jesperbeisner\Fwstats\Controller\SecurityController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\SecurityController
- */
+#[CoversClass(SecurityController::class)]
 final class SecurityControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

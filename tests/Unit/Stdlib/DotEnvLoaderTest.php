@@ -6,11 +6,10 @@ namespace Jesperbeisner\Fwstats\Tests\Unit\Stdlib;
 
 use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Stdlib\DotEnvLoader;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Stdlib\DotEnvLoader
- */
+#[CoversClass(DotEnvLoader::class)]
 final class DotEnvLoaderTest extends TestCase
 {
     public function setUp(): void

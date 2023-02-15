@@ -8,10 +8,9 @@ use Jesperbeisner\Fwstats\Controller\UnauthorizedController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\UnauthorizedController
- */
+#[CoversClass(UnauthorizedController::class)]
 final class UnauthorizedControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

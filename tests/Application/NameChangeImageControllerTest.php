@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\NameChangeImageController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\NameChangeImageController
- */
+#[CoversClass(NameChangeImageController::class)]
 final class NameChangeImageControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Integration\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Cronjob;
 use Jesperbeisner\Fwstats\Repository\CronjobRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Repository\CronjobRepository
- */
+#[CoversClass(CronjobRepository::class)]
 final class CronjobRepositoryTest extends AbstractTestCase
 {
     private CronjobRepository $cronjobRepository;

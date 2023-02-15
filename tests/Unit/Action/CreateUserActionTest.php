@@ -10,11 +10,10 @@ use Jesperbeisner\Fwstats\Exception\RuntimeException;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
 use Jesperbeisner\Fwstats\Tests\Doubles\TranslatorDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Action\CreateUserAction
- */
+#[CoversClass(CreateUserAction::class)]
 final class CreateUserActionTest extends TestCase
 {
     private CreateUserAction $createUserAction;

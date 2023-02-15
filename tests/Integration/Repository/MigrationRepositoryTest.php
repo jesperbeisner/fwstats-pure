@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Integration\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Migration;
 use Jesperbeisner\Fwstats\Repository\MigrationRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Repository\MigrationRepository
- */
+#[CoversClass(MigrationRepository::class)]
 final class MigrationRepositoryTest extends AbstractTestCase
 {
     private MigrationRepository $migrationRepository;

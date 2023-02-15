@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\LogoutController;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\LogoutController
- */
+#[CoversClass(LogoutController::class)]
 final class LogoutControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

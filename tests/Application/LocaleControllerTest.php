@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\LocaleController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\LocaleController
- */
+#[CoversClass(LocaleController::class)]
 final class LocaleControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

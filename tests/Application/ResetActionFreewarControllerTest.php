@@ -6,15 +6,15 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\ResetActionFreewarController;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\ResetActionFreewarController
- */
+#[CoversClass(ResetActionFreewarController::class)]
 final class ResetActionFreewarControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

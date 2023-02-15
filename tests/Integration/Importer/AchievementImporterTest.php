@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Functional\Importer;
+namespace Jesperbeisner\Fwstats\Tests\Integration\Importer;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -13,10 +13,9 @@ use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Doubles\FreewarDumpServiceDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Importer\AchievementImporter
- */
+#[CoversClass(AchievementImporter::class)]
 final class AchievementImporterTest extends AbstractTestCase
 {
     protected function setUp(): void

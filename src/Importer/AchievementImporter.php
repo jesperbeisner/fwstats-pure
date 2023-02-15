@@ -13,7 +13,7 @@ use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerRepository;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Functional\Importer\AchievementImporterTest
+ * @see \Jesperbeisner\Fwstats\Tests\Integration\Importer\AchievementImporterTest
  */
 final readonly class AchievementImporter implements ImporterInterface
 {

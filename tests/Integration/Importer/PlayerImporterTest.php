@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Functional\Importer;
+namespace Jesperbeisner\Fwstats\Tests\Integration\Importer;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\PlayerStatusEnum;
@@ -20,10 +20,9 @@ use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Doubles\FreewarDumpServiceDummy;
 use Jesperbeisner\Fwstats\Tests\Doubles\PlayerStatusServiceDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Importer\PlayerImporter
- */
+#[CoversClass(PlayerImporter::class)]
 final class PlayerImporterTest extends AbstractTestCase
 {
     protected function setUp(): void

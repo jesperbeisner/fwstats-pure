@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Integration\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Model\Config;
 use Jesperbeisner\Fwstats\Repository\ConfigRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Repository\ConfigRepository
- */
+#[CoversClass(ConfigRepository::class)]
 final class ConfigRepositoryTest extends AbstractTestCase
 {
     private ConfigRepository $configRepository;

@@ -6,15 +6,15 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\RequestLogController;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\RequestLogController
- */
+#[CoversClass(RequestLogController::class)]
 final class RequestLogControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

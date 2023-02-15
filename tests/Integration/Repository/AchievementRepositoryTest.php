@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Integration\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
@@ -10,10 +10,9 @@ use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Model\Player;
 use Jesperbeisner\Fwstats\Repository\AchievementRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Repository\AchievementRepository
- */
+#[CoversClass(AchievementRepository::class)]
 final class AchievementRepositoryTest extends AbstractTestCase
 {
     private AchievementRepository $achievementRepository;

@@ -30,7 +30,7 @@ use Jesperbeisner\Fwstats\Repository\PlayerStatusHistoryRepository;
 use Jesperbeisner\Fwstats\Repository\PlayerXpHistoryRepository;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Functional\Importer\PlayerImporterTest
+ * @see \Jesperbeisner\Fwstats\Tests\Integration\Importer\PlayerImporterTest
  */
 final readonly class PlayerImporter implements ImporterInterface
 {

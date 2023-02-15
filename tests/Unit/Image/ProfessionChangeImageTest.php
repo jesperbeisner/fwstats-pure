@@ -9,16 +9,14 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Image\ProfessionChangeImage;
 use Jesperbeisner\Fwstats\Repository\PlayerProfessionHistoryRepository;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Image\ProfessionChangeImage
- */
+#[CoversClass(ProfessionChangeImage::class)]
 final class ProfessionChangeImageTest extends TestCase
 {
-    /**
-     * @dataProvider provideWorldEnumData
-     */
+    #[DataProvider('provideWorldEnumData')]
     public function test_it_creates_an_image_successfully(WorldEnum $worldEnum): void
     {
         $fileName = __DIR__ . sprintf('/../../../var/%s-profession-changes-test.png', $worldEnum->value);
@@ -50,7 +48,7 @@ final class ProfessionChangeImageTest extends TestCase
     /**
      * @return Generator<array<WorldEnum>>
      */
-    public function provideWorldEnumData(): Generator
+    public static function provideWorldEnumData(): Generator
     {
         yield 'ActionFreewar' => [WorldEnum::AFSRV];
         yield 'ChaosFreewar' => [WorldEnum::CHAOS];

@@ -9,16 +9,14 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Image\RaceChangeImage;
 use Jesperbeisner\Fwstats\Repository\PlayerRaceHistoryRepository;
 use Jesperbeisner\Fwstats\Tests\Doubles\DatabaseDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Image\RaceChangeImage
- */
+#[CoversClass(RaceChangeImage::class)]
 final class RaceChangeImageTest extends TestCase
 {
-    /**
-     * @dataProvider provideWorldEnumData
-     */
+    #[DataProvider('provideWorldEnumData')]
     public function test_it_creates_an_image_successfully(WorldEnum $worldEnum): void
     {
         $fileName = __DIR__ . sprintf('/../../../var/%s-race-changes-test.png', $worldEnum->value);
@@ -50,7 +48,7 @@ final class RaceChangeImageTest extends TestCase
     /**
      * @return Generator<array<WorldEnum>>
      */
-    public function provideWorldEnumData(): Generator
+    public static function provideWorldEnumData(): Generator
     {
         yield 'ActionFreewar' => [WorldEnum::AFSRV];
         yield 'ChaosFreewar' => [WorldEnum::CHAOS];

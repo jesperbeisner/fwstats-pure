@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\CronjobController;
 use Jesperbeisner\Fwstats\Interface\CronjobInterface;
 use Jesperbeisner\Fwstats\Model\User;
 use Jesperbeisner\Fwstats\Repository\UserRepository;
@@ -13,10 +14,9 @@ use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
 use Jesperbeisner\Fwstats\Tests\Doubles\CronjobDummy;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\CronjobController
- */
+#[CoversClass(CronjobController::class)]
 final class CronjobControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

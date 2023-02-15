@@ -12,7 +12,7 @@ use Jesperbeisner\Fwstats\Model\Achievement;
 use Jesperbeisner\Fwstats\Model\Player;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Functional\Repository\AchievementRepositoryTest
+ * @see \Jesperbeisner\Fwstats\Tests\Integration\Repository\AchievementRepositoryTest
  */
 final class AchievementRepository extends AbstractRepository implements ResetActionFreewarInterface
 {

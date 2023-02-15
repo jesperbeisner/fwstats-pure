@@ -12,7 +12,7 @@ use Jesperbeisner\Fwstats\Model\PlayerActiveSecond;
 use Jesperbeisner\Fwstats\Repository\PlayerActiveSecondRepository;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Functional\Importer\PlaytimeImporterTest
+ * @see \Jesperbeisner\Fwstats\Tests\Integration\Importer\PlaytimeImporterTest
  */
 final readonly class PlaytimeImporter implements ImporterInterface
 {

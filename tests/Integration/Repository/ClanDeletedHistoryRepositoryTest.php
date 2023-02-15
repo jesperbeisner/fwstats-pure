@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Jesperbeisner\Fwstats\Tests\Functional\Repository;
+namespace Jesperbeisner\Fwstats\Tests\Integration\Repository;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\ClanDeletedHistory;
 use Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Repository\ClanDeletedHistoryRepository
- */
+#[CoversClass(ClanDeletedHistoryRepository::class)]
 final class ClanDeletedHistoryRepositoryTest extends AbstractTestCase
 {
     private ClanDeletedHistoryRepository $clanDeletedHistoryRepository;

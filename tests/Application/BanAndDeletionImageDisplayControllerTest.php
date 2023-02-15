@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\BanAndDeletionImageDisplayController;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\BanAndDeletionImageDisplayController
- */
+#[CoversClass(BanAndDeletionImageDisplayController::class)]
 final class BanAndDeletionImageDisplayControllerTest extends AbstractTestCase
 {
     protected function setUp(): void

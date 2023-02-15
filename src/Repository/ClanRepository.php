@@ -12,7 +12,7 @@ use Jesperbeisner\Fwstats\Enum\WorldEnum;
 use Jesperbeisner\Fwstats\Model\Player;
 
 /**
- * @see \Jesperbeisner\Fwstats\Tests\Functional\Repository\ClanRepositoryTest
+ * @see \Jesperbeisner\Fwstats\Tests\Integration\Repository\ClanRepositoryTest
  */
 final class ClanRepository extends AbstractRepository implements ResetActionFreewarInterface
 {

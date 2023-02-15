@@ -6,6 +6,7 @@ namespace Jesperbeisner\Fwstats\Tests\Application;
 
 use DateTimeImmutable;
 use Jesperbeisner\Fwstats\Application;
+use Jesperbeisner\Fwstats\Controller\LoginController;
 use Jesperbeisner\Fwstats\Enum\FlashEnum;
 use Jesperbeisner\Fwstats\Interface\SessionInterface;
 use Jesperbeisner\Fwstats\Model\User;
@@ -13,10 +14,9 @@ use Jesperbeisner\Fwstats\Repository\UserRepository;
 use Jesperbeisner\Fwstats\Stdlib\Request;
 use Jesperbeisner\Fwstats\Stdlib\Response;
 use Jesperbeisner\Fwstats\Tests\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jesperbeisner\Fwstats\Controller\LoginController
- */
+#[CoversClass(LoginController::class)]
 final class LoginControllerTest extends AbstractTestCase
 {
     protected function setUp(): void
